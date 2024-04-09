@@ -2,21 +2,22 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas           = ["public", "auth"]
+  schemas   = ["public", "auth"]
 }
 
 enum RiskStatus {
   new
   open
   closed
+
   @@schema("auth")
 }
 
@@ -24,6 +25,7 @@ enum UserRole {
   user
   manager
   owner
+
   @@schema("auth")
 }
 
@@ -39,6 +41,7 @@ model Company {
 
   contact   Contact @relation(fields: [contactId], references: [id])
   contactId String
+
   @@schema("auth")
 }
 
@@ -52,6 +55,7 @@ model Contact {
 
   users     User[]
   companies Company[]
+
   @@schema("auth")
 }
 
@@ -92,6 +96,7 @@ model Project {
   risks Risk[]
 
   projectUsers ProjectUser[]
+
   @@schema("auth")
 }
 
