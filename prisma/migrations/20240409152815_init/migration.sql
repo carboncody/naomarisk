@@ -1,14 +1,11 @@
--- CreateSchema
-CREATE SCHEMA IF NOT EXISTS "auth";
+-- CreateEnum
+CREATE TYPE "RiskStatus" AS ENUM ('new', 'open', 'closed');
 
 -- CreateEnum
-CREATE TYPE "auth"."RiskStatus" AS ENUM ('new', 'open', 'closed');
-
--- CreateEnum
-CREATE TYPE "auth"."UserRole" AS ENUM ('user', 'manager', 'owner');
+CREATE TYPE "UserRole" AS ENUM ('user', 'manager', 'owner');
 
 -- CreateTable
-CREATE TABLE "auth"."Company" (
+CREATE TABLE "Company" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "cvr" TEXT NOT NULL,
@@ -20,7 +17,7 @@ CREATE TABLE "auth"."Company" (
 );
 
 -- CreateTable
-CREATE TABLE "auth"."Contact" (
+CREATE TABLE "Contact" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "fullName" TEXT NOT NULL,
@@ -32,12 +29,12 @@ CREATE TABLE "auth"."Contact" (
 );
 
 -- CreateTable
-CREATE TABLE "auth"."User" (
+CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "jobDescription" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "role" "auth"."UserRole" NOT NULL,
+    "role" "UserRole" NOT NULL,
     "companyId" TEXT NOT NULL,
     "contactId" TEXT NOT NULL,
 
@@ -45,7 +42,7 @@ CREATE TABLE "auth"."User" (
 );
 
 -- CreateTable
-CREATE TABLE "auth"."Project" (
+CREATE TABLE "Project" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -63,7 +60,7 @@ CREATE TABLE "auth"."Project" (
 );
 
 -- CreateTable
-CREATE TABLE "auth"."ProjectUser" (
+CREATE TABLE "ProjectUser" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
@@ -73,7 +70,7 @@ CREATE TABLE "auth"."ProjectUser" (
 );
 
 -- CreateTable
-CREATE TABLE "auth"."Risk" (
+CREATE TABLE "Risk" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -81,7 +78,7 @@ CREATE TABLE "auth"."Risk" (
     "description" TEXT NOT NULL,
     "probability" INTEGER NOT NULL,
     "consequence" INTEGER NOT NULL,
-    "status" "auth"."RiskStatus" NOT NULL,
+    "status" "RiskStatus" NOT NULL,
     "comment" TEXT,
     "activity" TEXT,
     "userId" TEXT NOT NULL,
@@ -91,25 +88,25 @@ CREATE TABLE "auth"."Risk" (
 );
 
 -- AddForeignKey
-ALTER TABLE "auth"."Company" ADD CONSTRAINT "Company_contactId_fkey" FOREIGN KEY ("contactId") REFERENCES "auth"."Contact"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Company" ADD CONSTRAINT "Company_contactId_fkey" FOREIGN KEY ("contactId") REFERENCES "Contact"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "auth"."User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "auth"."Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "auth"."User" ADD CONSTRAINT "User_contactId_fkey" FOREIGN KEY ("contactId") REFERENCES "auth"."Contact"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_contactId_fkey" FOREIGN KEY ("contactId") REFERENCES "Contact"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "auth"."Project" ADD CONSTRAINT "Project_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "auth"."Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Project" ADD CONSTRAINT "Project_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "auth"."ProjectUser" ADD CONSTRAINT "ProjectUser_userId_fkey" FOREIGN KEY ("userId") REFERENCES "auth"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProjectUser" ADD CONSTRAINT "ProjectUser_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "auth"."ProjectUser" ADD CONSTRAINT "ProjectUser_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "auth"."Project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProjectUser" ADD CONSTRAINT "ProjectUser_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "auth"."Risk" ADD CONSTRAINT "Risk_userId_fkey" FOREIGN KEY ("userId") REFERENCES "auth"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Risk" ADD CONSTRAINT "Risk_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "auth"."Risk" ADD CONSTRAINT "Risk_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "auth"."Project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Risk" ADD CONSTRAINT "Risk_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

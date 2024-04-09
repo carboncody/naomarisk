@@ -10,7 +10,6 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas   = ["public", "auth"]
 }
 
 enum RiskStatus {
@@ -18,7 +17,6 @@ enum RiskStatus {
   open
   closed
 
-  @@schema("auth")
 }
 
 enum UserRole {
@@ -26,7 +24,6 @@ enum UserRole {
   manager
   owner
 
-  @@schema("auth")
 }
 
 model Company {
@@ -42,7 +39,6 @@ model Company {
   contact   Contact @relation(fields: [contactId], references: [id])
   contactId String
 
-  @@schema("auth")
 }
 
 model Contact {
@@ -56,7 +52,6 @@ model Contact {
   users     User[]
   companies Company[]
 
-  @@schema("auth")
 }
 
 model User {
@@ -74,7 +69,6 @@ model User {
   projectUsers ProjectUser[]
   risks        Risk[]
 
-  @@schema("auth")
 }
 
 model Project {
@@ -97,7 +91,6 @@ model Project {
 
   projectUsers ProjectUser[]
 
-  @@schema("auth")
 }
 
 model ProjectUser {
@@ -110,7 +103,6 @@ model ProjectUser {
   projectId String
 
   @@id([userId, projectId])
-  @@schema("auth")
 }
 
 model Risk {
@@ -130,5 +122,4 @@ model Risk {
   project   Project @relation(fields: [projectId], references: [id])
   projectId String
 
-  @@schema("auth")
 }
