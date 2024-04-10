@@ -16,14 +16,12 @@ enum RiskStatus {
   new
   open
   closed
-
 }
 
 enum UserRole {
   user
   manager
   owner
-
 }
 
 model Company {
@@ -38,7 +36,6 @@ model Company {
 
   contact   Contact @relation(fields: [contactId], references: [id])
   contactId String
-
 }
 
 model Contact {
@@ -51,7 +48,6 @@ model Contact {
 
   users     User[]
   companies Company[]
-
 }
 
 model User {
@@ -68,7 +64,6 @@ model User {
 
   projectUsers ProjectUser[]
   risks        Risk[]
-
 }
 
 model Project {
@@ -90,7 +85,6 @@ model Project {
   risks Risk[]
 
   projectUsers ProjectUser[]
-
 }
 
 model ProjectUser {
@@ -121,5 +115,4 @@ model Risk {
   userId    String
   project   Project @relation(fields: [projectId], references: [id])
   projectId String
-
 }
