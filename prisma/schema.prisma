@@ -82,8 +82,8 @@ model Project {
   company   Company @relation(fields: [companyId], references: [id])
   companyId String
 
-  risks Risk[]
-
+  risks        Risk[]
+  // test
   projectUsers ProjectUser[]
 }
 
