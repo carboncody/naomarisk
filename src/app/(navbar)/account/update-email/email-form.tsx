@@ -1,8 +1,8 @@
 'use client';
 import Alert from '@/components/Alert';
 import InputErrorMessage from '@/components/InputErrorMessage';
-import { formatError } from '@/lib/utils';
-import { UpdateEmailSchema } from '@/lib/validationSchema';
+import { formatError } from '@lib/services/supabase/utils';
+import { UpdateEmailSchema } from '@lib/services/supabase/validationSchema';
 import { Button, Input, Link } from '@nextui-org/react';
 import {
   createClientComponentClient,
