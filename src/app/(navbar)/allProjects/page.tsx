@@ -13,19 +13,11 @@ export default async function Account() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
-      <h2 className="mb-4 text-4xl font-semibold">Account</h2>
-      <p className="mb-10 font-medium">
-        Hi {session?.user.email}, you can update your email or password from
-        here
-      </p>
-      <div className=" justify-flex flex justify-center gap-6">
-        <Link className="block w-full p-3" href="/account/update-email">
-          <Button>Update email</Button>
-        </Link>
-        <Link className="block w-full p-3" href="/account/update-password">
-          <Button>Update password</Button>
-        </Link>
-      </div>
+      <h2 className="mb-4 text-4xl font-semibold">
+        All projects ever made are located here
+      </h2>
+      <p className="mb-10 font-medium">Hi {session?.user.email}</p>
+
       <div className=" justify-flex flex justify-center">
         <Link className="block w-full p-3" href="/">
           <Button>Back</Button>
