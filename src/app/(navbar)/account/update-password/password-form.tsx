@@ -107,12 +107,12 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
             Update Password
           </Button>
         </div>
-        <div className="item-center justify-flex my-4 flex justify-center">
-          <Link href="/account">
-            <Button>Back</Button>
-          </Link>
-        </div>
       </form>
+      <div className="item-center justify-flex my-4 flex justify-center">
+        <Link href="/account">
+          <Button>Back</Button>
+        </Link>
+      </div>
     </div>
   );
 }
