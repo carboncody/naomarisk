@@ -27,8 +27,10 @@ export default function SignInForm() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] text-white">
       <div className="h-[600px] w-[500px] rounded-lg border bg-[#3f3e3e]">
-        <p className="my-5 text-center text-4xl text-white">Login</p>
-        <p className="mb-4 text-center font-medium">Hi, Welcome back</p>
+        <p className="my-5 text-center text-4xl text-white">
+          Welcome to <br /> NAOMA-RISK
+        </p>
+        <p className="mb-4 text-center font-medium">Sign in</p>
         <div className="px-5 py-5">
           <SignIn
             supabaseClient={supabase}

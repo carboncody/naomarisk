@@ -107,8 +107,8 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
             Update Password
           </Button>
         </div>
-        <div className=" justify-flex flex justify-center">
-          <Link className="block w-full p-3" href="/account">
+        <div className="item-center justify-flex my-4 flex justify-center">
+          <Link href="/account">
             <Button>Back</Button>
           </Link>
         </div>
