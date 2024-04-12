@@ -107,9 +107,9 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <Button className="btn btn-primary no-animation">
+          <button className="btn btn-primary no-animation">
             Update Password
-          </Button>
+          </button>
         </div>
       </form>
       <div className="item-center justify-flex my-4 flex justify-center">
