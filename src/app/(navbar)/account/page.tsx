@@ -26,6 +26,11 @@ export default async function Account() {
           <Button>Update password</Button>
         </Link>
       </div>
+      <div className=" justify-flex flex justify-center">
+        <Link className="block w-full p-3" href="/">
+          <Button>Back</Button>
+        </Link>
+      </div>
     </div>
   );
 }

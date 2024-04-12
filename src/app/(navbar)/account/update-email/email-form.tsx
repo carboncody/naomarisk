@@ -3,7 +3,7 @@ import Alert from '@/components/Alert';
 import InputErrorMessage from '@/components/InputErrorMessage';
 import { formatError } from '@/lib/utils';
 import { UpdateEmailSchema } from '@/lib/validationSchema';
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input, Link } from '@nextui-org/react';
 import {
   createClientComponentClient,
   type User,
@@ -71,9 +71,7 @@ export default function EmailForm({ user }: { user: User | undefined }) {
       <form onSubmit={handleSubmit}>
         <div className="form-control">
           <Input
-            label="Email"
-            placeholder="Enter a new email"
-            id="email"
+            label="Enter a new email"
             name="email"
             type="email"
             value={formData?.email ?? ''}
@@ -86,13 +84,11 @@ export default function EmailForm({ user }: { user: User | undefined }) {
         {errors?.email ? (
           <InputErrorMessage>{errors?.email}</InputErrorMessage>
         ) : null}
-        <div className="form-control">
-          <label htmlFor="emailConfirm" className="label">
-            Confirm Email
-          </label>
+        <div className="form-control my-4">
           <Input
             id="emailConfirm"
-            name="emailConfirm"
+            label="Confirm email"
+            name="email"
             type="email"
             value={formData.emailConfirm ?? ''}
             onChange={(ev) =>
@@ -108,6 +104,11 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           <Button className="btn btn-primary no-animation">Update Email</Button>
         </div>
       </form>
+      <div className=" justify-flex flex justify-center">
+        <Link className="block w-full p-3" href="/account">
+          <Button>Back</Button>
+        </Link>
+      </div>
     </div>
   );
 }

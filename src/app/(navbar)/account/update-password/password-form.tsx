@@ -3,10 +3,12 @@ import Alert from '@/components/Alert';
 import InputErrorMessage from '@/components/InputErrorMessage';
 import { formatError } from '@/lib/utils';
 import { UpdatePasswordSchema } from '@/lib/validationSchema';
+import { Button, Input } from '@nextui-org/react';
 import {
   createClientComponentClient,
   type User,
 } from '@supabase/auth-helpers-nextjs';
+import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import { ZodError, type z } from 'zod';
 
@@ -55,7 +57,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
     setMessage('Your password was updated successfully.');
   };
   return (
-    <div className="w-11/12 rounded-lg p-12 px-6 py-10 sm:w-8/12 sm:px-10 sm:py-6 md:w-6/12 lg:w-5/12 2xl:w-3/12">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
       {message ? (
         <Alert
           className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}
@@ -69,11 +71,9 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
-          <label htmlFor="password" className="label">
-            Password
-          </label>
-          <input
+          <Input
             id="password"
+            label="Enter a new password"
             name="password"
             type="password"
             value={formData?.password ?? ''}
@@ -87,27 +87,30 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.password}</InputErrorMessage>
         ) : null}
         <div className="form-control">
-          <label htmlFor="passwordConfirm" className="label">
-            Confirm Password
-          </label>
-          <input
+          <Input
+            className="my-5"
             id="passwordConfirm"
             name="passwordConfirm"
+            label="Confirm password"
             type="password"
             value={formData.passwordConfirm ?? ''}
             onChange={(ev) =>
               setFormData({ ...formData, passwordConfirm: ev.target.value })
             }
-            className="input input-bordered"
           />
         </div>
         {errors?.passwordConfirm ? (
           <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
         ) : null}
-        <div className="form-control mt-6">
-          <button className="btn btn-primary no-animation">
+        <div className="form-control mt-6 justify-center text-center">
+          <Button className="btn btn-primary no-animation">
             Update Password
-          </button>
+          </Button>
+        </div>
+        <div className=" justify-flex flex justify-center">
+          <Link className="block w-full p-3" href="/account">
+            <Button>Back</Button>
+          </Link>
         </div>
       </form>
     </div>
