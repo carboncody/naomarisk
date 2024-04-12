@@ -3,14 +3,13 @@ import Alert from '@/components/Alert';
 import InputErrorMessage from '@/components/InputErrorMessage';
 import { formatError } from '@/lib/utils';
 import { UpdatePasswordSchema } from '@/lib/validationSchema';
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input, Link } from '@nextui-org/react';
 import {
+  User,
   createClientComponentClient,
-  type User,
 } from '@supabase/auth-helpers-nextjs';
-import Link from 'next/link';
-import { useState, type FormEvent } from 'react';
-import { ZodError, type z } from 'zod';
+import { FormEvent, useState } from 'react';
+import { ZodError, z } from 'zod';
 
 type FormData = z.infer<typeof UpdatePasswordSchema>;
 
@@ -71,6 +70,9 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
+          <label htmlFor="password" className="label">
+            Password
+          </label>
           <Input
             id="password"
             label="Enter a new password"
@@ -86,9 +88,11 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
         {errors?.password ? (
           <InputErrorMessage>{errors?.password}</InputErrorMessage>
         ) : null}
-        <div className="form-control">
+        <div className="form-control mt-5">
+          <label htmlFor="passwordConfirm" className="label">
+            Confirm Password
+          </label>
           <Input
-            className="my-5"
             id="passwordConfirm"
             name="passwordConfirm"
             label="Confirm password"
