@@ -1,4 +1,4 @@
-import { createServerClient } from '@/lib/supabase-server';
+import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { Button } from '@nextui-org/react';
 import { Session } from 'inspector';
 import Link from 'next/link';

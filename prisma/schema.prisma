@@ -2,31 +2,35 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "foreignKeys"
 }
 
 enum RiskStatus {
-  new
-  open
-  closed
+  NEW
+  OPEN
+  CLOSED
 }
 
 enum UserRole {
-  user
-  manager
-  owner
+  USER
+  MANAGER
+  OWNER
+}
+
+enum UserStatus {
+  ACTIVE
+  PENDING
+  INACTIVE
 }
 
 model Company {
   id        String   @id @default(uuid())
-  name      String
   cvr       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -57,7 +61,7 @@ model User {
   updatedAt      DateTime @updatedAt
   role           UserRole
 
-  comapany  Company @relation(fields: [companyId], references: [id])
+  company   Company @relation(fields: [companyId], references: [id])
   companyId String
   contact   Contact @relation(fields: [contactId], references: [id])
   contactId String
@@ -72,7 +76,7 @@ model Project {
   updatedAt               DateTime @updatedAt
   name                    String
   description             String
-  startdate               DateTime
+  startDate               DateTime
   dueDate                 DateTime
   budget                  String?
   riskRegisterDescription String?
