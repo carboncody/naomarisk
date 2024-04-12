@@ -71,6 +71,9 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
+          <label htmlFor="password" className="label">
+            Password
+          </label>
           <Input
             id="password"
             label="Enter a new password"
@@ -86,9 +89,11 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
         {errors?.password ? (
           <InputErrorMessage>{errors?.password}</InputErrorMessage>
         ) : null}
-        <div className="form-control">
+        <div className="form-control mt-5">
+          <label htmlFor="passwordConfirm" className="label">
+            Confirm Password
+          </label>
           <Input
-            className="my-5"
             id="passwordConfirm"
             name="passwordConfirm"
             label="Confirm password"
@@ -103,16 +108,16 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <Button className="btn btn-primary no-animation">
+          <button className="btn btn-primary no-animation">
             Update Password
-          </Button>
-        </div>
-        <div className=" justify-flex flex justify-center">
-          <Link className="block w-full p-3" href="/account">
-            <Button>Back</Button>
-          </Link>
+          </button>
         </div>
       </form>
+      <div className="item-center justify-flex my-4 flex justify-center">
+        <Link href="/account">
+          <Button>Back</Button>
+        </Link>
+      </div>
     </div>
   );
 }
