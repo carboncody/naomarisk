@@ -5,11 +5,11 @@ import { formatError } from '@/lib/utils';
 import { UpdatePasswordSchema } from '@/lib/validationSchema';
 import { Button, Input, Link } from '@nextui-org/react';
 import {
-  User,
   createClientComponentClient,
+  type User,
 } from '@supabase/auth-helpers-nextjs';
-import { FormEvent, useState } from 'react';
-import { ZodError, z } from 'zod';
+import { useState, type FormEvent } from 'react';
+import { ZodError, type z } from 'zod';
 
 type FormData = z.infer<typeof UpdatePasswordSchema>;
 
