@@ -1,13 +1,14 @@
 'use client';
 import Alert from '@/components/Alert';
 import InputErrorMessage from '@/components/InputErrorMessage';
-import { formatError } from '@/lib/utils';
-import { UpdatePasswordSchema } from '@/lib/validationSchema';
-import { Button, Input, Link } from '@nextui-org/react';
+import { formatError } from '@lib/services/supabase/utils';
+import { UpdatePasswordSchema } from '@lib/services/supabase/validationSchema';
+import { Button, Input } from '@nextui-org/react';
 import {
   createClientComponentClient,
   type User,
 } from '@supabase/auth-helpers-nextjs';
+import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import { ZodError, type z } from 'zod';
 

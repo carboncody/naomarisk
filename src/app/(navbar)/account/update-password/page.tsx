@@ -1,4 +1,4 @@
-import { createServerClient } from '@/lib/supabase-server';
+import { createServerClient } from '@lib/services/supabase/supabase-server';
 import PasswordForm from './password-form';
 
 export const dynamic = 'force-dynamic';
