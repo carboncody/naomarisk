@@ -1,3 +1,118 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.group[data-filled-within='true']
+  .group-data-\[filled-within\=true\]\:text-default-600:focus {
+  color: white !important; /* Set the label color to white when focused */
+}
+
+.placeholder\:text-danger::placeholder {
+    color: white !important; /* Set placeholder color to white */
+  }
+  
+  .placeholder\:text-default-700\/50::placeholder {
+    color: white !important; /* Set placeholder color to white */
+  }
+  
+  .placeholder\:text-foreground-500::placeholder {
+    color: white !important; /* Set placeholder color to white */
+  }
+  
+  .placeholder\:text-primary::placeholder {
+    color: white !important; /* Set placeholder color to white */
+  }
+  
+  .placeholder\:text-secondary::placeholder {
+    color: white !important; /* Set placeholder color to white */
+  }
+  
+  .placeholder\:text-success-600::placeholder {
+    color: white !important; /* Set placeholder color to white */
+  }
+  
+  .placeholder\:text-warning-600::placeholder {
+    color: white !important; /* Set placeholder color to white */
+  }
+
+  .group[data-disabled=true] .group-data-\[disabled\=true\]\:text-foreground-300 {
+    color: white !important;
+  }
+  
+  .group[data-filled-within=true] .group-data-\[filled-within\=true\]\:text-default-600 {
+    color: white !important;
+  }
+  
+  .group[data-filled-within=true] .group-data-\[filled-within\=true\]\:text-foreground {
+    color: white !important;
+  }
+  
+  .group[data-filled=true] .group-data-\[filled\=true\]\:text-default-600 {
+    color: white !important;
+  }
+  
+  .group[data-filled=true] .group-data-\[filled\=true\]\:text-foreground {
+    color: white !important;
+  }
+  
+  .group[data-has-value=true] .group-data-\[has-value\=true\]\:text-default-foreground {
+    color: white !important;
+  }
+  
+  .group[data-has-value=true] .group-data-\[has-value\=true\]\:text-foreground {
+    color: white !important;
+  }
+  
+  .group[data-invalid=true] .group-data-\[invalid\=true\]\:text-danger {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-danger {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-danger-foreground {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-default-foreground {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-foreground {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-primary {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-primary-foreground {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-secondary {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-secondary-foreground {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-success {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-success-foreground {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-warning {
+    color: white !important;
+  }
+  
+  .group[data-selected=true] .group-data-\[selected\=true\]\:text-warning-foreground {
+    color: white !important;
+  }
+  
+  

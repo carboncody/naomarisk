@@ -15,7 +15,8 @@ export default function SignInForm() {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.info(session?.user.email)
       if (event === 'SIGNED_IN') {
         router.push('/');
       }

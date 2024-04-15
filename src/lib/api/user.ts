@@ -13,10 +13,11 @@ export class UserService {
     return db.user.findUnique({ where: { id } });
   }
 
-  static async createUser(createUserForm: CreateUserForm) {
+  static async upsertUser(email: string, createUserForm: CreateUserForm) {
     const { contact, company, ...rest } = createUserForm;
-    return db.user.create({
-      data: {
+    return db.user.upsert({
+      where: { id: email },
+      create: {
         ...rest,
         contact: {
           create: {
@@ -24,16 +25,10 @@ export class UserService {
           },
         },
         company: {
-          create: {
-            ...company,
-            contact: {
-              create: {
-                ...company.contact,
-              },
-            },
-          },
+          connect: { id: company.id },
         },
       },
+      update: {},
     });
   }
 
