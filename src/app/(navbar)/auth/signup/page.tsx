@@ -20,9 +20,18 @@ export default function HomePage() {
         <div className="px-5">
           <SignUp
             supabaseClient={supabase}
-            appearance={{ theme: ThemeSupa }}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    inputText: '#FFFFFF',
+                    inputLabelText: '#FFFFFF',
+                  },
+                },
+              },
+            }}
             providers={[]}
-            redirectTo="/"
           />
         </div>
         <div className="pt-4 text-center">

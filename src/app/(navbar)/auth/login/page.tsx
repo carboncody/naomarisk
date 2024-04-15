@@ -31,10 +31,20 @@ export default function SignInForm() {
           Welcome to <br /> NAOMA-RISK
         </p>
         <p className="mb-4 text-center font-medium">Sign in</p>
-        <div className="px-5 py-5">
+        <div className="px-5 py-5 text-white">
           <SignIn
             supabaseClient={supabase}
-            appearance={{ theme: ThemeSupa }}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    inputText: '#FFFFFF',
+                    inputLabelText: '#FFFFFF',
+                  },
+                },
+              },
+            }}
             providers={[]}
           />
           <div className="pt-4 text-center">
