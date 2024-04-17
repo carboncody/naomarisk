@@ -18,6 +18,7 @@ export class UserService {
     return db.user.create({
       data: {
         ...rest,
+        email: contact.email,
         contact: {
           create: {
             ...contact,
@@ -26,6 +27,7 @@ export class UserService {
         company: {
           create: {
             ...company,
+            email: company.contact.email,
             contact: {
               create: {
                 ...company.contact,
@@ -55,6 +57,7 @@ export class UserService {
   static async inviteUser(email: string, role: UserRole, companyId: string) {
     return db.user.create({
       data: {
+        email,
         role,
         company: {
           connect: { id: companyId },
