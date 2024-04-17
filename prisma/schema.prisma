@@ -7,6 +7,7 @@ generator client {
 
 datasource db {
   provider     = "postgresql"
+  directUrl    = env("DIRECT_URL")
   url          = env("DATABASE_URL")
   relationMode = "foreignKeys"
 }
@@ -31,15 +32,16 @@ enum UserStatus {
 
 model Company {
   id        String   @id @default(uuid())
+  email     String
   cvr       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  contact   Contact? @relation(fields: [contactId], references: [id])
+  contactId String?
+
   projects Project[]
   users    User[]
-
-  contact   Contact @relation(fields: [contactId], references: [id])
-  contactId String
 }
 
 model Contact {
@@ -50,21 +52,24 @@ model Contact {
   phone    String?
   website  String?
 
-  users     User[]
-  companies Company[]
+  project   Project?  @relation(fields: [projectId], references: [id])
+  projectId String?
+  user      User[]
+  Company   Company[]
 }
 
 model User {
   id             String   @id @default(uuid())
-  jobDescription String?
+  email          String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   role           UserRole
+  jobDescription String?
 
-  company   Company @relation(fields: [companyId], references: [id])
+  company   Company  @relation(fields: [companyId], references: [id])
   companyId String
-  contact   Contact @relation(fields: [contactId], references: [id])
-  contactId String
+  contact   Contact? @relation(fields: [contactId], references: [id])
+  contactId String?
 
   projectUsers ProjectUser[]
   risks        Risk[]
@@ -82,11 +87,13 @@ model Project {
   riskRegisterDescription String?
   riskReportIntro         String?
   riskReportDocumentId    String?
+  test                    String?
 
   company   Company @relation(fields: [companyId], references: [id])
   companyId String
 
-  risks Risk[]
+  contacts Contact[]
+  risks    Risk[]
 
   projectUsers ProjectUser[]
 }
