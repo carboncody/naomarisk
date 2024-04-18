@@ -25,9 +25,8 @@ export default function SignInForm() {
       try {
         await axios.post('/api/user/upsert', { email: user.user.email });
       } catch (error) {
-        setError(
-          'Noget gik galt i login. Prøv igen. Hvis det bliver ved, kontakt os. ',
-        );
+        setError(JSON.stringify(error));
+        throw error;
         return;
       }
 
