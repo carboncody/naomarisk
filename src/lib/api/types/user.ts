@@ -1,13 +1,11 @@
 import type { UserRole } from '@models';
-import type { CreateCompanyForm } from './company';
-import type { CreateContactForm, UpdateContactForm } from './contact';
+import type { UpdateContactForm } from './contact';
 
 export type CreateUserForm = {
   name: string;
+  email: string;
   jobDescription?: string;
   role: UserRole;
-  contact: CreateContactForm;
-  company: CreateCompanyForm;
 };
 
 export type UpdateUserForm = {

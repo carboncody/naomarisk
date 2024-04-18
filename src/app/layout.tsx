@@ -1,5 +1,4 @@
 import '@/styles/globals.css';
-import { Nav } from '@components/Nav';
 
 import { Providers } from '@lib/providers';
 import { Inter } from 'next/font/google';
@@ -25,15 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Providers>
-        <body
-          suppressHydrationWarning
-          className={`font-sans ${inter.variable}`}
-        >
-          <Nav />
-          {children}
-        </body>
-      </Providers>
+      <body suppressHydrationWarning className={`font-sans ${inter.variable}`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
