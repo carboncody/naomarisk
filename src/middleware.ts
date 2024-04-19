@@ -6,7 +6,10 @@ export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
 
-  if (req.nextUrl.pathname.startsWith('/_next') || req.nextUrl.pathname.startsWith('/logout')) {
+  if (
+    req.nextUrl.pathname.startsWith('/_next') ||
+    req.nextUrl.pathname.startsWith('/logout')
+  ) {
     return res;
   }
 

@@ -1,14 +1,10 @@
 import { Nav } from '@components/Nav';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function NavLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <>
       <Nav />
       {children}
-    </div>
+    </>
   );
 }

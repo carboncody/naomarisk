@@ -1,0 +1,3 @@
+{
+  "buildCommand": "yarn prisma migrate deploy && yarn build"
+}

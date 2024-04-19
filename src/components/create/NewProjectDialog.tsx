@@ -11,7 +11,6 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 
-
 export default function NewPreojectDialog() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -48,15 +47,14 @@ export default function NewPreojectDialog() {
                     variant="bordered"
                     classNames={{ label: 'text-white' }}
                   />
-                  
+
                   <Input
                     label="Project Description"
                     variant="bordered"
-                    classNames={{ label: 'text-white !important', 
-                    }}
+                    classNames={{ label: 'text-white !important' }}
                   />
                 </div>
-                
+
                 {/* <div className='grid grid-cols-3 gap-5'>
                 <Input
                     label="riskReportIntro"
@@ -75,21 +73,13 @@ export default function NewPreojectDialog() {
                   />
                  
                 </div> */}
-                <div className='grid grid-cols-4 gap-5'>
+                <div className="grid grid-cols-4 gap-5">
+                  <Input label="Start Date" type="date" variant="bordered" />
+                  <Input label="End Date" type="date" variant="bordered" />
                   <Input
-                    label="Start Date"
-                    type="date"
-                    variant="bordered"
-                  />
-                  <Input
-                    label="End Date"
-                    type="date"
-                    variant="bordered"
-                  />
-                   <Input 
-                   className='col-span-2'
-                   type="number"
-                   placeholder="0.00 kr."
+                    className="col-span-2"
+                    type="number"
+                    placeholder="0.00 kr."
                     label="Budget"
                     variant="bordered"
                   />
