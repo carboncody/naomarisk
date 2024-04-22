@@ -1,8 +1,8 @@
 'use client';
 
+import { NextInput } from '@components/ui/Input';
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -41,18 +41,9 @@ export default function NewPreojectDialog() {
               </ModalHeader>
               <ModalBody className="text-white">
                 <div className="grid grid-cols-2 gap-5">
-                  <Input
-                    autoFocus
-                    label="Project name"
-                    variant="bordered"
-                    classNames={{ label: 'text-white' }}
-                  />
+                  <NextInput autoFocus label="Project name" />
 
-                  <Input
-                    label="Project Description"
-                    variant="bordered"
-                    classNames={{ label: 'text-white !important' }}
-                  />
+                  <NextInput label="Project Description" variant="bordered" />
                 </div>
 
                 {/* <div className='grid grid-cols-3 gap-5'>
@@ -73,15 +64,19 @@ export default function NewPreojectDialog() {
                   />
                  
                 </div> */}
+
                 <div className="grid grid-cols-4 gap-5">
-                  <Input label="Start Date" type="date" variant="bordered" />
-                  <Input label="End Date" type="date" variant="bordered" />
-                  <Input
-                    className="col-span-2"
-                    type="number"
-                    placeholder="0.00 kr."
-                    label="Budget"
+                  <NextInput
+                    label="Start Date"
+                    type="date"
                     variant="bordered"
+                  />
+                  <NextInput label="End Date" type="date" variant="bordered" />
+                  <NextInput
+                    className="col-span-2"
+                    label="Budget [kr.]"
+                    type="number"
+                    labelPlacement="inside"
                   />
                 </div>
               </ModalBody>
