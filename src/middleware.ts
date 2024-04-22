@@ -1,11 +1,17 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
-import { NextResponse } from 'next/server';
-
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
+
+  if (
+    req.nextUrl.pathname.startsWith('/_next') ||
+    req.nextUrl.pathname.startsWith('/logout')
+  ) {
+    return res;
+  }
 
   const {
     data: { user },
@@ -23,20 +29,3 @@ export async function middleware(req: NextRequest) {
 
   return res;
 }
-
-export const config = {
-  matcher: [
-    '/',
-    '/login',
-    '/signup',
-    '/forgotpassword',
-    '/account',
-    '/active',
-    '/allProjects',
-    '/create',
-    '/team',
-    '/projects/project1',
-    '/projects/project2',
-    '/projects/project3',
-  ],
-};

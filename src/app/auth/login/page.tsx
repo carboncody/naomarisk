@@ -27,7 +27,6 @@ export default function SignInForm() {
       } catch (error) {
         setError(JSON.stringify(error));
         throw error;
-        return;
       }
 
       if (event === 'SIGNED_IN') {
