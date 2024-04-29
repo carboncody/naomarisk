@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
-
 import { Providers } from '@lib/providers';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -25,7 +25,26 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`font-sans ${inter.variable}`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              className: '',
+              duration: 5000,
+              style: {
+                background: 'dark:#333 #fff',
+                color: 'dark:#fff #333',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#15803d',
+                  secondary: 'white',
+                },
+              },
+            }}
+          />
+          {children}
+        </Providers>
       </body>
     </html>
   );
