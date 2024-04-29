@@ -11,15 +11,20 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
+import { createClient } from '@supabase/supabase-js';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { useSession } from '@supabase/auth-helpers-react';
-
-export default function NewPreojectDialog() {
+export default function NewProjectDialog() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const session = useSession();
+
+  const supabase = createClient(
+    'https://mjqqjcubkoilxmelnbxn.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qcXFqY3Via29pbHhtZWxuYnhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI2NTMyNzAsImV4cCI6MjAyODIyOTI3MH0.eFYDUktj6m3vDznvDJosUNSQOAO-wQCf_MS6WM6MGKM',
+  );
 
   const {
     register,
@@ -37,17 +42,15 @@ export default function NewPreojectDialog() {
 
   async function onSubmit(data: CreateProjectForm) {
     try {
-      toast('The users email is: ' + session?.user?.email);
-
       const project = await axios.post('/api/project/create', {
-        myEmail: session?.user?.email,
+        // myEmail: session?.user?.email,
         createProjectForm: data,
       });
       console.info(project);
       reset();
     } catch (error) {
       toast.error("This didn't work.");
-      toast('The users email is: ' + session?.user?.email);
+      // toast('The users email is: ' + session?.user?.email);
       console.error(error);
     }
   }
@@ -60,7 +63,7 @@ export default function NewPreojectDialog() {
         className="bg-transparent"
         disableAnimation
       >
-        Creat a new project
+        Create a new project
       </Button>
 
       <Modal
@@ -98,18 +101,6 @@ export default function NewPreojectDialog() {
                   />
                 </div>
                 <div className="grid grid-cols-4 gap-5">
-                  {/* <NextInput
-                    {...register('startDate')}
-                    label="Start Date"
-                    type="date"
-                    variant="bordered"
-                  />
-                  <NextInput
-                    {...register('dueDate')}
-                    label="End Date"
-                    type="date"
-                    variant="bordered"
-                  /> */}
                   <NextInput
                     {...register('budget')}
                     className="col-span-2"
