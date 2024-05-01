@@ -16,13 +16,17 @@ export default async function Account() {
     redirect('/auth/login');
   }
 
+  const { data, error } = await supabase.from('project').select();
+
+  console.log(data);
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
       <h2 className="mb-4 text-4xl font-semibold">
         All projects ever made are located here
       </h2>
       <p className="mb-10 font-medium">Hi {user.email}</p>
-
+      <div>{data}</div>
       <div className=" justify-flex flex justify-center">
         <Link className="block w-full p-3" href="/">
           <Button>Back</Button>

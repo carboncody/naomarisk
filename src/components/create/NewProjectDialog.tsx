@@ -11,20 +11,12 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { createClient } from '@supabase/supabase-js';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 export default function NewProjectDialog() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const session = useSession();
-
-  const supabase = createClient(
-    'https://mjqqjcubkoilxmelnbxn.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qcXFqY3Via29pbHhtZWxuYnhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI2NTMyNzAsImV4cCI6MjAyODIyOTI3MH0.eFYDUktj6m3vDznvDJosUNSQOAO-wQCf_MS6WM6MGKM',
-  );
 
   const {
     register,
@@ -43,15 +35,13 @@ export default function NewProjectDialog() {
   async function onSubmit(data: CreateProjectForm) {
     try {
       const project = await axios.post('/api/project/create', {
-        // myEmail: session?.user?.email,
         createProjectForm: data,
       });
-      console.info(project);
+      console.info('The Project is:', project);
+      toast.success('Project created');
       reset();
     } catch (error) {
-      toast.error("This didn't work.");
-      // toast('The users email is: ' + session?.user?.email);
-      console.error(error);
+      toast.error('Error - something went wrong');
     }
   }
 
@@ -112,7 +102,7 @@ export default function NewProjectDialog() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" onClick={onClose}>
-                  Cancel
+                  Close
                 </Button>
                 <Button onClick={handleSubmit(onSubmit)}>Save</Button>
               </ModalFooter>

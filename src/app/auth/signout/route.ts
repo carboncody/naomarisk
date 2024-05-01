@@ -1,18 +1,20 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { createClient } from '@lib/services/supabase/client';
+import { revalidatePath } from 'next/cache';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export async function POST() {
-  const supabase = createRouteHandlerClient({ cookies });
+export async function POST(req: NextRequest) {
+  const supabase = createClient();
 
-  // Check if we have a session
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  await supabase.auth.signOut();
+  if (user) {
+    await supabase.auth.signOut();
+  }
 
-  return NextResponse.redirect(new URL('/auth/login'), {
+  revalidatePath('/', 'layout');
+  return NextResponse.redirect(new URL('/auth/login', req.url), {
     status: 302,
   });
 }

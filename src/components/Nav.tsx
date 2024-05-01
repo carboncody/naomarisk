@@ -45,7 +45,7 @@ export function Nav() {
           <ActiveProjects />
         </NavbarItem>
         <NavbarItem>
-          <Link href={'/allProjects'}>All Project</Link>
+          <Link href={'/allProjects'}>All Projects</Link>
         </NavbarItem>
       </NavbarContent>
 
