@@ -31,21 +31,7 @@ export function AllProjects() {
       <h2 className="mb-4 mt-40 text-4xl font-semibold">
         All projectsmade are located here:
       </h2>
-      <div>
-        {/* {allProjects && allProjects.length > 0 ? (
-          allProjects.map((project) => (
-            <Link
-              className="block w-full p-3"
-              href={`/projects/${project.id}`}
-              key={project.id}
-            >
-              <Button>{project.name}</Button>
-            </Link>
-          ))
-        ) : (
-          <p>No projects found</p>
-        )} */}
-      </div>
+      <div></div>
       <div className="h-full w-3/4 ">
         <ProjectTable projects={allProjects ?? []} />
       </div>
