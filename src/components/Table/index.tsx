@@ -7,7 +7,8 @@ import { sortTable } from './sorting/sort.table';
 import { type TableColumns } from './types/table.columns';
 import { getTableActions, type TableAction } from './util/table.action';
 
-export type TableProps<T extends Record<string, never>> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TableProps<T extends Record<string, any>> = {
   applyMinWidth?: boolean;
   rows: T[];
   columns: TableColumns<T>;
@@ -19,10 +20,12 @@ export type TableProps<T extends Record<string, never>> = {
 } & (
   | { actions: TableAction<T>[] }
   | { onClickEdit: (row: T) => void; onClickDelete: (row: T) => void }
-  | NonNullable<unknown>
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  | {}
 );
 
-export function Table<T extends Record<string, never>>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function Table<T extends Record<string, any>>({
   applyMinWidth = true,
   rows,
   columns,

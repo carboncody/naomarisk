@@ -5,14 +5,16 @@ import { type SortReducerState } from './sorting/sort.reducer';
 import { type TableColumns } from './types/table.columns';
 import { prepareSpacing, totalColumnSpacing } from './util/spacing';
 
-interface TableHeaderProps<T extends Record<string, unknown>> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface TableHeaderProps<T extends Record<string, any>> {
   selectable?: boolean;
   columns: TableColumns<T>;
   sortState: SortReducerState<keyof T>;
   dispatchSortState: React.Dispatch<keyof T>;
 }
 
-export function TableHeader<T extends Record<string, unknown>>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function TableHeader<T extends Record<string, any>>({
   selectable = false,
   columns,
   sortState,
@@ -36,7 +38,7 @@ export function TableHeader<T extends Record<string, unknown>>({
 
   return (
     <div
-      className={`grid ${colCount} dark:bg-dark-gray-primary rounded-xl bg-gray-100 pl-4 text-sm`}
+      className={`grid ${colCount} rounded-xl bg-gray-200 pl-4 text-sm text-black  `}
     >
       {Object.keys(columns)
         .map((key) => ({
@@ -53,7 +55,7 @@ export function TableHeader<T extends Record<string, unknown>>({
                 className={clsx(
                   `col-span-${spacing} select-none rounded-lg px-2 py-4`,
                   {
-                    'flex cursor-pointer items-center duration-300 hover:shadow-md hover:ease-in':
+                    'flex cursor-pointer items-center duration-300 hover:bg-gray-300 hover:shadow-xl hover:ease-in':
                       sortable,
                   },
                 )}

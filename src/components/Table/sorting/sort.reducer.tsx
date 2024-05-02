@@ -27,7 +27,8 @@ export function tableSorterReducer<T = string>(
   return { key, direction: 'ascending' };
 }
 
-export function useTableSorting<T extends Record<string, unknown>>() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useTableSorting<T extends Record<string, any>>() {
   return useReducer(tableSorterReducer<keyof T>, {
     key: null,
     direction: 'none',

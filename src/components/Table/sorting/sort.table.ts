@@ -2,7 +2,8 @@ import { cloneDeep } from 'lodash';
 import { type TableColumns } from '../types/table.columns';
 import { type SortReducerState } from './sort.reducer';
 
-export function sortTable<T extends Record<string, unknown>>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function sortTable<T extends Record<string, any>>(
   { key, direction }: SortReducerState<keyof T>,
   columns: TableColumns<T>,
   rows: T[],

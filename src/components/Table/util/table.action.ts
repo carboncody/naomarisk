@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { type MenuItemProps } from '@nextui-org/react';
 
-export type TableAction<T extends Record<string, never>> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TableAction<T extends Record<string, any>> = {
   text: string;
   onClick: (row: T) => void;
 } & Omit<MenuItemProps, 'onClick'>;
 
-function defaultTableActions<T extends Record<string, never>>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function defaultTableActions<T extends Record<string, any>>(
   onClickEdit: (row: T) => void,
   onClickDelete: (row: T) => void,
 ): TableAction<T>[] {
@@ -24,11 +25,13 @@ function defaultTableActions<T extends Record<string, never>>(
   ];
 }
 
-export function getTableActions<T extends Record<string, never>>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getTableActions<T extends Record<string, any>>(
   rest:
     | { actions: TableAction<T>[] }
     | { onClickEdit: (row: T) => void; onClickDelete: (row: T) => void }
-    | Record<string, never>,
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    | {},
 ) {
   if ('actions' in rest) {
     return rest.actions;
@@ -39,7 +42,9 @@ export function getTableActions<T extends Record<string, never>>(
   }
 
   return defaultTableActions(
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     () => {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     () => {},
   );
 }

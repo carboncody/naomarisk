@@ -4,6 +4,7 @@ import { useProjectsInCompany } from '@lib/api/hooks';
 import { Button, Spinner } from '@nextui-org/react';
 import Error from 'next/error';
 import Link from 'next/link';
+import { ProjectTable } from './ProjectTable';
 
 export function AllProjects() {
   const {
@@ -26,12 +27,12 @@ export function AllProjects() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
-      <h2 className="mb-4 text-4xl font-semibold">
-        All projects ever made are located here
+    <div className="justify-top flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
+      <h2 className="mb-4 mt-40 text-4xl font-semibold">
+        All projectsmade are located here:
       </h2>
       <div>
-        {allProjects && allProjects.length > 0 ? (
+        {/* {allProjects && allProjects.length > 0 ? (
           allProjects.map((project) => (
             <Link
               className="block w-full p-3"
@@ -43,7 +44,10 @@ export function AllProjects() {
           ))
         ) : (
           <p>No projects found</p>
-        )}
+        )} */}
+      </div>
+      <div className="h-full w-3/4 ">
+        <ProjectTable projects={allProjects ?? []} />
       </div>
       <div className=" justify-flex flex justify-center">
         <Link className="block w-full p-3" href="/">
