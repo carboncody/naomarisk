@@ -28,9 +28,7 @@ export function AllProjects() {
 
   return (
     <div className="justify-top flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
-      <h2 className="mb-4 mt-40 text-4xl font-semibold">
-        All projectsmade are located here:
-      </h2>
+      <h2 className="mb-4 mt-40 text-4xl font-semibold">Alle Projekter:</h2>
       <div></div>
       <div className="h-full w-3/4 ">
         <ProjectTable projects={allProjects ?? []} />
