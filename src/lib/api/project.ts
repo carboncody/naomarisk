@@ -3,9 +3,13 @@ import { db } from '@server/db';
 import type { CreateProjectForm, UpdateProjectForm } from './types';
 
 export async function ProjectService() {
-  async function getProjectsInCompany(companyId: string) {
+  async function getProjectsInCompany(email: string) {
     return db.project.findMany({
-      where: { companyId },
+      where: {
+        company: {
+          users: { some: { email } },
+        },
+      },
     });
   }
 

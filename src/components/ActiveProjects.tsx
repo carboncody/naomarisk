@@ -12,15 +12,9 @@ export function ActiveProjects() {
     <Dropdown className=" bg-white/25 text-white" placement="bottom-start">
       <DropdownTrigger>Active Projects</DropdownTrigger>
       <DropdownMenu aria-label="User Actions" variant="flat">
-        <DropdownItem href="/projects/project1" key="settings">
-          Project 1
-        </DropdownItem>
-        <DropdownItem href="/projects/project2" key="team_settings">
-          Project 2
-        </DropdownItem>
-        <DropdownItem href="/projects/project3" key="settings">
-          Project 3
-        </DropdownItem>
+        <DropdownItem key="settings">Project 1</DropdownItem>
+        <DropdownItem key="team_settings">Project 2</DropdownItem>
+        <DropdownItem key="settings">Project 3</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );

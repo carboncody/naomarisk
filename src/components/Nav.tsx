@@ -10,7 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ActiveProjects } from './ActiveProjects';
 import { SettingsDropdown } from './SettingsDropdown';
-import NewPreojectDialog from './create/NewProjectDialog';
+import NewProjectDialog from './create/NewProjectDialog';
 
 export function Nav() {
   return (
@@ -39,13 +39,13 @@ export function Nav() {
         justify="center"
       >
         <NavbarItem>
-          <NewPreojectDialog />
+          <NewProjectDialog />
         </NavbarItem>
         <NavbarItem>
           <ActiveProjects />
         </NavbarItem>
         <NavbarItem>
-          <Link href={'/allProjects'}>All Projects</Link>
+          <Link href={'/projects'}>All Projects</Link>
         </NavbarItem>
       </NavbarContent>
 
