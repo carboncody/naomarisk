@@ -53,7 +53,7 @@ export default function NewProjectDialog() {
         className="bg-transparent"
         disableAnimation
       >
-        Create a new project
+        Opret nyt projekt
       </Button>
 
       <Modal
@@ -68,7 +68,7 @@ export default function NewProjectDialog() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-white">
-                Create a new project
+                Opret nyt projekt
               </ModalHeader>
               <ModalBody className="text-white">
                 <div className="grid grid-cols-2 gap-5">
@@ -102,9 +102,9 @@ export default function NewProjectDialog() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" onClick={onClose}>
-                  Close
+                  Luk
                 </Button>
-                <Button onClick={handleSubmit(onSubmit)}>Save</Button>
+                <Button onClick={handleSubmit(onSubmit)}>Opret</Button>
               </ModalFooter>
             </>
           )}

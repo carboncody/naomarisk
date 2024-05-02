@@ -33,7 +33,6 @@ export function Nav() {
           </Link>
         </NavbarBrand>
       </NavbarContent>
-
       <NavbarContent
         className="justify-center gap-10 text-sm sm:flex md:text-lg"
         justify="center"
@@ -45,7 +44,7 @@ export function Nav() {
           <ActiveProjects />
         </NavbarItem>
         <NavbarItem>
-          <Link href={'/projects'}>All Projects</Link>
+          <Link href={'/projects'}>Alle Projekter</Link>
         </NavbarItem>
       </NavbarContent>
 

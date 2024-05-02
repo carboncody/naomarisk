@@ -11,17 +11,17 @@ import axios from 'axios';
 export function SettingsDropdown() {
   return (
     <Dropdown className=" bg-white/25 text-white" placement="bottom-start">
-      <DropdownTrigger>Settings</DropdownTrigger>
+      <DropdownTrigger>Indstilling</DropdownTrigger>
       <DropdownMenu aria-label="User Actions" variant="flat">
         <DropdownItem href="/account" key="settings">
-          My Settings
+          Mine Indstilling
         </DropdownItem>
         <DropdownItem href="/team" key="team_settings">
-          Team Settings
+          Team Indstilling
         </DropdownItem>
         <DropdownItem key="logout" href="/auth/signout" color="danger">
           <button onClick={() => axios.post('/auth/signout')} type="submit">
-            Sign out
+            Log ud
           </button>
         </DropdownItem>
       </DropdownMenu>

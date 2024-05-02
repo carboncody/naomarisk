@@ -37,7 +37,7 @@ export function AllProjects() {
       </div>
       <div className=" justify-flex flex justify-center">
         <Link className="block w-full p-3" href="/">
-          <Button>Back</Button>
+          <Button>Tilbage</Button>
         </Link>
       </div>
     </div>

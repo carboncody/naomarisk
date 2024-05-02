@@ -106,7 +106,7 @@ export default function EmailForm({ user }: { user: User | undefined }) {
       </form>
       <div className=" justify-flex flex justify-center">
         <Link className="block w-full p-3" href="/account">
-          <Button>Back</Button>
+          <Button>Tilbage</Button>
         </Link>
       </div>
     </div>
