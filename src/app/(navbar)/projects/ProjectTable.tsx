@@ -32,7 +32,7 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
           <span>{dayjs(project.createdAt).format('DD MMM')}</span>
         </div>
       ),
-      sort: sortBy('date'),
+      // sort: sortBy('date'),
     },
 
     budget: {
