@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
 
   if (
     req.nextUrl.pathname.startsWith('/_next') ||
-    req.nextUrl.pathname.startsWith('/logout')
+    req.nextUrl.pathname.startsWith('/auth')
   ) {
     return res;
   }

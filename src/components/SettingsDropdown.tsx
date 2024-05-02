@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from '@nextui-org/react';
+import axios from 'axios';
 
 export function SettingsDropdown() {
   return (
@@ -18,10 +19,10 @@ export function SettingsDropdown() {
         <DropdownItem href="/team" key="team_settings">
           Team Settings
         </DropdownItem>
-        <DropdownItem key="logout" color="danger">
-          <form className="block" action="/auth/signout" method="post">
-            <button type="submit">Sign out</button>
-          </form>
+        <DropdownItem key="logout" href="/auth/signout" color="danger">
+          <button onClick={() => axios.post('/auth/signout')} type="submit">
+            Sign out
+          </button>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>

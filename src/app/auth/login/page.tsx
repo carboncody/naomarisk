@@ -1,4 +1,6 @@
 'use client';
+import { useMe } from '@lib/context/MeContext';
+import { type User } from '@models';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { SignIn } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
@@ -11,6 +13,7 @@ export default function SignInForm() {
   const supabase = createClientComponentClient();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const { setMe } = useMe();
 
   useEffect(() => {
     const {
@@ -23,7 +26,10 @@ export default function SignInForm() {
         return;
       }
       try {
-        await axios.post('/api/user/upsert', { email: user.user.email });
+        const meQuery = await axios.post('/api/user/upsert', {
+          email: user.user.email,
+        });
+        setMe(meQuery.data as User);
       } catch (error) {
         setError(JSON.stringify(error));
         throw error;
@@ -35,7 +41,7 @@ export default function SignInForm() {
     });
 
     return () => subscription.unsubscribe();
-  }, [router, supabase.auth]);
+  }, [router, setMe, supabase.auth]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] text-white">

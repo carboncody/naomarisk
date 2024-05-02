@@ -2,29 +2,48 @@ import type { Project } from '@prisma/client';
 import { db } from '@server/db';
 import type { CreateProjectForm, UpdateProjectForm } from './types';
 
-export class ProjectService {
-  static async getProjectsInCompany(companyId: string) {
+export async function ProjectService() {
+  async function getProjectsInCompany(email: string) {
     return db.project.findMany({
-      where: { companyId },
+      where: {
+        company: {
+          users: { some: { email } },
+        },
+      },
     });
   }
 
-  static async getProjectFromId(id: string): Promise<Project | null> {
+  async function getProjectFromId(id: string): Promise<Project | null> {
     return db.project.findUnique({
       where: { id },
       include: { risks: true, projectUsers: true, company: true },
     });
   }
 
-  static async createProject(
-    companyId: string,
+  async function createProject(
+    email: string,
     createProjectForm: CreateProjectForm,
   ) {
     const { riskIds, projectUserIds, ...rest } = createProjectForm;
+
+    const company = await db.company.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!company) {
+      throw new Error('Company not found');
+    }
+
     return db.project.create({
       data: {
         ...rest,
-        companyId,
+        company: {
+          connect: {
+            id: company.id,
+          },
+        },
         risks: riskIds
           ? {
               connect: riskIds,
@@ -37,7 +56,10 @@ export class ProjectService {
     });
   }
 
-  static async updateProject(id: string, updateProjectForm: UpdateProjectForm) {
+  async function updateProject(
+    id: string,
+    updateProjectForm: UpdateProjectForm,
+  ) {
     const { riskIds, projectUserIds, ...rest } = updateProjectForm;
     const riskIdsAssociatedWithProject = await db.risk.findMany({
       where: {
@@ -61,4 +83,11 @@ export class ProjectService {
       },
     });
   }
+
+  return {
+    getProjectsInCompany,
+    getProjectFromId,
+    createProject,
+    updateProject,
+  };
 }

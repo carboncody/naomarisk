@@ -1,5 +1,5 @@
-import { Projects } from './Projects';
+import { AllProjects } from './Projects';
 
 export default function Page() {
-  return <Projects />;
+  return <AllProjects />;
 }

@@ -77,13 +77,13 @@ model User {
 }
 
 model Project {
-  id                      String   @id @default(uuid())
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  id                      String    @id @default(uuid())
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
   name                    String
   description             String
-  startDate               DateTime
-  dueDate                 DateTime
+  startDate               DateTime?
+  dueDate                 DateTime?
   budget                  String?
   riskRegisterDescription String?
   riskReportIntro         String?

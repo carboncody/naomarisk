@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-
+import { Toast } from '@components/Toast';
 import { Providers } from '@lib/providers';
 import { Inter } from 'next/font/google';
 
@@ -25,7 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`font-sans ${inter.variable}`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Toast />
+          {children}
+        </Providers>
       </body>
     </html>
   );

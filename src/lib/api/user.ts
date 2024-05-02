@@ -16,7 +16,7 @@ export async function UserService() {
   }
 
   async function updateOrCreateUser(email: string) {
-    return db.user.upsert({
+    return await db.user.upsert({
       where: {
         email: email,
       },
@@ -32,6 +32,7 @@ export async function UserService() {
         },
       },
       update: {},
+      include: { company: true },
     });
   }
 

@@ -1,6 +1,10 @@
 import { Nav } from '@components/Nav';
 
-export default function NavLayout({ children }: { children: React.ReactNode }) {
+export default async function NavLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Nav />

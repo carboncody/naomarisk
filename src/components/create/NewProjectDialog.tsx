@@ -1,6 +1,7 @@
 'use client';
 
 import { NextInput } from '@components/ui/Input';
+import { type CreateProjectForm } from '@lib/api/types';
 import {
   Button,
   Modal,
@@ -10,19 +11,49 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
-export default function NewPreojectDialog() {
+export default function NewProjectDialog() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CreateProjectForm>({
+    defaultValues: {
+      name: '',
+      description: '',
+      startDate: new Date(),
+      dueDate: undefined,
+    },
+  });
+
+  async function onSubmit(data: CreateProjectForm) {
+    try {
+      const project = await axios.post('/api/project/create', {
+        createProjectForm: data,
+      });
+      console.info('The Project is:', project);
+      toast.success('Project created');
+      reset();
+    } catch (error) {
+      toast.error('Error - something went wrong');
+    }
+  }
 
   return (
     <>
       <Button
-        onPress={onOpen}
+        onClick={onOpen}
         color="primary"
         className="bg-transparent"
         disableAnimation
       >
-        Creat a new project
+        Create a new project
       </Button>
 
       <Modal
@@ -41,38 +72,27 @@ export default function NewPreojectDialog() {
               </ModalHeader>
               <ModalBody className="text-white">
                 <div className="grid grid-cols-2 gap-5">
-                  <NextInput autoFocus label="Project name" />
-
-                  <NextInput label="Project Description" variant="bordered" />
+                  <NextInput
+                    {...register('name', {
+                      required: {
+                        value: true,
+                        message: 'Project name is required',
+                      },
+                    })}
+                    autoFocus
+                    label="Project name"
+                    isInvalid={!!errors.name}
+                    errorMessage={errors.name?.message}
+                  />
+                  <NextInput
+                    {...register('description')}
+                    label="Project Description"
+                    variant="bordered"
+                  />
                 </div>
-
-                {/* <div className='grid grid-cols-3 gap-5'>
-                <Input
-                    label="riskReportIntro"
-                    variant="bordered"
-                    classNames={{ label: 'text-white !important' }}
-                  />
-                  <Input
-                    label="riskRegisterDescription"
-                    variant="bordered"
-                    classNames={{ label: 'text-white !important' }}
-                  />
-                   <Input
-                    label="riskReportDocumentId"
-                    variant="bordered"
-                    classNames={{ label: 'text-white !important' }}
-                  />
-                 
-                </div> */}
-
                 <div className="grid grid-cols-4 gap-5">
                   <NextInput
-                    label="Start Date"
-                    type="date"
-                    variant="bordered"
-                  />
-                  <NextInput label="End Date" type="date" variant="bordered" />
-                  <NextInput
+                    {...register('budget')}
                     className="col-span-2"
                     label="Budget [kr.]"
                     type="number"
@@ -81,10 +101,10 @@ export default function NewPreojectDialog() {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" onPress={onClose}>
-                  Cancel
+                <Button color="danger" onClick={onClose}>
+                  Close
                 </Button>
-                <Button onPress={onClose}>Save</Button>
+                <Button onClick={handleSubmit(onSubmit)}>Save</Button>
               </ModalFooter>
             </>
           )}
