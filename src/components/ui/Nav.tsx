@@ -32,7 +32,6 @@ export function Nav() {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="center">
-        <NavbarItem>{/* <ActiveProjectsDropdown /> */}</NavbarItem>
         <NavbarItem>
           <Link href={'/projects'}>
             <Button
