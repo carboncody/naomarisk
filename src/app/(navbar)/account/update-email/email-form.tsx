@@ -56,7 +56,7 @@ export default function EmailForm({ user }: { user: User | undefined }) {
     setMessage('Your email was updated successfully.');
   };
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center text-white">
       {message ? (
         <Alert
           className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}

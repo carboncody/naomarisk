@@ -27,7 +27,7 @@ export function AllEmployees() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] px-8 text-white">
+      <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
         <div className="mb-4 mt-40 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Medarbejdere</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>

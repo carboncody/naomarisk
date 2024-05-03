@@ -15,10 +15,11 @@ interface BaseOption {
 }
 
 interface SingleDropdownProps {
-  selectedValue?: string;
+  selectedValue: string;
   options: BaseOption[];
   buttonLabel: ReactNode;
   setSelectedValue: (value: string) => void;
+  customTriggerBtn?: ReactNode;
 }
 
 export function SingleDropdown({
@@ -26,15 +27,18 @@ export function SingleDropdown({
   selectedValue,
   setSelectedValue,
   options,
+  customTriggerBtn,
 }: SingleDropdownProps) {
   return (
     <NextDropdown className="bg-[#413e3e] text-white" placement="bottom-start">
       <DropdownTrigger className="text-md">
-        <Button color="default" className="text-md">
-          {selectedValue
-            ? options.find((option) => option.value === selectedValue)?.label
-            : buttonLabel}
-        </Button>
+        {customTriggerBtn ?? (
+          <Button color="default" className="text-md">
+            {selectedValue
+              ? options.find((option) => option.value === selectedValue)?.label
+              : buttonLabel}
+          </Button>
+        )}
       </DropdownTrigger>
       <DropdownMenu
         selectionMode="single"

@@ -25,10 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`font-sans ${inter.variable}`}>
-        <Providers>
-          <Toast />
-          {children}
-        </Providers>
+        <main className="h-screen  w-screen bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] px-8 text-white">
+          <Providers>
+            <Toast />
+            {children}
+          </Providers>
+        </main>
       </body>
     </html>
   );

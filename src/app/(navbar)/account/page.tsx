@@ -17,7 +17,7 @@ export default async function Account() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center text-white">
       <h2 className="mb-4 text-4xl font-semibold">Account</h2>
       <p className="mb-10 font-medium">
         Hi {user.email}, you can update your email or password from here

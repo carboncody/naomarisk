@@ -15,6 +15,9 @@ export function SettingsDropdown() {
       value: 'logout',
     },
   ];
+
+  const triggerButton = <button className="outline-none">Indstillinger</button>;
+
   return (
     <SingleDropdown
       selectedValue={''}
@@ -24,6 +27,7 @@ export function SettingsDropdown() {
         if (value === 'logout') {
         }
       }}
+      customTriggerBtn={triggerButton}
     />
   );
 }

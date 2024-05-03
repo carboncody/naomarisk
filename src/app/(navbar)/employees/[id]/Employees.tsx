@@ -4,8 +4,7 @@ import { usePathname } from 'next/navigation';
 
 export function Employees() {
   const pathName = usePathname();
-  const employeeIdIndex = pathName?.split('/').indexOf('employees') + 1;
-  const employeeId = pathName?.split('/')[employeeIdIndex];
+  const employeeId = pathName?.split('/employees/')[1];
 
   if (!employeeId) {
     return <Error statusCode={404} title="Employee not found in the url" />;
@@ -13,7 +12,10 @@ export function Employees() {
 
   return (
     <>
-      <p>Employee ID: {JSON.stringify(employeeId)}</p>
+      <div className="pt-20">
+        <p>Employee ID: {JSON.stringify(employeeId)}</p>
+      </div>
+      <div></div>
     </>
   );
 }

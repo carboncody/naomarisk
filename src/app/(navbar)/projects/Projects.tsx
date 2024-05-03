@@ -32,7 +32,7 @@ export function AllProjects() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] px-8 text-white">
+      <div className="justify-top flex min-h-screen flex-col items-center">
         <div className="mb-4 mt-40 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Projekter</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
