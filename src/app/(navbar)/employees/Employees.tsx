@@ -27,16 +27,14 @@ export function AllEmployees() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
-        <div className="mb-4 w-full mt-40 flex justify-between">
+      <div className="justify-top flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] px-8 text-white">
+        <div className="mb-4 mt-40 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Medarbejdere</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
             Tilføj
           </Button>
         </div>
-        <div className="h-full w-3/4 ">
-          <EmployeeTable employee={allEmployees ?? []} />
-        </div>
+        <EmployeeTable employee={allEmployees ?? []} />
         <div className=" justify-flex flex justify-center">
           <Link className="block w-full p-3" href="/">
             <Button>Tilbage</Button>
@@ -44,7 +42,11 @@ export function AllEmployees() {
         </div>
       </div>
       {isNewOpen && (
-        <InviteEmployee isOpen={isNewOpen} setIsOpen={setIsNewOpen} refetch={refetch} />
+        <InviteEmployee
+          isOpen={isNewOpen}
+          setIsOpen={setIsNewOpen}
+          refetch={refetch}
+        />
       )}
     </>
   );

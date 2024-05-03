@@ -1,4 +1,4 @@
-import { Employees} from './Employees';
+import { Employees } from './Employees';
 
 export default function Page() {
   return <Employees />;

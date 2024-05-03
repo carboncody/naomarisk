@@ -29,8 +29,8 @@ export function SingleDropdown({
 }: SingleDropdownProps) {
   return (
     <NextDropdown className="bg-[#413e3e] text-white" placement="bottom-start">
-      <DropdownTrigger className='text-md'>
-        <Button disableAnimation className="text-md bg-transparent text-white">
+      <DropdownTrigger className="text-md">
+        <Button color="default" className="text-md">
           {selectedValue
             ? options.find((option) => option.value === selectedValue)?.label
             : buttonLabel}

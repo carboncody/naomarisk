@@ -33,7 +33,6 @@ export function EmployeeTable({ employee }: { employee: User[] }) {
       ),
       // sort: sortBy('date'),
     },
-
   };
 
   return (

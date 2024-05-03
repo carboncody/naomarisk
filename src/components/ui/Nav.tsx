@@ -9,8 +9,6 @@ import {
 import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import Link from 'next/link';
-import NewProjectDialog from '../create/NewProjectDialog';
-import { ActiveProjectsDropdown } from './ActiveProjectsDropdown';
 import { SettingsDropdown } from './SettingsDropdown';
 
 export function Nav() {
@@ -33,20 +31,15 @@ export function Nav() {
           </Link>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className='left-[500px]' justify="start">
-        <NavbarItem>
-          <NewProjectDialog />
-        </NavbarItem>
-        <NavbarItem>
-          <ActiveProjectsDropdown />
-        </NavbarItem>
+      <NavbarContent justify="center">
+        <NavbarItem>{/* <ActiveProjectsDropdown /> */}</NavbarItem>
         <NavbarItem>
           <Link href={'/projects'}>
             <Button
               disableAnimation
               className="text-md bg-transparent text-white"
             >
-              Alle Projekter
+              Projekter
             </Button>
           </Link>
         </NavbarItem>

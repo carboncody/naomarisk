@@ -1,7 +1,9 @@
 'use client';
 
+import { SingleDropdown } from '@components/ui';
 import { NextInput } from '@components/ui/Input';
 import { type CreateUserForm } from '@lib/api/types';
+import { UserRole } from '@models';
 import {
   Button,
   Modal,
@@ -28,15 +30,32 @@ export default function InviteEmployee({
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<CreateUserForm>({
     defaultValues: {
       name: '',
       email: '',
       jobDescription: '',
+      role: UserRole.User,
     },
   });
 
+  const RoleActionDropdownOptions = [
+    {
+      label: 'Bruger',
+      value: 'USER',
+    },
+    {
+      label: 'Manager',
+      value: 'MANAGER',
+    },
+    {
+      label: 'Ejer',
+      value: 'OWNER',
+    },
+  ];
   async function onSubmit(data: CreateUserForm) {
     try {
       await axios.post('/api/user/create', {
@@ -68,7 +87,7 @@ export default function InviteEmployee({
                 Inviter medarbejder
               </ModalHeader>
               <ModalBody className="text-white">
-                <div className="flex w-full items-center gap-5">
+                <div className="flex w-full items-start gap-5">
                   <NextInput
                     {...register('email', {
                       required: {
@@ -93,6 +112,17 @@ export default function InviteEmployee({
                     {...register('jobDescription')}
                     label="Job title"
                     variant="bordered"
+                  />
+                </div>
+                <div className="flex h-12 w-1/2 items-center">
+                  <label className="mx-2">Rolle {'->'}</label>
+                  <SingleDropdown
+                    options={RoleActionDropdownOptions}
+                    buttonLabel={'Roller'}
+                    selectedValue={watch('role')}
+                    setSelectedValue={(value) => {
+                      setValue('role', value as UserRole);
+                    }}
                   />
                 </div>
                 <div className="grid grid-cols-4 gap-5"></div>

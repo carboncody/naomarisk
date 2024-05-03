@@ -47,7 +47,7 @@ export function Table<T extends Record<string, any>>({
   return (
     <div
       className={clsx(
-        'rounded-xl border shadow-lg',
+        'w-full rounded-xl border shadow-lg ',
         applyMinWidth && 'min-w-[900px]',
         className,
       )}
