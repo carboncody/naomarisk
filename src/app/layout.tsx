@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import { Toast } from '@components/Toast';
+import { Toast } from '@components/ui/Toast';
 import { Providers } from '@lib/providers';
 import { Inter } from 'next/font/google';
 

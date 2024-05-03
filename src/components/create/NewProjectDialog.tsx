@@ -50,7 +50,7 @@ export default function NewProjectDialog() {
       <Button
         onClick={onOpen}
         color="primary"
-        className="bg-transparent"
+        className="text-md bg-transparent"
         disableAnimation
       >
         Opret nyt projekt

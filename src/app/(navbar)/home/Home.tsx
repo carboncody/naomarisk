@@ -1,4 +1,4 @@
-import { SearchIcon } from '@components/SearchIcon';
+import { SearchIcon } from '@components/ui/SearchIcon';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { Input } from '@nextui-org/react';
 import Link from 'next/link';

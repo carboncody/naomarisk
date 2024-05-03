@@ -42,6 +42,7 @@ export interface Contact {
 
 export interface User {
   id: string;
+  email: string;
   jobDescription?: string;
   createdAt: Date;
   updatedAt: Date;
