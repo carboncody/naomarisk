@@ -84,6 +84,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
               setFormData({ ...formData, password: ev.target.value })
             }
             className="input input-bordered"
+            
           />
         </div>
         {errors?.password ? (
@@ -108,7 +109,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary no-animation">
+          <button className="btn btn-primary border rounded-xl py-2 px-2 text-black bg-white">
             Update Password
           </button>
         </div>

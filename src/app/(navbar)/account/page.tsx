@@ -1,38 +1,37 @@
-import { createServerClient } from '@lib/services/supabase/supabase-server';
-import { Button } from '@nextui-org/react';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
+'use client';
 
-export const dynamic = 'force-dynamic';
+import UserSettings from '@components/UserSettings/UserSettings';
+import { Backbutton } from '@components/ui/BackButton';
+import { SettingsCard } from '@components/ui/SettingsCard';
+import { User } from '@lib/api/hooks';
+import { Button, Link } from '@nextui-org/react';
 
-export default async function Account() {
-  const supabase = createServerClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user?.email) {
-    redirect('/auth/login');
-  }
-
+export default function Account() {
+  const { data: error, refetch } = User();
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center text-white">
-      <h2 className="mb-4 text-4xl font-semibold">Account</h2>
-      <p className="mb-10 font-medium">
-        Hi {user.email}, you can update your email or password from here
-      </p>
-      <div className=" justify-flex flex justify-center gap-6">
-        <Link className="block w-full p-3" href="/account/update-email">
-          <Button>Update email</Button>
-        </Link>
-        <Link className="block w-full p-3" href="/account/update-password">
-          <Button>Update password</Button>
-        </Link>
+    <div>
+      <div className="flex w-full">
+        <div className="mt-[100px] flex h-[500px] w-0 rounded-2xl bg-[#413e3e] md:w-1/2" />
+        <div className="mt-[100px] flex w-full flex-col justify-center gap-y-5 px-4 md:w-1/2 md:px-10">
+          <SettingsCard>
+            <UserSettings refetch={refetch} />
+          </SettingsCard>
+          <>
+            {/* {isAdmin && ( */}
+            {/* <SettingsCard> */}
+            {/* <CompanySettings /> */}
+            {/* </SettingsCard> */}
+            {/* )} */}
+          </>
+        </div>
       </div>
-      <div className=" justify-flex flex justify-center">
-        <Link className="block w-full p-3" href="/">
-          <Button>Back</Button>
+      <div className="center flex gap-4">
+        <Backbutton href={'/'} />
+        <Link href="/account/update-email">
+          <Button>Ændre email</Button>
+        </Link>
+        <Link href="/account/update-password">
+          <Button>Ændre adgangskode</Button>
         </Link>
       </div>
     </div>

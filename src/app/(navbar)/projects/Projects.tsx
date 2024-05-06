@@ -7,6 +7,7 @@ import Error from 'next/error';
 import Link from 'next/link';
 import { useState } from 'react';
 import { ProjectTable } from './ProjectTable';
+import { Backbutton } from '@components/ui/BackButton';
 
 export function AllProjects() {
   const [isNewOpen, setIsNewOpen] = useState(false);
@@ -41,9 +42,8 @@ export function AllProjects() {
         </div>
         <ProjectTable projects={allProjects ?? []} />
         <div className=" justify-flex flex justify-center">
-          <Link className="block w-full p-3" href="/">
-            <Button>Tilbage</Button>
-          </Link>
+        <Backbutton href={'/'}  />
+
         </div>
       </div>
       {isNewOpen && (
