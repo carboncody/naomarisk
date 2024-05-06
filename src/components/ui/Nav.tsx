@@ -1,5 +1,6 @@
 import logo from '@assets/logoNaoma.svg';
 import {
+  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -8,9 +9,7 @@ import {
 import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ActiveProjects } from './ActiveProjects';
 import { SettingsDropdown } from './SettingsDropdown';
-import NewProjectDialog from './create/NewProjectDialog';
 
 export function Nav() {
   return (
@@ -22,33 +21,40 @@ export function Nav() {
     >
       <NavbarContent>
         <NavbarBrand>
-          <Link href={'/'} className="text-3xl">
+          <Link href={'/'}>
             <Image
               src={logo as StaticImport}
               alt="logo"
-              width={100}
-              height={80}
-              className="min-w-[40%] max-w-[60%] invert md:max-w-[100%]"
+              width={90}
+              className="invert"
             />
           </Link>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent
-        className="justify-center gap-10 text-sm sm:flex md:text-lg"
-        justify="center"
-      >
+      <NavbarContent justify="center">
         <NavbarItem>
-          <NewProjectDialog />
+          <Link href={'/projects'}>
+            <Button
+              disableAnimation
+              className="text-md bg-transparent text-white"
+            >
+              Projekter
+            </Button>
+          </Link>
         </NavbarItem>
         <NavbarItem>
-          <ActiveProjects />
-        </NavbarItem>
-        <NavbarItem>
-          <Link href={'/projects'}>Alle Projekter</Link>
+          <Link href={'/employees'}>
+            <Button
+              disableAnimation
+              className="text-md bg-transparent text-white"
+            >
+              Medarbejdere
+            </Button>
+          </Link>
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent className="gap-4 text-sm sm:flex md:text-lg" justify="end">
+      <NavbarContent className="gap-4 sm:flex md:text-lg" justify="end">
         <NavbarItem>
           <SettingsDropdown />
         </NavbarItem>

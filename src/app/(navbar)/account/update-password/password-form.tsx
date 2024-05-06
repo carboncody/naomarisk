@@ -1,6 +1,6 @@
 'use client';
-import Alert from '@/components/Alert';
-import InputErrorMessage from '@/components/InputErrorMessage';
+import Alert from '@components/ui/Alert';
+import InputErrorMessage from '@components/ui/InputErrorMessage';
 import { formatError } from '@lib/services/supabase/utils';
 import { UpdatePasswordSchema } from '@lib/services/supabase/validationSchema';
 import { Button, Input } from '@nextui-org/react';
@@ -57,7 +57,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
     setMessage('Your password was updated successfully.');
   };
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center text-white">
       {message ? (
         <Alert
           className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}

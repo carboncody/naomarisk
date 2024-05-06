@@ -5,9 +5,13 @@ import { db } from '@server/db';
 import type { UpdateUserForm } from './types';
 
 export async function UserService() {
-  async function getUsersInCompany(companyId: string) {
+  async function getUsersInCompany(email: string) {
     return db.user.findMany({
-      where: { companyId },
+      where: {
+        company: {
+          users: { some: { email } },
+        },
+      },
     });
   }
 

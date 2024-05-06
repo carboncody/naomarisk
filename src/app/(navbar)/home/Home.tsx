@@ -1,4 +1,4 @@
-import { SearchIcon } from '@components/SearchIcon';
+import { SearchIcon } from '@components/ui/SearchIcon';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { Input } from '@nextui-org/react';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ export async function Home() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b  from-[#1c1c1c] to-[#2a2929] text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center text-white">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <p className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Naoma <span className="text-[hsl(0,0%,31%)]">Risk</span>

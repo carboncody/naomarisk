@@ -9,19 +9,27 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure,
 } from '@nextui-org/react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-export default function NewProjectDialog() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+interface NewProjectDialogProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  refetch: () => void;
+}
 
+export default function NewProjectDialog({
+  isOpen,
+  setIsOpen,
+  refetch,
+}: NewProjectDialogProps) {
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<CreateProjectForm>({
     defaultValues: {
@@ -37,9 +45,8 @@ export default function NewProjectDialog() {
       const project = await axios.post('/api/project/create', {
         createProjectForm: data,
       });
-      console.info('The Project is:', project);
       toast.success('Project created');
-      reset();
+      setIsOpen(false);
     } catch (error) {
       toast.error('Error - something went wrong');
     }
@@ -47,22 +54,14 @@ export default function NewProjectDialog() {
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        color="primary"
-        className="bg-transparent"
-        disableAnimation
-      >
-        Opret nyt projekt
-      </Button>
-
       <Modal
         className="bg-[#413e3e]"
         size="4xl"
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        onOpenChange={setIsOpen}
         placement="top-center"
         backdrop="blur"
+        onClose={() => setIsOpen(false)}
       >
         <ModalContent>
           {(onClose) => (
