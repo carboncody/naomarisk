@@ -7,7 +7,7 @@ interface BackButtonProps {
 
 export function Backbutton({ href }: BackButtonProps) {
   return (
-    <div className="py-4 justify-center">
+    <div className="justify-center py-4">
       <Link href={href}>
         <Button>Tilbage</Button>
       </Link>
