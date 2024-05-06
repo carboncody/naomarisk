@@ -52,6 +52,16 @@ export function Nav() {
             </Button>
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link href={'/risk'}>
+            <Button
+              disableAnimation
+              className="text-md bg-transparent text-white"
+            >
+              Risk
+            </Button>
+          </Link>
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="gap-4 sm:flex md:text-lg" justify="end">

@@ -1,5 +1,5 @@
 import { NextInput } from '@components/ui/Input';
-import { UpdateUserForm } from '@lib/api/types';
+import { type UpdateUserForm } from '@lib/api/types';
 import { UserRole } from '@models';
 import { Button } from '@nextui-org/react';
 import axios from 'axios';
@@ -14,31 +14,19 @@ export default function UserSettings({ refetch }: UserSettingsProps) {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm<UpdateUserForm>({
     defaultValues: {
       name: '',
       jobDescription: '',
       role: UserRole.User,
+      contact: {
+        fullName: '',
+        phone: '',
+        address: '',
+      },
     },
   });
-
-  //   const RoleActionDropdownOptions = [
-  //     {
-  //       label: 'Bruger',
-  //       value: 'USER',
-  //     },
-  //     {
-  //       label: 'Manager',
-  //       value: 'MANAGER',
-  //     },
-  //     {
-  //       label: 'Ejer',
-  //       value: 'OWNER',
-  //     },
-  //   ];
 
   async function onSubmit(data: UpdateUserForm) {
     try {
@@ -60,33 +48,34 @@ export default function UserSettings({ refetch }: UserSettingsProps) {
       <div className="text-white">
         <div className=" w-full items-start gap-5">
           <NextInput
-            {...register('name', {
+            {...register('contact.fullName', {
               required: {
                 value: true,
                 message: 'Name is required',
               },
             })}
-            className="col-span-2 mb-2"
+            className="mb-2"
             label="Name"
             labelPlacement="inside"
           />
           <NextInput
             {...register('jobDescription')}
+            className="mb-2"
             label="Job title"
             variant="bordered"
           />
-        </div>
-        {/* <div className="mt-3 flex h-12 w-1/2 items-center">
-          <label className="mx-2">Rolle {'->'}</label>
-          <SingleDropdown
-            options={RoleActionDropdownOptions}
-            buttonLabel={'Roller'}
-            selectedValue={watch('role')}
-            setSelectedValue={(value) => {
-              setValue('role', value as UserRole);
-            }}
+          <NextInput
+            {...register('contact.phone')}
+            className="mb-2"
+            label="Telefon nr."
+            variant="bordered"
           />
-        </div> */}
+          <NextInput
+            {...register('contact.address')}
+            label="Adresse"
+            variant="bordered"
+          />
+        </div>
         <div className="grid grid-cols-4 gap-5"></div>
       </div>
       <div className="mt-4">
