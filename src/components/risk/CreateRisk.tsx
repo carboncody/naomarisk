@@ -1,9 +1,7 @@
 'use client';
 
-import { SingleDropdown } from '@components/ui';
 import { NextInput } from '@components/ui/Input';
 import { CreateRiskForm } from '@lib/api/types/risk';
-import { UserRole } from '@models';
 import {
   Button,
   Modal,
@@ -73,45 +71,63 @@ export default function CreateRisk({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-white">
-                Inviter medarbejder
+                Opret Risiko
               </ModalHeader>
               <ModalBody className="text-white">
                 <div className="flex w-full items-start gap-5">
                   <NextInput
-                    {...register('email', {
-                      required: {
-                        value: true,
-                        message: 'Email is required',
-                      },
-                      validate: {
-                        email: (value) => {
-                          const regex =
-                            /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                          return regex.test(value) || 'Invalid email';
-                        },
-                      },
-                    })}
+                    // {...register('email', {
+                    //   required: {
+                    //     value: true,
+                    //     message: 'Email is required',
+                    //   },
+                    //   validate: {
+                    //     email: (value) => {
+                    //       const regex =
+                    //         /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+                    //       return regex.test(value) || 'Invalid email';
+                    //     },
+                    //   },
+                    // })}
                     className="col-span-2"
-                    label="Email"
+                    label="Id"
                     labelPlacement="inside"
-                    errorMessage={errors.email?.message}
-                    isInvalid={!!errors.email}
+                    // errorMessage={errors.email?.message}
+                    // isInvalid={!!errors.email}
                   />
                   <NextInput
-                    {...register('jobDescription')}
-                    label="Job title"
+                    // {...register('jobDescription')}
+                    label="Beskrivelse"
                     variant="bordered"
                   />
                 </div>
-                <div className="flex h-12 w-1/2 items-center">
-                  <label className="mx-2">Rolle {'->'}</label>
-                  <SingleDropdown
-                    options={RoleActionDropdownOptions}
-                    buttonLabel={'Roller'}
-                    selectedValue={watch('role')}
-                    setSelectedValue={(value) => {
-                      setValue('role', value as UserRole);
-                    }}
+                <div className="flex gap-5">
+                  <NextInput
+                    // {...register('jobDescription')}
+                    label="Sandsynlighed"
+                    variant="bordered"
+                  />
+                  <NextInput
+                    // {...register('jobDescription')}
+                    label="Konsekvens"
+                    variant="bordered"
+                  />
+                </div>
+                <div className="flex gap-5">
+                  <NextInput
+                    // {...register('jobDescription')}
+                    label="Status"
+                    variant="bordered"
+                  />
+                  <NextInput
+                    // {...register('jobDescription')}
+                    label="Kommentar"
+                    variant="bordered"
+                  />
+                  <NextInput
+                    // {...register('jobDescription')}
+                    label="Aktivitet"
+                    variant="bordered"
                   />
                 </div>
                 <div className="grid grid-cols-4 gap-5"></div>

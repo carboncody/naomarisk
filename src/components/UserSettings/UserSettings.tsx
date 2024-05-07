@@ -43,7 +43,7 @@ export default function UserSettings({ refetch }: UserSettingsProps) {
   return (
     <>
       <div className="mb-3 flex flex-col gap-1 text-white">
-        Ændre brugerindstillinger
+        Brugeroplysninger
       </div>
       <div className="text-white">
         <div className=" w-full items-start gap-5">

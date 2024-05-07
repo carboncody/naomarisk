@@ -10,7 +10,7 @@ export function RiskTable({ employee }: { employee: User[] }) {
 
   const columns: TableColumns<User> = {
     email: {
-      title: 'Email',
+      title: 'TEST',
       spacing: 1,
       render: (employee: User) => (
         <div className="truncate">
@@ -24,7 +24,7 @@ export function RiskTable({ employee }: { employee: User[] }) {
       sort: sortBy('string'),
     },
     role: {
-      title: 'ROLLE',
+      title: 'TEST',
       spacing: 1,
       render: (employee: User) => (
         <div className="truncate">
