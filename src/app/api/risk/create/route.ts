@@ -18,6 +18,6 @@ export async function POST(req: Request) {
     CreateRiskForm: CreateRiskForm;
   };
   const projectService = await ProjectService();
-  const project = await RiskService.createRisk(user.email, body.CreateRiskForm);
-  return NextResponse.json({ project });
+  // const project = await RiskService.createRisk(user.email, body.CreateRiskForm);
+  // return NextResponse.json({ project });
 }
