@@ -1,7 +1,7 @@
 'use client';
 
 import { NextInput } from '@components/ui/Input';
-import { CreateRiskForm } from '@lib/api/types/risk';
+import { type CreateRiskForm } from '@lib/api/types/risk';
 import {
   Button,
   Modal,
