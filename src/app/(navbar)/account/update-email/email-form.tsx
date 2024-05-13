@@ -101,7 +101,9 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.emailConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary no-animation">Update Email</button>
+          <button className="btn btn-primary rounded-xl border bg-white px-2 py-2 text-black">
+            Update Email
+          </button>
         </div>
       </form>
       <div className=" justify-flex flex justify-center">

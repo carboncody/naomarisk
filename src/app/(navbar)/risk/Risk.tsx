@@ -1,22 +1,17 @@
 'use client';
 
-import NewProjectDialog from '@components/create/NewProjectDialog';
+import CreateRisk from '@components/risk/CreateRisk';
 import { Backbutton } from '@components/ui/BackButton';
-import { useProjectsInCompany } from '@lib/api/hooks';
+import { User } from '@lib/api/hooks';
 import { Button, Spinner } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
-import { ProjectTable } from './ProjectTable';
+import { RiskTable } from './RiskTable';
 
-export function AllProjects() {
+export function AllRisk() {
   const [isNewOpen, setIsNewOpen] = useState(false);
-  const {
-    data: allProjects,
-    isFetching,
-    isError,
-    error,
-    refetch,
-  } = useProjectsInCompany();
+
+  const { data: allEmployees, isFetching, isError, error, refetch } = User();
 
   if (isFetching) {
     return (
@@ -32,20 +27,20 @@ export function AllProjects() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center">
+      <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
         <div className="mb-4 mt-40 flex w-full justify-between">
-          <p className="text-3xl font-semibold">Alle Projekter</p>
+          <p className="text-3xl font-semibold">Alle Risici</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
             Tilføj
           </Button>
         </div>
-        <ProjectTable projects={allProjects ?? []} />
+        <RiskTable employee={allEmployees ?? []} />
         <div className=" justify-flex flex justify-center">
           <Backbutton href={'/'} />
         </div>
       </div>
       {isNewOpen && (
-        <NewProjectDialog
+        <CreateRisk
           isOpen={isNewOpen}
           setIsOpen={setIsNewOpen}
           refetch={refetch}

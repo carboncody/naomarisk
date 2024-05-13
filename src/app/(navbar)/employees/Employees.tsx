@@ -1,10 +1,10 @@
 'use client';
 
 import InviteEmployee from '@components/invite/InviteEmployee';
+import { Backbutton } from '@components/ui/BackButton';
 import { User } from '@lib/api/hooks';
 import { Button, Spinner } from '@nextui-org/react';
 import Error from 'next/error';
-import Link from 'next/link';
 import { useState } from 'react';
 import { EmployeeTable } from './EmployeeTable';
 
@@ -36,9 +36,7 @@ export function AllEmployees() {
         </div>
         <EmployeeTable employee={allEmployees ?? []} />
         <div className=" justify-flex flex justify-center">
-          <Link className="block w-full p-3" href="/">
-            <Button>Tilbage</Button>
-          </Link>
+          <Backbutton href={'/'} />
         </div>
       </div>
       {isNewOpen && (
