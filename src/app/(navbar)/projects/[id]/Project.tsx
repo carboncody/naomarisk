@@ -3,6 +3,7 @@ import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 // import { getProjectFromId } from '@lib/api/project';
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
+import { AllRisk } from '../../../../components/risk/Risk';
 
 export function Project() {
   const pathName = usePathname();
@@ -25,7 +26,7 @@ export function Project() {
         <div className="flex w-4/5 flex-col items-center justify-center">
           <Tabs aria-label="Options">
             <Tab key="overview" title="Oversigt">
-              <Card>
+              <Card className="bg-[#333333] text-white">
                 <CardBody>
                   <p>ProjektID: {JSON.stringify(projectId)}</p>
                   <p className="mt-2">Projektnavn:</p>
@@ -38,18 +39,15 @@ export function Project() {
                 </CardBody>
               </Card>
             </Tab>
-            <Tab key="Riscs" title="Risks">
-              <Card>
+            <Tab key="Riscs" title="Risici">
+              <Card className="bg-[#333333] text-white">
                 <CardBody>
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur.
+                  <AllRisk />
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="employees" title="Medarbejder">
-              <Card>
+              <Card className="bg-[#333333] text-white">
                 <CardBody>
                   Excepteur sint occaecat cupidatat non proident, sunt in culpa
                   qui officia deserunt mollit anim id est laborum.
