@@ -2,8 +2,9 @@
 
 import CreateRisk from '@components/risk/CreateRisk';
 import { RiskTable } from '@components/risk/RiskTable';
+import LoadingSpinner from '@components/ui/LoadSpinner';
 import { User } from '@lib/api/hooks';
-import { Button, Spinner } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 
@@ -15,7 +16,7 @@ export function AllRisk() {
   if (isFetching) {
     return (
       <div className="flex min-h-full w-full items-center justify-center">
-        <Spinner size="lg" />
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

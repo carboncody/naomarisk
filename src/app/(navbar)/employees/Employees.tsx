@@ -2,8 +2,9 @@
 
 import InviteEmployee from '@components/invite/InviteEmployee';
 import { Backbutton } from '@components/ui/BackButton';
+import LoadingSpinner from '@components/ui/LoadSpinner';
 import { User } from '@lib/api/hooks';
-import { Button, Spinner } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import { EmployeeTable } from './EmployeeTable';
@@ -16,7 +17,7 @@ export function AllEmployees() {
   if (isFetching) {
     return (
       <div className="flex min-h-full w-full items-center justify-center">
-        <Spinner size="lg" />
+        <LoadingSpinner dist="top-64" size="lg" />
       </div>
     );
   }
