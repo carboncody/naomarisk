@@ -2,6 +2,7 @@
 
 import { NextInput } from '@components/ui/Input';
 import { UpdateProjectForm } from '@lib/api/types';
+import { Project } from '@models';
 import {
   Button,
   Modal,
@@ -16,6 +17,7 @@ import toast from 'react-hot-toast';
 
 interface EditProjectProps {
   isOpen: boolean;
+  project: Project;
   setIsOpen: (isOpen: boolean) => void;
   // refetch: () => void;
 }
@@ -23,6 +25,7 @@ interface EditProjectProps {
 export default function EditProject({
   isOpen,
   setIsOpen,
+  project,
   // refetch,
 }: EditProjectProps) {
   const {
@@ -33,21 +36,15 @@ export default function EditProject({
     formState: { errors },
   } = useForm<UpdateProjectForm>({
     defaultValues: {
-      name: '',
-      description: '',
-      startDate: new Date(),
-      dueDate: new Date(),
-      budget: '',
-      riskRegisterDescription: '',
-      riskReportIntro: '',
-      riskIds: [],
-      projectUserIds: [],
+      ...project,
+      riskIds: project.risks?.map((risk) => ({ id: risk.id })) ?? [],
+      projectUserIds: project.projectUsers.map((pu) => ({ userId: pu.userId })),
     },
   });
 
   async function onSubmit(data: UpdateProjectForm) {
     try {
-      await axios.post('/api/project/[id]', {
+      await axios.post(`/api/project/${project.id}`, {
         UpdateProjectForm: data,
       });
       // refetch();
