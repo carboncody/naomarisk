@@ -2,28 +2,16 @@
 
 import CreateRisk from '@components/risk/CreateRisk';
 import { RiskTable } from '@components/risk/RiskTable';
-import LoadingSpinner from '@components/ui/LoadSpinner';
-import { User } from '@lib/api/hooks';
 import { Button } from '@nextui-org/react';
-import Error from 'next/error';
+import { Risk } from '@prisma/client';
 import { useState } from 'react';
 
-export function AllRisk() {
+interface RiskProps {
+  risks: Risk[];
+}
+
+export function AllRisk({ risks }: RiskProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
-
-  const { data: allEmployees, isFetching, isError, error, refetch } = User();
-
-  if (isFetching) {
-    return (
-      <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
-
-  if (isError) {
-    <Error statusCode={500} message={error.message} />;
-  }
 
   return (
     <>
@@ -35,9 +23,6 @@ export function AllRisk() {
           </Button>
         </div>
         <RiskTable employee={allEmployees ?? []} />
-        {/* <div className=" justify-flex flex justify-center">
-          <Backbutton href={'/'} />
-        </div> */}
       </div>
       {isNewOpen && (
         <CreateRisk

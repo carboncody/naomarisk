@@ -1,3 +1,4 @@
+import { useProject } from './useProject';
 import { useProjectsInCompany } from './useProjectsInCompany';
 
-export { useProjectsInCompany };
+export { useProject, useProjectsInCompany };

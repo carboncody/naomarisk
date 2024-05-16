@@ -16,7 +16,13 @@ export async function ProjectService() {
   async function getProjectFromId(id: string): Promise<Project | null> {
     return db.project.findUnique({
       where: { id },
-      include: { risks: true, projectUsers: true, company: true },
+      include: {
+        risks: true,
+        projectUsers: {
+          include: { user: true },
+        },
+        company: true,
+      },
     });
   }
 
