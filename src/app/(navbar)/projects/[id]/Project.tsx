@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import EditProject from '@components/EditProject';
@@ -9,6 +11,17 @@ import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
+function formatDate(dateString: string | number | Date) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  };
+  return date.toLocaleDateString('dk-DK', options);
+}
+
 export function Project() {
   const pathName = usePathname();
   const projectId = pathName?.split('/projects/')[1];
@@ -18,12 +31,6 @@ export function Project() {
 
   if (isLoading) {
     return <LoadingSpinner size="lg" />;
-  } else {
-    console.log('project-----------------------:', project);
-    console.log(
-      'project description-----------------------:',
-      project?.description,
-    );
   }
 
   if ((!projectId || error) ?? !project) {
@@ -44,18 +51,27 @@ export function Project() {
                   >
                     Rediger Projekt
                   </Button>
-                  <p className="mt-2">Projektnavn:</p>
-                  {project.name}
-                  <p className="mt-2">Beskrivelse:</p>
-                  {project.description}
-                  <div className="mt-2 flex gap-10">
-                    <p>Dato for oprettelse:</p>
-                    {project.createdAt?.toDateString()}
-                    <p>Slutdato for projekt:</p>
-                    {project.dueDate?.toDateString()}
+                  <p className="mt-2 font-semibold">Projektnavn:</p>
+                  <p className="font-thin">{project.name}</p>
+                  <p className="mt-2 font-semibold">Beskrivelse:</p>
+                  <p className="font-thin">{project.description}</p>
+                  <div className="mt-2 flex gap-10 font-semibold">
+                    <p>
+                      Dato for oprettelse:
+                      <br />
+                      <p className="font-thin">
+                        {formatDate(project.createdAt)}
+                      </p>
+                    </p>
+
+                    <p>
+                      Slutdato for projekt:
+                      <br />
+                      <p className="font-thin">{formatDate(project.dueDate)}</p>
+                    </p>
                   </div>
-                  <p className="mt-2">Budgettet for projektet:</p>
-                  {project.budget}
+                  <p className="mt-2 font-semibold">Budgettet for projektet:</p>
+                  <p className="font-thin">{project.budget} kr.</p>
 
                   {isNewOpen && (
                     <EditProject isOpen={isNewOpen} setIsOpen={setIsNewOpen} />

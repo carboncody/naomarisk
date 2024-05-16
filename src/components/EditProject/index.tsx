@@ -47,7 +47,7 @@ export default function EditProject({
 
   async function onSubmit(data: UpdateProjectForm) {
     try {
-      await axios.post('/api/user/upsert', {
+      await axios.post('/api/project/[id]', {
         UpdateProjectForm: data,
       });
       // refetch();
