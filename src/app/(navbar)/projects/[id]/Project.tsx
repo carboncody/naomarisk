@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import EditProject from '@components/EditProject';
@@ -74,7 +72,11 @@ export function Project() {
                   <p className="font-thin">{project.budget} kr.</p>
 
                   {isNewOpen && (
-                    <EditProject isOpen={isNewOpen} setIsOpen={setIsNewOpen} />
+                    <EditProject
+                      isOpen={isNewOpen}
+                      setIsOpen={setIsNewOpen}
+                      project={project}
+                    />
                   )}
                 </CardBody>
               </Card>
