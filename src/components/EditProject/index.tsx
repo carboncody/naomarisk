@@ -31,9 +31,9 @@ export default function EditProject({
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
+    // setValue,
+    // watch,
+    // formState: { errors },
   } = useForm<UpdateProjectForm>({
     defaultValues: {
       ...project,
@@ -43,14 +43,17 @@ export default function EditProject({
   });
 
   async function onSubmit(data: UpdateProjectForm) {
+    console.log('save button pressed');
+    console.log('Data received:', data);
+
     try {
-      await axios.post(`/api/project/${project.id}`, {
+      await axios.patch(`/api/project/${project.id}`, {
         UpdateProjectForm: data,
       });
-      // refetch();
       toast.success('Projektet er opdateret!');
       setIsOpen(false);
     } catch (error) {
+      console.log(error);
       toast.error('Error - something went wrong');
     }
   }
@@ -86,7 +89,7 @@ export default function EditProject({
                   />
                 </div>
                 <div className="flex gap-5">
-                  <NextInput
+                  {/* <NextInput
                     {...register('startDate')}
                     label="Start dato"
                     variant="bordered"
@@ -95,7 +98,7 @@ export default function EditProject({
                     {...register('dueDate')}
                     label="Slut dato"
                     variant="bordered"
-                  />
+                  /> */}
                   <NextInput
                     {...register('budget')}
                     label="Budget"

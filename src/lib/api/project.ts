@@ -66,6 +66,7 @@ export async function ProjectService() {
     id: string,
     updateProjectForm: UpdateProjectForm,
   ) {
+    console.log('updateProjectForm', updateProjectForm);
     const { riskIds, projectUserIds, ...rest } = updateProjectForm;
     const riskIdsAssociatedWithProject = await db.risk.findMany({
       where: {

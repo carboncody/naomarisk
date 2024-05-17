@@ -4,6 +4,7 @@ import EditProject from '@components/EditProject';
 import { ProjectEmployee } from '@components/projectEmployee/ProjectEmployee';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useProject } from '@lib/api/hooks';
+
 import { Button, Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
@@ -26,6 +27,13 @@ export function Project() {
   const [isNewOpen, setIsNewOpen] = useState(false);
 
   const { data: project, error, isLoading } = useProject(projectId ?? '');
+  // const {
+  //   data: patchproject,
+  //   error: projectError,
+  //   isLoading: projectIsLoading,
+  // } = usePatchProject(projectId ?? '');
+
+  // console.log(patchproject);
 
   if (isLoading) {
     return <LoadingSpinner size="lg" />;
