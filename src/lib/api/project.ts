@@ -30,7 +30,7 @@ export async function ProjectService() {
     email: string,
     createProjectForm: CreateProjectForm,
   ) {
-    const { riskIds, projectUserIds, ...rest } = createProjectForm;
+    const { projectUserIds, ...rest } = createProjectForm;
 
     const company = await db.company.findUnique({
       where: {
@@ -50,11 +50,6 @@ export async function ProjectService() {
             id: company.id,
           },
         },
-        risks: riskIds
-          ? {
-              connect: riskIds,
-            }
-          : undefined,
         projectUsers: {
           create: projectUserIds,
         },
@@ -66,27 +61,21 @@ export async function ProjectService() {
     id: string,
     updateProjectForm: UpdateProjectForm,
   ) {
-    console.log('updateProjectForm', updateProjectForm);
-    const { riskIds, projectUserIds, ...rest } = updateProjectForm;
-    const riskIdsAssociatedWithProject = await db.risk.findMany({
-      where: {
-        projectId: id,
-      },
-      select: {
-        id: true,
-      },
-    });
+    const { projectUserIds, ...rest } = updateProjectForm;
     return db.project.update({
       where: { id },
       data: {
         ...rest,
-        risks: {
-          disconnect: riskIdsAssociatedWithProject,
-          connect: riskIds,
-        },
-        projectUsers: {
-          create: projectUserIds,
-        },
+        projectUsers: projectUserIds
+          ? {
+              deleteMany: {
+                projectId: id,
+              },
+              createMany: {
+                data: projectUserIds,
+              },
+            }
+          : undefined,
       },
     });
   }

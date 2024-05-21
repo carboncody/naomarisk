@@ -6,7 +6,6 @@ export type CreateProjectForm = {
   budget?: string;
   riskRegisterDescription?: string;
   riskReportIntro?: string;
-  riskIds?: { id: string }[];
   projectUserIds?: { userId: string }[];
 };
 

@@ -26,7 +26,12 @@ export function Project() {
   const projectId = pathName?.split('/projects/')[1];
   const [isNewOpen, setIsNewOpen] = useState(false);
 
-  const { data: project, error, isLoading } = useProject(projectId ?? '');
+  const {
+    data: project,
+    error,
+    isLoading,
+    refetch,
+  } = useProject(projectId ?? '');
   // const {
   //   data: patchproject,
   //   error: projectError,
@@ -49,56 +54,65 @@ export function Project() {
         <div className="flex w-4/5 flex-col items-center justify-center">
           <Tabs aria-label="Options">
             <Tab key="overview" title="Oversigt">
-              <Card className="bg-[#333333] text-white">
+              <Card className="bg-[#212020] text-white">
                 <CardBody>
-                  <Button
-                    className="my-4 w-32 justify-end"
-                    onClick={() => setIsNewOpen(true)}
-                  >
-                    Rediger Projekt
-                  </Button>
-                  <p className="mt-2 font-semibold">Projektnavn:</p>
-                  <p className="font-thin">{project.name}</p>
-                  <p className="mt-2 font-semibold">Beskrivelse:</p>
-                  <p className="font-thin">{project.description}</p>
-                  <div className="mt-2 flex gap-10 font-semibold">
-                    <p>
-                      Dato for oprettelse:
-                      <br />
-                      <p className="font-thin">
-                        {formatDate(project.createdAt)}
+                  <div className=" flex gap-4">
+                    <div className="rounded-md bg-[#333333] p-4">
+                      <Button
+                        className="my-4 w-32 justify-end"
+                        onClick={() => setIsNewOpen(true)}
+                      >
+                        Rediger Projekt
+                      </Button>
+                      <p className="mt-2 font-semibold">Projektnavn:</p>
+                      <p className="font-thin">{project.name}</p>
+                      <p className="mt-2 font-semibold">Beskrivelse:</p>
+                      <p className="font-thin">{project.description}</p>
+                      <div className="mt-2 flex gap-10 font-semibold">
+                        <p>
+                          Dato for oprettelse:
+                          <br />
+                          <p className="font-thin">
+                            {formatDate(project.createdAt)}
+                          </p>
+                        </p>
+
+                        <p>
+                          Slutdato for projekt:
+                          <br />
+                          <p className="font-thin">
+                            {formatDate(project.dueDate)}
+                          </p>
+                        </p>
+                      </div>
+                      <p className="mt-2 font-semibold">
+                        Budgettet for projektet:
                       </p>
-                    </p>
+                      <p className="font-thin">{project.budget} kr.</p>
 
-                    <p>
-                      Slutdato for projekt:
-                      <br />
-                      <p className="font-thin">{formatDate(project.dueDate)}</p>
-                    </p>
+                      {isNewOpen && (
+                        <EditProject
+                          isOpen={isNewOpen}
+                          setIsOpen={setIsNewOpen}
+                          project={project}
+                          refetch={refetch}
+                        />
+                      )}
+                    </div>
+                    <div className="h-[45rem] overflow-y-clip rounded-md bg-[#333333] p-4">
+                      <ProjectEmployee />
+                    </div>
                   </div>
-                  <p className="mt-2 font-semibold">Budgettet for projektet:</p>
-                  <p className="font-thin">{project.budget} kr.</p>
-
-                  {isNewOpen && (
-                    <EditProject
-                      isOpen={isNewOpen}
-                      setIsOpen={setIsNewOpen}
-                      project={project}
-                    />
-                  )}
                 </CardBody>
               </Card>
             </Tab>
             <Tab key="Riscs" title="Risici">
               <Card className="bg-[#333333] text-white">
-                <CardBody className="h-[45rem] overflow-y-clip">
+                <CardBody
+                // className="h-[45rem] overflow-y-clip"
+                >
                   {/* <AllRisk risks={project.risks} /> */}
                 </CardBody>
-              </Card>
-            </Tab>
-            <Tab key="employees" title="Medarbejder">
-              <Card className="bg-[#333333] text-white">
-                <ProjectEmployee />
               </Card>
             </Tab>
           </Tabs>

@@ -1,8 +1,8 @@
 'use client';
 
 import { NextInput } from '@components/ui/Input';
-import { UpdateProjectForm } from '@lib/api/types';
-import { Project } from '@models';
+import { type UpdateProjectForm } from '@lib/api/types';
+import { type Project } from '@models';
 import {
   Button,
   Modal,
@@ -19,14 +19,14 @@ interface EditProjectProps {
   isOpen: boolean;
   project: Project;
   setIsOpen: (isOpen: boolean) => void;
-  // refetch: () => void;
+  refetch: () => void;
 }
 
 export default function EditProject({
   isOpen,
   setIsOpen,
   project,
-  // refetch,
+  refetch,
 }: EditProjectProps) {
   const {
     register,
@@ -36,9 +36,11 @@ export default function EditProject({
     // formState: { errors },
   } = useForm<UpdateProjectForm>({
     defaultValues: {
-      ...project,
-      riskIds: project.risks?.map((risk) => ({ id: risk.id })) ?? [],
-      projectUserIds: project.projectUsers.map((pu) => ({ userId: pu.userId })),
+      name: project.name ?? '',
+      startDate: project.startDate ?? new Date(),
+      dueDate: project.dueDate ?? undefined,
+      budget: project.budget ?? '0',
+      description: project.description ?? '',
     },
   });
 
@@ -47,10 +49,9 @@ export default function EditProject({
     console.log('Data received:', data);
 
     try {
-      await axios.patch(`/api/project/${project.id}`, {
-        UpdateProjectForm: data,
-      });
+      await axios.patch(`/api/project/${project.id}`, data);
       toast.success('Projektet er opdateret!');
+      refetch();
       setIsOpen(false);
     } catch (error) {
       console.log(error);
@@ -89,7 +90,7 @@ export default function EditProject({
                   />
                 </div>
                 <div className="flex gap-5">
-                  {/* <NextInput
+                  <NextInput
                     {...register('startDate')}
                     label="Start dato"
                     variant="bordered"
@@ -98,7 +99,7 @@ export default function EditProject({
                     {...register('dueDate')}
                     label="Slut dato"
                     variant="bordered"
-                  /> */}
+                  />
                   <NextInput
                     {...register('budget')}
                     label="Budget"
