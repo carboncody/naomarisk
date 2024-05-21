@@ -22,7 +22,7 @@ export function AllProjects() {
   if (isFetching) {
     return (
       <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner dist="top-64" size="lg" />
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

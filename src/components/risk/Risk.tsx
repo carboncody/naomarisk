@@ -1,7 +1,5 @@
 'use client';
 
-import CreateRisk from '@components/risk/CreateRisk';
-import { RiskTable } from '@components/risk/RiskTable';
 import { Button } from '@nextui-org/react';
 import { Risk } from '@prisma/client';
 import { useState } from 'react';
@@ -22,15 +20,15 @@ export function AllRisk({ risks }: RiskProps) {
             Tilføj
           </Button>
         </div>
-        <RiskTable employee={allEmployees ?? []} />
+        {/* <RiskTable employee={allEmployees ?? []} /> */}
       </div>
-      {isNewOpen && (
+      {/* {isNewOpen && (
         <CreateRisk
           isOpen={isNewOpen}
           setIsOpen={setIsNewOpen}
           refetch={refetch}
         />
-      )}
+      )} */}
     </>
   );
 }
