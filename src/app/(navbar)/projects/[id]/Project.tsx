@@ -100,7 +100,10 @@ export function Project() {
                       )}
                     </div>
                     <div className="h-[45rem] overflow-y-clip rounded-md bg-[#333333] p-4">
-                      <ProjectEmployee />
+                      <ProjectEmployee
+                        members={project.projectUsers.map((user) => user.user)}
+                        refetch={refetch}
+                      />
                     </div>
                   </div>
                 </CardBody>
