@@ -21,7 +21,7 @@ export function ProjectEmployeeTable({
   const columns: TableColumns<User> = {
     email: {
       title: 'Medarbejder email',
-      spacing: 1,
+      spacing: 2,
       render: (employee: User) => (
         <div className="truncate">
           <span>{employee.email}</span>
@@ -35,7 +35,7 @@ export function ProjectEmployeeTable({
     },
     role: {
       title: 'Rolle',
-      spacing: 1,
+      spacing: 2,
       render: (employee: User) => (
         <div className="truncate">
           <span className="break-words text-gray-400">{employee.role}</span>

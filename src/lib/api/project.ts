@@ -50,9 +50,11 @@ export async function ProjectService() {
             id: company.id,
           },
         },
-        projectUsers: {
-          create: projectUserIds.map((id) => ({ userId: id })),
-        },
+        projectUsers: projectUserIds
+          ? {
+              create: projectUserIds.map((id) => ({ userId: id })),
+            }
+          : undefined,
       },
     });
   }

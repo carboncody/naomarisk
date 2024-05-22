@@ -106,12 +106,6 @@ export default function EditProject({
                   />
                 </div>
                 <div className="flex gap-5">
-                  {/* <NextInput
-                    {...register('startDate')}
-                    label="Start dato"
-                    variant="bordered"
-                    type="date"
-                  /> */}
                   <div className="flex flex-col">
                     <DatePicker
                       customPlaceholder="Vælg start dato"
@@ -131,17 +125,7 @@ export default function EditProject({
                       }}
                     />
                   </div>
-                  {/* <NextInput
-                    {...register('dueDate')}
-                    label="Slut dato"
-                    onBlur={() => {
-                      if (!dayjs(watch('dueDate')).isValid) {
-                        setValue('dueDate', undefined);
-                      }
-                    }}
-                    variant="bordered"
-                    type="date"
-                  /> */}
+
                   <NextInput
                     {...register('budget')}
                     value={watch('budget') ?? ''}

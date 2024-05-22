@@ -10,7 +10,7 @@ export const NextInput = forwardRef<HTMLInputElement, NextReactInputProps>(
       <Input
         {...props}
         ref={ref}
-        className={`form-input w-full flex-grow ${className}`}
+        className={`form-input w-full flex-grow ${className} rounded-xl bg-[#27272a]`}
         labelPlacement={hasPlaceholder ? 'outside' : undefined}
         classNames={{
           inputWrapper:

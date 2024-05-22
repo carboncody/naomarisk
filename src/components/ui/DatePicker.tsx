@@ -46,8 +46,8 @@ export function DatePicker({
                 startIcon ?? <FaCalendar className="text-gray-300" />
               }
               className={clsx(
-                'h-full w-full',
-                'min-h-unit-12  bg-[#27272a] hover:bg-[#3F3F46]',
+                'h-full w-full border-1 border-gray-400 hover:border-white',
+                'min-h-unit-12  bg-[#27272a] ',
                 date ? 'text-white' : 'text-white',
               )}
             >
@@ -80,7 +80,7 @@ export function DatePicker({
               cell: 'max-h-9 max-w-9 min-h-3 min-w-3',
               weeknumber: 'size-8 text-gray-500 mr-1',
             }}
-            selected={date ?? undefined}
+            selected={date ? new Date(date) : undefined}
             onSelect={(day) => {
               if (!day) {
                 setDate(null);
