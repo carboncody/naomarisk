@@ -4,8 +4,18 @@ import { type TableColumns } from '@components/Table/types/table.columns';
 import { type User } from '@models';
 import { useRouter } from 'next/navigation';
 
-export function ProjectEmployeeTable({ employee }: { employee: User[] }) {
-  const rows: User[] = employee;
+interface ProjectEmployeeTableProps {
+  projectMemberIds: string[];
+  employees: User[];
+}
+
+export function ProjectEmployeeTable({
+  employees,
+  projectMemberIds,
+}: ProjectEmployeeTableProps) {
+  const rows: User[] = employees.filter((employee) => {
+    return projectMemberIds.includes(employee.id);
+  });
   const router = useRouter();
 
   const columns: TableColumns<User> = {

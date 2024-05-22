@@ -51,7 +51,7 @@ export async function ProjectService() {
           },
         },
         projectUsers: {
-          create: projectUserIds,
+          create: projectUserIds.map((id) => ({ userId: id })),
         },
       },
     });
@@ -72,7 +72,7 @@ export async function ProjectService() {
                 projectId: id,
               },
               createMany: {
-                data: projectUserIds,
+                data: projectUserIds.map((id) => ({ userId: id })),
               },
             }
           : undefined,

@@ -1,25 +1,15 @@
 'use client';
 
-import EditProject from '@components/EditProject';
-import { ProjectEmployee } from '@components/projectEmployee/ProjectEmployee';
+import EditProject from '@app/(navbar)/projects/[id]/components/EditProjectModal';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useProject } from '@lib/api/hooks';
 
 import { Button, Card, CardBody, Tab, Tabs } from '@nextui-org/react';
+import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-
-function formatDate(dateString: string | number | Date) {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  };
-  return date.toLocaleDateString('dk-DK', options);
-}
+import { ProjectEmployee } from './components/members';
 
 export function Project() {
   const pathName = usePathname();
@@ -32,13 +22,6 @@ export function Project() {
     isLoading,
     refetch,
   } = useProject(projectId ?? '');
-  // const {
-  //   data: patchproject,
-  //   error: projectError,
-  //   isLoading: projectIsLoading,
-  // } = usePatchProject(projectId ?? '');
-
-  // console.log(patchproject);
 
   if (isLoading) {
     return <LoadingSpinner size="lg" />;
@@ -73,7 +56,7 @@ export function Project() {
                           Dato for oprettelse:
                           <br />
                           <p className="font-thin">
-                            {formatDate(project.createdAt)}
+                            {dayjs(project.createdAt).format('DD MMM YYYY')}
                           </p>
                         </p>
 
@@ -81,7 +64,7 @@ export function Project() {
                           Slutdato for projekt:
                           <br />
                           <p className="font-thin">
-                            {formatDate(project.dueDate)}
+                            {dayjs(project.dueDate).format('DD MMM YYYY')}
                           </p>
                         </p>
                       </div>
@@ -100,10 +83,7 @@ export function Project() {
                       )}
                     </div>
                     <div className="h-[45rem] overflow-y-clip rounded-md bg-[#333333] p-4">
-                      <ProjectEmployee
-                        members={project.projectUsers.map((user) => user.user)}
-                        refetch={refetch}
-                      />
+                      <ProjectEmployee project={project} refetch={refetch} />
                     </div>
                   </div>
                 </CardBody>

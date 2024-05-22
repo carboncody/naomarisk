@@ -1,5 +1,6 @@
 'use client';
 
+import { DatePicker } from '@components/ui/DatePicker';
 import { NextInput } from '@components/ui/Input';
 import { type UpdateProjectForm } from '@lib/api/types';
 import { type Project } from '@models';
@@ -31,9 +32,9 @@ export default function EditProject({
   const {
     register,
     handleSubmit,
-    // setValue,
-    // watch,
-    // formState: { errors },
+    setValue,
+    watch,
+    formState: { errors },
   } = useForm<UpdateProjectForm>({
     defaultValues: {
       name: project.name ?? '',
@@ -59,6 +60,8 @@ export default function EditProject({
     }
   }
 
+  console.info(watch());
+
   return (
     <>
       <Modal
@@ -79,31 +82,72 @@ export default function EditProject({
               <ModalBody className="text-white">
                 <div className="flex w-full items-start gap-5">
                   <NextInput
-                    {...register('name')}
+                    {...register('name', {
+                      required: {
+                        value: true,
+                        message: 'Navn er påkrævet',
+                      },
+                      minLength: {
+                        value: 3,
+                        message: 'Navn skal være mindst 3 tegn',
+                      },
+                    })}
+                    value={watch('name') ?? ''}
                     label="Projektnavn"
                     variant="bordered"
+                    isInvalid={!!errors.name}
+                    errorMessage={errors.name?.message}
                   />
                   <NextInput
                     {...register('description')}
+                    value={watch('description') ?? ''}
                     label="Beskrivelse"
                     variant="bordered"
                   />
                 </div>
                 <div className="flex gap-5">
-                  <NextInput
+                  {/* <NextInput
                     {...register('startDate')}
                     label="Start dato"
                     variant="bordered"
-                  />
-                  <NextInput
+                    type="date"
+                  /> */}
+                  <div className="flex flex-col">
+                    <DatePicker
+                      customPlaceholder="Vælg start dato"
+                      date={watch('startDate') ?? null}
+                      setDate={(date: Date | null) => {
+                        setValue('startDate', date);
+                      }}
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <DatePicker
+                      customPlaceholder="Vælg slut dato"
+                      date={watch('dueDate') ?? null}
+                      setDate={(date: Date | null) => {
+                        setValue('dueDate', date);
+                      }}
+                    />
+                  </div>
+                  {/* <NextInput
                     {...register('dueDate')}
                     label="Slut dato"
+                    onBlur={() => {
+                      if (!dayjs(watch('dueDate')).isValid) {
+                        setValue('dueDate', undefined);
+                      }
+                    }}
                     variant="bordered"
-                  />
+                    type="date"
+                  /> */}
                   <NextInput
                     {...register('budget')}
-                    label="Budget"
+                    value={watch('budget') ?? ''}
+                    label="Budget [kr.]"
                     variant="bordered"
+                    type="number"
                   />
                 </div>
                 <div className="grid grid-cols-4 gap-5"></div>

@@ -10,7 +10,7 @@ export const NextInput = forwardRef<HTMLInputElement, NextReactInputProps>(
       <Input
         {...props}
         ref={ref}
-        className={`form-input ${className || ''} w-full flex-grow`}
+        className={`form-input w-full flex-grow ${className}`}
         labelPlacement={hasPlaceholder ? 'outside' : undefined}
         classNames={{
           inputWrapper:
@@ -28,4 +28,4 @@ export const NextInput = forwardRef<HTMLInputElement, NextReactInputProps>(
   },
 );
 
-NextInput.displayName = 'Input';
+NextInput.displayName = 'NextInput';

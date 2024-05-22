@@ -15,10 +15,10 @@ interface BaseOption {
 }
 
 interface SingleDropdownProps {
-  selectedValue: string;
+  selectedValue: string | undefined;
   options: BaseOption[];
   buttonLabel: ReactNode;
-  setSelectedValue: (value: string) => void;
+  setSelectedValue: (value: string | undefined) => void;
   customTriggerBtn?: ReactNode;
 }
 

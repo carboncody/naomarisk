@@ -1,12 +1,12 @@
 export type CreateProjectForm = {
   name: string;
   description: string;
-  startDate: Date;
-  dueDate: Date;
+  startDate: Date | null;
+  dueDate: Date | null;
   budget?: string;
   riskRegisterDescription?: string;
   riskReportIntro?: string;
-  projectUserIds?: { userId: string }[];
+  projectUserIds: string[];
 };
 
 export type UpdateProjectForm = Partial<CreateProjectForm>;

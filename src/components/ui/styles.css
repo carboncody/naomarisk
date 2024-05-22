@@ -1,0 +1,15 @@
+.rdp {
+  margin: 0;
+}
+
+/* Highlight the selected day */
+button[aria-selected='true'] {
+  background-color: #7e7e7e; /* Green background color */
+  color: white; /* White text color */
+}
+
+/* Maintain hover effects for the selected day */
+button[aria-selected='true']:hover {
+  background-color: #7e7e7e; /* Slightly darker green for hover state */
+  color: white; /* Ensure text remains white on hover */
+}

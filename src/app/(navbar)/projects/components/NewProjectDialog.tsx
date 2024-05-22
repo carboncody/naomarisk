@@ -23,13 +23,10 @@ interface NewProjectDialogProps {
 export default function NewProjectDialog({
   isOpen,
   setIsOpen,
-  refetch,
 }: NewProjectDialogProps) {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm<CreateProjectForm>({
     defaultValues: {
@@ -78,7 +75,6 @@ export default function NewProjectDialog({
                         message: 'Project name is required',
                       },
                     })}
-                    autoFocus
                     label="Project name"
                     isInvalid={!!errors.name}
                     errorMessage={errors.name?.message}
@@ -95,7 +91,6 @@ export default function NewProjectDialog({
                     className="col-span-2"
                     label="Budget [kr.]"
                     type="number"
-                    labelPlacement="inside"
                   />
                 </div>
               </ModalBody>
