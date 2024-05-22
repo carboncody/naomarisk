@@ -41,7 +41,7 @@ export interface Contact {
 }
 
 export interface User {
-  projectIds: any;
+  projectIds: unknown;
   id: string;
   email: string;
   jobDescription?: string;
