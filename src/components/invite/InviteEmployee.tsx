@@ -104,7 +104,6 @@ export default function InviteEmployee({
                     })}
                     className="col-span-2"
                     label="Email"
-                    labelPlacement="inside"
                     errorMessage={errors.email?.message}
                     isInvalid={!!errors.email}
                   />

@@ -16,7 +16,13 @@ export async function ProjectService() {
   async function getProjectFromId(id: string): Promise<Project | null> {
     return db.project.findUnique({
       where: { id },
-      include: { risks: true, projectUsers: true, company: true },
+      include: {
+        risks: true,
+        projectUsers: {
+          include: { user: true },
+        },
+        company: true,
+      },
     });
   }
 
@@ -24,7 +30,7 @@ export async function ProjectService() {
     email: string,
     createProjectForm: CreateProjectForm,
   ) {
-    const { riskIds, projectUserIds, ...rest } = createProjectForm;
+    const { projectUserIds, ...rest } = createProjectForm;
 
     const company = await db.company.findUnique({
       where: {
@@ -44,14 +50,11 @@ export async function ProjectService() {
             id: company.id,
           },
         },
-        risks: riskIds
+        projectUsers: projectUserIds
           ? {
-              connect: riskIds,
+              create: projectUserIds.map((id) => ({ userId: id })),
             }
           : undefined,
-        projectUsers: {
-          create: projectUserIds,
-        },
       },
     });
   }
@@ -60,26 +63,21 @@ export async function ProjectService() {
     id: string,
     updateProjectForm: UpdateProjectForm,
   ) {
-    const { riskIds, projectUserIds, ...rest } = updateProjectForm;
-    const riskIdsAssociatedWithProject = await db.risk.findMany({
-      where: {
-        projectId: id,
-      },
-      select: {
-        id: true,
-      },
-    });
+    const { projectUserIds, ...rest } = updateProjectForm;
     return db.project.update({
       where: { id },
       data: {
         ...rest,
-        risks: {
-          disconnect: riskIdsAssociatedWithProject,
-          connect: riskIds,
-        },
-        projectUsers: {
-          create: projectUserIds,
-        },
+        projectUsers: projectUserIds
+          ? {
+              deleteMany: {
+                projectId: id,
+              },
+              createMany: {
+                data: projectUserIds.map((id) => ({ userId: id })),
+              },
+            }
+          : undefined,
       },
     });
   }

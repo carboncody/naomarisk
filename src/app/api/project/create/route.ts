@@ -14,13 +14,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Not logged in' });
   }
 
-  const body = (await req.json()) as {
-    createProjectForm: CreateProjectForm;
-  };
+  const body = (await req.json()) as CreateProjectForm;
   const projectService = await ProjectService();
-  const project = await projectService.createProject(
-    user.email,
-    body.createProjectForm,
-  );
+  const project = await projectService.createProject(user.email, body);
   return NextResponse.json({ project });
 }

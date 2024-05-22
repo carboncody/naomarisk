@@ -2,8 +2,9 @@
 
 import InviteEmployee from '@components/invite/InviteEmployee';
 import { Backbutton } from '@components/ui/BackButton';
-import { User } from '@lib/api/hooks';
-import { Button, Spinner } from '@nextui-org/react';
+import LoadingSpinner from '@components/ui/LoadSpinner';
+import { useEmployees } from '@lib/api/hooks';
+import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import { EmployeeTable } from './EmployeeTable';
@@ -11,12 +12,18 @@ import { EmployeeTable } from './EmployeeTable';
 export function AllEmployees() {
   const [isNewOpen, setIsNewOpen] = useState(false);
 
-  const { data: allEmployees, isFetching, isError, error, refetch } = User();
+  const {
+    data: allEmployees,
+    isFetching,
+    isError,
+    error,
+    refetch,
+  } = useEmployees();
 
   if (isFetching) {
     return (
       <div className="flex min-h-full w-full items-center justify-center">
-        <Spinner size="lg" />
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

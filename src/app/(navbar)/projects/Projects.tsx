@@ -1,9 +1,10 @@
 'use client';
 
-import NewProjectDialog from '@components/create/NewProjectDialog';
+import NewProjectDialog from '@app/(navbar)/projects/components/NewProjectDialog';
 import { Backbutton } from '@components/ui/BackButton';
+import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useProjectsInCompany } from '@lib/api/hooks';
-import { Button, Spinner } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import { ProjectTable } from './ProjectTable';
@@ -21,7 +22,7 @@ export function AllProjects() {
   if (isFetching) {
     return (
       <div className="flex min-h-full w-full items-center justify-center">
-        <Spinner size="lg" />
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

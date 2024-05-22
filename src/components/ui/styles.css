@@ -1,0 +1,13 @@
+.rdp {
+  margin: 0;
+}
+
+button[aria-selected='true'] {
+  background-color: #7e7e7e;
+  color: white;
+}
+
+button[aria-selected='true']:hover {
+  background-color: #7e7e7e;
+  color: white;
+}

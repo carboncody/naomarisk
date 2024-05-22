@@ -1,5 +1,6 @@
 'use client';
 
+import { DatePicker } from '@components/ui/DatePicker';
 import { NextInput } from '@components/ui/Input';
 import { type CreateProjectForm } from '@lib/api/types';
 import {
@@ -42,10 +43,9 @@ export default function NewProjectDialog({
 
   async function onSubmit(data: CreateProjectForm) {
     try {
-      const project = await axios.post('/api/project/create', {
-        createProjectForm: data,
-      });
-      toast.success('Project created');
+      await axios.post('/api/project/create', data);
+      toast.success('Project created!');
+      refetch();
       setIsOpen(false);
     } catch (error) {
       toast.error('Error - something went wrong');
@@ -70,7 +70,7 @@ export default function NewProjectDialog({
                 Opret nyt projekt
               </ModalHeader>
               <ModalBody className="text-white">
-                <div className="grid grid-cols-2 gap-5">
+                <div className="flex gap-3">
                   <NextInput
                     {...register('name', {
                       required: {
@@ -78,7 +78,6 @@ export default function NewProjectDialog({
                         message: 'Project name is required',
                       },
                     })}
-                    autoFocus
                     label="Project name"
                     isInvalid={!!errors.name}
                     errorMessage={errors.name?.message}
@@ -88,14 +87,27 @@ export default function NewProjectDialog({
                     label="Project Description"
                     variant="bordered"
                   />
-                </div>
-                <div className="grid grid-cols-4 gap-5">
                   <NextInput
                     {...register('budget')}
                     className="col-span-2"
                     label="Budget [kr.]"
                     type="number"
-                    labelPlacement="inside"
+                  />
+                </div>
+                <div className="flex gap-5">
+                  <DatePicker
+                    customPlaceholder="Vælg start dato"
+                    date={watch('startDate') ?? null}
+                    setDate={(date: Date | null) => {
+                      setValue('startDate', date);
+                    }}
+                  />
+                  <DatePicker
+                    customPlaceholder="Vælg slut dato"
+                    date={watch('dueDate') ?? null}
+                    setDate={(date: Date | null) => {
+                      setValue('dueDate', date);
+                    }}
                   />
                 </div>
               </ModalBody>
