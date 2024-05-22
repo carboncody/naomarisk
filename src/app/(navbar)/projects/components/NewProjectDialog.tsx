@@ -43,13 +43,11 @@ export default function NewProjectDialog({
 
   async function onSubmit(data: CreateProjectForm) {
     try {
-      console.log(data);
       await axios.post('/api/project/create', data);
       toast.success('Project created!');
       refetch();
       setIsOpen(false);
     } catch (error) {
-      console.log(error);
       toast.error('Error - something went wrong');
     }
   }

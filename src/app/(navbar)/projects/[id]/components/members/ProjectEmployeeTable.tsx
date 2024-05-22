@@ -41,7 +41,6 @@ export function ProjectEmployeeTable({
           <span className="break-words text-gray-400">{employee.role}</span>
         </div>
       ),
-      // sort: sortBy('date'),
     },
   };
 

@@ -3,11 +3,11 @@
 import UserSettings from '@components/UserSettings/UserSettings';
 import { Backbutton } from '@components/ui/BackButton';
 import { SettingsCard } from '@components/ui/SettingsCard';
-import { User } from '@lib/api/hooks';
+import { useEmployees } from '@lib/api/hooks';
 import { Button, Link } from '@nextui-org/react';
 
 export default function Account() {
-  const { data: error, refetch } = User();
+  const { data: error, refetch } = useEmployees();
   return (
     <div>
       <div className="flex w-full">
@@ -16,13 +16,7 @@ export default function Account() {
           <SettingsCard>
             <UserSettings refetch={refetch} />
           </SettingsCard>
-          <>
-            {/* {isAdmin && ( */}
-            {/* <SettingsCard> */}
-            {/* <CompanySettings /> */}
-            {/* </SettingsCard> */}
-            {/* )} */}
-          </>
+          <></>
         </div>
       </div>
       <div className="center flex gap-4">

@@ -41,16 +41,12 @@ export function MembersModal({
     });
 
   async function onSubmit(data: UpdateProjectForm) {
-    console.log('save button pressed');
-    console.log('Data received:', data);
-
     try {
       await axios.patch(`/api/project/${projectId}`, data);
       toast.success('Projektet er opdateret!');
       refetchProject();
       setIsOpen(false);
     } catch (error) {
-      console.log(error);
       toast.error('Error - something went wrong');
     }
   }

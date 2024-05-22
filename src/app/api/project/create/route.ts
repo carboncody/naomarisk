@@ -15,7 +15,6 @@ export async function POST(req: Request) {
   }
 
   const body = (await req.json()) as CreateProjectForm;
-  console.log(body);
   const projectService = await ProjectService();
   const project = await projectService.createProject(user.email, body);
   return NextResponse.json({ project });

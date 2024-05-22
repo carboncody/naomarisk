@@ -46,16 +46,12 @@ export default function EditProject({
   });
 
   async function onSubmit(data: UpdateProjectForm) {
-    console.log('save button pressed');
-    console.log('Data received:', data);
-
     try {
       await axios.patch(`/api/project/${project.id}`, data);
       toast.success('Projektet er opdateret!');
       refetch();
       setIsOpen(false);
     } catch (error) {
-      console.log(error);
       toast.error('Error - something went wrong');
     }
   }
