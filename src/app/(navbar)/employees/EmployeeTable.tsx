@@ -11,7 +11,7 @@ export function EmployeeTable({ employee }: { employee: User[] }) {
   const columns: TableColumns<User> = {
     email: {
       title: 'Email',
-      spacing: 1,
+      spacing: 2,
       render: (employee: User) => (
         <div className="truncate">
           <span>{employee.email}</span>
@@ -25,7 +25,7 @@ export function EmployeeTable({ employee }: { employee: User[] }) {
     },
     role: {
       title: 'ROLLE',
-      spacing: 1,
+      spacing: 2,
       render: (employee: User) => (
         <div className="truncate">
           <span className="break-words text-gray-400">{employee.role}</span>
