@@ -14,14 +14,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Not logged in' });
   }
 
-  const body = (await req.json()) as {
-    createUserForm: CreateUserForm;
-  };
+  const body = (await req.json()) as CreateUserForm;
   const userService = await UserService();
-  const employee = await userService.inviteUser(
-    user.email,
-    body.createUserForm.role,
-    user.id,
-  );
+  const employee = await userService.inviteUser(user.email, body);
   return NextResponse.json({ employee });
 }

@@ -33,7 +33,7 @@ export default function CreateRisk({
     formState: { errors },
   } = useForm<CreateRiskForm>({
     defaultValues: {
-      customId: '',
+      customerId: '',
       description: '',
       probability: 0,
       consequence: 0,
@@ -45,11 +45,9 @@ export default function CreateRisk({
 
   async function onSubmit(data: CreateRiskForm) {
     try {
-      await axios.post('/api/user/create', {
-        CreateRiskForm: data,
-      });
+      await axios.post('/api/risk/[projectId]', data);
       refetch();
-      toast.success('Brugeren inviteret!');
+      toast.success('Risk oprettet!');
       setIsOpen(false);
     } catch (error) {
       toast.error('Error - something went wrong');

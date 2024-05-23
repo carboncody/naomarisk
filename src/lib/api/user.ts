@@ -2,7 +2,7 @@
 
 import { UserRole } from '@models';
 import { db } from '@server/db';
-import type { UpdateUserForm } from './types';
+import type { CreateUserForm, UpdateUserForm } from './types';
 
 export async function UserService() {
   async function getUsersInCompany(email: string) {
@@ -55,14 +55,23 @@ export async function UserService() {
     });
   }
 
-  async function inviteUser(email: string, role: UserRole, companyId: string) {
+  async function inviteUser(creatorEmail: string, data: CreateUserForm) {
+    const creatorsCompany = await db.user.findUnique({
+      where: { email: creatorEmail },
+      include: { company: true },
+    });
+
+    if (!creatorsCompany) {
+      throw new Error('Creator not found');
+    }
+
     return db.user.create({
       data: {
-        email,
-        fullName: email,
-        role,
+        email: data.email,
+        fullName: data.email,
+        role: data.role,
         company: {
-          connect: { id: companyId },
+          connect: { id: creatorsCompany.companyId },
         },
       },
     });

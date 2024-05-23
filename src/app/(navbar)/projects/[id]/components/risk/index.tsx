@@ -1,24 +1,23 @@
 'use client';
 
-import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
-import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
-import { useEmployees } from '@lib/api/hooks';
+import { useRisks } from '@lib/api/hooks/risks';
 import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
-import { EmployeeTable } from './EmployeeTable';
+import { RiskTable } from './RiskTable';
+import CreateRisk from './CreateRisk';
 
-export function AllEmployees() {
+export function AllRisks() {
   const [isNewOpen, setIsNewOpen] = useState(false);
 
   const {
-    data: allEmployees,
+    data: allRisks,
     isFetching,
     isError,
     error,
     refetch,
-  } = useEmployees();
+  } = useRisks();
 
   if (isFetching) {
     return (
@@ -41,13 +40,10 @@ export function AllEmployees() {
             Tilføj
           </Button>
         </div>
-        <EmployeeTable employee={allEmployees ?? []} />
-        <div className=" justify-flex flex justify-center">
-          <Backbutton href={'/'} />
-        </div>
+        <RiskTable risk={allRisks ?? []} />
       </div>
       {isNewOpen && (
-        <InviteEmployee
+        <CreateRisk
           isOpen={isNewOpen}
           setIsOpen={setIsNewOpen}
           refetch={refetch}
