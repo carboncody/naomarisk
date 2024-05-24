@@ -30,7 +30,7 @@ export default function UserSettings({ refetch }: UserSettingsProps) {
 
   async function onSubmit(data: UpdateUserForm) {
     try {
-      await axios.post('/api/user/upsert', {
+      await axios.patch('/api/user/upsert', {
         UpdateUserForm: data,
       });
       refetch();

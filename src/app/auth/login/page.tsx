@@ -1,6 +1,4 @@
 'use client';
-import { useMe } from '@lib/context/MeContext';
-import { type User } from '@models';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { SignIn } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
@@ -13,23 +11,26 @@ export default function SignInForm() {
   const supabase = createClientComponentClient();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const { setMe } = useMe();
 
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, user) => {
-      if (!user?.user.email) {
-        setError(
-          'Noget gik galt i login. Prøv igen. Hvis det bliver ved, kontakt os. ',
-        );
-        return;
-      }
       try {
-        const meQuery = await axios.post('/api/user/upsert', {
+        if (event !== 'SIGNED_IN') {
+          return;
+        }
+
+        if (!user?.user) {
+          setError(
+            'Noget gik galt i login. Prøv igen. Hvis det bliver ved, kontakt os. ',
+          );
+          return;
+        }
+
+        await axios.post('/api/user/upsert', {
           email: user.user.email,
         });
-        setMe(meQuery.data as User);
       } catch (error) {
         setError(JSON.stringify(error));
         throw error;
@@ -41,7 +42,7 @@ export default function SignInForm() {
     });
 
     return () => subscription.unsubscribe();
-  }, [router, setMe, supabase.auth]);
+  }, [supabase.auth, router]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] text-white">

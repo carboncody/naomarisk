@@ -98,4 +98,6 @@ export interface Risk {
   userId: string;
   project: Project;
   projectId: string;
+  riskOwnerUserId: string;
+  user: User[];
 }

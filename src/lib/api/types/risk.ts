@@ -1,7 +1,7 @@
 import { type RiskStatus } from '@prisma/client';
 
 export type CreateRiskForm = {
-  customerId: string;
+  customId: string;
   description: string;
   probability: number;
   consequence: number;

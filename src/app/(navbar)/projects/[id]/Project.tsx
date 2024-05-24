@@ -10,7 +10,7 @@ import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ProjectEmployee } from './components/members';
-import { AllRisks } from './components/risk';
+import { Risks } from './components/risk';
 
 export function Project() {
   const pathName = usePathname();
@@ -93,7 +93,7 @@ export function Project() {
             <Tab key="Riscs" title="Risici">
               <Card className="bg-[#333333] text-white">
                 <CardBody className="h-[45rem] overflow-y-clip">
-                  <AllRisks />
+                  <Risks project={project} />
                 </CardBody>
               </Card>
             </Tab>

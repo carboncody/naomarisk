@@ -2,13 +2,18 @@
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useRisks } from '@lib/api/hooks/risks';
+import type { Project } from '@models';
 import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
-import { RiskTable } from './RiskTable';
 import CreateRisk from './CreateRisk';
+import { RiskTable } from './RiskTable';
 
-export function AllRisks() {
+interface RisksProps {
+  project: Project;
+}
+
+export function Risks({ project }: RisksProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
 
   const {
@@ -17,7 +22,7 @@ export function AllRisks() {
     isError,
     error,
     refetch,
-  } = useRisks();
+  } = useRisks(project.id);
 
   if (isFetching) {
     return (
@@ -33,9 +38,9 @@ export function AllRisks() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
-        <div className="mb-4 mt-40 flex w-full justify-between">
-          <p className="text-3xl font-semibold">Alle Medarbejdere</p>
+      <div className="justify-top flex min-h-screen w-[1300px] flex-col items-center px-8 text-white">
+        <div className="my-4 flex w-full justify-between">
+          <p className="text-3xl font-semibold">{project.name}s risici</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
             Tilføj
           </Button>
@@ -47,6 +52,7 @@ export function AllRisks() {
           isOpen={isNewOpen}
           setIsOpen={setIsNewOpen}
           refetch={refetch}
+          project={project}
         />
       )}
     </>

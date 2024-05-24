@@ -1,7 +1,7 @@
 import { Table } from '@components/Table';
 import { sortBy } from '@components/Table/sorting/sort.utils';
 import { type TableColumns } from '@components/Table/types/table.columns';
-import { type Risk, } from '@models';
+import { type Risk } from '@models';
 import { useRouter } from 'next/navigation';
 
 export function RiskTable({ risk }: { risk: Risk[] }) {
@@ -11,13 +11,13 @@ export function RiskTable({ risk }: { risk: Risk[] }) {
   const columns: TableColumns<Risk> = {
     id: {
       title: 'Risk-ID',
-      spacing: 2,
+      spacing: 1,
       render: (risk: Risk) => (
         <div className="truncate">
-          <span>{risk.id}</span>
+          <span>{risk.customId}</span>
           <br />
           <span className="break-words text-gray-400">
-            {risk.status}
+            Status: {risk.status}
           </span>
         </div>
       ),
@@ -25,15 +25,41 @@ export function RiskTable({ risk }: { risk: Risk[] }) {
     },
     description: {
       title: 'Beskrivelse',
-      spacing: 2,
+      spacing: 1,
       render: (risk: Risk) => (
         <div className="truncate">
           <span className="break-words text-gray-400">{risk.description}</span>
         </div>
       ),
     },
-  };
 
+    probability: {
+      title: 'Risiko',
+      spacing: 1,
+      render: (risk: Risk) => (
+        <div className="truncate">
+          <span className="break-words text-gray-400">
+            Sansynlighed: {risk.probability}
+          </span>
+          <br />
+          <span className="break-words text-gray-400">
+            Konsekvens: {risk.consequence}
+          </span>
+        </div>
+      ),
+    },
+    riskowner: {
+      title: 'Ejer',
+      spacing: 1,
+      render: (risk: Risk) => (
+        <div className="truncate">
+          <span className="break-words text-gray-400">
+            {risk.riskOwnerUserId}
+          </span>
+        </div>
+      ),
+    },
+  };
   return (
     <Table
       onRowClick={(risk) => router.push(`/risk/${risk.id}`)}

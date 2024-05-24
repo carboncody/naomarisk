@@ -1,7 +1,10 @@
 'use client';
 
+import { SingleDropdown } from '@components/ui';
 import { NextInput } from '@components/ui/Input';
+import { useEmployees } from '@lib/api/hooks';
 import { type CreateRiskForm } from '@lib/api/types/risk';
+import type { Project, User } from '@models';
 import {
   Button,
   Modal,
@@ -11,6 +14,7 @@ import {
   ModalHeader,
 } from '@nextui-org/react';
 import axios from 'axios';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -18,12 +22,14 @@ interface CreateRiskProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   refetch: () => void;
+  project: Project;
 }
 
 export default function CreateRisk({
   isOpen,
   setIsOpen,
   refetch,
+  project,
 }: CreateRiskProps) {
   const {
     register,
@@ -33,19 +39,20 @@ export default function CreateRisk({
     formState: { errors },
   } = useForm<CreateRiskForm>({
     defaultValues: {
-      customerId: '',
-      description: '',
       probability: 0,
       consequence: 0,
       status: 'OPEN',
-      comment: '',
-      activity: '',
     },
   });
 
   async function onSubmit(data: CreateRiskForm) {
+    if (data.riskOwnerUserId === undefined) {
+      toast.error('Du skal vælge en medarbejder');
+      return;
+    }
+
     try {
-      await axios.post('/api/risk/[projectId]', data);
+      await axios.post('/api/risk/' + project.id, data);
       refetch();
       toast.success('Risk oprettet!');
       setIsOpen(false);
@@ -53,6 +60,19 @@ export default function CreateRisk({
       toast.error('Error - something went wrong');
     }
   }
+
+  const { data: allEmployees, isError } = useEmployees();
+
+  if (isError || !allEmployees) {
+    <div>Something went wrong</div>;
+  }
+
+  const projectMembers: User[] | undefined = useMemo(() => {
+    const projectMemberIds = project.projectUsers.map((pu) => pu.userId);
+    return allEmployees?.filter((employee) =>
+      projectMemberIds.includes(employee.id),
+    );
+  }, [allEmployees, project.projectUsers]);
 
   return (
     <>
@@ -72,63 +92,93 @@ export default function CreateRisk({
                 Opret Risiko
               </ModalHeader>
               <ModalBody className="text-white">
-                <div className="flex w-full items-start gap-5">
+                <div className="flex w-full gap-5">
                   <NextInput
-                    // {...register('email', {
-                    //   required: {
-                    //     value: true,
-                    //     message: 'Email is required',
-                    //   },
-                    //   validate: {
-                    //     email: (value) => {
-                    //       const regex =
-                    //         /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                    //       return regex.test(value) || 'Invalid email';
-                    //     },
-                    //   },
-                    // })}
-                    className="col-span-2"
+                    {...register('customId', {
+                      required: {
+                        value: true,
+                        message: 'Id mangler',
+                      },
+                    })}
+                    className="w-1/6"
                     label="Id"
                     labelPlacement="inside"
-                    // errorMessage={errors.email?.message}
-                    // isInvalid={!!errors.email}
+                    errorMessage={errors.customId?.message}
+                    error={!!errors.customId}
                   />
                   <NextInput
-                    // {...register('jobDescription')}
+                    {...register('description')}
                     label="Beskrivelse"
+                    className="w-full"
                     variant="bordered"
                   />
                 </div>
-                <div className="flex gap-5">
-                  <NextInput
-                    // {...register('jobDescription')}
-                    label="Sandsynlighed"
-                    variant="bordered"
-                  />
-                  <NextInput
-                    // {...register('jobDescription')}
-                    label="Konsekvens"
-                    variant="bordered"
-                  />
+                <div className="flex w-full items-center justify-between gap-5">
+                  <div className="flex w-1/3 gap-4">
+                    <NextInput
+                      {...register('probability', {
+                        required: {
+                          value: true,
+                          message: 'Sandsynlighed mangler',
+                        },
+                        validate: {
+                          range: (value) =>
+                            (value >= 0 && value <= 10) ||
+                            'Sandsynlighed skal være mellem 0 og 10',
+                        },
+                      })}
+                      label="Sandsynlighed"
+                      variant="bordered"
+                      type="number"
+                      errorMessage={errors.probability?.message}
+                      error={!!errors.probability}
+                    />
+
+                    <NextInput
+                      {...register('consequence', {
+                        required: {
+                          value: true,
+                          message: 'Konsekvens mangler',
+                        },
+                        validate: {
+                          range: (value) =>
+                            (value >= 0 && value <= 10) ||
+                            'Konsekvens skal være mellem 0 og 10',
+                        },
+                      })}
+                      label="Konsekvens"
+                      variant="bordered"
+                      type="number"
+                      errorMessage={errors.consequence?.message}
+                      error={!!errors.consequence}
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span>Risiko ejer {'->'}</span>
+                    <SingleDropdown
+                      selectedValue={undefined}
+                      options={
+                        projectMembers
+                          ? projectMembers.map((employee) => ({
+                              label: employee.email,
+                              value: employee.id,
+                            }))
+                          : []
+                      }
+                      buttonLabel={
+                        projectMembers && watch('riskOwnerUserId')
+                          ? projectMembers.find(
+                              (employee) =>
+                                employee.id === watch('riskOwnerUserId'),
+                            )?.email
+                          : 'Vælg medarbejder'
+                      }
+                      setSelectedValue={(value) =>
+                        value && setValue('riskOwnerUserId', value)
+                      }
+                    />
+                  </div>
                 </div>
-                <div className="flex gap-5">
-                  <NextInput
-                    // {...register('jobDescription')}
-                    label="Status"
-                    variant="bordered"
-                  />
-                  <NextInput
-                    // {...register('jobDescription')}
-                    label="Kommentar"
-                    variant="bordered"
-                  />
-                  <NextInput
-                    // {...register('jobDescription')}
-                    label="Aktivitet"
-                    variant="bordered"
-                  />
-                </div>
-                <div className="grid grid-cols-4 gap-5"></div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" onClick={onClose}>

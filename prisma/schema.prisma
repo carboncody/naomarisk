@@ -115,7 +115,7 @@ model Risk {
   id          String     @id @default(uuid())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  customerId  String
+  customId    String
   description String
   probability Int
   consequence Int
@@ -127,4 +127,6 @@ model Risk {
   riskOwnerUserId String
   project         Project @relation(fields: [projectId], references: [id])
   projectId       String
+
+  @@unique([projectId, customId])
 }
