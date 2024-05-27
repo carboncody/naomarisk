@@ -4,8 +4,13 @@ import { type CreateRiskForm } from './types';
 export async function RiskService() {
   async function getRisk(projectId: string) {
     return db.risk.findMany({
-      where: {
-        projectId,
+      where: { projectId },
+      include: {
+        riskowner: {
+          select: {
+            email: true,
+          },
+        },
       },
     });
   }

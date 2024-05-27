@@ -54,7 +54,7 @@ export function RiskTable({ risk }: { risk: Risk[] }) {
       render: (risk: Risk) => (
         <div className="truncate">
           <span className="break-words text-gray-400">
-            {risk.riskOwnerUserId}
+            {risk.riskowner.email}
           </span>
         </div>
       ),
