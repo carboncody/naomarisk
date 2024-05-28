@@ -7,7 +7,7 @@ import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import CreateRisk from './CreateRisk';
-import { RiskTable } from './RiskTable';
+import RiskTable from './RiskTable';
 
 interface RisksProps {
   project: Project;
@@ -15,6 +15,7 @@ interface RisksProps {
 
 export function Risks({ project }: RisksProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
+  const [NewOpen, setNewOpen] = useState(false);
 
   const {
     data: allRisks,
@@ -41,11 +42,22 @@ export function Risks({ project }: RisksProps) {
       <div className="justify-top flex min-h-screen w-[1300px] flex-col items-center px-8 text-white">
         <div className="my-4 flex w-full justify-between">
           <p className="text-3xl font-semibold">{project.name}s risici</p>
-          <Button className="w-32" onClick={() => setIsNewOpen(true)}>
-            Tilføj
-          </Button>
+          <div className="flex gap-4">
+            <Button className="w-32" onClick={() => setIsNewOpen(true)}>
+              Tilføj
+            </Button>
+            <Button className="w-32" onClick={() => setNewOpen(true)}>
+              Rediger
+            </Button>
+          </div>
         </div>
-        <RiskTable risk={allRisks ?? []} />
+        <RiskTable
+          risk={allRisks ?? []}
+          isOpen={NewOpen}
+          setIsOpen={setNewOpen}
+          refetch={refetch}
+          project={project}
+        />
       </div>
       {isNewOpen && (
         <CreateRisk
