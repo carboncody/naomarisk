@@ -26,12 +26,13 @@ export async function POST(req: Request) {
 
   const body = (await req.json()) as CreateRiskForm;
   const riskService = await RiskService();
-  const risk = await riskService.createRisk(projectId, body);
-  return NextResponse.json({ status: 200, risk });
+  // const risk = await riskService.createRisk(projectId, body);
+  // return NextResponse.json({ status: 200, risk });
 }
 
 export async function PATCH(req: Request) {
   const projectId = req.url.split('/risk/')[1];
+  console.log(req);
 
   if (!projectId) {
     return NextResponse.json({ status: 400, error: 'No project id in url' });
@@ -39,6 +40,6 @@ export async function PATCH(req: Request) {
 
   const body = (await req.json()) as UpdateRiskForm;
   const riskService = await RiskService();
-  const risk = await riskService.createRisk(projectId, body);
-  return NextResponse.json({ status: 200, risk });
+  // const risk = await riskService.updateRisk(projectId, body);
+  // return NextResponse.json({ status: 200, risk });
 }

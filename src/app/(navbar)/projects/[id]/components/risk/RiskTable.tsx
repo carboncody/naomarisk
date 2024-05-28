@@ -14,7 +14,7 @@ import {
   ModalHeader,
 } from '@nextui-org/react';
 import axios from 'axios';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -22,12 +22,12 @@ interface RiskTableProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   refetch: () => void;
-  risk: Risk;
+  risks: Risk[];
   project: Project;
 }
 
 export default function RiskTable({
-  risk,
+  risks,
   isOpen,
   setIsOpen,
   refetch,
@@ -39,16 +39,23 @@ export default function RiskTable({
     setValue,
     watch,
     formState: { errors },
-  } = useForm<UpdateRiskForm>({
-    defaultValues: {
-      customId: risk.customId ?? '',
-      description: risk.description ?? '',
-      probability: risk.probability ?? 0,
-      consequence: risk.consequence ?? 0,
-      status: risk.status,
-      comment: risk.comment ?? '',
-    },
-  });
+    reset,
+  } = useForm<UpdateRiskForm>();
+
+  const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
+
+  useEffect(() => {
+    if (riskBeingEdited) {
+      reset({
+        customId: riskBeingEdited.customId ?? '',
+        description: riskBeingEdited.description ?? '',
+        probability: riskBeingEdited.probability ?? 0,
+        consequence: riskBeingEdited.consequence ?? 0,
+        status: riskBeingEdited.status,
+        comment: riskBeingEdited.comment ?? '',
+      });
+    }
+  }, [riskBeingEdited, reset]);
 
   async function onSubmit(data: UpdateRiskForm) {
     try {
@@ -61,9 +68,8 @@ export default function RiskTable({
     }
   }
 
-  const rows: Risk[] = risk;
-  const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
-  console.log('The risk being edited is: Risk ID', riskBeingEdited?.customId);
+  const rows: Risk[] = risks;
+  // const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
 
   const columns: TableColumns<Risk> = {
     id: {

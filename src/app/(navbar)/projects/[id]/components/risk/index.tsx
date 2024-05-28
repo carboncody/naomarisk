@@ -52,7 +52,7 @@ export function Risks({ project }: RisksProps) {
           </div>
         </div>
         <RiskTable
-          risk={allRisks ?? []}
+          risks={allRisks ?? []}
           isOpen={NewOpen}
           setIsOpen={setNewOpen}
           refetch={refetch}
