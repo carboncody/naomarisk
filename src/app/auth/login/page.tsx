@@ -6,6 +6,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import 'src/components/ui/styles.css';
 
 export default function SignInForm() {
   const supabase = createClientComponentClient();

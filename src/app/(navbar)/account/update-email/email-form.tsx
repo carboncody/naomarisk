@@ -53,7 +53,7 @@ export default function EmailForm({ user }: { user: User | undefined }) {
     // reset form
     setFormData({ email: '', emailConfirm: '' });
     setFormSuccess(true);
-    setMessage('Your email was updated successfully.');
+    setMessage('Email opdateret');
   };
   return (
     <div className="flex min-h-screen flex-col items-center justify-center text-white">
@@ -64,14 +64,14 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           {message}
         </Alert>
       ) : null}
-      <h2 className="mb-4 text-4xl font-semibold">Update Email</h2>
+      <h2 className="mb-4 text-4xl font-semibold">Opdater Email</h2>
       <p className="mb-4 font-medium">
-        Hi {user?.email}, Enter your new email below and confirm it
+        Hej {user?.email}, Indtast din nye e-mail nedenfor og bekræft den
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
           <Input
-            label="Enter a new email"
+            label="Indtast en nye email"
             name="email"
             type="email"
             value={formData?.email ?? ''}
@@ -87,7 +87,7 @@ export default function EmailForm({ user }: { user: User | undefined }) {
         <div className="form-control my-4">
           <Input
             id="emailConfirm"
-            label="Confirm email"
+            label="Bekræft din email"
             name="email"
             type="email"
             value={formData.emailConfirm ?? ''}
@@ -102,7 +102,7 @@ export default function EmailForm({ user }: { user: User | undefined }) {
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
           <button className="btn btn-primary rounded-xl border bg-white px-2 py-2 text-black">
-            Update Email
+            Opdater Email
           </button>
         </div>
       </form>
