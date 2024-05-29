@@ -117,14 +117,14 @@ model Risk {
   updatedAt   DateTime   @updatedAt
   customId    String
   description String
-  probability Int
-  consequence Int
+  probability Int        @default(0)
+  consequence Int        @default(0)
   status      RiskStatus
   comment     String?
   activity    String?
 
-  riskowner       User    @relation(fields: [riskOwnerUserId], references: [id])
-  riskOwnerUserId String
+  riskowner       User?   @relation(fields: [riskOwnerUserId], references: [id])
+  riskOwnerUserId String?
   project         Project @relation(fields: [projectId], references: [id])
   projectId       String
 

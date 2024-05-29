@@ -66,7 +66,7 @@ export default function EditRisk({
 
   async function onSubmit(data: UpdateRiskForm) {
     try {
-      await axios.patch(`/api/project/${project.id}`, data);
+      await axios.patch(`/api/risk/${riskElement.id}`, data);
       toast.success('Projektet er opdateret!');
       refetch();
       setRiskBeingEdited(null);

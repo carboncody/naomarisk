@@ -16,12 +16,9 @@ export async function RiskService() {
     });
   }
 
-  async function createRisk(
-    projectId: string,
-    data: CreateRiskForm,
-  ): Promise<{ errorMsg: string; code: number }> {
+  async function createRisk(projectId: string, data: CreateRiskForm) {
     try {
-      await db.risk.create({
+      const risk = await db.risk.create({
         data: {
           ...data,
           projectId,
@@ -29,34 +26,29 @@ export async function RiskService() {
           consequence: +data.consequence,
         },
       });
-      return { errorMsg: '', code: 200 };
+      return risk;
     } catch (error) {
-      return {
-        errorMsg: error.message || 'An error occurred',
-        code: error.code || 500,
-      };
+      throw error;
     }
   }
 
-  async function updateRisk(
-    projectId: string,
-    data: UpdateRiskForm,
-  ): Promise<{ errorMsg: string; code: number }> {
+  async function updateRisk(id: string, data: UpdateRiskForm) {
+    await db.risk.findUnique({
+      where: { id },
+    });
+
     try {
       await db.risk.update({
-        where: { id: data.id },
+        where: { id },
         data: {
           ...data,
-          probability: +data.probability,
-          consequence: +data.consequence,
+          probability: data.probability ? +data.probability : undefined,
+          consequence: data.consequence ? +data.consequence : undefined,
         },
       });
-      return { errorMsg: '', code: 200 };
     } catch (error) {
-      return {
-        errorMsg: error.message || 'An error occurred',
-        code: error.code || 500,
-      };
+      console.error('Error updating risk:', error);
+      throw error;
     }
   }
 

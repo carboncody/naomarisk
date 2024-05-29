@@ -1,11 +1,16 @@
 import { RiskService } from '@lib/api/risk';
 import { type CreateRiskForm } from '@lib/api/types';
 import { type UpdateRiskForm } from '@lib/api/types/risk';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
-  console.log(req.url);
   const projectId = req.url.split('/risk/')[1];
+  console.info(
+    '                                                                                                                                                          ------------------------------------------------projectId from url: ',
+    projectId,
+    '---------------------------------------                                                                                                        ',
+  );
 
   if (!projectId) {
     return NextResponse.json({ status: 400, error: 'No project id in url' });
@@ -13,6 +18,7 @@ export async function GET(req: Request) {
 
   const riskService = await RiskService();
   const risk = await riskService.getRisk(projectId);
+  console.info('risk: ', risk[1]?.id);
 
   return NextResponse.json(risk);
 }
@@ -26,20 +32,29 @@ export async function POST(req: Request) {
 
   const body = (await req.json()) as CreateRiskForm;
   const riskService = await RiskService();
-  const risk = await riskService.createRisk(projectId, body);
-  return NextResponse.json({ status: 200, risk });
+  try {
+    const risk = await riskService.createRisk(projectId, body);
+    return NextResponse.json({ status: 200, risk });
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.code === 'P2002' ? 409 : 500 },
+      );
+    }
+    return NextResponse.json({ status: 500, error: error });
+  }
 }
 
 export async function PATCH(req: Request) {
-  const projectId = req.url.split('/risk/')[1];
-  console.log(req);
+  const riskId = req.url.split('/risk/')[1];
 
-  if (!projectId) {
-    return NextResponse.json({ status: 400, error: 'No project id in url' });
+  if (!riskId) {
+    return NextResponse.json({ status: 400, error: 'No risk id in url' });
   }
 
   const body = (await req.json()) as UpdateRiskForm;
   const riskService = await RiskService();
-  const risk = await riskService.updateRisk(projectId, body);
+  const risk = await riskService.updateRisk(riskId, body);
   return NextResponse.json({ status: 200, risk });
 }

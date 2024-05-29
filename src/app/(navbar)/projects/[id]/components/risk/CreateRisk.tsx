@@ -13,7 +13,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -41,7 +41,7 @@ export default function CreateRisk({
     defaultValues: {
       probability: 0,
       consequence: 0,
-      status: 'OPEN',
+      status: 'NEW',
     },
   });
 
@@ -57,6 +57,15 @@ export default function CreateRisk({
       toast.success('Risk oprettet!');
       setIsOpen(false);
     } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 409) {
+        toast.error(
+          'Risk already exists with the Id - ' +
+            data.customId +
+            ' in project ' +
+            project.name,
+        );
+        return;
+      }
       toast.error('Error - something went wrong');
     }
   }
