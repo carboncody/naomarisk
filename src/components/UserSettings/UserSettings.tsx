@@ -11,11 +11,7 @@ interface UserSettingsProps {
 }
 
 export default function UserSettings({ refetch }: UserSettingsProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UpdateUserForm>({
+  const { register, handleSubmit } = useForm<UpdateUserForm>({
     defaultValues: {
       name: '',
       jobDescription: '',

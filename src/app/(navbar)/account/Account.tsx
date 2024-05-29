@@ -7,7 +7,7 @@ import { useEmployees } from '@lib/api/hooks';
 import { Button, Link } from '@nextui-org/react';
 
 export default function Account() {
-  const { data: error, refetch } = useEmployees();
+  const { refetch } = useEmployees();
   return (
     <div>
       <div className="flex w-full">
