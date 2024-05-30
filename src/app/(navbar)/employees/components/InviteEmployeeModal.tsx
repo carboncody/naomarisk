@@ -35,7 +35,7 @@ export default function InviteEmployee({
     formState: { errors },
   } = useForm<CreateUserForm>({
     defaultValues: {
-      name: '',
+      fullName: '',
       email: '',
       jobDescription: '',
       role: UserRole.User,
@@ -59,7 +59,7 @@ export default function InviteEmployee({
 
   async function onSubmit(data: CreateUserForm) {
     try {
-      await axios.post('/api/user/create', data);
+      await axios.post('/api/user', data);
       refetch();
       toast.success('Brugeren inviteret!');
       setIsOpen(false);

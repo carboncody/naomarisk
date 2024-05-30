@@ -1,9 +1,8 @@
 import { UserService } from '@lib/api';
-import { type CreateUserForm } from '@lib/api/types';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export async function GET() {
   const supabase = createServerClient();
 
   const {
@@ -14,8 +13,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Not logged in' });
   }
 
-  const body = (await req.json()) as CreateUserForm;
   const userService = await UserService();
-  const employee = await userService.inviteUser(user.email, body);
-  return NextResponse.json({ employee });
+  const users = await userService.getMe(user.email);
+  return NextResponse.json(users);
 }
