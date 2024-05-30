@@ -108,7 +108,7 @@ export default function InviteEmployee({
                   />
                   <NextInput
                     {...register('jobDescription')}
-                    label="Job title"
+                    label="Job beskrivelse"
                     variant="bordered"
                   />
                 </div>

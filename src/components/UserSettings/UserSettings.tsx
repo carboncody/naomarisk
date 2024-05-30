@@ -76,20 +76,9 @@ export default function UserSettings() {
             {...register('jobDescription')}
             value={watch('jobDescription') ?? ''}
             className="mb-2"
-            label="Job title"
+            label="Job beskrivelse"
             variant="bordered"
           />
-          {/* <NextInput
-            {...register('contact.phone')}
-            className="mb-2"
-            label="Telefon nr."
-            variant="bordered"
-          />
-          <NextInput
-            {...register('contact.address')}
-            label="Adresse"
-            variant="bordered"
-          /> */}
         </div>
         <div className="grid grid-cols-4 gap-5"></div>
       </div>

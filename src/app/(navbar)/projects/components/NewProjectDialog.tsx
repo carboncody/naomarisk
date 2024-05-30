@@ -75,16 +75,16 @@ export default function NewProjectDialog({
                     {...register('name', {
                       required: {
                         value: true,
-                        message: 'Project name is required',
+                        message: 'Projekt navn er påkrævet',
                       },
                     })}
-                    label="Project name"
+                    label="Projekt navn"
                     isInvalid={!!errors.name}
                     errorMessage={errors.name?.message}
                   />
                   <NextInput
                     {...register('description')}
-                    label="Project Description"
+                    label="Projekt beskrivelse"
                     variant="bordered"
                   />
                   <NextInput
