@@ -11,3 +11,15 @@ button[aria-selected='true']:hover {
   background-color: #7e7e7e;
   color: white;
 }
+
+.supabase-auth-ui_ui-button.c-bOcPnF.c-bOcPnF-cmFMMs-color-primary {
+  background-color: #7e7e7e;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.supabase-auth-ui_ui-button.c-bOcPnF.c-bOcPnF-cmFMMs-color-primary:hover {
+  background-color: #555555;
+  color: #eeeeee;
+  border-color: #dddddd;
+}

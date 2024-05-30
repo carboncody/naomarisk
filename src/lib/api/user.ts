@@ -2,9 +2,13 @@
 
 import { UserRole } from '@models';
 import { db } from '@server/db';
-import type { UpdateUserForm } from './types';
+import type { CreateUserForm, UpdateUserForm } from './types';
 
 export async function UserService() {
+  async function getMe(email: string) {
+    return db.user.findUnique({ where: { email } });
+  }
+
   async function getUsersInCompany(email: string) {
     return db.user.findMany({
       where: {
@@ -40,35 +44,42 @@ export async function UserService() {
     });
   }
 
-  async function updateUser(id: string, updateUserForm: UpdateUserForm) {
-    const { contact, ...rest } = updateUserForm;
+  async function updateUser(email: string, updateUserForm: UpdateUserForm) {
+    const { fullName, jobDescription } = updateUserForm;
+    console.info('jon description in the form ----->', jobDescription);
     return db.user.update({
-      where: { id },
+      where: { email },
       data: {
-        ...rest,
-        contact: {
-          update: {
-            ...contact,
-          },
-        },
+        fullName: fullName,
+        jobDescription: jobDescription,
       },
     });
   }
 
-  async function inviteUser(email: string, role: UserRole, companyId: string) {
+  async function inviteUser(creatorEmail: string, data: CreateUserForm) {
+    const creatorsCompany = await db.user.findUnique({
+      where: { email: creatorEmail },
+      include: { company: true },
+    });
+
+    if (!creatorsCompany) {
+      throw new Error('Creator not found');
+    }
+
     return db.user.create({
       data: {
-        email,
-        fullName: email,
-        role,
+        email: data.email,
+        fullName: data.email,
+        role: data.role,
         company: {
-          connect: { id: companyId },
+          connect: { id: creatorsCompany.companyId },
         },
       },
     });
   }
 
   return {
+    getMe,
     getUsersInCompany,
     getUserFromId,
     updateOrCreateUser,

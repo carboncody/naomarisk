@@ -51,10 +51,9 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
       return;
     }
 
-    // reset form
     setFormData({ password: '', passwordConfirm: '' });
     setFormSuccess(true);
-    setMessage('Your password was updated successfully.');
+    setMessage('Din adgangskode blev opdateret.');
   };
   return (
     <div className="flex min-h-screen flex-col items-center justify-center text-white">
@@ -65,18 +64,18 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           {message}
         </Alert>
       ) : null}
-      <h2 className="mb-4 text-4xl font-semibold">Update Password</h2>
+      <h2 className="mb-4 text-4xl font-semibold">Opdater kode</h2>
       <p className="mb-4 font-medium">
-        Hi {user?.email}, Enter your new password below and confirm it
+        Hi {user?.email}, Indtast din nye kode nedenfor og bekræft den
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label htmlFor="password" className="label">
-            Password
+            Kode
           </label>
           <Input
-            id="password"
-            label="Enter a new password"
+            id="Kode"
+            label="Indtast en ny kode"
             name="password"
             type="password"
             value={formData?.password ?? ''}
@@ -91,12 +90,12 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
         ) : null}
         <div className="form-control mt-5">
           <label htmlFor="passwordConfirm" className="label">
-            Confirm Password
+            Bekræft Kode
           </label>
           <Input
             id="passwordConfirm"
             name="passwordConfirm"
-            label="Confirm password"
+            label="Indstast din kode igen"
             type="password"
             value={formData.passwordConfirm ?? ''}
             onChange={(ev) =>
@@ -109,7 +108,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
           <button className="btn btn-primary rounded-xl border bg-white px-2 py-2 text-black">
-            Update Password
+            Opdater Kode
           </button>
         </div>
       </form>

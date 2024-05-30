@@ -71,7 +71,7 @@ export function TableRows<T extends Record<string, any>>({
                 {
                   'border-b border-gray-200 dark:border-gray-500':
                     rowIndex !== rows.length - 1,
-                  'rounded-lg bg-[#383838]':
+                  'rounded-lg bg-[#494949]':
                     selectedRowId === getRowId(row) &&
                     !selectedRowIds &&
                     !setSelectedRowIds,

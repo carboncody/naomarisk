@@ -31,7 +31,6 @@ export function EmployeeTable({ employee }: { employee: User[] }) {
           <span className="break-words text-gray-400">{employee.role}</span>
         </div>
       ),
-      // sort: sortBy('date'),
     },
   };
 

@@ -42,6 +42,7 @@ export interface Contact {
 
 export interface User {
   projectIds: unknown;
+  fullName: string;
   id: string;
   email: string;
   jobDescription?: string;
@@ -98,4 +99,6 @@ export interface Risk {
   userId: string;
   project: Project;
   projectId: string;
+  riskOwnerUserId: string;
+  user: User[];
 }

@@ -6,7 +6,7 @@ export function useEmployees() {
   const queryInfo = useQuery<User[], Error>({
     queryKey: ['company-user'],
     queryFn: async (): Promise<User[]> => {
-      const { data } = await axios.get<User[]>('/api/user/getall');
+      const { data } = await axios.get<User[]>('/api/user');
       return data;
     },
     refetchOnWindowFocus: false,

@@ -35,32 +35,31 @@ export default function InviteEmployee({
     formState: { errors },
   } = useForm<CreateUserForm>({
     defaultValues: {
-      name: '',
+      fullName: '',
       email: '',
       jobDescription: '',
       role: UserRole.User,
     },
   });
 
-  const RoleActionDropdownOptions = [
+  const RoleActionDropdownOptions: { label: string; value: UserRole }[] = [
     {
       label: 'Bruger',
-      value: 'USER',
+      value: UserRole.User,
     },
     {
       label: 'Manager',
-      value: 'MANAGER',
+      value: UserRole.Manager,
     },
     {
       label: 'Ejer',
-      value: 'OWNER',
+      value: UserRole.Owner,
     },
   ];
+
   async function onSubmit(data: CreateUserForm) {
     try {
-      await axios.post('/api/user/create', {
-        CreateUserForm: data,
-      });
+      await axios.post('/api/user', data);
       refetch();
       toast.success('Brugeren inviteret!');
       setIsOpen(false);
@@ -120,6 +119,7 @@ export default function InviteEmployee({
                     buttonLabel={'Roller'}
                     selectedValue={watch('role')}
                     setSelectedValue={(value) => {
+                      if (!value) return;
                       setValue('role', value as UserRole);
                     }}
                   />

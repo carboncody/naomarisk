@@ -1,24 +1,28 @@
 'use client';
 
-import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
-import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
-import { useEmployees } from '@lib/api/hooks';
+import { useRisks } from '@lib/api/hooks/risks';
+import type { Project } from '@models';
 import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
-import { EmployeeTable } from './EmployeeTable';
+import CreateRisk from './CreateRisk';
+import RiskTable from './RiskTable';
 
-export function AllEmployees() {
+interface RisksProps {
+  project: Project;
+}
+
+export function Risks({ project }: RisksProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
 
   const {
-    data: allEmployees,
+    data: allRisks,
     isFetching,
     isError,
     error,
     refetch,
-  } = useEmployees();
+  } = useRisks(project.id);
 
   if (isFetching) {
     return (
@@ -34,23 +38,21 @@ export function AllEmployees() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
-        <div className="mb-4 mt-40 flex w-full justify-between">
-          <p className="text-3xl font-semibold">Alle Medarbejdere</p>
+      <div className="justify-top flex min-h-screen w-[1300px] flex-col items-center px-8 text-white">
+        <div className="my-4 flex w-full justify-between">
+          <p className="text-3xl font-semibold">{project.name}s risici</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
             Tilføj
           </Button>
         </div>
-        <EmployeeTable employee={allEmployees ?? []} />
-        <div className=" justify-flex flex justify-center">
-          <Backbutton href={'/'} />
-        </div>
+        <RiskTable risks={allRisks ?? []} refetch={refetch} project={project} />
       </div>
       {isNewOpen && (
-        <InviteEmployee
+        <CreateRisk
           isOpen={isNewOpen}
           setIsOpen={setIsNewOpen}
           refetch={refetch}
+          project={project}
         />
       )}
     </>
