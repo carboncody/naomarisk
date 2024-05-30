@@ -1,18 +1,18 @@
 import { NextInput } from '@components/ui/Input';
-import LoadingSpinner from '@components/ui/LoadSpinner';
-import { useMe } from '@lib/api/hooks/users/useMe';
 import { type UpdateUserForm } from '@lib/api/types';
 import { type User } from '@models';
 import { Button } from '@nextui-org/react';
 import axios from 'axios';
-import Error from 'next/error';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-export default function UserSettings() {
-  const { data: me, isLoading, error } = useMe();
+interface UserSettingsProps {
+  me: User;
+  refetchMe: () => void;
+}
 
+export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
   const {
     register,
     handleSubmit,
@@ -21,34 +21,18 @@ export default function UserSettings() {
     formState: { errors },
   } = useForm<UpdateUserForm>();
 
+  useEffect(() => {
+    reset(me);
+  }, [me, reset]);
+
   async function onSubmit(data: UpdateUserForm) {
     try {
-      const updatedMe = await axios.patch<User>('/api/user', data);
-      reset({
-        fullName: updatedMe.data.fullName,
-        jobDescription: updatedMe.data.jobDescription,
-      });
+      await axios.patch<User>('/api/user', data);
+      refetchMe();
       toast.success('Brugeren er opdateret!');
     } catch (error) {
       toast.error('Error - something went wrong');
     }
-  }
-
-  useEffect(() => {
-    if (me) {
-      reset({
-        fullName: me.fullName,
-        jobDescription: me.jobDescription,
-      });
-    }
-  }, [me, reset]);
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  if (error) {
-    return <Error statusCode={500} title="Something went wrong" />;
   }
 
   return (

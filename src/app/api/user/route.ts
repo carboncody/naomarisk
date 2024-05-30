@@ -1,5 +1,6 @@
 import { UserService } from '@lib/api';
 import { type CreateUserForm, type UpdateUserForm } from '@lib/api/types';
+import { sendInviteEmail } from '@lib/services/email';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 
@@ -33,6 +34,9 @@ export async function POST(req: Request) {
   const body = (await req.json()) as CreateUserForm;
   const userService = await UserService();
   const employee = await userService.inviteUser(user.email, body);
+
+  void sendInviteEmail(employee.email, employee.company.name);
+
   return NextResponse.json({ employee });
 }
 

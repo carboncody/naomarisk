@@ -20,6 +20,8 @@ export enum UserStatus {
 // Interfaces
 export interface Company {
   id: string;
+  name: string;
+  email: string;
   cvr: string;
   createdAt: Date;
   updatedAt: Date;

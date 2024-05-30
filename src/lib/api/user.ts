@@ -6,7 +6,7 @@ import type { CreateUserForm, UpdateUserForm } from './types';
 
 export async function UserService() {
   async function getMe(email: string) {
-    return db.user.findUnique({ where: { email } });
+    return db.user.findUnique({ where: { email }, include: { company: true } });
   }
 
   async function getUsersInCompany(email: string) {
@@ -75,6 +75,7 @@ export async function UserService() {
           connect: { id: creatorsCompany.companyId },
         },
       },
+      include: { company: true },
     });
   }
 

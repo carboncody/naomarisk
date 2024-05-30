@@ -1,12 +1,12 @@
-import type { CreateContactForm, UpdateContactForm } from './contact';
+import type { CreateContactForm } from './contact';
 
 export type CreateCompanyForm = {
   cvr: string;
   contact: CreateContactForm;
 };
 
-export type UpdateCompanyForm = {
+export interface UpdateCompanyForm {
   name?: string;
   cvr?: string;
-  contact?: UpdateContactForm;
-};
+  email?: string;
+}
