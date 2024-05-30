@@ -1,20 +1,20 @@
 // Enums
 export enum RiskStatus {
-  New = 'NY',
-  Open = 'ÅBEN',
-  Closed = 'LUKKET',
+  New = 'Ny',
+  Open = 'Åben',
+  Closed = 'CLOSED',
 }
 
 export enum UserRole {
-  User = 'BRUGER',
+  User = 'USER',
   Manager = 'MANAGER',
-  Owner = 'EJER',
+  Owner = 'OWNER',
 }
 
 export enum UserStatus {
-  Active = 'AKTIV',
+  Active = 'ACTIVE',
   Pending = 'PENDING',
-  Inactive = 'INAKTIV',
+  Inactive = 'INACTIVE',
 }
 
 // Interfaces
