@@ -3,7 +3,7 @@
 import NewProjectDialog from '@app/(navbar)/projects/components/NewProjectDialog';
 import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
-import { useProjectsInCompany } from '@lib/api/hooks';
+import { useMyProjects } from '@lib/api/hooks';
 import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
@@ -17,7 +17,7 @@ export function AllProjects() {
     isError,
     error,
     refetch,
-  } = useProjectsInCompany();
+  } = useMyProjects();
 
   if (isFetching) {
     return (
@@ -35,7 +35,7 @@ export function AllProjects() {
     <>
       <div className="justify-top flex min-h-screen flex-col items-center">
         <div className="mb-4 mt-40 flex w-full justify-between">
-          <p className="text-3xl font-semibold">Alle Projekter</p>
+          <p className="text-3xl font-semibold">Mine Projekter</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
             Tilføj
           </Button>

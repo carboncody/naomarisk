@@ -36,11 +36,11 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
     },
 
     budget: {
-      title: 'BUDGET',
+      title: 'RISKS',
       spacing: 1,
       render: (project: Project) => (
         <div className="truncate">
-          <span>{project.budget} kr.</span>
+          <span>{project.risks.length} kr.</span>
         </div>
       ),
     },

@@ -1,16 +1,11 @@
-import { RiskService } from '@lib/api/risk';
 import { type CreateRiskForm } from '@lib/api/types';
 import { type UpdateRiskForm } from '@lib/api/types/risk';
+import { RiskService } from '@lib/db/risk';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
   const projectId = req.url.split('/risk/')[1];
-  console.info(
-    '                                                                                                                                                          ------------------------------------------------projectId from url: ',
-    projectId,
-    '---------------------------------------                                                                                                        ',
-  );
 
   if (!projectId) {
     return NextResponse.json({ status: 400, error: 'No project id in url' });

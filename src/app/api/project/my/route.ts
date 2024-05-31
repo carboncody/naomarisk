@@ -1,4 +1,4 @@
-import { ProjectService } from '@lib/api';
+import { ProjectService } from '@lib/db';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 
@@ -14,6 +14,6 @@ export async function GET() {
   }
 
   const projectService = await ProjectService();
-  const projects = await projectService.getProjectsInCompany(user.email);
+  const projects = await projectService.getMyProjects(user.email);
   return NextResponse.json(projects);
 }
