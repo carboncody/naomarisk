@@ -45,13 +45,13 @@ export async function UserService() {
   }
 
   async function updateUser(email: string, updateUserForm: UpdateUserForm) {
-    const { fullName, jobDescription } = updateUserForm;
-    console.info('jon description in the form ----->', jobDescription);
+    const { fullName, jobDescription, role } = updateUserForm;
     return db.user.update({
       where: { email },
       data: {
         fullName: fullName,
         jobDescription: jobDescription,
+        role: role,
       },
     });
   }

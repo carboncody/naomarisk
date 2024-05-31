@@ -36,6 +36,7 @@ export async function PATCH(req: Request) {
   const body = (await req.json()) as UpdateProjectForm;
 
   const projectService = await ProjectService();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { error } = await projectService.updateProject(
     user.email,
     projectId,
@@ -43,6 +44,7 @@ export async function PATCH(req: Request) {
   );
 
   if (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     return NextResponse.json({ error }, { status: error.code });
   }
 
