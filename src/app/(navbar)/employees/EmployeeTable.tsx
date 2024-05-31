@@ -3,10 +3,17 @@ import { sortBy } from '@components/Table/sorting/sort.utils';
 import { type TableColumns } from '@components/Table/types/table.columns';
 import { type User } from '@models';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import DeleteEmployee from './components/DeleteEmployee';
 
-export function EmployeeTable({ employee }: { employee: User[] }) {
+interface EmployeeTableProps {
+  employee: User[];
+  refetch: () => void;
+}
+
+export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
   const rows: User[] = employee;
-  const router = useRouter();
+  const [EmployeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(null);
 
   const columns: TableColumns<User> = {
     email: {
@@ -35,10 +42,21 @@ export function EmployeeTable({ employee }: { employee: User[] }) {
   };
 
   return (
+    <>
     <Table
-      onRowClick={(employee) => router.push(`/employees/${employee.id}`)}
+      onRowClick={(employee) => setEmployeeBeingEdited(employee)}
       columns={columns}
       rows={rows}
-    />
+      />
+
+    {EmployeeBeingEdited && (
+      <DeleteEmployee
+        isOpen={!!EmployeeBeingEdited}
+        employee={EmployeeBeingEdited}
+        setEmployeeBeingEdited={setEmployeeBeingEdited}
+        refetch={refetch}
+        />
+      )}
+      </>
   );
 }
