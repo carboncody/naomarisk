@@ -48,7 +48,7 @@ export default function NewProjectDialog({
       refetch();
       setIsOpen(false);
     } catch (error) {
-      toast.error('Error - something went wrong');
+      toast.error('Error - Du har ikke rettigheder til at oprette projekter');
     }
   }
 

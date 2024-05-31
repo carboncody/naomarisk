@@ -67,13 +67,13 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
             label="CVR nr."
             variant="bordered"
           />
-          <NextInput
+          {/* <NextInput
             {...register('email')}
             value={watch('email') ?? ''}
             className="mb-2"
             label="Email"
             variant="bordered"
-          />
+          /> */}
         </div>
         <div className="grid grid-cols-4 gap-5"></div>
       </div>
