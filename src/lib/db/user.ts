@@ -2,7 +2,7 @@
 
 import { UserRole } from '@models';
 import { db } from '@server/db';
-import type { CreateUserForm, UpdateUserForm } from './types';
+import type { CreateUserForm, UpdateUserForm } from '../api/types';
 
 export async function UserService() {
   async function getMe(email: string) {

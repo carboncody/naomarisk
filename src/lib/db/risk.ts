@@ -1,6 +1,6 @@
 import { db } from '@server/db';
-import { type CreateRiskForm } from './types';
-import { type UpdateRiskForm } from './types/risk';
+import { type CreateRiskForm } from '../api/types';
+import { type UpdateRiskForm } from '../api/types/risk';
 
 export async function RiskService() {
   async function getRisk(projectId: string) {

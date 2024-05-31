@@ -1,4 +1,4 @@
-import { UserService } from '@lib/api';
+import { UserService } from '@lib/db';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 

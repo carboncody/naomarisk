@@ -1,5 +1,5 @@
-import { CompanyService } from '@lib/api/company';
 import { type UpdateCompanyForm } from '@lib/api/types';
+import { CompanyService } from '@lib/db/company';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 

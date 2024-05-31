@@ -1,5 +1,5 @@
-import { UserService } from '@lib/api';
 import { type CreateUserForm, type UpdateUserForm } from '@lib/api/types';
+import { UserService } from '@lib/db';
 import { sendInviteEmail } from '@lib/services/email';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';

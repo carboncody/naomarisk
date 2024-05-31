@@ -1,4 +1,4 @@
-import { UserService } from '@lib/api';
+import { UserService } from '@lib/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {

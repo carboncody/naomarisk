@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@server/db';
-import type { UpdateCompanyForm } from './types';
+import type { UpdateCompanyForm } from '../api/types';
 
 export async function CompanyService() {
   async function getCompany(email: string) {

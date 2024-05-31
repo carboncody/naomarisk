@@ -1,5 +1,5 @@
-import { ProjectService } from '@lib/api';
 import { type UpdateProjectForm } from '@lib/api/types';
+import { ProjectService } from '@lib/db';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
