@@ -2,7 +2,6 @@ import { Table } from '@components/Table';
 import { sortBy } from '@components/Table/sorting/sort.utils';
 import { type TableColumns } from '@components/Table/types/table.columns';
 import { type User } from '@models';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import DeleteEmployee from './components/DeleteEmployee';
 
@@ -13,7 +12,9 @@ interface EmployeeTableProps {
 
 export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
   const rows: User[] = employee;
-  const [EmployeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(null);
+  const [EmployeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(
+    null,
+  );
 
   const columns: TableColumns<User> = {
     email: {
@@ -43,20 +44,20 @@ export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
 
   return (
     <>
-    <Table
-      onRowClick={(employee) => setEmployeeBeingEdited(employee)}
-      columns={columns}
-      rows={rows}
+      <Table
+        onRowClick={(employee) => setEmployeeBeingEdited(employee)}
+        columns={columns}
+        rows={rows}
       />
 
-    {EmployeeBeingEdited && (
-      <DeleteEmployee
-        isOpen={!!EmployeeBeingEdited}
-        employee={EmployeeBeingEdited}
-        setEmployeeBeingEdited={setEmployeeBeingEdited}
-        refetch={refetch}
+      {EmployeeBeingEdited && (
+        <DeleteEmployee
+          isOpen={!!EmployeeBeingEdited}
+          employee={EmployeeBeingEdited}
+          setEmployeeBeingEdited={setEmployeeBeingEdited}
+          refetch={refetch}
         />
       )}
-      </>
+    </>
   );
 }

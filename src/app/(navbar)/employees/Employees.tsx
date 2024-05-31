@@ -44,7 +44,7 @@ export function AllEmployees() {
             </Button>
           </div>
         </div>
-        <EmployeeTable employee={allEmployees ?? []} />
+        <EmployeeTable employee={allEmployees ?? []} refetch={refetch} />
         <div className=" justify-flex flex justify-center">
           <Backbutton href={'/'} />
         </div>
