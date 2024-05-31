@@ -1,5 +1,6 @@
+import { useMyProjects } from './useMyProjects';
 import { usePatchProject } from './usePatchProject';
 import { useProject } from './useProject';
 import { useProjectsInCompany } from './useProjectsInCompany';
 
-export { usePatchProject, useProject, useProjectsInCompany };
+export { useMyProjects, usePatchProject, useProject, useProjectsInCompany };

@@ -4,6 +4,23 @@ import { db } from '@server/db';
 import type { CreateProjectForm, UpdateProjectForm } from '../api/types';
 
 export async function ProjectService() {
+  async function getMyProjects(email: string) {
+    return db.project.findMany({
+      where: {
+        projectUsers: {
+          some: { user: { email } },
+        },
+      },
+      include: {
+        risks: true,
+        projectUsers: {
+          include: { user: true },
+        },
+        company: true,
+      },
+    });
+  }
+
   async function getProjectsInCompany(email: string) {
     return db.project.findMany({
       where: {
@@ -91,29 +108,86 @@ export async function ProjectService() {
   }
 
   async function updateProject(
+    userEmail: string,
     id: string,
     updateProjectForm: UpdateProjectForm,
-  ) {
+  ): Promise<ActionResponse<Project>> {
     const { projectUserIds, ...rest } = updateProjectForm;
-    return db.project.update({
-      where: { id },
-      data: {
-        ...rest,
-        projectUsers: projectUserIds
-          ? {
-              deleteMany: {
-                projectId: id,
-              },
-              createMany: {
-                data: projectUserIds.map((id) => ({ userId: id })),
-              },
-            }
-          : undefined,
-      },
-    });
+
+    try {
+      const user = await db.user.findUnique({
+        where: {
+          email: userEmail,
+        },
+        include: {
+          projectUsers: {
+            where: {
+              projectId: id,
+            },
+          },
+        },
+      });
+
+      if (!user) {
+        return {
+          error: {
+            code: 404,
+            message: `User with email ${userEmail} not found`,
+          },
+        };
+      }
+
+      if (user.role === UserRole.USER) {
+        return {
+          error: {
+            code: 403,
+            message: 'You do not have permission to update this project',
+          },
+        };
+      }
+
+      const projectUser = user.projectUsers.find((pu) => pu.projectId === id);
+      if (!projectUser) {
+        return {
+          error: {
+            code: 403,
+            message: 'You are not a part of this project',
+          },
+        };
+      }
+
+      const updatedProject = await db.project.update({
+        where: { id },
+        data: {
+          ...rest,
+          projectUsers: projectUserIds
+            ? {
+                deleteMany: {
+                  projectId: id,
+                },
+                createMany: {
+                  data: projectUserIds.map((id) => ({ userId: id })),
+                },
+              }
+            : undefined,
+        },
+      });
+
+      return {
+        data: updatedProject,
+      };
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: 'Internal Server Error',
+        },
+      };
+    }
   }
 
   return {
+    getMyProjects,
     getProjectsInCompany,
     getProjectFromId,
     createProject,
