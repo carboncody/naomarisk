@@ -1,8 +1,8 @@
 'use client';
 
 import { NextInput, SingleDropdown } from '@components/ui';
-import { UpdateUserForm, type CreateUserForm } from '@lib/api/types';
-import { User, UserRole } from '@models';
+import { type UpdateUserForm } from '@lib/api/types';
+import { UserRole, type User } from '@models';
 import {
   Button,
   Modal,
@@ -15,36 +15,36 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-interface DeleteEmployeeProps {
+interface EditEmployeeModalProps {
   isOpen: boolean;
   employee: User;
   setEmployeeBeingEdited: (employee: User | null) => void;
   refetch: () => void;
 }
 
-export default function DeleteEmployee({
+export default function EditEmployeeModal({
   refetch,
   setEmployeeBeingEdited,
   employee,
-}: DeleteEmployeeProps) {
+}: EditEmployeeModalProps) {
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
-  } = useForm<CreateUserForm>({
+  } = useForm<UpdateUserForm>({
     defaultValues: {
-      fullName: employee.fullName ?? '',
-      jobDescription: employee.jobDescription ?? '',
-      role: UserRole.User,
+      fullName: employee.fullName,
+      jobDescription: employee.jobDescription,
+      role: employee.role,
     },
   });
 
   async function onSubmit(data: UpdateUserForm) {
     console.info('data: ', data);
     try {
-      await axios.patch('/api/user', data);
+      await axios.patch(`/api/user/${employee.email}`, data);
       refetch();
       toast.success('Brugeren er opdateret');
       setEmployeeBeingEdited(null);
@@ -53,9 +53,9 @@ export default function DeleteEmployee({
     }
   }
 
-  async function onDelete(data: UpdateUserForm) {
+  async function onDelete() {
     try {
-      //   await axios.delete(`/api/user/`, data);
+      await axios.delete(`/api/user/${employee.email}`);
       refetch();
       toast.success('Brugeren er slettet');
       setEmployeeBeingEdited(null);
@@ -102,6 +102,7 @@ export default function DeleteEmployee({
               <div className="flex w-full items-start gap-5">
                 <NextInput
                   {...register('fullName', {})}
+                  value={watch('fullName')}
                   className="col-span-2"
                   label="Navn"
                   errorMessage={errors.fullName?.message}
@@ -109,6 +110,7 @@ export default function DeleteEmployee({
                 />
                 <NextInput
                   {...register('jobDescription')}
+                  value={watch('jobDescription')}
                   label="Job beskrivelse"
                   variant="bordered"
                 />

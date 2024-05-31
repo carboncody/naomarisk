@@ -79,6 +79,10 @@ export async function UserService() {
     });
   }
 
+  async function deleteUser(email: string) {
+    return db.user.delete({ where: { email } });
+  }
+
   return {
     getMe,
     getUsersInCompany,
@@ -86,5 +90,6 @@ export async function UserService() {
     updateOrCreateUser,
     updateUser,
     inviteUser,
+    deleteUser,
   };
 }

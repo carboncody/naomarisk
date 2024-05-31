@@ -3,7 +3,7 @@ import { sortBy } from '@components/Table/sorting/sort.utils';
 import { type TableColumns } from '@components/Table/types/table.columns';
 import { type User } from '@models';
 import { useState } from 'react';
-import DeleteEmployee from './components/DeleteEmployee';
+import EditEmployeeModal from './components/EditEmployeeModal';
 
 interface EmployeeTableProps {
   employee: User[];
@@ -12,7 +12,7 @@ interface EmployeeTableProps {
 
 export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
   const rows: User[] = employee;
-  const [EmployeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(
+  const [employeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(
     null,
   );
 
@@ -50,10 +50,10 @@ export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
         rows={rows}
       />
 
-      {EmployeeBeingEdited && (
-        <DeleteEmployee
-          isOpen={!!EmployeeBeingEdited}
-          employee={EmployeeBeingEdited}
+      {employeeBeingEdited && (
+        <EditEmployeeModal
+          isOpen={!!employeeBeingEdited}
+          employee={employeeBeingEdited}
           setEmployeeBeingEdited={setEmployeeBeingEdited}
           refetch={refetch}
         />

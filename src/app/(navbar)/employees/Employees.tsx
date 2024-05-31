@@ -11,7 +11,6 @@ import { EmployeeTable } from './EmployeeTable';
 
 export function AllEmployees() {
   const [isNewOpen, setIsNewOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const {
     data: allEmployees,
