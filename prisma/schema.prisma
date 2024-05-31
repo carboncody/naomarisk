@@ -117,8 +117,8 @@ model Risk {
   updatedAt   DateTime   @updatedAt
   customId    String
   description String
-  probability Int        @default(0)
-  consequence Int        @default(0)
+  probability Int?
+  consequence Int?
   status      RiskStatus
   comment     String?
   activity    String?

@@ -15,12 +15,13 @@ export function AllEmployees() {
   const {
     data: allEmployees,
     isFetching,
+    isRefetching,
     isError,
     error,
     refetch,
   } = useEmployees();
 
-  if (isFetching) {
+  if (isFetching && !isRefetching) {
     return (
       <div className="flex min-h-full w-full items-center justify-center">
         <LoadingSpinner size="lg" />

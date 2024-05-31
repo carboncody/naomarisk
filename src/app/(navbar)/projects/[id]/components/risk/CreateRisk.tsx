@@ -46,11 +46,6 @@ export default function CreateRisk({
   });
 
   async function onSubmit(data: CreateRiskForm) {
-    if (data.riskOwnerUserId === undefined) {
-      toast.error('Du skal vælge en medarbejder');
-      return;
-    }
-
     try {
       await axios.post('/api/risk/' + project.id, data);
       refetch();
@@ -116,24 +111,28 @@ export default function CreateRisk({
                     error={!!errors.customId}
                   />
                   <NextInput
-                    {...register('description')}
+                    {...register('description', {
+                      required: {
+                        value: true,
+                        message: 'Beskrivelse mangler',
+                      },
+                    })}
                     label="Beskrivelse"
                     className="w-full"
                     variant="bordered"
+                    errorMessage={errors.description?.message}
+                    error={!!errors.description}
                   />
                 </div>
                 <div className="flex w-full items-center justify-between gap-5">
                   <div className="flex w-1/3 gap-4">
                     <NextInput
                       {...register('probability', {
-                        required: {
-                          value: true,
-                          message: 'Sandsynlighed mangler',
-                        },
                         validate: {
                           range: (value) =>
-                            (value >= 0 && value <= 10) ||
-                            'Sandsynlighed skal være mellem 0 og 10',
+                            value === undefined ||
+                            (value >= 0 && value <= 5) ||
+                            'Sandsynlighed skal være mellem 1 og 5',
                         },
                       })}
                       label="Sandsynlighed"
@@ -145,14 +144,11 @@ export default function CreateRisk({
 
                     <NextInput
                       {...register('consequence', {
-                        required: {
-                          value: true,
-                          message: 'Konsekvens mangler',
-                        },
                         validate: {
                           range: (value) =>
-                            (value >= 0 && value <= 10) ||
-                            'Konsekvens skal være mellem 0 og 10',
+                            value === undefined ||
+                            (value >= 0 && value <= 5) ||
+                            'Konsekvens skal være mellem 1 og 5',
                         },
                       })}
                       label="Konsekvens"
@@ -182,9 +178,13 @@ export default function CreateRisk({
                             )?.email
                           : 'Vælg medarbejder'
                       }
-                      setSelectedValue={(value) =>
-                        value && setValue('riskOwnerUserId', value)
-                      }
+                      setSelectedValue={(value) => {
+                        if (value === watch('riskOwnerUserId')) {
+                          setValue('riskOwnerUserId', undefined);
+                          return;
+                        }
+                        setValue('riskOwnerUserId', value);
+                      }}
                     />
                   </div>
                 </div>

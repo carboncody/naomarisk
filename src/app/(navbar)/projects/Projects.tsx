@@ -33,7 +33,7 @@ export function AllProjects() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center">
+      <div className="justify-top flex  min-h-screen flex-col items-center overflow-y-auto">
         <div className="mb-4 mt-40 flex w-full justify-between">
           <p className="text-3xl font-semibold">Mine Projekter</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>

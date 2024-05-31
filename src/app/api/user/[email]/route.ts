@@ -4,6 +4,8 @@ import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 
 export async function PATCH(req: Request) {
+  console.info('------------------------------------PATCH FUCNTION ENTERED');
+
   const supabase = createServerClient();
   const {
     data: { user },
@@ -25,9 +27,18 @@ export async function PATCH(req: Request) {
   }
 
   const body = (await req.json()) as UpdateUserForm;
+  console.info('------------------------------------body: ', body);
 
   const userService = await UserService();
-  const employee = await userService.updateUser(userEmail, body);
+  const { error, data: employee } = await userService.updateUser(
+    userEmail,
+    body,
+    me.email,
+  );
+  if (error) {
+    return NextResponse.json({ error }, { status: error.code });
+  }
+  console.info('------------------------------------employee: ', employee);
   return NextResponse.json(employee);
 }
 

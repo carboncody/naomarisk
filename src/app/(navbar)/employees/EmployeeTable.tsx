@@ -29,11 +29,25 @@ export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
           </span>
         </div>
       ),
+      // sort: sortBy('string'),
+    },
+    fullName: {
+      title: 'NAVN',
+      spacing: 2,
+      render: (employee: User) => (
+        <div className="truncate">
+          <span>{employee.fullName}</span>
+          <br />
+          <span className="break-words text-gray-400">
+            {employee.jobDescription}
+          </span>
+        </div>
+      ),
       sort: sortBy('string'),
     },
     role: {
       title: 'ROLLE',
-      spacing: 2,
+      spacing: 1,
       render: (employee: User) => (
         <div className="truncate">
           <span className="break-words text-gray-400">{employee.role}</span>

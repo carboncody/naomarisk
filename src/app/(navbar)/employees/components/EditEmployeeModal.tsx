@@ -11,7 +11,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -49,7 +49,15 @@ export default function EditEmployeeModal({
       toast.success('Brugeren er opdateret');
       setEmployeeBeingEdited(null);
     } catch (error) {
-      toast.error('Error - something went wrong');
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 403) {
+          toast.error('Du har ikke rettigheder til at redigere brugere');
+          return;
+        }
+        toast.error('Noget gik galt -' + error.code);
+        return;
+      }
+      toast.error('Noget gik galt, beklager.');
     }
   }
 
@@ -129,19 +137,21 @@ export default function EditEmployeeModal({
               </div>
               <div className="grid grid-cols-4 gap-5"></div>
             </ModalBody>
-            <ModalFooter>
-              <Button onClick={() => setEmployeeBeingEdited(null)}>
-                Fortryd
-              </Button>
-              <Button
-                className="bg-[#616161] text-white"
-                onClick={handleSubmit(onSubmit)}
-              >
-                Gem ændringer
-              </Button>
+            <ModalFooter className="flex justify-between">
               <Button color="danger" onClick={handleSubmit(onDelete)}>
                 Slet Medarbejder
               </Button>
+              <div className="flex items-center gap-2">
+                <Button onClick={() => setEmployeeBeingEdited(null)}>
+                  Fortryd
+                </Button>
+                <Button
+                  className="bg-[#616161] text-white"
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Gem ændringer
+                </Button>
+              </div>
             </ModalFooter>
           </>
         </ModalContent>

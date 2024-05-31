@@ -23,45 +23,54 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         <div className="truncate">
           <span>{risk.customId}</span>
           <br />
-          <span className="break-words text-gray-400">
-            Status: {risk.status}
-          </span>
+          <span>Status: {risk.status}</span>
         </div>
       ),
       sort: sortBy('string'),
-    },
-    description: {
-      title: 'Beskrivelse',
-      spacing: 1,
-      render: (risk: Risk) => (
-        <div className="truncate">
-          <span className="break-words text-gray-400">{risk.description}</span>
-        </div>
-      ),
-    },
-    probability: {
-      title: 'Risiko',
-      spacing: 1,
-      render: (risk: Risk) => (
-        <div className="truncate">
-          <span className="break-words text-gray-400">
-            Sansynlighed: {risk.probability}
-          </span>
-          <br />
-          <span className="break-words text-gray-400">
-            Konsekvens: {risk.consequence}
-          </span>
-        </div>
-      ),
     },
     riskowner: {
       title: 'Ejer',
       spacing: 1,
       render: (risk: Risk) => (
         <div className="truncate">
-          <span className="break-words text-gray-400">
-            {risk.riskowner.email}
+          <span>
+            {risk.riskowner ? (
+              risk.riskowner.email
+            ) : (
+              <em className="text-gray-400">Ingen ejer</em>
+            )}
           </span>
+        </div>
+      ),
+    },
+    description: {
+      title: 'Beskrivelse',
+      spacing: 2,
+      render: (risk: Risk) => (
+        <div className="col-span-2 truncate">{risk.description}</div>
+      ),
+    },
+    probability: {
+      title: 'Risiko',
+      spacing: 1,
+      render: (risk: Risk) => (
+        <div className="flex gap-2">
+          <div>
+            <p>Sansynlighed :</p>
+            <p>Konsekvens :</p>
+          </div>
+          <div>
+            <p>
+              {risk.probability ?? (
+                <em className="text-gray-400">Ikke defineret</em>
+              )}
+            </p>
+            <p>
+              {risk.consequence ?? (
+                <em className="text-gray-400">Ikke defineret</em>
+              )}
+            </p>
+          </div>
         </div>
       ),
     },
