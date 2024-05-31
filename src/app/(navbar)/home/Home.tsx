@@ -62,7 +62,7 @@ export async function Home() {
             <p className="text-2xl font-bold">Project example 1 →</p>
             <div className="text-lg">
               Just the basics - Everything you need to know to set up your
-              database and authentication.
+              database and authentication..
             </div>
           </Link>
           <Link
