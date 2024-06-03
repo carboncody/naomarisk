@@ -15,12 +15,13 @@ export function AllEmployees() {
   const {
     data: allEmployees,
     isFetching,
+    isRefetching,
     isError,
     error,
     refetch,
   } = useEmployees();
 
-  if (isFetching) {
+  if (isFetching && !isRefetching) {
     return (
       <div className="flex min-h-full w-full items-center justify-center">
         <LoadingSpinner size="lg" />
@@ -37,11 +38,13 @@ export function AllEmployees() {
       <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
         <div className="mb-4 mt-40 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Medarbejdere</p>
-          <Button className="w-32" onClick={() => setIsNewOpen(true)}>
-            Tilføj
-          </Button>
+          <div className="flex gap-4">
+            <Button className="w-32" onClick={() => setIsNewOpen(true)}>
+              Tilføj
+            </Button>
+          </div>
         </div>
-        <EmployeeTable employee={allEmployees ?? []} />
+        <EmployeeTable employee={allEmployees ?? []} refetch={refetch} />
         <div className=" justify-flex flex justify-center">
           <Backbutton href={'/'} />
         </div>

@@ -54,7 +54,7 @@ export default function EditProject({
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 403) {
-          toast.error('Du har ikke rettigheder til at oprette projekter');
+          toast.error('Du har ikke rettigheder til at ændre projekter');
           return;
         }
         toast.error('Noget gik galt -' + error.code);

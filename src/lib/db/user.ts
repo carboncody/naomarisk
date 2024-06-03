@@ -1,8 +1,13 @@
 'use server';
 
 import { UserRole } from '@models';
+import { User } from '@prisma/client';
 import { db } from '@server/db';
-import type { CreateUserForm, UpdateUserForm } from '../api/types';
+import type {
+  ActionResponse,
+  CreateUserForm,
+  UpdateUserForm,
+} from '../api/types';
 
 export async function UserService() {
   async function getMe(email: string) {
@@ -44,39 +49,112 @@ export async function UserService() {
     });
   }
 
-  async function updateUser(email: string, updateUserForm: UpdateUserForm) {
-    const { fullName, jobDescription } = updateUserForm;
-    console.info('jon description in the form ----->', jobDescription);
-    return db.user.update({
-      where: { email },
-      data: {
-        fullName: fullName,
-        jobDescription: jobDescription,
-      },
-    });
+  async function updateUser(
+    email: string,
+    updateUserForm: UpdateUserForm,
+    me?: string,
+  ): Promise<ActionResponse<User>> {
+    const { fullName, jobDescription, role } = updateUserForm;
+
+    try {
+      const user = await db.user.findUnique({
+        where: {
+          email: me,
+        },
+      });
+
+      if (!user) {
+        return {
+          error: {
+            code: 404,
+            message: `User with email ${email} not found`,
+          },
+        };
+      }
+
+      if (user.role === UserRole.User) {
+        return {
+          error: {
+            code: 403,
+            message: 'You do not have permission to update users',
+          },
+        };
+      }
+
+      const createdUser = await db.user.update({
+        where: { email },
+        data: {
+          fullName: fullName,
+          jobDescription: jobDescription,
+          role: role,
+        },
+      });
+
+      return { data: createdUser };
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: 'Internal Server Error',
+        },
+      };
+    }
   }
 
   async function inviteUser(creatorEmail: string, data: CreateUserForm) {
-    const creatorsCompany = await db.user.findUnique({
-      where: { email: creatorEmail },
-      include: { company: true },
-    });
+    try {
+      const creatorsCompany = await db.user.findUnique({
+        where: { email: creatorEmail },
+        include: { company: true },
+      });
 
-    if (!creatorsCompany) {
-      throw new Error('Creator not found');
-    }
+      if (!creatorsCompany) {
+        throw new Error('Creator not found');
+      }
 
-    return db.user.create({
-      data: {
-        email: data.email,
-        fullName: data.email,
-        role: data.role,
-        company: {
-          connect: { id: creatorsCompany.companyId },
+      if (!creatorsCompany) {
+        return {
+          error: {
+            code: 404,
+            message: `User with email ${creatorEmail} not found`,
+          },
+        };
+      }
+
+      if (creatorsCompany.role === UserRole.User) {
+        return {
+          error: {
+            code: 403,
+            message: 'You do not have permission to update this project',
+          },
+        };
+      }
+      const createUser = await db.user.create({
+        data: {
+          email: data.email,
+          fullName: data.email,
+          role: data.role,
+          company: {
+            connect: { id: creatorsCompany.companyId },
+          },
         },
-      },
-      include: { company: true },
-    });
+        include: { company: true },
+      });
+      return {
+        data: createUser,
+      };
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: 'Internal Server Error',
+        },
+      };
+    }
+  }
+
+  async function deleteUser(email: string) {
+    return db.user.delete({ where: { email } });
   }
 
   return {
@@ -86,5 +164,6 @@ export async function UserService() {
     updateOrCreateUser,
     updateUser,
     inviteUser,
+    deleteUser,
   };
 }

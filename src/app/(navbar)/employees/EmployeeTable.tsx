@@ -2,11 +2,19 @@ import { Table } from '@components/Table';
 import { sortBy } from '@components/Table/sorting/sort.utils';
 import { type TableColumns } from '@components/Table/types/table.columns';
 import { type User } from '@models';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import EditEmployeeModal from './components/EditEmployeeModal';
 
-export function EmployeeTable({ employee }: { employee: User[] }) {
+interface EmployeeTableProps {
+  employee: User[];
+  refetch: () => void;
+}
+
+export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
   const rows: User[] = employee;
-  const router = useRouter();
+  const [employeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(
+    null,
+  );
 
   const columns: TableColumns<User> = {
     email: {
@@ -21,11 +29,25 @@ export function EmployeeTable({ employee }: { employee: User[] }) {
           </span>
         </div>
       ),
+      // sort: sortBy('string'),
+    },
+    fullName: {
+      title: 'NAVN',
+      spacing: 2,
+      render: (employee: User) => (
+        <div className="truncate">
+          <span>{employee.fullName}</span>
+          <br />
+          <span className="break-words text-gray-400">
+            {employee.jobDescription}
+          </span>
+        </div>
+      ),
       sort: sortBy('string'),
     },
     role: {
       title: 'ROLLE',
-      spacing: 2,
+      spacing: 1,
       render: (employee: User) => (
         <div className="truncate">
           <span className="break-words text-gray-400">{employee.role}</span>
@@ -35,10 +57,21 @@ export function EmployeeTable({ employee }: { employee: User[] }) {
   };
 
   return (
-    <Table
-      onRowClick={(employee) => router.push(`/employees/${employee.id}`)}
-      columns={columns}
-      rows={rows}
-    />
+    <>
+      <Table
+        onRowClick={(employee) => setEmployeeBeingEdited(employee)}
+        columns={columns}
+        rows={rows}
+      />
+
+      {employeeBeingEdited && (
+        <EditEmployeeModal
+          isOpen={!!employeeBeingEdited}
+          employee={employeeBeingEdited}
+          setEmployeeBeingEdited={setEmployeeBeingEdited}
+          refetch={refetch}
+        />
+      )}
+    </>
   );
 }

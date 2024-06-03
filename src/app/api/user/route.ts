@@ -33,8 +33,13 @@ export async function POST(req: Request) {
 
   const body = (await req.json()) as CreateUserForm;
   const userService = await UserService();
-  const employee = await userService.inviteUser(user.email, body);
-
+  const { error, data: employee } = await userService.inviteUser(
+    user.email,
+    body,
+  );
+  if (error) {
+    return NextResponse.json({ error }, { status: error.code });
+  }
   void sendInviteEmail(employee.email, employee.company.name);
 
   return NextResponse.json({ employee });

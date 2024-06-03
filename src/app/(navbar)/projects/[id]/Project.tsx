@@ -21,10 +21,11 @@ export function Project() {
     data: project,
     error,
     isLoading,
+    isRefetching,
     refetch,
   } = useProject(projectId ?? '');
 
-  if (isLoading) {
+  if (isLoading && !isRefetching) {
     return <LoadingSpinner size="lg" />;
   }
 
@@ -83,7 +84,7 @@ export function Project() {
                         />
                       )}
                     </div>
-                    <div className="h-[45rem] overflow-y-clip rounded-md bg-[#333333] p-4">
+                    <div className="h-[45rem] w-[1000px] overflow-y-clip rounded-md bg-[#333333] p-4">
                       <ProjectEmployee project={project} refetch={refetch} />
                     </div>
                   </div>
@@ -92,7 +93,7 @@ export function Project() {
             </Tab>
             <Tab key="Riscs" title="Risici">
               <Card className="bg-[#333333] text-white">
-                <CardBody className="h-[45rem] overflow-y-clip">
+                <CardBody className="h-[45rem] w-[1500px] items-center ">
                   <Risks project={project} />
                 </CardBody>
               </Card>

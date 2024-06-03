@@ -32,7 +32,6 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
           <span>{dayjs(project.createdAt).format('kl. HH:MM - DD MMM')}</span>
         </div>
       ),
-      // sort: sortBy('date'),
     },
 
     budget: {
@@ -40,7 +39,7 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
       spacing: 1,
       render: (project: Project) => (
         <div className="truncate">
-          <span>{project.risks.length} kr.</span>
+          <span>{project.risks.length}</span>
         </div>
       ),
     },

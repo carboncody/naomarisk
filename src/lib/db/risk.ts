@@ -22,8 +22,8 @@ export async function RiskService() {
         data: {
           ...data,
           projectId,
-          probability: +data.probability,
-          consequence: +data.consequence,
+          probability: data.probability ? +data.probability : undefined,
+          consequence: data.consequence ? +data.consequence : undefined,
         },
       });
       return risk;
