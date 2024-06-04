@@ -42,7 +42,7 @@ export function Project() {
               <Card className="bg-[#212020] text-white">
                 <CardBody>
                   <div className=" flex gap-4">
-                    <div className="rounded-md bg-[#333333] p-4">
+                    <div className="w-[45vh] rounded-md bg-[#333333] p-4">
                       <Button
                         className="my-4 w-32 justify-end"
                         onClick={() => setIsNewOpen(true)}
@@ -84,7 +84,7 @@ export function Project() {
                         />
                       )}
                     </div>
-                    <div className="h-[45rem] w-[1000px] overflow-y-clip rounded-md bg-[#333333] p-4">
+                    <div className="h-[80vh] w-[70vw] overflow-y-auto rounded-md bg-[#333333] p-4">
                       <ProjectEmployee project={project} refetch={refetch} />
                     </div>
                   </div>
@@ -92,8 +92,8 @@ export function Project() {
               </Card>
             </Tab>
             <Tab key="Riscs" title="Risici">
-              <Card className="h-[85vh] border bg-[#333333] text-white">
-                <CardBody className="h-full w-[1500px] items-center ">
+              <Card className="mb-5 h-[80vh] w-[90vw] bg-[#333333] pb-5 text-white">
+                <CardBody className="h-full w-full items-center ">
                   <Risks project={project} />
                 </CardBody>
               </Card>
