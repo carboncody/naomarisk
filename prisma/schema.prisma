@@ -13,7 +13,6 @@ datasource db {
 }
 
 enum RiskStatus {
-  NEW
   OPEN
   CLOSED
 }

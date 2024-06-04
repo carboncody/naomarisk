@@ -16,12 +16,14 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 interface NewProjectDialogProps {
+  myId: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   refetch: () => void;
 }
 
 export default function NewProjectDialog({
+  myId,
   isOpen,
   setIsOpen,
   refetch,
@@ -38,6 +40,7 @@ export default function NewProjectDialog({
       description: '',
       startDate: new Date(),
       dueDate: undefined,
+      projectUserIds: [myId],
     },
   });
 

@@ -41,7 +41,7 @@ export default function CreateRisk({
     defaultValues: {
       probability: 0,
       consequence: 0,
-      status: 'NEW',
+      status: 'OPEN',
     },
   });
 
@@ -54,14 +54,11 @@ export default function CreateRisk({
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 409) {
         toast.error(
-          'Risk already exists with the Id - ' +
-            data.customId +
-            ' in project ' +
-            project.name,
+          'Noget gik galt ved at oprette unik ID til risiko. Prøv venligst igen.',
         );
         return;
       }
-      toast.error('Error - something went wrong');
+      toast.error('Noget gik galt!');
     }
   }
 
@@ -117,7 +114,7 @@ export default function CreateRisk({
                       {...register('probability', {
                         validate: {
                           range: (value) =>
-                            value === undefined ||
+                            value === null ||
                             (value >= 0 && value <= 5) ||
                             'Sandsynlighed skal være mellem 1 og 5',
                         },
@@ -133,7 +130,7 @@ export default function CreateRisk({
                       {...register('consequence', {
                         validate: {
                           range: (value) =>
-                            value === undefined ||
+                            value === null ||
                             (value >= 0 && value <= 5) ||
                             'Konsekvens skal være mellem 1 og 5',
                         },

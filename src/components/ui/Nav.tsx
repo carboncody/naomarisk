@@ -12,6 +12,10 @@ import Link from 'next/link';
 import { SettingsDropdown } from './SettingsDropdown';
 
 export function Nav() {
+  // TODO : fix this!
+  // const me = useMe();
+  // const isAdmin = me.role === UserRole.Owner || me.role === UserRole.Manager;
+
   return (
     <Navbar
       className="absolute h-10 w-full bg-white/10 text-white backdrop-blur-md md:h-16"
@@ -32,13 +36,25 @@ export function Nav() {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="center">
+        {
+          <NavbarItem>
+            <Link href={'/projects?status=all'}>
+              <Button
+                disableAnimation
+                className="text-md bg-transparent text-white"
+              >
+                Alle Projekter
+              </Button>
+            </Link>
+          </NavbarItem>
+        }
         <NavbarItem>
           <Link href={'/projects'}>
             <Button
               disableAnimation
               className="text-md bg-transparent text-white"
             >
-              Projekter
+              Mine Projekter
             </Button>
           </Link>
         </NavbarItem>

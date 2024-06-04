@@ -28,6 +28,13 @@ export async function ProjectService() {
           users: { some: { email } },
         },
       },
+      include: {
+        risks: true,
+        projectUsers: {
+          include: { user: true },
+        },
+        company: true,
+      },
     });
   }
 
@@ -142,16 +149,6 @@ export async function ProjectService() {
           error: {
             code: 403,
             message: 'You do not have permission to update this project',
-          },
-        };
-      }
-
-      const projectUser = user.projectUsers.find((pu) => pu.projectId === id);
-      if (!projectUser) {
-        return {
-          error: {
-            code: 403,
-            message: 'You are not a part of this project',
           },
         };
       }

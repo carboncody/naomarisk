@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "RiskStatus" AS ENUM ('NEW', 'OPEN', 'CLOSED');
+CREATE TYPE "RiskStatus" AS ENUM ('OPEN', 'CLOSED');
 
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('USER', 'MANAGER', 'OWNER');
@@ -81,10 +81,10 @@ CREATE TABLE "Risk" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "customId" TEXT NOT NULL,
+    "customId" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
-    "probability" INTEGER NOT NULL DEFAULT 0,
-    "consequence" INTEGER NOT NULL DEFAULT 0,
+    "probability" INTEGER,
+    "consequence" INTEGER,
     "status" "RiskStatus" NOT NULL,
     "comment" TEXT,
     "activity" TEXT,

@@ -35,7 +35,7 @@ export function Project() {
 
   return (
     <div className="pt-20">
-      <div className="flex h-full items-center justify-center">
+      <div className="flex items-center justify-center">
         <div className="flex w-4/5 flex-col items-center justify-center">
           <Tabs aria-label="Options">
             <Tab key="overview" title="Oversigt">
@@ -92,8 +92,8 @@ export function Project() {
               </Card>
             </Tab>
             <Tab key="Riscs" title="Risici">
-              <Card className="bg-[#333333] text-white">
-                <CardBody className="h-[45rem] w-[1500px] items-center ">
+              <Card className="h-[85vh] border bg-[#333333] text-white">
+                <CardBody className="h-full w-[1500px] items-center ">
                   <Risks project={project} />
                 </CardBody>
               </Card>
