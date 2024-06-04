@@ -35,7 +35,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         <div className="truncate">
           <span>
             {risk.riskowner ? (
-              risk.riskowner.email
+              risk.riskowner.fullName
             ) : (
               <em className="text-gray-400">Ingen ejer</em>
             )}
@@ -45,9 +45,9 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
     },
     description: {
       title: 'Beskrivelse',
-      spacing: 2,
+      spacing: 2, // Adjust spacing to span 2 columns
       render: (risk: Risk) => (
-        <div className="col-span-2 truncate">{risk.description}</div>
+        <div className="col-span-2 truncate">{risk.description}</div> // Add col-span-2
       ),
     },
     probability: {
@@ -78,6 +78,12 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
 
   return (
     <>
+      <div className="grid grid-cols-5 gap-4 text-white/0">
+        <div className="col-span-1">Risk-ID</div>
+        <div className="col-span-1">Ejer</div>
+        <div className="col-span-2">Beskrivelse</div>
+        <div className="col-span-1">Risiko</div>
+      </div>
       <Table
         onRowClick={(risk) => setRiskBeingEdited(risk)}
         columns={columns}
