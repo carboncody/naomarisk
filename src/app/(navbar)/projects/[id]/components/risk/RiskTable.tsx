@@ -37,7 +37,6 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
           <span>Status: {risk.status}</span>
         </div>
       ),
-      sort: sortBy('string'),
     },
     riskowner: {
       title: 'Ejer',
@@ -58,8 +57,9 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       title: 'Beskrivelse',
       spacing: 2,
       render: (risk: Risk) => (
-        <div className="col-span-2 truncate">{risk.description}</div> // Add col-span-2
+        <div className="col-span-2 truncate">{risk.description}</div>
       ),
+      sort: sortBy('string'),
     },
     probability: {
       title: 'Risiko -> Risikoscore',

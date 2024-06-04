@@ -8,11 +8,7 @@ export async function RiskService() {
     return db.risk.findMany({
       where: { projectId },
       include: {
-        riskowner: {
-          select: {
-            email: true,
-          },
-        },
+        riskowner: true,
       },
     });
   }
@@ -31,7 +27,17 @@ export async function RiskService() {
         : 0;
 
     try {
-      const risk = await db.risk.create({
+      const risksInProject = await db.risk.findMany({
+        where: { projectId },
+        select: { customId: true },
+      });
+
+      const highestRiskCustomId =
+        risksInProject.length > 0
+          ? Math.max(...risksInProject.map((risk) => risk.customId))
+          : 0;
+
+      const newRisk = await db.risk.create({
         data: {
           ...data,
           customId: +highestRisk + 1,
@@ -40,9 +46,10 @@ export async function RiskService() {
           consequence: data.consequence ? +data.consequence : null,
         },
       });
-      return risk;
+
+      return newRisk;
     } catch (error) {
-      throw error;
+      throw new Error();
     }
   }
 
