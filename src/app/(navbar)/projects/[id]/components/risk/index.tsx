@@ -38,8 +38,8 @@ export function Risks({ project }: RisksProps) {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen w-[1400px] flex-col items-center overflow-y-auto px-8 text-white">
-        <div className="my-4 flex w-full justify-between overflow-y-auto">
+      <div className="justify-top flex min-h-screen w-[1400px] flex-col items-center px-8 text-white ">
+        <div className="my-4 flex w-full justify-between">
           <p className="text-3xl font-semibold">{project.name}s risici</p>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
             Tilføj
