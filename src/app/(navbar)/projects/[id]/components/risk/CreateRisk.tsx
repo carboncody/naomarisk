@@ -97,19 +97,7 @@ export default function CreateRisk({
               </ModalHeader>
               <ModalBody className="text-white">
                 <div className="flex w-full gap-5">
-                  <NextInput
-                    {...register('customId', {
-                      required: {
-                        value: true,
-                        message: 'Id mangler',
-                      },
-                    })}
-                    className="w-1/6"
-                    label="Id"
-                    labelPlacement="inside"
-                    errorMessage={errors.customId?.message}
-                    error={!!errors.customId}
-                  />
+                 
                   <NextInput
                     {...register('description', {
                       required: {

@@ -13,7 +13,6 @@ export async function GET(req: Request) {
 
   const riskService = await RiskService();
   const risk = await riskService.getRisk(projectId);
-  console.info('risk: ', risk[1]?.id);
 
   return NextResponse.json(risk);
 }

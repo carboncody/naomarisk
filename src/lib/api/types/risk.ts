@@ -11,4 +11,4 @@ export type CreateRiskForm = {
   riskOwnerUserId: string | undefined;
 };
 
-export type UpdateRiskForm = Partial<CreateRiskForm>;
+export type UpdateRiskForm = Partial<CreateRiskForm> & { customId: never };

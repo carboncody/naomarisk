@@ -15,6 +15,8 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const rows: Risk[] = risks;
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
 
+  console.info('risks: ', rows);
+
   const columns: TableColumns<Risk> = {
     id: {
       title: 'Risk-ID',
@@ -26,7 +28,6 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
           <span>Status: {risk.status}</span>
         </div>
       ),
-      sort: sortBy('string'),
     },
     riskowner: {
       title: 'Ejer',
@@ -45,10 +46,11 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
     },
     description: {
       title: 'Beskrivelse',
-      spacing: 2, // Adjust spacing to span 2 columns
+      spacing: 2, 
       render: (risk: Risk) => (
-        <div className="col-span-2 truncate">{risk.description}</div> // Add col-span-2
+        <div className="col-span-2 truncate">{risk.description}</div>
       ),
+      sort: sortBy('string'),
     },
     probability: {
       title: 'Risiko',
@@ -77,6 +79,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   };
 
   return (
+    
     <>
       <div className="grid grid-cols-5 gap-4 text-white/0">
         <div className="col-span-1">Risk-ID</div>
