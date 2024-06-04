@@ -13,7 +13,6 @@ datasource db {
 }
 
 enum RiskStatus {
-  NEW
   OPEN
   CLOSED
 }
@@ -115,7 +114,7 @@ model Risk {
   id          String     @id @default(uuid())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  customId    String
+  customId    Int
   description String
   probability Int?
   consequence Int?

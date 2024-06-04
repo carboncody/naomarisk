@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`font-sans ${inter.variable}`}>
-        <main className="h-screen bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] px-8 text-white">
+        <main className="h-screen overflow-clip bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] px-8 text-white">
           <Providers>
             <Toast />
             {children}
