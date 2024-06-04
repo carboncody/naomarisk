@@ -10,7 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -47,7 +47,15 @@ export function MembersModal({
       refetchProject();
       setIsOpen(false);
     } catch (error) {
-      toast.error('Error - something went wrong');
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 403) {
+          toast.error('Du har ikke rettigheder til at ændre projekter');
+          return;
+        }
+        toast.error('Noget gik galt -' + error.code);
+        return;
+      }
+      toast.error('Noget gik galt, beklager.');
     }
   }
 

@@ -1,7 +1,9 @@
 import { Table } from '@components/Table';
 import { sortBy } from '@components/Table/sorting/sort.utils';
 import { type TableColumns } from '@components/Table/types/table.columns';
+import { ColorMap, RiskMap } from '@lib/calc/threshholds';
 import { type Project, type Risk } from '@models';
+import clsx from 'clsx';
 import { useState } from 'react';
 import EditRisk from './EditRisk';
 
@@ -14,6 +16,15 @@ interface RiskTableProps {
 export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const rows: Risk[] = risks;
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
+
+  function getStyleColor(risk: Risk): string | undefined {
+    const riskValue = risk.probability * risk.consequence;
+    const threshold = RiskMap[riskValue];
+    if (threshold === undefined) {
+      return undefined;
+    }
+    return ColorMap[threshold];
+  }
 
   const columns: TableColumns<Risk> = {
     id: {
@@ -35,7 +46,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         <div className="truncate">
           <span>
             {risk.riskowner ? (
-              risk.riskowner.fullName
+              risk.riskowner.fullName ?? risk.riskowner.email
             ) : (
               <em className="text-gray-400">Ingen ejer</em>
             )}
@@ -45,16 +56,21 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
     },
     description: {
       title: 'Beskrivelse',
-      spacing: 2, // Adjust spacing to span 2 columns
+      spacing: 2,
       render: (risk: Risk) => (
         <div className="col-span-2 truncate">{risk.description}</div> // Add col-span-2
       ),
     },
     probability: {
-      title: 'Risiko',
+      title: 'Risiko -> Risikoscore',
       spacing: 1,
       render: (risk: Risk) => (
-        <div className="flex gap-2">
+        <div
+          style={{
+            color: getStyleColor(risk),
+          }}
+          className={clsx('flex items-center gap-2')}
+        >
           <div>
             <p>Sansynlighed :</p>
             <p>Konsekvens :</p>
@@ -71,6 +87,10 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
               )}
             </p>
           </div>
+          <em>
+            {' '}
+            {'->'} {risk.probability * risk.consequence}
+          </em>
         </div>
       ),
     },

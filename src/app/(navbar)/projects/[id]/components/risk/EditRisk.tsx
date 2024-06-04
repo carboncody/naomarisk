@@ -40,12 +40,11 @@ export default function EditRisk({
     formState: { errors },
   } = useForm<UpdateRiskForm>({
     defaultValues: {
-      customId: riskElement.customId ?? '',
-      description: riskElement.description ?? '',
-      probability: riskElement.probability ?? 0,
-      consequence: riskElement.consequence ?? 0,
+      description: riskElement.description,
+      probability: riskElement.probability ?? null,
+      consequence: riskElement.consequence ?? null,
       status: riskElement.status,
-      comment: riskElement.comment ?? '',
+      comment: riskElement.comment,
     },
   });
 
@@ -58,13 +57,14 @@ export default function EditRisk({
       label: 'Closed',
       value: RiskStatus.Closed,
     },
-    {
-      label: 'New',
-      value: RiskStatus.New,
-    },
   ];
 
   async function onSubmit(data: UpdateRiskForm) {
+    const { probability, consequence } = data;
+
+    data.probability = probability ? +probability : null;
+    data.consequence = consequence ? +consequence : null;
+
     try {
       await axios.patch(`/api/risk/${riskElement.id}`, data);
       toast.success('Projektet er opdateret!');
@@ -88,6 +88,8 @@ export default function EditRisk({
     );
   }, [allEmployees, project.projectUsers]);
 
+  console.info(watch());
+
   return (
     <>
       <Modal
@@ -106,27 +108,13 @@ export default function EditRisk({
           <ModalBody className="text-white">
             <div className="flex w-full gap-5">
               <NextInput
-                {...register('customId', {
-                  required: {
-                    value: true,
-                    message: 'Id mangler',
-                  },
-                })}
-                value={watch('customId') ?? ''}
-                className="w-1/6"
-                label="Id"
-                labelPlacement="inside"
-                errorMessage={errors.customId?.message}
-                error={!!errors.customId}
-              />
-              <NextInput
                 {...register('description', {
                   required: {
                     value: true,
                     message: 'Beskrivelse mangler',
                   },
                 })}
-                value={watch('description') ?? ''}
+                value={watch('description')}
                 label="Beskrivelse"
                 className="w-full"
                 variant="bordered"
@@ -140,12 +128,12 @@ export default function EditRisk({
                   {...register('probability', {
                     validate: {
                       range: (value) =>
-                        value === undefined ||
+                        value === null ||
                         (value >= 0 && value <= 5) ||
                         'Sandsynlighed skal være mellem 1 og 5',
                     },
                   })}
-                  value={watch('probability') ?? ''}
+                  value={watch('probability')}
                   label="Sandsynlighed"
                   variant="bordered"
                   type="number"
@@ -156,12 +144,12 @@ export default function EditRisk({
                   {...register('consequence', {
                     validate: {
                       range: (value) =>
-                        value === undefined ||
+                        value === null ||
                         (value >= 0 && value <= 5) ||
                         'Konsekvens skal være mellem 1 og 5',
                     },
                   })}
-                  value={watch('consequence') ?? ''}
+                  value={watch('consequence')}
                   label="Konsekvens"
                   variant="bordered"
                   type="number"

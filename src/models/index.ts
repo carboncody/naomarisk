@@ -1,6 +1,5 @@
 // Enums
 export enum RiskStatus {
-  New = 'NEW',
   Open = 'OPEN',
   Closed = 'CLOSED',
 }
