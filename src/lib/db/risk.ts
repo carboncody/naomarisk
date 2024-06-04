@@ -1,4 +1,3 @@
-import { type Risk } from '@prisma/client';
 import { db } from '@server/db';
 import { type CreateRiskForm } from '../api/types';
 import { type UpdateRiskForm } from '../api/types/risk';
@@ -19,22 +18,24 @@ export async function RiskService() {
         where: { projectId },
         select: { customId: true },
       });
-  
+
       const highestRiskCustomId =
         risksInProject.length > 0
           ? Math.max(...risksInProject.map((risk) => risk.customId))
           : 0;
-  
+
       const newRisk = await db.risk.create({
         data: {
           ...data,
           customId: highestRiskCustomId + 1,
           projectId,
-          probability: data.probability !== undefined ? +data.probability : undefined,
-          consequence: data.consequence !== undefined ? +data.consequence : undefined,
+          probability:
+            data.probability !== undefined ? +data.probability : undefined,
+          consequence:
+            data.consequence !== undefined ? +data.consequence : undefined,
         },
       });
-  
+
       return newRisk;
     } catch (error) {
       throw new Error();

@@ -97,7 +97,6 @@ export default function CreateRisk({
               </ModalHeader>
               <ModalBody className="text-white">
                 <div className="flex w-full gap-5">
-                 
                   <NextInput
                     {...register('description', {
                       required: {

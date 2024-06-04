@@ -46,7 +46,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
     },
     description: {
       title: 'Beskrivelse',
-      spacing: 2, 
+      spacing: 2,
       render: (risk: Risk) => (
         <div className="col-span-2 truncate">{risk.description}</div>
       ),
@@ -79,7 +79,6 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   };
 
   return (
-    
     <>
       <div className="grid grid-cols-5 gap-4 text-white/0">
         <div className="col-span-1">Risk-ID</div>

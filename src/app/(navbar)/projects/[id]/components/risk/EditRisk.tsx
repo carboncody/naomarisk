@@ -40,10 +40,9 @@ export default function EditRisk({
     formState: { errors },
   } = useForm<UpdateRiskForm>({
     defaultValues: {
-      customId: riskElement.customId ?? '',
-      description: riskElement.description ?? '',
-      probability: riskElement.probability ?? 0,
-      consequence: riskElement.consequence ?? 0,
+      description: riskElement.description,
+      probability: riskElement.probability ?? null,
+      consequence: riskElement.consequence ?? null,
       status: riskElement.status,
       comment: riskElement.comment ?? '',
     },
@@ -105,20 +104,6 @@ export default function EditRisk({
           </ModalHeader>
           <ModalBody className="text-white">
             <div className="flex w-full gap-5">
-              <NextInput
-                {...register('customId', {
-                  required: {
-                    value: true,
-                    message: 'Id mangler',
-                  },
-                })}
-                value={watch('customId') ?? ''}
-                className="w-1/6"
-                label="Id"
-                labelPlacement="inside"
-                errorMessage={errors.customId?.message}
-                error={!!errors.customId}
-              />
               <NextInput
                 {...register('description', {
                   required: {
