@@ -2,8 +2,8 @@
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useRisks } from '@lib/api/hooks/risks';
-import type { Project } from '@models';
-import { Button } from '@nextui-org/react';
+import { RiskStatus, type Project } from '@models';
+import { Button, Tab, Tabs } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import CreateRisk from './CreateRisk';
@@ -15,6 +15,7 @@ interface RisksProps {
 
 export function Risks({ project }: RisksProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
+  const [selectedTab, setSelectedTab] = useState<RiskStatus>(RiskStatus.Open);
 
   const {
     data: allRisks,
@@ -38,14 +39,30 @@ export function Risks({ project }: RisksProps) {
 
   return (
     <>
-      <div className="justify-top flex w-full flex-col items-center px-8 text-white ">
-        <div className="my-4 flex w-full justify-between">
-          <p className="text-3xl font-semibold">{project.name}s risici</p>
+      <div className="justify-top flex w-full flex-col items-center text-white ">
+        <p className="text-xl font-semibold">
+          Alle {selectedTab === RiskStatus.Open ? 'åben' : 'lukket'} risici for
+          projekt {project.name}
+        </p>
+
+        <div className="mb-4 flex w-full items-center justify-between">
+          <Tabs
+            aria-label="Options"
+            selectedKey={selectedTab}
+            onSelectionChange={(value) => setSelectedTab(value as RiskStatus)}
+          >
+            <Tab key="OPEN" title="Åben" />
+            <Tab className="border-0" key="CLOSED" title="Lukket" />
+          </Tabs>
           <Button className="w-32" onClick={() => setIsNewOpen(true)}>
             Tilføj
           </Button>
         </div>
-        <RiskTable risks={allRisks ?? []} refetch={refetch} project={project} />
+        <RiskTable
+          risks={allRisks?.filter((risk) => risk.status === selectedTab) ?? []}
+          refetch={refetch}
+          project={project}
+        />
       </div>
       {isNewOpen && (
         <CreateRisk

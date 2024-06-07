@@ -9,8 +9,8 @@ import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
-import { Risks } from './components/risk';
 
 export function Project() {
   const pathName = usePathname();
