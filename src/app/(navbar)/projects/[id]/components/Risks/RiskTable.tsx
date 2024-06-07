@@ -14,7 +14,15 @@ interface RiskTableProps {
 }
 
 export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
-  const rows: Risk[] = risks;
+  type Row = Risk & { riskScore: number };
+
+  const rows: Row[] = risks.map((risk) => ({
+    ...risk,
+    riskScore:
+      risk.probability && risk.consequence
+        ? risk.probability * risk.consequence
+        : 0,
+  }));
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
 
   function getStyleColor(risk: Risk): string | undefined {
@@ -26,8 +34,8 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
     return ColorMap[threshold];
   }
 
-  const columns: TableColumns<Risk> = {
-    id: {
+  const columns: TableColumns<Row> = {
+    customId: {
       title: 'Risk-ID',
       spacing: 1,
       render: (risk: Risk) => (
@@ -37,6 +45,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
           <span>Status: {risk.status}</span>
         </div>
       ),
+      sort: sortBy('number'),
     },
     riskowner: {
       title: 'Ejer',
@@ -61,7 +70,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       ),
       sort: sortBy('string'),
     },
-    probability: {
+    riskScore: {
       title: 'Risiko -> Risikoscore',
       spacing: 1,
       render: (risk: Risk) => (
@@ -93,6 +102,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
           </em>
         </div>
       ),
+      sort: sortBy('number'),
     },
   };
 

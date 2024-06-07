@@ -89,7 +89,7 @@ export interface Risk {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  customId: string;
+  customId: number;
   description: string;
   probability: number;
   consequence: number;
