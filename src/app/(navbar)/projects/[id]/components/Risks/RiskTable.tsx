@@ -41,8 +41,8 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       render: (risk: Risk) => (
         <div className="truncate">
           <span>{risk.customId}</span>
-          <br />
-          <span>Status: {risk.status}</span>
+          {/* <br />
+          <span>Status: {risk.status}</span> */}
         </div>
       ),
       sort: sortBy('number'),
@@ -115,6 +115,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         <div className="col-span-1">Risiko</div>
       </div>
       <Table
+        expanding
         onRowClick={(risk) => setRiskBeingEdited(risk)}
         columns={columns}
         rows={rows}

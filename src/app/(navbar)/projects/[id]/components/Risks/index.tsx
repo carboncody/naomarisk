@@ -7,7 +7,7 @@ import { Button, Tab, Tabs } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import CreateRisk from './CreateRisk';
-import RiskTable from './RiskTable';
+import { RiskTable } from './Table';
 
 interface RisksProps {
   project: Project;
