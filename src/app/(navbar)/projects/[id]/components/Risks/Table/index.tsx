@@ -179,7 +179,7 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
                 </div>
                 <button
                   className="flex w-16 items-center  justify-center rounded-lg"
-                  onClick={(risk) => setRiskBeingEdited(risk)}
+                  onClick={(risk) => console.log(risk)}
                 >
                   <MdOutlineEdit />
                 </button>
