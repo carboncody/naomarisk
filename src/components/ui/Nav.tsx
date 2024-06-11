@@ -18,7 +18,7 @@ export function Nav() {
 
   return (
     <Navbar
-      className="absolute h-10 w-full bg-white/10 text-white backdrop-blur-md md:h-16"
+      className="sticky h-10 w-full bg-white/10 text-white backdrop-blur-md md:h-16"
       classNames={{
         wrapper: 'max-w-[2024px]',
       }}

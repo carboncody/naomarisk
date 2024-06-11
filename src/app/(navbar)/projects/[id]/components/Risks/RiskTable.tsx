@@ -26,7 +26,10 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
 
   function getStyleColor(risk: Risk): string | undefined {
-    const riskValue = risk.probability * risk.consequence;
+    const riskValue =
+      risk.probability && risk.consequence
+        ? risk.probability * risk.consequence
+        : 0;
     const threshold = RiskMap[riskValue];
     if (threshold === undefined) {
       return undefined;
@@ -96,10 +99,12 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
               )}
             </p>
           </div>
-          <em>
-            {' '}
-            {'->'} {risk.probability * risk.consequence}
-          </em>
+          {risk.probability && risk.consequence && (
+            <em>
+              {' '}
+              {'->'} {risk.probability * risk.consequence}
+            </em>
+          )}
         </div>
       ),
       sort: sortBy('number'),
