@@ -45,6 +45,7 @@ export default function EditRisk({
       consequence: riskElement.consequence ?? null,
       status: riskElement.status,
       comment: riskElement.comment,
+      activity: riskElement.activity,
     },
   });
 
@@ -131,6 +132,7 @@ export default function EditRisk({
                       message: 'aktivitet mangler',
                     },
                   })}
+                  value={watch('activity')}
                   label="Aktivitet"
                   className="w-full"
                   variant="bordered"
@@ -146,6 +148,7 @@ export default function EditRisk({
                       message: 'Kommentar mangler',
                     },
                   })}
+                  value={watch('comment')}
                   label="Kommentar"
                   className="w-full"
                   variant="bordered"
@@ -205,11 +208,11 @@ export default function EditRisk({
                 <div className="flex items-center gap-2">
                   <span>Risiko ejer {'->'}</span>
                   <SingleDropdown
-                    selectedValue={undefined}
+                    selectedValue={watch('riskOwnerUserId')}
                     options={
                       projectMembers
                         ? projectMembers.map((employee) => ({
-                            label: employee.email,
+                            label: employee.fullName,
                             value: employee.id,
                           }))
                         : []

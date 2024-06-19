@@ -181,7 +181,7 @@ export default function CreateRisk({
                       options={
                         projectMembers
                           ? projectMembers.map((employee) => ({
-                              label: employee.email,
+                              label: employee.fullName,
                               value: employee.id,
                             }))
                           : []

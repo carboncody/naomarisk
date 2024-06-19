@@ -10,13 +10,11 @@ import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { ProjectTable } from './ProjectTable';
+import { ProjectTable } from './components/ProjectTable';
 
 export function AllProjects() {
   const searchParams = useSearchParams();
   const all = searchParams.get('status');
-  console.info(searchParams);
-  console.info(all);
   const me = useMe();
   const isAdmin = useAdmin(me);
 

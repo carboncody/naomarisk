@@ -83,11 +83,13 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   }
 
   function getRiskValue(risk: Risk): number {
-    return risk.probability * risk.consequence || 0;
+    const probability = risk.probability ?? 0;
+    const consequence = risk.consequence ?? 0;
+    return probability * consequence;
   }
 
   function getStyleColor(risk: Risk): string | undefined {
-    const riskValue = risk.probability * risk.consequence;
+    const riskValue = getRiskValue(risk);
     const threshold = RiskMap[riskValue];
     if (threshold === undefined) {
       return undefined;
@@ -173,13 +175,13 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
                       </p>
                     </div>
                     <em>
-                      {'->'} {risk.probability * risk.consequence}
+                      {'->'} {getRiskValue(risk)}
                     </em>
                   </div>
                 </div>
                 <button
                   className="flex w-16 items-center  justify-center rounded-lg"
-                  onClick={(risk) => setRiskBeingEdited(risk)}
+                  onClick={() => setRiskBeingEdited(risk)}
                 >
                   <MdOutlineEdit />
                 </button>

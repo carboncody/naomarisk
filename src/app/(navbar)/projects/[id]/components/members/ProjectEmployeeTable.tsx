@@ -49,6 +49,7 @@ export function ProjectEmployeeTable({
       onRowClick={(employee) => router.push(`/employees/${employee.id}`)}
       columns={columns}
       rows={rows}
+      applyMinWidth={false}
     />
   );
 }

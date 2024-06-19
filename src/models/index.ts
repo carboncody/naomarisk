@@ -91,8 +91,8 @@ export interface Risk {
   updatedAt: Date;
   customId: number;
   description: string;
-  probability: number;
-  consequence: number;
+  probability: number | null;
+  consequence: number | null;
   status: RiskStatus;
   comment?: string;
   activity?: string;
