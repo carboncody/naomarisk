@@ -38,6 +38,13 @@ export function Project() {
       <div className="flex items-center justify-center">
         <div className="flex w-4/5 flex-col items-center justify-center">
           <Tabs aria-label="Options">
+            <Tab key="Riscs" title="Risici">
+              <Card className="mb-5 h-[80vh] w-[90vw] bg-[#333333] pb-5 text-white">
+                <CardBody className="h-full w-full items-center ">
+                  <Risks project={project} />
+                </CardBody>
+              </Card>
+            </Tab>
             <Tab key="overview" title="Oversigt">
               <Card className="bg-[#212020] text-white">
                 <CardBody>
@@ -73,7 +80,11 @@ export function Project() {
                       <p className="mt-2 font-semibold">
                         Budgettet for projektet:
                       </p>
-                      <p className="font-thin">{project.budget} kr.</p>
+                      <p className="font-thin">
+                        {project.budget
+                          ? `${project.budget} kr.`
+                          : 'Budget er ikke sat'}
+                      </p>
 
                       {isNewOpen && (
                         <EditProject
@@ -88,13 +99,6 @@ export function Project() {
                       <ProjectEmployee project={project} refetch={refetch} />
                     </div>
                   </div>
-                </CardBody>
-              </Card>
-            </Tab>
-            <Tab key="Riscs" title="Risici">
-              <Card className="mb-5 h-[80vh] w-[90vw] bg-[#333333] pb-5 text-white">
-                <CardBody className="h-full w-full items-center ">
-                  <Risks project={project} />
                 </CardBody>
               </Card>
             </Tab>
