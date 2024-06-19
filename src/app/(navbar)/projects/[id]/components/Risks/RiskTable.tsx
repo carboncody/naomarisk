@@ -44,8 +44,6 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       render: (risk: Risk) => (
         <div className="truncate">
           <span>{risk.customId}</span>
-          {/* <br />
-          <span>Status: {risk.status}</span> */}
         </div>
       ),
       sort: sortBy('number'),

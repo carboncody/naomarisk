@@ -50,7 +50,7 @@ export function Risks({ project }: RisksProps) {
             aria-label="Options"
             selectedKey={selectedTab}
             onSelectionChange={(value) => {
-              console.log(selectedTab);
+              // console.log(selectedTab);
               setSelectedTab(value as RiskStatus);
             }}
           >

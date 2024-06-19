@@ -14,7 +14,7 @@ export type TableProps<T extends Record<string, any>> = {
   rows: T[];
   columns: TableColumns<T>;
   expanding?: boolean;
-  rowExpander?: React.ReactNode; // New prop for row expansion
+  rowExpander?: React.ReactNode;
   className?: string;
   selectedRowIds?: string[];
   getRowId?: (row: T) => string;
