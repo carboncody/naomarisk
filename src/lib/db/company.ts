@@ -8,6 +8,27 @@ export async function CompanyService() {
     return db.company.findUnique({ where: { email } });
   }
 
+  async function getUserCompany(userEmail: string) {
+    return db.company.findFirst({
+      where: {
+        users: {
+          some: {
+            email: userEmail,
+          },
+        },
+      },
+      include: {
+        users: true,
+        projects: {
+          include: {
+            risks: true,
+            projectUsers: true,
+          },
+        },
+      },
+    });
+  }
+
   async function getCompanyFromId(id: string) {
     return db.company.findUnique({ where: { id } });
   }
@@ -37,6 +58,7 @@ export async function CompanyService() {
 
   return {
     getCompany,
+    getUserCompany,
     getCompanyFromId,
     updateCompany,
   };
