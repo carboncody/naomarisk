@@ -98,10 +98,9 @@ export function Risk() {
                   <SingleRiskMatrix risk={risk} />
                 </div>
               </div>
-              <div className="w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
-                <div className="h-full w-full border bg-white/50">
-                  Dashboard
-                </div>
+              <div className="w-2/3 overflow-y-auto rounded-lg bg-[#333333] p-4">
+                <div className="h-full w-full bg-white/50">Kommentarer</div>
+                <p className="mt-4 text-sm text-gray-400">Kommer snart!</p>
               </div>
             </div>
           </div>

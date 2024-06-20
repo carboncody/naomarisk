@@ -3,6 +3,7 @@
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useCompany } from '@lib/api/hooks';
 import { useMe } from '@lib/providers/me';
+import { ProjectStatus, RiskStatus } from '@models';
 import Error from 'next/error';
 import { useMemo } from 'react';
 import { BsBuildingFillGear } from 'react-icons/bs';
@@ -52,8 +53,13 @@ export function Home() {
       <div className="mb-5 flex items-center gap-4 md:mb-10">
         <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-amber-500 via-amber-800 to-amber-900 p-4 font-medium text-white shadow-lg shadow-black">
           <FaCubes className="text-3xl" />
-          <p className="ml-2 text-3xl">{data.projects.length}</p>
-          <p className="text-xl">projekter</p>
+          <p className="ml-2 text-3xl">
+            {
+              data.projects.filter((p) => p.status !== ProjectStatus.Closed)
+                .length
+            }
+          </p>
+          <p className="text-xl">aktive projekter</p>
         </div>
         <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-green-600 via-green-800 to-green-900 p-4 font-medium text-white shadow-lg shadow-black">
           <FaUsers className="text-3xl" />
@@ -62,8 +68,13 @@ export function Home() {
         </div>
         <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-gray-600 via-gray-800 to-gray-900 p-4 font-medium text-white shadow-lg shadow-black">
           <PiWarningFill className="text-3xl" />
-          <p className="ml-2 text-3xl">{allRisksInCompany.length}</p>
-          <p className="text-xl">risikoer</p>
+          <p className="ml-2 text-3xl">
+            {
+              allRisksInCompany.filter((r) => r.status !== RiskStatus.Closed)
+                .length
+            }
+          </p>
+          <p className="text-xl">åben risikoer</p>
         </div>
       </div>
       <div className="items-cemter grid h-[50vh] w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
