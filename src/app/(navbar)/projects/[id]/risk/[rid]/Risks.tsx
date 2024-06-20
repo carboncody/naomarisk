@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import CommentRow from './components/comments/CommentRow';
 import CreateComment from './components/comments/CreateComment';
 
 export function Risk() {
@@ -24,11 +25,6 @@ export function Risk() {
     isRefetching,
     refetch,
   } = useRisk(riskId ?? '');
-
-  // const {
-  //   data: comments,
-  //   refetch: refetchComments,
-  // } = useComments(riskId ?? '');
 
   if (isLoading && !isRefetching) {
     return <LoadingSpinner size="lg" />;
@@ -103,7 +99,10 @@ export function Risk() {
                 </div>
               </div>
               <div className="w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
-                  <CreateComment riskId={riskId} />
+                <CreateComment riskId={riskId} />
+                {Comment.map((comment, index) => (
+                  <CommentRow key={index} comment={comment} />
+                ))}
               </div>
             </div>
           </div>

@@ -1,16 +1,17 @@
 const CommentRow = ({ Comment }) => {
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <span><b>{Comment.author}</b></span>
-          <span>{new Date(Comment.createdAt).toLocaleString()}</span>
-        </div>
-        <div>
-          <p>Kommentar</p>
-        </div>
+        <span>
+          <b>{Comment.author}</b>
+        </span>
+        <span>{new Date(Comment.createdAt).toLocaleString()}</span>
       </div>
-    );
-  };
-  
-  export default CommentRow;
-  
+      <div>
+        <p>Kommentar</p>
+      </div>
+    </div>
+  );
+};
+
+export default CommentRow;
