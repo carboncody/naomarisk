@@ -47,7 +47,7 @@ export function Project() {
               selectedKey={selectedTab}
               className="mb-5"
               onSelectionChange={(tab) =>
-                setSelectedTab(tab as 'overview' | 'risks')
+                setSelectedTab(tab as 'risks' | 'overview')
               }
             >
               <Tab key="risks" title="Risikosamling" />
@@ -96,7 +96,7 @@ export function Project() {
             )}
 
             {selectedTab === 'risks' && (
-              <div className="h-full overflow-y-auto rounded-md bg-[#333333] p-4">
+              <div className="h-full w-full overflow-y-auto rounded-md bg-[#333333] p-4">
                 <Risks project={project} />
               </div>
             )}

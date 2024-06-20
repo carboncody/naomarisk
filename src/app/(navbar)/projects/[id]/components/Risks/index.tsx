@@ -7,7 +7,7 @@ import { Button, Tab, Tabs } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import CreateRisk from './CreateRisk';
-import { RiskTable } from './Table';
+import RiskTable from './RiskTable';
 
 interface RisksProps {
   project: Project;
@@ -41,7 +41,7 @@ export function Risks({ project }: RisksProps) {
     <>
       <div className="justify-top flex w-full flex-col items-center text-white ">
         <p className="text-xl font-semibold">
-          Alle {selectedTab === RiskStatus.Open ? 'åbne' : 'lukket'} risici for
+          Alle {selectedTab === RiskStatus.Open ? 'åben' : 'lukket'} risici for
           projekt {project.name}
         </p>
 
@@ -49,10 +49,7 @@ export function Risks({ project }: RisksProps) {
           <Tabs
             aria-label="Options"
             selectedKey={selectedTab}
-            onSelectionChange={(value) => {
-              // console.log(selectedTab);
-              setSelectedTab(value as RiskStatus);
-            }}
+            onSelectionChange={(value) => setSelectedTab(value as RiskStatus)}
           >
             <Tab key="OPEN" title="Åben" />
             <Tab className="border-0" key="CLOSED" title="Lukket" />
