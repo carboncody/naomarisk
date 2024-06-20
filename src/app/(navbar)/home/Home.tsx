@@ -74,7 +74,7 @@ export function Home() {
                 .length
             }
           </p>
-          <p className="text-xl">åben risikoer</p>
+          <p className="text-xl">åben risici</p>
         </div>
       </div>
       <div className="items-cemter grid h-[50vh] w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
@@ -84,7 +84,7 @@ export function Home() {
           Riskoer fordelt ved status
         </p>
         <p className="w-full -translate-y-4 text-center text-sm text-white">
-          Projekter fordelt ved antal risikoer og deltager
+          Projekter fordelt ved antal risici og deltager
         </p>
       </div>
     </div>

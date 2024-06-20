@@ -29,7 +29,11 @@ export function Project() {
   } = useProject(projectId ?? '');
 
   if (isLoading && !isRefetching) {
-    return <LoadingSpinner size="lg" />;
+    return (
+      <div className="h-[80vh]">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   if ((!projectId || error) ?? !project) {
@@ -46,11 +50,11 @@ export function Project() {
               selectedKey={selectedTab}
               className="mb-5"
               onSelectionChange={(tab) =>
-                setSelectedTab(tab as 'overview' | 'risks')
+                setSelectedTab(tab as 'risks' | 'overview')
               }
             >
+              <Tab key="risks" title="Risiskoregister" />
               <Tab key="overview" title="Oversigt" />
-              <Tab key="risks" title="Risikosamling" />
             </Tabs>
             {selectedTab === 'overview' && (
               <div className="flex w-full max-w-screen-2xl gap-4">

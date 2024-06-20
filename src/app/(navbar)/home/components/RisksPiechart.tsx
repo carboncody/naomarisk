@@ -26,7 +26,7 @@ export function RisksPiechart({ risks }: RisksPiechartProps) {
     };
     return Object.entries(taskCountByStatus).map(([status, count]) => ({
       value: count,
-      name: status === 'CLOSED' ? 'Lukket risikoer' : 'Åben risikoer',
+      name: status === 'CLOSED' ? 'Lukket risici' : 'Åben risici',
       fillColor: statusColors[status as RiskStatus] ?? '#000000',
     }));
   }, [taskCountByStatus]);

@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { FaComment } from 'react-icons/fa';
 
 export function Risk() {
   const pathName = usePathname();
@@ -25,14 +26,16 @@ export function Risk() {
   } = useRisk(riskId ?? '');
 
   if (isLoading && !isRefetching) {
-    return <LoadingSpinner size="lg" />;
+    return (
+      <div className="h-[80vh]">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   if ((!riskId || error) ?? !risk) {
     return <Error statusCode={404} title="Invalid risk id in the URL" />;
   }
-
-  console.log(risk);
 
   return (
     <>
@@ -49,15 +52,15 @@ export function Risk() {
                 </Button>
                 <div>
                   <span className="mt-2 font-semibold">Risk ID:</span>
-                  <span className="ml-1 font-thin">{risk.customId}</span>
+                  <span className="ml-1 font-light">{risk.customId}</span>
                 </div>
                 <p className="mt-2 font-semibold">Beskrivelse:</p>
-                <p className="font-thin">{risk.description}</p>
+                <p className="font-light">{risk.description}</p>
                 <div className="mt-2 flex gap-10 font-semibold">
                   <p>
                     Dato for oprettelse:
                     <br />
-                    <p className="font-thin">
+                    <p className="font-light">
                       {dayjs(risk.createdAt).format('DD MMM YYYY')}
                     </p>
                   </p>
@@ -65,33 +68,35 @@ export function Risk() {
                   <p>
                     Sidst ændret:
                     <br />
-                    <p className="font-thin">
+                    <p className="font-light">
                       {dayjs(risk.updatedAt).format('DD MMM YYYY')}
                     </p>
                   </p>
                 </div>
-                <div className="mt-2 flex gap-10 font-thin">
+                <div className="mt-2 flex gap-10 font-light">
                   <p>
                     <span className="font-semibold">Konsekvens:</span>
-                    <span className="ml-1 font-thin">{risk.consequence}</span>
+                    <span className="ml-1 font-light">{risk.consequence}</span>
                   </p>
 
                   <p>
                     <span className="font-semibold">Sandsynlighed:</span>
-                    <span className="ml-1 font-thin">{risk.probability}</span>
+                    <span className="ml-1 font-light">{risk.probability}</span>
                   </p>
                 </div>
-                <div className="mt-2 flex gap-10 font-semibold">
-                  <p>
-                    kommentar:
-                    <br />
-                    <span className="font-thin">{risk.comment}</span>
+                <div className="mt-4 border-t border-gray-500 pt-2 font-semibold">
+                  <p className="flex flex-wrap items-center gap-2">
+                    <span>Kommentar</span>
+                    <span className="font-light">
+                      {risk.comment ?? 'Ingen'}
+                    </span>
                   </p>
 
-                  <p>
-                    Aktivitet:
-                    <br />
-                    <span className="font-thin">{risk.activity}</span>
+                  <p className="lex mt-2 flex-wrap items-center gap-2">
+                    <span>Aktivitet</span>
+                    <span className="ml-2 font-light">
+                      {risk.activity ?? 'Ingen'}
+                    </span>
                   </p>
                 </div>
                 <div className="mt-10">
@@ -99,8 +104,13 @@ export function Risk() {
                 </div>
               </div>
               <div className="w-2/3 overflow-y-auto rounded-lg bg-[#333333] p-4">
-                <div className="h-full w-full bg-white/50">Kommentarer</div>
-                <p className="mt-4 text-sm text-gray-400">Kommer snart!</p>
+                <div className="flex w-full items-center gap-2">
+                  <FaComment className="h-4 w-4" />
+                  Kommentartråd
+                </div>
+                <p className="mt-4 animate-pulse text-sm text-gray-200">
+                  Kommer snart!
+                </p>
               </div>
             </div>
           </div>

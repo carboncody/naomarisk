@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useDeepCompareMemo } from 'use-deep-compare';
+import { ExpandingTableRows } from './ExpandingTableRow';
 import { TableHeader } from './TableHeader';
 import { TableRows } from './TableRows';
 import { useTableSorting } from './sorting/sort.reducer';
@@ -12,6 +13,8 @@ export type TableProps<T extends Record<string, any>> = {
   applyMinWidth?: boolean;
   rows: T[];
   columns: TableColumns<T>;
+  expanding?: boolean;
+  rowExpander?: React.ReactNode;
   className?: string;
   selectedRowIds?: string[];
   getRowId?: (row: T) => string;
@@ -29,6 +32,7 @@ export function Table<T extends Record<string, any>>({
   applyMinWidth = true,
   rows,
   columns,
+  expanding = false,
   className,
   selectedRowIds,
   getRowId,
@@ -59,15 +63,28 @@ export function Table<T extends Record<string, any>>({
           dispatchSortState={dispatchSortState}
           sortState={sortState}
         />
-        <TableRows
-          columns={columns}
-          actions={actions}
-          rows={orderedRows}
-          selectedRowIds={selectedRowIds}
-          getRowId={getRowId}
-          onRowClick={onRowClick}
-          setSelectedRowIds={setSelectedRowIds}
-        />
+        {expanding ? (
+          <ExpandingTableRows
+            rowExpander={rest.rowExpander}
+            columns={columns}
+            actions={actions}
+            rows={orderedRows}
+            selectedRowIds={selectedRowIds}
+            getRowId={getRowId}
+            onRowClick={onRowClick}
+            setSelectedRowIds={setSelectedRowIds}
+          />
+        ) : (
+          <TableRows
+            columns={columns}
+            actions={actions}
+            rows={orderedRows}
+            selectedRowIds={selectedRowIds}
+            getRowId={getRowId}
+            onRowClick={onRowClick}
+            setSelectedRowIds={setSelectedRowIds}
+          />
+        )}
       </div>
     </div>
   );

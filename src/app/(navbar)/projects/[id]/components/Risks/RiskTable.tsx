@@ -6,6 +6,7 @@ import { type Project, type Risk } from '@models';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { MdOutlineEdit } from 'react-icons/md';
 import EditRisk from './EditRisk';
 
 interface RiskTableProps {
@@ -71,7 +72,9 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       title: 'Beskrivelse',
       spacing: 2,
       render: (risk: Risk) => (
-        <div className="col-span-2 truncate">{risk.description}</div>
+        <div className="col-span-2 flex items-center justify-between truncate">
+          <span>{risk.description}</span>
+        </div>
       ),
       sort: sortBy('string'),
     },
@@ -79,34 +82,47 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       title: 'Risiko -> Risikoscore',
       spacing: 1,
       render: (risk: Risk) => (
-        <div
-          style={{
-            color: getStyleColor(risk),
-          }}
-          className={clsx('flex items-center gap-2')}
-        >
-          <div>
-            <p>Sansynlighed :</p>
-            <p>Konsekvens :</p>
+        <div className="grid grid-cols-2">
+          <div
+            style={{
+              color: getStyleColor(risk),
+            }}
+            className={clsx('col-span-1 flex items-center gap-2')}
+          >
+            <div>
+              <p>Sansynlighed :</p>
+              <p>Konsekvens :</p>
+            </div>
+            <div>
+              <p>
+                {risk.probability ?? (
+                  <em className="text-gray-400">Ikke defineret</em>
+                )}
+              </p>
+              <p>
+                {risk.consequence ?? (
+                  <em className="text-gray-400">Ikke defineret</em>
+                )}
+              </p>
+            </div>
+            {risk.probability && risk.consequence && (
+              <em>
+                {' '}
+                {'->'} {risk.probability * risk.consequence}
+              </em>
+            )}
           </div>
-          <div>
-            <p>
-              {risk.probability ?? (
-                <em className="text-gray-400">Ikke defineret</em>
-              )}
-            </p>
-            <p>
-              {risk.consequence ?? (
-                <em className="text-gray-400">Ikke defineret</em>
-              )}
-            </p>
+          <div className="col-span-1 flex justify-end">
+            <button
+              className="flex w-16 items-center justify-center rounded-lg text-xl text-white outline-none duration-200 hover:bg-gray-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                setRiskBeingEdited(risk);
+              }}
+            >
+              <MdOutlineEdit />
+            </button>
           </div>
-          {risk.probability && risk.consequence && (
-            <em>
-              {' '}
-              {'->'} {risk.probability * risk.consequence}
-            </em>
-          )}
         </div>
       ),
       sort: sortBy('number'),
