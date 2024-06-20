@@ -78,7 +78,7 @@ export default function CreateRisk({
   return (
     <>
       <Modal
-        className="bg-[#413e3e]"
+        className="bg-gray-600"
         size="4xl"
         isOpen={isOpen}
         onOpenChange={setIsOpen}
@@ -107,6 +107,38 @@ export default function CreateRisk({
                     errorMessage={errors.description?.message}
                     error={!!errors.description}
                   />
+                </div>
+                <div className="flex w-full gap-5">
+                  <div className="w-full">
+                    <NextInput
+                      {...register('activity', {
+                        required: {
+                          value: false,
+                          message: 'aktivitet mangler',
+                        },
+                      })}
+                      label="Aktivitet"
+                      className="w-full"
+                      variant="bordered"
+                      errorMessage={errors.activity?.message}
+                      error={!!errors.activity}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <NextInput
+                      {...register('comment', {
+                        required: {
+                          value: false,
+                          message: 'Kommentar mangler',
+                        },
+                      })}
+                      label="Kommentar"
+                      className="w-full"
+                      variant="bordered"
+                      errorMessage={errors.comment?.message}
+                      error={!!errors.comment}
+                    />
+                  </div>
                 </div>
                 <div className="flex w-full items-center justify-between gap-5">
                   <div className="flex w-1/3 gap-4">
@@ -149,7 +181,7 @@ export default function CreateRisk({
                       options={
                         projectMembers
                           ? projectMembers.map((employee) => ({
-                              label: employee.email,
+                              label: employee.fullName,
                               value: employee.id,
                             }))
                           : []

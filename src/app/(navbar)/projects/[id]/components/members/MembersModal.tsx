@@ -77,7 +77,7 @@ export function MembersModal({
 
   return (
     <Modal
-      className="bg-[#413e3e]"
+      className="bg-gray-600"
       size="xl"
       isOpen={isOpen}
       onOpenChange={setIsOpen}
@@ -92,7 +92,7 @@ export function MembersModal({
               Tilføj / Fjern medlemmer
             </ModalHeader>
             <ModalBody className="text-white">
-              <div className="flex w-full items-center justify-center pr-6 text-gray-300">
+              <div className="flex w-full items-center justify-center pr-6 text-gray-200">
                 <span className="w-full">Medlemmer</span>
                 <span className="w-full">Firma rolle</span>
               </div>
@@ -118,7 +118,7 @@ export function MembersModal({
                   </div>
                 ))
               ) : (
-                <div className="w-full p-2 text-center text-gray-400">
+                <div className="w-full p-2 text-center text-gray-200">
                   Ingen medlemmer
                 </div>
               )}

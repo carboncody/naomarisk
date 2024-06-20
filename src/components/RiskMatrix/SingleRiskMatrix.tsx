@@ -21,7 +21,7 @@ export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
   }
 
   return (
-    <div className="flex -translate-x-6 items-center text-gray-300">
+    <div className="flex -translate-x-6 items-center text-gray-200">
       <em className="translate-x-8 rotate-[270deg] text-xs md:text-sm">
         Sandsynlighed
       </em>

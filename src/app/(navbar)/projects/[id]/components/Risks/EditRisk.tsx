@@ -45,6 +45,7 @@ export default function EditRisk({
       consequence: riskElement.consequence ?? null,
       status: riskElement.status,
       comment: riskElement.comment,
+      activity: riskElement.activity,
     },
   });
 
@@ -98,7 +99,7 @@ export default function EditRisk({
         size="4xl"
         placement="top-center"
         backdrop="blur"
-        className="bg-[#413e3e]"
+        className="bg-gray-600"
         onClose={() => setRiskBeingEdited(null)}
       >
         <ModalContent>
@@ -121,6 +122,40 @@ export default function EditRisk({
                 errorMessage={errors.description?.message}
                 error={!!errors.description}
               />
+            </div>
+            <div className="flex w-full gap-5">
+              <div className="w-full">
+                <NextInput
+                  {...register('activity', {
+                    required: {
+                      value: false,
+                      message: 'aktivitet mangler',
+                    },
+                  })}
+                  value={watch('activity')}
+                  label="Aktivitet"
+                  className="w-full"
+                  variant="bordered"
+                  errorMessage={errors.activity?.message}
+                  error={!!errors.activity}
+                />
+              </div>
+              <div className="w-full">
+                <NextInput
+                  {...register('comment', {
+                    required: {
+                      value: false,
+                      message: 'Kommentar mangler',
+                    },
+                  })}
+                  value={watch('comment')}
+                  label="Kommentar"
+                  className="w-full"
+                  variant="bordered"
+                  errorMessage={errors.comment?.message}
+                  error={!!errors.comment}
+                />
+              </div>
             </div>
             <div className="flex w-full items-center justify-between gap-5">
               <div className="flex w-1/3 gap-4">
@@ -173,11 +208,11 @@ export default function EditRisk({
                 <div className="flex items-center gap-2">
                   <span>Risiko ejer {'->'}</span>
                   <SingleDropdown
-                    selectedValue={undefined}
+                    selectedValue={watch('riskOwnerUserId')}
                     options={
                       projectMembers
                         ? projectMembers.map((employee) => ({
-                            label: employee.email,
+                            label: employee.fullName,
                             value: employee.id,
                           }))
                         : []

@@ -30,7 +30,7 @@ export function SingleDropdown({
   customTriggerBtn,
 }: SingleDropdownProps) {
   return (
-    <NextDropdown className="bg-[#413e3e] text-white" placement="bottom-start">
+    <NextDropdown className="bg-gray-600 text-white" placement="bottom-start">
       <DropdownTrigger className="text-md">
         {customTriggerBtn ?? (
           <Button color="default" className="text-md">

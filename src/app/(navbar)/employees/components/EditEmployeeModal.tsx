@@ -90,7 +90,7 @@ export default function EditEmployeeModal({
   return (
     <>
       <Modal
-        className="bg-[#413e3e]"
+        className="bg-gray-600"
         size="4xl"
         isOpen={!!employee}
         onOpenChange={() => setEmployeeBeingEdited(null)}
@@ -146,7 +146,7 @@ export default function EditEmployeeModal({
                   Fortryd
                 </Button>
                 <Button
-                  className="bg-[#616161] text-white"
+                  className="bg-gray-300 text-white"
                   onClick={handleSubmit(onSubmit)}
                 >
                   Gem ændringer

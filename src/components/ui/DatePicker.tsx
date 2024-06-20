@@ -43,7 +43,7 @@ export function DatePicker({
               disableRipple
               onClick={() => setIsOpen(true)}
               startContent={
-                startIcon ?? <FaCalendar className="text-gray-300" />
+                startIcon ?? <FaCalendar className="text-gray-200" />
               }
               className={clsx(
                 'h-full w-full border-1 border-gray-400 hover:border-white',
@@ -64,7 +64,7 @@ export function DatePicker({
             locale={da}
             className={clsx(
               'm-0 rounded-lg p-2',
-              'bg-[#413e3e]',
+              'bg-gray-600',
               'text-xs text-gray-200 md:text-sm',
               'backdrop-blur-sm duration-300',
               'border-1 border-black',

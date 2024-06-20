@@ -1,5 +1,6 @@
 'use client';
 
+import { FaGear } from 'react-icons/fa6';
 import { SingleDropdown } from './Dropdown';
 
 export function SettingsDropdown() {
@@ -16,7 +17,11 @@ export function SettingsDropdown() {
     },
   ];
 
-  const triggerButton = <button className="outline-none">Indstillinger</button>;
+  const triggerButton = (
+    <button className="outline-none">
+      <FaGear className="h-5 w-5 text-amber-200" />
+    </button>
+  );
 
   return (
     <SingleDropdown

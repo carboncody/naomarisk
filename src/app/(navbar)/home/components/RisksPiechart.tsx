@@ -26,13 +26,17 @@ export function RisksPiechart({ risks }: RisksPiechartProps) {
     };
     return Object.entries(taskCountByStatus).map(([status, count]) => ({
       value: count,
-      name: status,
+      name: status === 'CLOSED' ? 'Lukket risici' : 'Åben risici',
       fillColor: statusColors[status as RiskStatus] ?? '#000000',
     }));
   }, [taskCountByStatus]);
 
   return (
-    <ResponsiveContainer width="100%" height={'100%'}>
+    <ResponsiveContainer
+      className="rounded-lg shadow-2xl shadow-black"
+      width="100%"
+      height={'100%'}
+    >
       <PieChart>
         <Pie
           dataKey="value"
@@ -48,11 +52,10 @@ export function RisksPiechart({ risks }: RisksPiechartProps) {
           ))}
         </Pie>
         <Tooltip
-          wrapperClassName="text-left dark:bg-adjera-dark-700/80 bg-white/50 backdrop-blur-md dark:shadow-black rounded border-gray-200 dark:border-adjera-dark-500"
-          itemStyle={{ color: 'black dark:white' }}
+          wrapperClassName="text-black bg-white/50 backdrop-blur-md rounded-lg"
           cursor={false}
           filterNull
-          separator="->"
+          separator=" -> "
         />
       </PieChart>
     </ResponsiveContainer>

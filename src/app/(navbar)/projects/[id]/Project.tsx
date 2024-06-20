@@ -29,7 +29,11 @@ export function Project() {
   } = useProject(projectId ?? '');
 
   if (isLoading && !isRefetching) {
-    return <LoadingSpinner size="lg" />;
+    return (
+      <div className="h-[80vh]">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   if ((!projectId || error) ?? !project) {
@@ -46,15 +50,15 @@ export function Project() {
               selectedKey={selectedTab}
               className="mb-5"
               onSelectionChange={(tab) =>
-                setSelectedTab(tab as 'overview' | 'risks')
+                setSelectedTab(tab as 'risks' | 'overview')
               }
             >
+              <Tab key="risks" title="Risiskoregister" />
               <Tab key="overview" title="Oversigt" />
-              <Tab key="risks" title="Risikosamling" />
             </Tabs>
             {selectedTab === 'overview' && (
               <div className="flex w-full max-w-screen-2xl gap-4">
-                <div className="sticky top-12 h-fit w-1/3 rounded-md bg-[#333333] p-4 md:top-20">
+                <div className="sticky top-12 h-fit w-1/3 rounded-md bg-gray-600 p-4 md:top-20">
                   <Button
                     className="my-4 w-32 justify-end"
                     onClick={() => setIsEditOpen(true)}
@@ -88,14 +92,14 @@ export function Project() {
                     <CumulativeRiskMatrix risks={project.risks} />
                   </div>
                 </div>
-                <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
+                <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-gray-600 p-4">
                   <ProjectEmployee project={project} refetch={refetch} />
                 </div>
               </div>
             )}
 
             {selectedTab === 'risks' && (
-              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
+              <div className="w-full overflow-y-auto rounded-md bg-gray-600 p-4">
                 <Risks project={project} />
               </div>
             )}

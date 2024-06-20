@@ -16,7 +16,7 @@ export const NextInput = forwardRef<HTMLInputElement, NextReactInputProps>(
           inputWrapper:
             'border-1 border-gray-400 hover:border-white data-[hover=true]:border-white group-data-[focus=true]:border-white',
           label:
-            'text-xs text-black md:text-sm text-gray-300 group-hover:text-white group-data-[filled-within=true]:text-white',
+            'text-xs text-black md:text-sm text-gray-200 group-hover:text-white group-data-[filled-within=true]:text-white',
           errorMessage: 'text-red-400',
         }}
         variant="bordered"

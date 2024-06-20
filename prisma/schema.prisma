@@ -10,6 +10,7 @@ datasource db {
 }
 
 enum RiskStatus {
+  PLANNING
   OPEN
   CLOSED
 }
@@ -24,6 +25,12 @@ enum UserStatus {
   ACTIVE
   PENDING
   INACTIVE
+}
+
+enum ProjectStatus {
+  PLANNING
+  OPEN
+  CLOSED
 }
 
 model Company {
@@ -68,17 +75,19 @@ model User {
   contact   Contact? @relation(fields: [contactId], references: [id])
   contactId String?
 
-  projectUsers ProjectUser[]
-  risks        Risk[]
-  Comment      Comment[]
+  projectUsers     ProjectUser[]
+  risks            Risk[]
+  authoredComments Comment[]     @relation("author")
+  resolvedComments Comment[]     @relation("resolver")
 }
 
 model Project {
-  id                      String    @id @default(uuid())
-  createdAt               DateTime  @default(now())
-  updatedAt               DateTime  @updatedAt
+  id                      String        @id @default(uuid())
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
   name                    String
   description             String
+  status                  ProjectStatus @default(PLANNING)
   startDate               DateTime?
   dueDate                 DateTime?
   budget                  String?
@@ -131,12 +140,17 @@ model Risk {
 }
 
 model Comment {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  resolved  Boolean  @default(false)
-  risk      Risk     @relation(fields: [riskId], references: [id])
-  riskId    String
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  resolvedAt DateTime?
+
+  authorId String
+  author   User   @relation("author", fields: [authorId], references: [id])
+
+  resolvedById String?
+  resolvedBy   User?   @relation("resolver", fields: [resolvedById], references: [id])
+
+  risk   Risk   @relation(fields: [riskId], references: [id])
+  riskId String
 }

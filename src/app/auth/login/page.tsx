@@ -47,7 +47,7 @@ export default function SignInForm() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] text-white">
-      <div className="h-[600px] w-[500px] rounded-lg border bg-[#3f3e3e]">
+      <div className="h-[600px] w-[500px] rounded-lg border bg-gray-600">
         <p className="my-5 text-center text-4xl text-white">
           Velkommen til <br /> NAOMA-RISK
         </p>
