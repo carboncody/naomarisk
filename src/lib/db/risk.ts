@@ -3,7 +3,19 @@ import { type CreateRiskForm } from '../api/types';
 import { type UpdateRiskForm } from '../api/types/risk';
 
 export async function RiskService() {
-  async function getRisk(projectId: string) {
+  async function getRisk(id: string) {
+    return db.risk.findUnique({
+      where: { id },
+      include: {
+        riskowner: true,
+        project: {
+          include: { projectUsers: true },
+        },
+      },
+    });
+  }
+
+  async function getProjectRisks(projectId: string) {
     return db.risk.findMany({
       where: { projectId },
       include: {
@@ -54,6 +66,7 @@ export async function RiskService() {
 
   return {
     getRisk,
+    getProjectRisks,
     createRisk,
     updateRisk,
   };

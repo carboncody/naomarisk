@@ -6,6 +6,7 @@ import { type Project, type Risk } from '@models';
 import clsx from 'clsx';
 import { useState } from 'react';
 import EditRisk from './EditRisk';
+import { useRouter } from 'next/navigation';
 
 interface RiskTableProps {
   refetch: () => void;
@@ -15,6 +16,7 @@ interface RiskTableProps {
 
 export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   type Row = Risk & { riskScore: number };
+  const router = useRouter();
 
   const rows: Row[] = risks.map((risk) => ({
     ...risk,
@@ -120,7 +122,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         <div className="col-span-1">Risiko</div>
       </div>
       <Table
-        onRowClick={(risk) => setRiskBeingEdited(risk)}
+        onRowClick={(risk) => router.push(`/projects/${project.id}/risk/${risk.id}`)}
         columns={columns}
         rows={rows}
       />

@@ -5,14 +5,14 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
-  const projectId = req.url.split('/risk/')[1];
+  const riskId = req.url.split('/risk/')[1];
 
-  if (!projectId) {
-    return NextResponse.json({ status: 400, error: 'No project id in url' });
+  if (!riskId) {
+    return NextResponse.json({ status: 400, error: 'No risk id in url' });
   }
 
   const riskService = await RiskService();
-  const risk = await riskService.getRisk(projectId);
+  const risk = await riskService.getRisk(riskId);
 
   return NextResponse.json(risk);
 }
