@@ -1,15 +1,14 @@
 'use client';
 
 import EditProject from '@app/(navbar)/projects/[id]/components/EditProjectModal';
+import { CumulativeRiskMatrix } from '@components/RiskMatrix/CumulativeRiskMatrix';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useProject } from '@lib/api/hooks';
-
 import { Button, Tab, Tabs } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { RiskMatrix } from './components/RiskMatrix';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
 
@@ -86,17 +85,17 @@ export function Project() {
                   <p className="mt-2">Budgettet for projektet:</p>
                   <p className="font-thin">{project.budget} kr.</p>
                   <div className="mt-10">
-                    <RiskMatrix risks={project.risks} />
+                    <CumulativeRiskMatrix risks={project.risks} />
                   </div>
                 </div>
-                <div className="h-full w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
+                <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
                   <ProjectEmployee project={project} refetch={refetch} />
                 </div>
               </div>
             )}
 
             {selectedTab === 'risks' && (
-              <div className="h-full overflow-y-auto rounded-md bg-[#333333] p-4">
+              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
                 <Risks project={project} />
               </div>
             )}

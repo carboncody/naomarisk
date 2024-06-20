@@ -10,7 +10,7 @@ import { Button, Link } from '@nextui-org/react';
 import Error from 'next/error';
 import { CompanySettings } from './components/CompanySetttings';
 
-export default function Account() {
+export function Account() {
   const { data: me, isLoading, error, refetch } = useMe();
 
   if (isLoading) {

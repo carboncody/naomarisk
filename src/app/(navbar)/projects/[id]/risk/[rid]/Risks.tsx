@@ -1,6 +1,7 @@
 'use client';
 
 import EditRisk from '@app/(navbar)/projects/[id]/components/Risks/EditRisk';
+import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useRisk } from '@lib/api/hooks/risks';
 import { type Risk } from '@models';
@@ -92,6 +93,9 @@ export function Risk() {
                     <br />
                     <span className="font-thin">{risk.activity}</span>
                   </p>
+                </div>
+                <div className="mt-10">
+                  <SingleRiskMatrix risk={risk} />
                 </div>
               </div>
               <div className="w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">

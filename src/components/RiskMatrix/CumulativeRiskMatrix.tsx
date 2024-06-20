@@ -2,11 +2,11 @@ import { ColorMap, RiskMap } from '@lib/calc/threshholds';
 import type { Risk } from '@models';
 import clsx from 'clsx';
 
-interface RiskMatrixProps {
+interface CumulativeRiskMatrixProps {
   risks: Risk[];
 }
 
-export function RiskMatrix({ risks }: RiskMatrixProps) {
+export function CumulativeRiskMatrix({ risks }: CumulativeRiskMatrixProps) {
   const matrix: number[][] = Array.from({ length: 5 }, () =>
     Array<number>(5).fill(0),
   );

@@ -27,7 +27,7 @@ export function Risks({ project }: RisksProps) {
 
   if (isFetching) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
+      <div className="flex h-[80vh] w-full items-center justify-center">
         <LoadingSpinner size="lg" />
       </div>
     );
