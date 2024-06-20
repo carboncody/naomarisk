@@ -4,6 +4,7 @@ import { type TableColumns } from '@components/Table/types/table.columns';
 import { ColorMap, RiskMap } from '@lib/calc/threshholds';
 import { type Project, type Risk } from '@models';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MdOutlineEdit } from 'react-icons/md';
 import EditRisk from './EditRisk';
@@ -16,6 +17,7 @@ interface RiskTableProps {
 
 export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   type Row = Risk & { riskScore: number };
+  const router = useRouter();
 
   const rows: Row[] = risks.map((risk) => ({
     ...risk,
@@ -112,8 +114,11 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
           </div>
           <div className="col-span-1 flex justify-end">
             <button
-              className="flex w-16 items-center justify-center rounded-lg text-xl text-white"
-              onClick={() => setRiskBeingEdited(risk)}
+              className="flex w-16 items-center justify-center rounded-lg text-xl text-white outline-none duration-200 hover:bg-gray-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                setRiskBeingEdited(risk);
+              }}
             >
               <MdOutlineEdit />
             </button>
@@ -133,7 +138,9 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         <div className="col-span-1">Risiko</div>
       </div>
       <Table
-        // onRowClick={(risk) => setRiskBeingEdited(risk)}
+        onRowClick={(risk) =>
+          router.push(`/projects/${project.id}/risk/${risk.id}`)
+        }
         columns={columns}
         rows={rows}
       />

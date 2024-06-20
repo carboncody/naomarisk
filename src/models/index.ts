@@ -4,6 +4,12 @@ export enum RiskStatus {
   Closed = 'CLOSED',
 }
 
+export enum ProjectStatus {
+  Planning = 'PLANNING',
+  Open = 'OPEN',
+  Closed = 'CLOSED',
+}
+
 export enum UserRole {
   User = 'USER',
   Manager = 'MANAGER',
@@ -65,6 +71,7 @@ export interface Project {
   name: string;
   description: string;
   startDate: Date;
+  status: ProjectStatus;
   dueDate: Date;
   budget?: string;
   riskRegisterDescription?: string;

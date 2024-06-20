@@ -1,3 +1,4 @@
-import { useRisks } from './useRisk';
+import { useProjectRisks } from './useProjectRisks';
+import { useRisk } from './useRisk';
 
-export { useRisks };
+export { useProjectRisks, useRisk };

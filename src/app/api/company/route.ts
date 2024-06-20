@@ -3,6 +3,23 @@ import { CompanyService } from '@lib/db/company';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 
+export async function GET() {
+  const supabase = createServerClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user?.email) {
+    return NextResponse.json({ error: 'Not logged in' });
+  }
+
+  const companyService = await CompanyService();
+  const company = await companyService.getUserCompany(user.email);
+
+  return NextResponse.json(company);
+}
+
 export async function PATCH(req: Request) {
   const supabase = createServerClient();
 

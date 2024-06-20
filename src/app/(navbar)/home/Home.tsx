@@ -1,81 +1,91 @@
-import { SearchIcon } from '@components/ui/SearchIcon';
-import { createServerClient } from '@lib/services/supabase/supabase-server';
-import { Input } from '@nextui-org/react';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
+'use client';
 
-export async function Home() {
-  const supabase = createServerClient();
+import LoadingSpinner from '@components/ui/LoadSpinner';
+import { useCompany } from '@lib/api/hooks';
+import { useMe } from '@lib/providers/me';
+import { ProjectStatus, RiskStatus } from '@models';
+import Error from 'next/error';
+import { useMemo } from 'react';
+import { BsBuildingFillGear } from 'react-icons/bs';
+import { FaCubes, FaUsers } from 'react-icons/fa';
+import { PiShieldWarningBold, PiWarningFill } from 'react-icons/pi';
+import { ProjectBarChart } from './components/ProjectBarChart';
+import { RisksPiechart } from './components/RisksPiechart';
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export function Home() {
+  const me = useMe();
+  const { data, isLoading, error } = useCompany();
 
-  if (!user?.email) {
-    redirect('/auth/login');
+  const allRisksInCompany = useMemo(() => {
+    if (!data) {
+      return [];
+    }
+    return data.projects.flatMap((project) => project.risks);
+  }, [data]);
+
+  if (isLoading) {
+    return (
+      <div className="h-[80vh]">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if (error ?? !data) {
+    return <Error statusCode={500} message={'Noget gik galt!'} />;
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <p className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Naoma <span className="text-[hsl(0,0%,31%)]">Risk</span>
+    <div className="mx-auto flex h-full max-w-screen-2xl flex-col text-white">
+      <div className="mt-5 flex items-center justify-between md:mt-10">
+        <span className="select-none text-5xl font-medium text-white">
+          Welcome {me.fullName},
+        </span>
+        <BsBuildingFillGear className="inline h-10 w-10 text-amber-200" />
+      </div>
+      <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-xl text-white md:mt-10">
+        <PiShieldWarningBold className="inline h-6 w-6 text-amber-500" />
+        <p className="select-none">
+          <span>Aktive projekt statisktikker for</span>
+          <span className="ml-2 font-bold">{data.name}</span>
         </p>
-
-        <p>Welcome {user.email}</p>
-        <div className="flex items-center justify-center rounded-2xl bg-transparent px-8 text-white ">
-          <Input
-            isClearable
-            radius="lg"
-            classNames={{
-              label: 'text-black dark:text-white',
-              input: [
-                'bg-transparent',
-                'text-black dark:text-white',
-                'placeholder:text-default-700 dark:placeholder:text-white/60',
-              ],
-              innerWrapper: 'bg-transparent',
-              inputWrapper: [
-                'shadow-xl',
-                'bg-default-200',
-                'dark:bg-default/60',
-                'backdrop-blur-xl',
-                'backdrop-saturate-200',
-                'hover:bg-default-200',
-                'dark:hover:bg-default',
-                'group-data-[focused=true]:bg-default-200',
-                'dark:group-data-[focused=true]:bg-default/60',
-                '!cursor-text',
-              ],
-            }}
-            placeholder="Type to search..."
-            startContent={
-              <SearchIcon className="pointer-events-none mb-0.5 flex-shrink-0 text-slate-400 focus:text-black dark:text-white" />
+      </div>
+      <div className="mb-5 flex items-center gap-4 md:mb-10">
+        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-amber-500 via-amber-800 to-amber-900 p-4 font-medium text-white shadow-lg shadow-black">
+          <FaCubes className="text-3xl" />
+          <p className="ml-2 text-3xl">
+            {
+              data.projects.filter((p) => p.status !== ProjectStatus.Closed)
+                .length
             }
-          />
+          </p>
+          <p className="text-xl">aktive projekter</p>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href=""
-          >
-            <p className="text-2xl font-bold">Project example 1 →</p>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication..
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href=""
-          >
-            <p className="text-2xl font-bold">Project example 2 →</p>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-green-600 via-green-800 to-green-900 p-4 font-medium text-white shadow-lg shadow-black">
+          <FaUsers className="text-3xl" />
+          <p className="ml-2 text-3xl">{data.users.length}</p>
+          <p className="text-xl">medarbejdere</p>
         </div>
+        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-gray-600 via-gray-800 to-gray-900 p-4 font-medium text-white shadow-lg shadow-black">
+          <PiWarningFill className="text-3xl" />
+          <p className="ml-2 text-3xl">
+            {
+              allRisksInCompany.filter((r) => r.status !== RiskStatus.Closed)
+                .length
+            }
+          </p>
+          <p className="text-xl">åben risici</p>
+        </div>
+      </div>
+      <div className="items-cemter grid h-[50vh] w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
+        <RisksPiechart risks={allRisksInCompany} />
+        <ProjectBarChart projects={data.projects} />
+        <p className="w-full -translate-y-4 text-center text-sm text-white">
+          Riskoer fordelt ved status
+        </p>
+        <p className="w-full -translate-y-4 text-center text-sm text-white">
+          Projekter fordelt ved antal risici og deltager
+        </p>
       </div>
     </div>
   );

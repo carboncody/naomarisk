@@ -22,7 +22,7 @@ export const RiskMap: Record<number, Thresholds> = {
 };
 
 export const ColorMap: Record<Thresholds, string> = {
-  [Thresholds.GREEN]: 'green',
+  [Thresholds.GREEN]: 'lightgreen',
   [Thresholds.YELLOW]: 'yellow',
-  [Thresholds.RED]: 'red',
+  [Thresholds.RED]: '#f54e42',
 };

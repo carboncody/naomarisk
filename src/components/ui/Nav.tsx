@@ -1,4 +1,3 @@
-import logo from '@assets/logoNaoma.svg';
 import {
   Button,
   Navbar,
@@ -6,8 +5,6 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@nextui-org/react';
-import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import Image from 'next/image';
 import Link from 'next/link';
 import { SettingsDropdown } from './SettingsDropdown';
 
@@ -26,12 +23,9 @@ export function Nav() {
       <NavbarContent>
         <NavbarBrand>
           <Link href={'/'}>
-            <Image
-              src={logo as StaticImport}
-              alt="logo"
-              width={90}
-              className="invert"
-            />
+            <span className="bg-gradient-to-br from-white via-amber-50 to-amber-200 bg-clip-text text-xl font-medium text-transparent md:text-2xl">
+              Naoma Risk
+            </span>
           </Link>
         </NavbarBrand>
       </NavbarContent>

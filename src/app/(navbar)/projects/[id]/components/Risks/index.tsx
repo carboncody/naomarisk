@@ -1,7 +1,7 @@
 'use client';
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
-import { useRisks } from '@lib/api/hooks/risks';
+import { useProjectRisks } from '@lib/api/hooks/risks';
 import { RiskStatus, type Project } from '@models';
 import { Button, Tab, Tabs } from '@nextui-org/react';
 import Error from 'next/error';
@@ -23,11 +23,11 @@ export function Risks({ project }: RisksProps) {
     isError,
     error,
     refetch,
-  } = useRisks(project.id);
+  } = useProjectRisks(project.id);
 
   if (isFetching) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
+      <div className="flex h-[80vh] w-full items-center justify-center">
         <LoadingSpinner size="lg" />
       </div>
     );
