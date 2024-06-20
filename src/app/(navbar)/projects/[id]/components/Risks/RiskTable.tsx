@@ -4,9 +4,9 @@ import { type TableColumns } from '@components/Table/types/table.columns';
 import { ColorMap, RiskMap } from '@lib/calc/threshholds';
 import { type Project, type Risk } from '@models';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import EditRisk from './EditRisk';
-import { useRouter } from 'next/navigation';
 
 interface RiskTableProps {
   refetch: () => void;
@@ -122,7 +122,9 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         <div className="col-span-1">Risiko</div>
       </div>
       <Table
-        onRowClick={(risk) => router.push(`/projects/${project.id}/risk/${risk.id}`)}
+        onRowClick={(risk) =>
+          router.push(`/projects/${project.id}/risk/${risk.id}`)
+        }
         columns={columns}
         rows={rows}
       />
