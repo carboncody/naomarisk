@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import CreateComment from './components/comments/CreateComment';
 
 export function Risk() {
   const pathName = usePathname();
@@ -24,6 +25,11 @@ export function Risk() {
     refetch,
   } = useRisk(riskId ?? '');
 
+  // const {
+  //   data: comments,
+  //   refetch: refetchComments,
+  // } = useComments(riskId ?? '');
+
   if (isLoading && !isRefetching) {
     return <LoadingSpinner size="lg" />;
   }
@@ -31,8 +37,6 @@ export function Risk() {
   if ((!riskId || error) ?? !risk) {
     return <Error statusCode={404} title="Invalid risk id in the URL" />;
   }
-
-  console.log(risk);
 
   return (
     <>
@@ -99,9 +103,7 @@ export function Risk() {
                 </div>
               </div>
               <div className="w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
-                <div className="h-full w-full border bg-white/50">
-                  Dashboard
-                </div>
+                  <CreateComment riskId={riskId} />
               </div>
             </div>
           </div>
