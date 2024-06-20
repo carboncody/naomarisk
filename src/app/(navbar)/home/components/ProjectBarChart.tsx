@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   Legend,
   Rectangle,
   ResponsiveContainer,
@@ -26,7 +25,11 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
   }, [projects]);
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer
+      className="rounded-lg p-4 shadow-2xl shadow-black"
+      width="100%"
+      height="100%"
+    >
       <BarChart
         width={500}
         height={300}
@@ -38,20 +41,24 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="name" className="text-white" />
         <YAxis />
-        <Tooltip />
+        <Tooltip
+          wrapperClassName="text-black bg-white/50 backdrop-blur-md rounded-lg"
+          cursor={false}
+          filterNull
+          separator=" -> "
+        />
         <Legend />
         <Bar
           dataKey="Risikoer"
-          fill="#8884d8"
-          activeBar={<Rectangle fill="pink" stroke="blue" />}
+          fill="#ffeb3a"
+          activeBar={<Rectangle fill="yellow" stroke="#4caf4f" />}
         />
         <Bar
           dataKey="Brugere"
-          fill="#82ca9d"
-          activeBar={<Rectangle fill="gold" stroke="purple" />}
+          fill="#4caf4f"
+          activeBar={<Rectangle fill="green" stroke="yellow" />}
         />
       </BarChart>
     </ResponsiveContainer>
