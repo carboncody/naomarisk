@@ -58,7 +58,7 @@ export function Project() {
             </Tabs>
             {selectedTab === 'overview' && (
               <div className="flex w-full max-w-screen-2xl gap-4">
-                <div className="sticky top-12 h-fit w-1/3 rounded-md bg-[#333333] p-4 md:top-20">
+                <div className="sticky top-12 h-fit w-1/3 rounded-md bg-gray-600 p-4 md:top-20">
                   <Button
                     className="my-4 w-32 justify-end"
                     onClick={() => setIsEditOpen(true)}
@@ -67,6 +67,8 @@ export function Project() {
                   </Button>
                   <p className="mt-2 font-semibold">Projektnavn:</p>
                   <p className="font-thin">{project.name}</p>
+                  <p className="mt-2 font-semibold">Projekt Ejer:</p>
+                  {/* <p className="font-thin">{project}</p> */}
                   <p className="mt-2 font-semibold">Beskrivelse:</p>
                   <p className="font-thin">{project.description}</p>
                   <div className="mt-2 flex gap-10 font-semibold">
@@ -92,14 +94,14 @@ export function Project() {
                     <CumulativeRiskMatrix risks={project.risks} />
                   </div>
                 </div>
-                <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
+                <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-gray-600 p-4">
                   <ProjectEmployee project={project} refetch={refetch} />
                 </div>
               </div>
             )}
 
             {selectedTab === 'risks' && (
-              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
+              <div className="w-full overflow-y-auto rounded-md bg-gray-600 p-4">
                 <Risks project={project} />
               </div>
             )}

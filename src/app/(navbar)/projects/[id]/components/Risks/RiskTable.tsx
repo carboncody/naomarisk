@@ -62,7 +62,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
             {risk.riskowner ? (
               risk.riskowner.fullName ?? risk.riskowner.email
             ) : (
-              <em className="text-gray-400">Ingen ejer</em>
+              <em className="text-gray-200">Ingen ejer</em>
             )}
           </span>
         </div>
@@ -96,12 +96,12 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
             <div>
               <p>
                 {risk.probability ?? (
-                  <em className="text-gray-400">Ikke defineret</em>
+                  <em className="text-gray-200">Ikke defineret</em>
                 )}
               </p>
               <p>
                 {risk.consequence ?? (
-                  <em className="text-gray-400">Ikke defineret</em>
+                  <em className="text-gray-200">Ikke defineret</em>
                 )}
               </p>
             </div>

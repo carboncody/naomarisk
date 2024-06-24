@@ -31,8 +31,8 @@ export function Account() {
 
   return (
     <div>
-      <div className="flex w-full">
-        <div className="mt-[100px] flex h-[500px] w-0 rounded-2xl bg-[#413e3e] md:w-1/2" />
+      <div className="flex w-full px-4">
+        <div className="mt-[100px] flex h-[500px] w-0 rounded-2xl bg-gray-300 md:w-1/2" />
         <div className="mt-[100px] flex w-full flex-col justify-center gap-y-5 px-4 md:w-1/2 md:px-10">
           <SettingsCard>
             <UserSettings me={me} refetchMe={refetch} />
@@ -44,7 +44,7 @@ export function Account() {
           )}
         </div>
       </div>
-      <div className="center flex gap-4">
+      <div className="center flex gap-4 px-4">
         <Backbutton href={'/'} />
         <Link href="/account/update-email">
           <Button>Ændre email</Button>

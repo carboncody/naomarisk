@@ -27,6 +27,7 @@ export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
 
   async function onSubmit(data: UpdateUserForm) {
     try {
+      console.info(data);
       await axios.patch<User>('/api/user', data);
       refetchMe();
       toast.success('Brugeren er opdateret!');

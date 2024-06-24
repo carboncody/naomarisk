@@ -1,7 +1,7 @@
 'use server';
 
 import { UserRole } from '@models';
-import { User } from '@prisma/client';
+import { type User } from '@prisma/client';
 import { db } from '@server/db';
 import type {
   ActionResponse,
@@ -50,16 +50,15 @@ export async function UserService() {
   }
 
   async function updateUser(
-    email: string,
+    editorEmail: string,
     updateUserForm: UpdateUserForm,
-    me?: string,
   ): Promise<ActionResponse<User>> {
-    const { fullName, jobDescription, role } = updateUserForm;
+    const { fullName, email, jobDescription, role } = updateUserForm;
 
     try {
       const user = await db.user.findUnique({
         where: {
-          email: me,
+          email: editorEmail,
         },
       });
 
@@ -67,7 +66,7 @@ export async function UserService() {
         return {
           error: {
             code: 404,
-            message: `User with email ${email} not found`,
+            message: `User with email ${editorEmail} not found`,
           },
         };
       }

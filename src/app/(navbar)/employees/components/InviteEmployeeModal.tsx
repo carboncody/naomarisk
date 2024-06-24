@@ -79,7 +79,7 @@ export default function InviteEmployee({
   return (
     <>
       <Modal
-        className="bg-[#413e3e]"
+        className="bg-gray-600"
         size="4xl"
         isOpen={isOpen}
         onOpenChange={setIsOpen}

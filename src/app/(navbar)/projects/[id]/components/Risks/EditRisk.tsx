@@ -99,7 +99,7 @@ export default function EditRisk({
         size="4xl"
         placement="top-center"
         backdrop="blur"
-        className="bg-[#413e3e]"
+        className="bg-gray-600"
         onClose={() => setRiskBeingEdited(null)}
       >
         <ModalContent>

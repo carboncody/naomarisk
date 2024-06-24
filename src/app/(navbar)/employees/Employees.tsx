@@ -36,7 +36,7 @@ export function AllEmployees() {
   return (
     <>
       <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
-        <div className="mb-4 mt-40 flex w-full justify-between">
+        <div className="mb-4 mt-10 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Medarbejdere</p>
           <div className="flex gap-4">
             <Button className="w-32" onClick={() => setIsNewOpen(true)}>
