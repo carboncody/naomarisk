@@ -1,5 +1,5 @@
 import { ColorMap, RiskMap } from '@lib/calc/threshholds';
-import type { Project} from '@models';
+import type { Project } from '@models';
 import { useMemo } from 'react';
 import {
   Bar,
@@ -11,7 +11,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
 
 interface RiskChartProps {
   projects: Project;
@@ -46,7 +45,9 @@ export function RiskChart({ projects }: RiskChartProps) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { x, y, width, height, fillColor } = props;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    return <Rectangle x={x} y={y} width={width} height={height} fill={fillColor} />;
+    return (
+      <Rectangle x={x} y={y} width={width} height={height} fill={fillColor} />
+    );
   };
 
   return (
@@ -75,10 +76,7 @@ export function RiskChart({ projects }: RiskChartProps) {
           separator=" -> "
         />
         <Legend />
-        <Bar
-          dataKey="count"
-          shape={<CustomBarShape />}
-        />
+        <Bar dataKey="count" shape={<CustomBarShape />} />
       </BarChart>
     </ResponsiveContainer>
   );
