@@ -19,8 +19,8 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
   const data = useMemo(() => {
     return projects.map((project) => ({
       name: project.name,
-      risici: project.risks.length,
-      Brugere: project.projectUsers.length,
+      Risici: project.risks.length,
+      Medarbejdere: project.projectUsers.length,
     }));
   }, [projects]);
 
@@ -51,12 +51,12 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
         />
         <Legend />
         <Bar
-          dataKey="risici"
+          dataKey="Risici"
           fill="#ffeb3a"
           activeBar={<Rectangle fill="yellow" stroke="#4caf4f" />}
         />
         <Bar
-          dataKey="Brugere"
+          dataKey="Medarbejdere"
           fill="#4caf4f"
           activeBar={<Rectangle fill="green" stroke="yellow" />}
         />

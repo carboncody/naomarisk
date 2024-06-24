@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { RiskChart } from './components/Riskchart';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
 
@@ -16,9 +17,9 @@ export function Project() {
   const pathName = usePathname();
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'risks'>(
-    'overview',
-  );
+  const [selectedTab, setSelectedTab] = useState<
+    'overview' | 'risks' | 'chart'
+  >('overview');
 
   const {
     data: project,
@@ -50,11 +51,12 @@ export function Project() {
               selectedKey={selectedTab}
               className="mb-5"
               onSelectionChange={(tab) =>
-                setSelectedTab(tab as 'risks' | 'overview')
+                setSelectedTab(tab as 'risks' | 'overview' | 'chart')
               }
             >
               <Tab key="risks" title="Risiskoregister" />
               <Tab key="overview" title="Oversigt" />
+              <Tab key="chart" title="chart" />
             </Tabs>
             {selectedTab === 'overview' && (
               <div className="flex w-full max-w-screen-2xl gap-4">
@@ -101,6 +103,12 @@ export function Project() {
             {selectedTab === 'risks' && (
               <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
                 <Risks project={project} />
+              </div>
+            )}
+
+            {selectedTab === 'chart' && (
+              <div className="w-screen p-4">
+                <RiskChart projects={project} />
               </div>
             )}
           </div>
