@@ -107,7 +107,7 @@ export function Project() {
             )}
 
             {selectedTab === 'chart' && (
-              <div className="w-screen p-4">
+              <div className="w-1/3 p-4">
                 <RiskChart projects={project} />
               </div>
             )}
