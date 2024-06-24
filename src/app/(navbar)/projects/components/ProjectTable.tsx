@@ -30,6 +30,11 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
       render: (project: Project) => (
         <div className="truncate">
           <span>{dayjs(project.createdAt).format('kl. HH:MM - DD MMM')}</span>
+          <br />
+          <span className="gap-3 break-words text-gray-200">
+            <span>Opdateret:</span>
+            {dayjs(project.updatedAt).format('DD MMM YYYY')}
+          </span>
         </div>
       ),
     },
@@ -40,6 +45,10 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
       render: (project: Project) => (
         <div className="truncate">
           <span>{project.risks.length}</span>
+          {/* <br />
+          <span className="break-words text-gray-200">
+            {project.risks.length}
+          </span> */}
         </div>
       ),
     },

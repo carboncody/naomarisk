@@ -34,7 +34,6 @@ export async function PATCH(req: Request) {
   if (error) {
     return NextResponse.json({ error }, { status: error.code });
   }
-  console.info('------------------------------------employee: ', employee);
   return NextResponse.json(employee);
 }
 

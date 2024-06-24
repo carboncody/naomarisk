@@ -67,6 +67,8 @@ export function Project() {
                   </Button>
                   <p className="mt-2 font-semibold">Projektnavn:</p>
                   <p className="font-thin">{project.name}</p>
+                  <p className="mt-2 font-semibold">Projekt Ejer:</p>
+                  {/* <p className="font-thin">{project}</p> */}
                   <p className="mt-2 font-semibold">Beskrivelse:</p>
                   <p className="font-thin">{project.description}</p>
                   <div className="mt-2 flex gap-10 font-semibold">
