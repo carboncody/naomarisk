@@ -35,7 +35,6 @@ export function RiskChart({ projects }: RiskChartProps) {
 
       const riskThreshold = RiskMap[score];
       const color = ColorMap[riskThreshold! as Thresholds];
-      console.info(riskscore, color);
 
       return {
         name: riskscore,
