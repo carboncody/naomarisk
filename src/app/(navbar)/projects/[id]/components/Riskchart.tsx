@@ -86,7 +86,7 @@ export function RiskChart({ projects }: RiskChartProps) {
         />
         <Tooltip
           wrapperClassName="text-black bg-white/50 backdrop-blur-md rounded-lg"
-          cursor={true}
+          cursor={false}
           filterNull
           separator=" -> "
         />
