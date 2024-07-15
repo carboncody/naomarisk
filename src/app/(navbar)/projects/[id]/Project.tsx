@@ -18,7 +18,7 @@ export function Project() {
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
-    'overview' | 'risks' | 'chart'
+    'overview' | 'risks' | 'employees'
   >('overview');
 
   const {
@@ -51,12 +51,12 @@ export function Project() {
               selectedKey={selectedTab}
               className="mb-5"
               onSelectionChange={(tab) =>
-                setSelectedTab(tab as 'risks' | 'overview' | 'chart')
+                setSelectedTab(tab as 'risks' | 'overview' | 'employees')
               }
             >
               <Tab key="risks" title="Risiskoregister" />
               <Tab key="overview" title="Oversigt" />
-              <Tab key="chart" title="chart" />
+              <Tab key="employees" title="Medarbejdere" />
             </Tabs>
             {selectedTab === 'overview' && (
               <div className="flex w-full max-w-screen-2xl gap-4">
@@ -94,8 +94,15 @@ export function Project() {
                     <CumulativeRiskMatrix risks={project.risks} />
                   </div>
                 </div>
-                <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
-                  <ProjectEmployee project={project} refetch={refetch} />
+                <div className="flex w-2/3 flex-col items-center justify-center overflow-y-auto rounded-md bg-[#333333] p-4">
+                  <div className="my-5 w-full">
+                    <p className="flex items-center justify-center text-2xl font-semibold">
+                      Projekt Risici:
+                    </p>
+                    <div>
+                      <RiskChart projects={project} refetch={refetch} />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -106,9 +113,9 @@ export function Project() {
               </div>
             )}
 
-            {selectedTab === 'chart' && (
-              <div className="w-1/3 p-4">
-                <RiskChart projects={project} />
+            {selectedTab === 'employees' && (
+              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
+                <ProjectEmployee project={project} refetch={refetch} />
               </div>
             )}
           </div>

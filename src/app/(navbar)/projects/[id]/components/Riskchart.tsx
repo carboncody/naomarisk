@@ -1,10 +1,9 @@
-import { ColorMap, RiskMap } from '@lib/calc/threshholds';
-import type { Project } from '@models';
+import { ColorMap, RiskMap, type Thresholds } from '@lib/calc/threshholds';
+import type { Project, Risk } from '@models';
 import { useMemo } from 'react';
 import {
   Bar,
   BarChart,
-  Legend,
   Rectangle,
   ResponsiveContainer,
   Tooltip,
@@ -14,69 +13,84 @@ import {
 
 interface RiskChartProps {
   projects: Project;
+  refetch: () => void;
+}
+
+interface RiskData {
+  name: string;
+  fillColor: string;
+  antal: number;
 }
 
 export function RiskChart({ projects }: RiskChartProps) {
-  const riskData = useMemo(() => {
+  const riskData = useMemo<RiskData[]>(() => {
     return Object.keys(RiskMap).map((riskscore) => {
       const score = Number(riskscore);
-      const count = projects?.risks.filter((risk) =>
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      const antal = projects!.risks.filter((risk: Risk) =>
         risk.probability && risk.consequence
           ? risk.probability * risk.consequence === score
           : false,
       ).length;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const color = ColorMap[RiskMap[score]];
+
+      const riskThreshold = RiskMap[score];
+      const color = ColorMap[riskThreshold! as Thresholds];
       console.info(riskscore, color);
+
       return {
         name: riskscore,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         fillColor: color,
-        count,
+        antal,
       };
     });
-  }, [projects?.risks]);
+  }, [projects]);
 
-  console.log(riskData);
-
-  // Custom shape to use the fillColor property from riskData
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const CustomBarShape = (props: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { x, y, width, height, fillColor } = props;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return (
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       <Rectangle x={x} y={y} width={width} height={height} fill={fillColor} />
     );
   };
 
   return (
-    <ResponsiveContainer
-      className="rounded-lg p-4 shadow-2xl shadow-black"
-      width="100%"
-      height={300}
-    >
+    <ResponsiveContainer className="rounded-lg p-4" width="100%" height={400}>
       <BarChart
-        width={500}
-        height={300}
+        width={400}
+        height={400}
         data={riskData}
         margin={{
-          top: 5,
+          top: 20,
           right: 30,
           left: 20,
-          bottom: 5,
+          bottom: 10,
         }}
       >
-        <XAxis dataKey="name" className="text-white" />
-        <YAxis />
+        <XAxis
+          dataKey="name"
+          className="text-white"
+          label={{ value: 'Risk Score', position: 'insideBottom', offset: -5 }}
+        />
+        <YAxis
+          domain={[0, 'dataMax']}
+          tickCount={4}
+          interval={0}
+          label={{
+            value: 'Antal Risici',
+            angle: -90,
+            position: 'insideLeft',
+            offset: 10,
+          }}
+        />
         <Tooltip
           wrapperClassName="text-black bg-white/50 backdrop-blur-md rounded-lg"
-          cursor={false}
+          cursor={true}
           filterNull
           separator=" -> "
         />
-        <Legend />
-        <Bar dataKey="count" shape={<CustomBarShape />} />
+        <Bar dataKey="antal" shape={<CustomBarShape />} />
       </BarChart>
     </ResponsiveContainer>
   );

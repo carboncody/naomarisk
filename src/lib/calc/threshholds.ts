@@ -1,4 +1,4 @@
-enum Thresholds {
+export enum Thresholds {
   'GREEN',
   'YELLOW',
   'RED',
