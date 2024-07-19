@@ -1,10 +1,5 @@
 'use client';
 
-import { SingleDropdown } from '@components/ui';
-import { PlusMinusButton } from '@components/ui/PlusMinusButton';
-import { Button } from '@components/ui/button';
-import type { UpdateProjectForm } from '@lib/api/types';
-import { type User } from '@models';
 import {
   Dialog,
   DialogContent,
@@ -12,6 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'; // Adjust the import path according to your setup
+import { SingleDropdown } from '@components/ui';
+import { PlusMinusButton } from '@components/ui/PlusMinusButton';
+import { Button } from '@components/ui/button';
+import type { UpdateProjectForm } from '@lib/api/types';
+import { type User } from '@models';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -81,7 +81,9 @@ export function MembersModal({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="bg-[#413e3e] text-white">
         <DialogHeader>
-          <DialogTitle className="text-white">Tilføj / Fjern medlemmer</DialogTitle>
+          <DialogTitle className="text-white">
+            Tilføj / Fjern medlemmer
+          </DialogTitle>
         </DialogHeader>
         <div className="text-Zinc-300 flex w-full items-center justify-center pr-6">
           <span className="w-full">Medlemmer</span>
@@ -120,8 +122,7 @@ export function MembersModal({
               selectedValue={undefined}
               options={employees
                 .filter(
-                  (employee) =>
-                    !watch('projectUserIds')?.includes(employee.id),
+                  (employee) => !watch('projectUserIds')?.includes(employee.id),
                 )
                 .map((employee) => ({
                   label: employee.email,
@@ -129,9 +130,7 @@ export function MembersModal({
                   href: undefined,
                 }))}
               buttonLabel={'Vælg medlem'}
-              setSelectedValue={(id: string | undefined) =>
-                id && addMember(id)
-              }
+              setSelectedValue={(id: string | undefined) => id && addMember(id)}
             />
           </div>
         )}

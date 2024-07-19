@@ -1,19 +1,20 @@
 'use client';
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { type CreateProjectForm } from '@lib/api/types';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/ui/dialog';
-import { Input } from '@components/ui/Input';
 
 interface NewProjectDialogProps {
   myId: string;
@@ -65,7 +66,7 @@ export default function NewProjectDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-[#413e3e]"  >
+      <DialogContent className="bg-[#413e3e]">
         <DialogHeader>
           <DialogTitle className="text-white">Opret nyt projekt</DialogTitle>
         </DialogHeader>
@@ -73,6 +74,7 @@ export default function NewProjectDialog({
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-3 text-white">
               <div className="flex gap-3">
+                <Label>Projekt navn</Label>
                 <Input
                   {...register('name', {
                     required: {
@@ -84,15 +86,17 @@ export default function NewProjectDialog({
                   // isInvalid={!!errors.name}
                   // errorMessage={errors.name?.message}
                 />
+                <Label>Projekt beskrivelse</Label>
                 <Input
                   {...register('description')}
-                  className="bg-Zinc-500 col-span-2"
+
                   // label="Projekt beskrivelse"
                   // variant="bordered"
                 />
+                <Label>Budget [kr.]</Label>
                 <Input
                   {...register('budget')}
-                 className="bg-Zinc-500 col-span-2"
+
                   // label="Budget [kr.]"
                   // type="number"
                 />

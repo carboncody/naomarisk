@@ -3,18 +3,18 @@
 import { SingleDropdown } from '@components/ui';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
-import { useEmployees } from '@lib/api/hooks';
-import { type UpdateRiskForm } from '@lib/api/types/risk';
-import { RiskStatus, type Project, type Risk, type User } from '@models';
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
+import { useEmployees } from '@lib/api/hooks';
+import { type UpdateRiskForm } from '@lib/api/types/risk';
+import { RiskStatus, type Project, type Risk, type User } from '@models';
 import axios from 'axios';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -100,7 +100,10 @@ export default function EditRisk({
                 <Label htmlFor="description">Description</Label>
                 <Input
                   {...register('description', {
-                    required: { value: true, message: 'Description is required' },
+                    required: {
+                      value: true,
+                      message: 'Description is required',
+                    },
                   })}
                   id="description"
                   value={watch('description')}
@@ -186,7 +189,9 @@ export default function EditRisk({
                       )?.label || 'Select Status'
                     }
                     selectedValue={watch('status')}
-                    setSelectedValue={(value) => setValue('status', value as RiskStatus)}
+                    setSelectedValue={(value) =>
+                      setValue('status', value as RiskStatus)
+                    }
                   />
                 </div>
                 <div className="flex items-center gap-2">
@@ -219,7 +224,10 @@ export default function EditRisk({
           </div>
         </DialogDescription>
         <DialogFooter>
-          <Button variant="destructive" onClick={() => setRiskBeingEdited(null)}>
+          <Button
+            variant="destructive"
+            onClick={() => setRiskBeingEdited(null)}
+          >
             Close
           </Button>
           <Button onClick={handleSubmit(onSubmit)}>Save</Button>

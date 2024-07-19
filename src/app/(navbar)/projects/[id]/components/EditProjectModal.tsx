@@ -69,14 +69,13 @@ export default function EditProject({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-       <DialogContent className="bg-[#413e3e]">
+      <DialogContent className="bg-[#413e3e]">
         <DialogHeader>
           <DialogTitle className="text-white">Rediger Projekt</DialogTitle>
         </DialogHeader>
         <DialogDescription className="text-white">
           <div className="flex w-full items-start gap-5">
             <Input
-              className="bg-Zinc-500 col-span-2"
               {...register('name', {
                 required: {
                   value: true,
@@ -94,7 +93,6 @@ export default function EditProject({
               // errorMessage={errors.name?.message}
             />
             <Input
-              className="bg-Zinc-500 col-span-2"
               {...register('description')}
               value={watch('description') ?? ''}
               // label="Beskrivelse"
@@ -125,7 +123,6 @@ export default function EditProject({
             <Input
               {...register('budget')}
               value={watch('budget') ?? ''}
-              className="bg-Zinc-500 col-span-2"
               // label="Budget [kr.]"
               // variant="bordered"
               type="number"

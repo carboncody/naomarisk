@@ -1,5 +1,5 @@
-import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { Input } from '@components/ui/Input';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 
 type NextReactInputProps = ComponentPropsWithoutRef<typeof Input>;
 

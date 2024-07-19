@@ -65,7 +65,7 @@ export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
         <div className="grid grid-cols-4 gap-5"></div>
       </div>
       <div className="mt-4">
-        <Button  onClick={handleSubmit(onSubmit)}>Opdater</Button>
+        <Button onClick={handleSubmit(onSubmit)}>Opdater</Button>
       </div>
     </>
   );

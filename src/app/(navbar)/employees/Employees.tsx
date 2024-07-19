@@ -3,11 +3,11 @@
 import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
 import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useEmployees } from '@lib/api/hooks';
 import Error from 'next/error';
 import { useState } from 'react';
 import { EmployeeTable } from './EmployeeTable';
-import { Button } from '@components/ui/button';
 
 export function AllEmployees() {
   const [isNewOpen, setIsNewOpen] = useState(false);

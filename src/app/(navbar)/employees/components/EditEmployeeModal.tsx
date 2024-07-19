@@ -101,7 +101,7 @@ export default function EditEmployeeModal({
             <Input
               {...register('fullName', {})}
               value={watch('fullName')}
-              className="bg-Zinc-500 col-span-2"
+              //
               // label="Navn"
               // errorMessage={errors.fullName?.message}
               // isInvalid={!!errors.fullName}
@@ -109,7 +109,7 @@ export default function EditEmployeeModal({
             <Input
               {...register('jobDescription')}
               value={watch('jobDescription')}
-              className="bg-Zinc-500 col-span-2"
+
               // label="Job beskrivelse"
               // variant="bordered"
             />

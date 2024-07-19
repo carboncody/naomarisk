@@ -1,14 +1,14 @@
 'use client';
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
 import { useProjectRisks } from '@lib/api/hooks/risks';
 import { RiskStatus, type Project } from '@models';
 import Error from 'next/error';
 import { useState } from 'react';
 import CreateRisk from './CreateRisk';
 import RiskTable from './RiskTable';
-import { Button } from '@components/ui/button';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@components/ui/tabs';
 
 interface RisksProps {
   project: Project;
@@ -59,7 +59,11 @@ export function Risks({ project }: RisksProps) {
             <TabsContent value={RiskStatus.Open}>
               <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
                 <RiskTable
-                  risks={allRisks?.filter((risk) => risk.status === RiskStatus.Open) ?? []}
+                  risks={
+                    allRisks?.filter(
+                      (risk) => risk.status === RiskStatus.Open,
+                    ) ?? []
+                  }
                   refetch={refetch}
                   project={project}
                 />
@@ -68,7 +72,11 @@ export function Risks({ project }: RisksProps) {
             <TabsContent value={RiskStatus.Closed}>
               <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
                 <RiskTable
-                  risks={allRisks?.filter((risk) => risk.status === RiskStatus.Closed) ?? []}
+                  risks={
+                    allRisks?.filter(
+                      (risk) => risk.status === RiskStatus.Closed,
+                    ) ?? []
+                  }
                   refetch={refetch}
                   project={project}
                 />

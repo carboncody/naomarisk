@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { SettingsDropdown } from './SettingsDropdown';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -9,6 +7,8 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
+import Link from 'next/link';
+import { SettingsDropdown } from './SettingsDropdown';
 
 export function Nav() {
   // TODO : fix this!
@@ -17,7 +17,7 @@ export function Nav() {
 
   return (
     <NavigationMenu className="sticky top-0 z-50 h-10 w-full bg-white/10 text-white backdrop-blur-md md:h-16">
-      <NavigationMenuList className="flex items-center justify-between w-full">
+      <NavigationMenuList className="flex w-full items-center justify-between">
         <NavigationMenuItem>
           <Link href="/" passHref legacyBehavior>
             <NavigationMenuLink className="bg-gradient-to-br from-white via-amber-50 to-amber-200 bg-clip-text text-xl font-medium text-transparent md:text-2xl">

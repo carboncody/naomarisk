@@ -3,6 +3,7 @@
 import NewProjectDialog from '@app/(navbar)/projects/components/NewProjectDialog';
 import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useAdmin, useMyProjects } from '@lib/api/hooks';
 import { useAllProjects } from '@lib/api/hooks/projects/useAllProjects';
 import { useMe } from '@lib/providers/me';
@@ -10,7 +11,6 @@ import Error from 'next/error';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { ProjectTable } from './components/ProjectTable';
-import { Button } from '@components/ui/button';
 
 export function AllProjects() {
   const searchParams = useSearchParams();

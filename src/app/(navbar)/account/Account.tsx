@@ -4,12 +4,12 @@ import UserSettings from '@app/(navbar)/account/components/UserSettings';
 import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { SettingsCard } from '@components/ui/SettingsCard';
+import { Button } from '@components/ui/button';
 import { useMe } from '@lib/api/hooks/users/useMe';
 import { UserRole } from '@models';
 import Error from 'next/error';
-import { CompanySettings } from './components/CompanySetttings';
-import { Button } from '@components/ui/button';
 import Link from 'next/link'; // Import Link from next/link
+import { CompanySettings } from './components/CompanySetttings';
 
 export function Account() {
   const { data: me, isLoading, error, refetch } = useMe();

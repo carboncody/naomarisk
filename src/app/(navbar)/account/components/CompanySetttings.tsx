@@ -47,7 +47,7 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
       </div>
       <div className="text-white">
         <div className=" w-full items-start gap-5">
-          <Label >Navn</Label>
+          <Label>Navn</Label>
           <Input
             {...register('name', {
               required: {
@@ -74,7 +74,7 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
         <div className="grid grid-cols-4 gap-5"></div>
       </div>
       <div className="mt-4">
-        <Button  onClick={handleSubmit(onSubmit)}>Opdater</Button>
+        <Button onClick={handleSubmit(onSubmit)}>Opdater</Button>
       </div>
     </>
   );

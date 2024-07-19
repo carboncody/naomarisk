@@ -77,7 +77,6 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           </Label>
           <Input
             id="Kode"
-           
             name="password"
             type="password"
             value={formData?.password ?? ''}
@@ -115,7 +114,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
       </form>
       <div className="item-center justify-flex my-4 flex justify-center">
         <Link href="/account">
-          <Button >Tilbage</Button>
+          <Button>Tilbage</Button>
         </Link>
       </div>
     </div>

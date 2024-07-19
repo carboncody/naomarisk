@@ -1,12 +1,5 @@
 'use client';
 
-import { SingleDropdown } from '@components/ui';
-import { Button } from '@components/ui/button';
-import { type CreateUserForm } from '@lib/api/types';
-import { UserRole } from '@models';
-import axios, { AxiosError } from 'axios';
-import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +8,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { SingleDropdown } from '@components/ui';
 import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
+import { type CreateUserForm } from '@lib/api/types';
+import { UserRole } from '@models';
+import axios, { AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 interface InviteEmployeeProps {
   isOpen: boolean;
@@ -82,14 +83,13 @@ export default function InviteEmployee({
       <DialogTrigger asChild>
         <Button variant="outline">Inviter medarbejder</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-[#413e3e]">
+      <DialogContent className="bg-[#413e3e] sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-white">
-            Inviter medarbejder
-          </DialogTitle>
+          <DialogTitle className="text-white">Inviter medarbejder</DialogTitle>
         </DialogHeader>
         <div className="text-white">
           <div className="flex w-full items-start gap-5">
+            <Label>Email</Label>
             <Input
               {...register('email', {
                 required: {
@@ -103,14 +103,15 @@ export default function InviteEmployee({
                   },
                 },
               })}
-              className="bg-Zinc-500 col-span-2"
+
               // label="Email"
               // errorMessage={errors.email?.message}
               // isInvalid={!!errors.email}
             />
+            <Label>Job beskrivelse</Label>
             <Input
               {...register('jobDescription')}
-              className="bg-Zinc-500 col-span-2"
+
               // label="Job beskrivelse"
               // variant="bordered"
             />

@@ -1,12 +1,12 @@
 'use client';
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useEmployees } from '@lib/api/hooks';
 import type { Project } from '@models';
 import { useState } from 'react';
 import { MembersModal } from './MembersModal';
 import { ProjectEmployeeTable } from './ProjectEmployeeTable';
-import { Button } from '@components/ui/button';
 
 interface ProjectEmployeeProps {
   project: Project;

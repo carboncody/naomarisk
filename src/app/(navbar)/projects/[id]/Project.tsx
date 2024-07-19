@@ -1,8 +1,10 @@
 'use client';
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EditProject from '@app/(navbar)/projects/[id]/components/EditProjectModal';
 import { CumulativeRiskMatrix } from '@components/RiskMatrix/CumulativeRiskMatrix';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useProject } from '@lib/api/hooks';
 import dayjs from 'dayjs';
 import Error from 'next/error';
@@ -10,19 +12,14 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
-import { Button } from '@components/ui/button';
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from '@/components/ui/tabs';
 
 export function Project() {
   const pathName = usePathname();
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'risks'>('overview');
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'risks'>(
+    'overview',
+  );
 
   const {
     data: project,
@@ -51,7 +48,9 @@ export function Project() {
           <div className="flex w-screen flex-col items-center justify-center px-4">
             <Tabs
               value={selectedTab}
-              onValueChange={(tab) => setSelectedTab(tab as 'risks' | 'overview')}
+              onValueChange={(tab) =>
+                setSelectedTab(tab as 'risks' | 'overview')
+              }
               className="mb-5"
             >
               <TabsList>

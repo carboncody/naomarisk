@@ -118,9 +118,8 @@ export default function CreateRisk({
               />
             </div>
             <div className="w-full">
-            <Label htmlFor="comment">Kommentar</Label>
+              <Label htmlFor="comment">Kommentar</Label>
               <Input
-                
                 {...register('comment', {
                   required: {
                     value: false,
@@ -137,7 +136,7 @@ export default function CreateRisk({
           </div>
           <div className="flex w-full items-center justify-between gap-5">
             <div className="flex w-1/3 gap-4">
-            <Label htmlFor="probability">Sandsynlighed</Label>
+              <Label htmlFor="probability">Sandsynlighed</Label>
 
               <Input
                 {...register('probability', {
@@ -154,7 +153,7 @@ export default function CreateRisk({
                 // errorMessage={errors.probability?.message}
                 // error={!!errors.probability}
               />
-            <Label htmlFor="consequence">Konsekvens</Label>
+              <Label htmlFor="consequence">Konsekvens</Label>
 
               <Input
                 {...register('consequence', {
