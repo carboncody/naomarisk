@@ -107,7 +107,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary rounded-xl border bg-white px-2 py-2 text-black">
+          <button className="btn btn-primary rounded-xl border bg-white/10 px-2 py-2 text-black">
             Opdater Kode
           </button>
         </div>

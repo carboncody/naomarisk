@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@components/ui/dialog';
+import { Label } from '@components/ui/label';
 import { type UpdateProjectForm } from '@lib/api/types';
 import { type Project } from '@models';
 import axios, { AxiosError } from 'axios';
@@ -75,31 +76,37 @@ export default function EditProject({
         </DialogHeader>
         <DialogDescription className="text-white">
           <div className="flex w-full items-start gap-5">
-            <Input
-              {...register('name', {
-                required: {
-                  value: true,
-                  message: 'Navn er påkrævet',
-                },
-                minLength: {
-                  value: 3,
-                  message: 'Navn skal være mindst 3 tegn',
-                },
-              })}
-              value={watch('name') ?? ''}
-              // label="Projektnavn"
-              // variant="bordered"
-              // isInvalid={!!errors.name}
-              // errorMessage={errors.name?.message}
-            />
-            <Input
-              {...register('description')}
-              value={watch('description') ?? ''}
-              // label="Beskrivelse"
-              // variant="bordered"
-            />
+            <div>
+              <Label>Projekt navn</Label>
+              <Input
+                {...register('name', {
+                  required: {
+                    value: true,
+                    message: 'Navn er påkrævet',
+                  },
+                  minLength: {
+                    value: 3,
+                    message: 'Navn skal være mindst 3 tegn',
+                  },
+                })}
+                value={watch('name') ?? ''}
+                // label="Projektnavn"
+                // variant="bordered"
+                // isInvalid={!!errors.name}
+                // errorMessage={errors.name?.message}
+              />
+            </div>
+            <div>
+              <Label>Projekt beskrivelse</Label>
+              <Input
+                {...register('description')}
+                value={watch('description') ?? ''}
+                // label="Beskrivelse"
+                // variant="bordered"
+              />
+            </div>
           </div>
-          <div className="flex gap-5">
+          <div className="mt-5 flex gap-5">
             <div className="flex flex-col">
               <DatePicker
                 // customPlaceholder="Vælg start dato"
@@ -119,7 +126,7 @@ export default function EditProject({
                 }}
               />
             </div>
-
+            <Label>Budget [kr.]</Label>
             <Input
               {...register('budget')}
               value={watch('budget') ?? ''}
