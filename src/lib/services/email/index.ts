@@ -24,3 +24,24 @@ export async function sendInviteEmail(email: string, companyName: string) {
     return console.error({ error });
   }
 }
+
+export async function sendNotificationEmail(
+  email: string,
+  companyName: string,
+  Risk: string,
+) {
+  const { error } = await resend.emails.send({
+    from: 'NAOMA Risk <it@naoma.dk>',
+    to: [email],
+    subject: 'NAOMA Risk Notification',
+    html: `
+      <p><strong>Hej,</strong></p>
+      <p>Risk ${Risk} for ${companyName} er blevet opdateret.</p>
+       <p>Med venlig hilsen,<br/>NAOMA Risk Teamet</p>
+
+    `,
+  });
+  if (error) {
+    return console.error({ error });
+  }
+}
