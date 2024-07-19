@@ -1,35 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* ------------ Customizing the scrollbar ------------ */
-::-webkit-scrollbar {
-  width: 6px; /* Width of the vertical scrollbar */
-  height: 8px; /* Height of the horizontal scrollbar */
-  background: transparent; /* Setting the track to have no background */
-}
-
-/* Customizing the scrollbar handle */
-::-webkit-scrollbar-thumb {
-  background-color: rgb(229, 223, 223);
-  border-radius: 3px;
-}
-
-/* Customizing the scrollbar handle for dark mode */
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-thumb {
-    background-color: #9c9c9c;
-  }
-}
-
-/* For Firefox */
-* {
-  scrollbar-width: thin; /* Can be 'auto', 'thin', or 'none' */
-  scrollbar-color: lightgray transparent;
-}
-
-@media (prefers-color-scheme: dark) {
-  * {
-    scrollbar-color: #b6b6b6 transparent;
-  }
-}
+  

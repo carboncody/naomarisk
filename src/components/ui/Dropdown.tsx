@@ -1,12 +1,13 @@
-// ReusableDropdown.jsx
-import {
-  Button,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Dropdown as NextDropdown,
-} from '@nextui-org/react';
 import { type ReactNode } from 'react';
+import { Button } from '@components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from '@/components/ui/dropdown-menu';
 
 interface BaseOption {
   label: ReactNode;
@@ -30,31 +31,35 @@ export function SingleDropdown({
   customTriggerBtn,
 }: SingleDropdownProps) {
   return (
-    <NextDropdown className="bg-[#413e3e] text-white" placement="bottom-start">
-      <DropdownTrigger className="text-md">
+    <DropdownMenu>
+      <DropdownMenuTrigger>
         {customTriggerBtn ?? (
-          <Button color="default" className="text-md">
+          <Button className="text-md">
             {selectedValue
               ? options.find((option) => option.value === selectedValue)?.label
               : buttonLabel}
           </Button>
         )}
-      </DropdownTrigger>
-      <DropdownMenu
-        selectionMode="single"
-        aria-label="User Actions"
-        variant="flat"
-      >
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-[#413e3e] text-white">
+        <DropdownMenuLabel className="text-md">{buttonLabel}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         {options.map((option) => (
-          <DropdownItem
+          <DropdownMenuItem
             key={option.value}
-            href={option.href}
             onClick={() => setSelectedValue(option.value)}
+            asChild
           >
-            {option.label}
-          </DropdownItem>
+            {option.href ? (
+              <a href={option.href} className="text-white no-underline">
+                {option.label}
+              </a>
+            ) : (
+              <span className="text-white">{option.label}</span>
+            )}
+          </DropdownMenuItem>
         ))}
-      </DropdownMenu>
-    </NextDropdown>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

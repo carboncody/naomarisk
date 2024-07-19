@@ -1,7 +1,8 @@
-import { NextInput } from '@components/ui/Input';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { type UpdateCompanyForm } from '@lib/api/types';
 import type { Company } from '@models';
-import { Button } from '@nextui-org/react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -46,7 +47,8 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
       </div>
       <div className="text-white">
         <div className=" w-full items-start gap-5">
-          <NextInput
+          <Label >Navn</Label>
+          <Input
             {...register('name', {
               required: {
                 value: true,
@@ -55,30 +57,24 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
             })}
             value={watch('name') ?? ''}
             className="mb-2"
-            label="Navn"
-            labelPlacement="inside"
-            isInvalid={!!errors.name}
-            errorMessage={errors.name?.message}
           />
-          <NextInput
+          <Label>CVR nr.</Label>
+          <Input
             {...register('cvr')}
             value={watch('cvr') ?? ''}
             className="mb-2"
-            label="CVR nr."
-            variant="bordered"
           />
-          <NextInput
+          <Label>Email</Label>
+          <Input
             {...register('email')}
             value={watch('email') ?? ''}
             className="mb-2"
-            label="Email"
-            variant="bordered"
           />
         </div>
         <div className="grid grid-cols-4 gap-5"></div>
       </div>
       <div className="mt-4">
-        <Button onClick={handleSubmit(onSubmit)}>Opdater</Button>
+        <Button  onClick={handleSubmit(onSubmit)}>Opdater</Button>
       </div>
     </>
   );

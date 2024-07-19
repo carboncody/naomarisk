@@ -4,10 +4,10 @@ import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeMod
 import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useEmployees } from '@lib/api/hooks';
-import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import { EmployeeTable } from './EmployeeTable';
+import { Button } from '@components/ui/button';
 
 export function AllEmployees() {
   const [isNewOpen, setIsNewOpen] = useState(false);

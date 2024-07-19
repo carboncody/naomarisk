@@ -1,4 +1,3 @@
-import { Checkbox } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { type TableColumns } from './types/table.columns';
@@ -55,11 +54,11 @@ export function TableRows<T extends Record<string, any>>({
         <>
           {selectedRowIds && setSelectedRowIds && (
             <div className="flex items-center py-2 text-lg">
-              <Checkbox
+              {/* <Checkbox
                 radius="sm"
                 isSelected={selectedRowIds.length === rows.length}
                 onValueChange={handleSelectAllChange}
-              />
+              /> */}
               <span>Vælg alle</span>
             </div>
           )}
@@ -69,7 +68,7 @@ export function TableRows<T extends Record<string, any>>({
               className={clsx(
                 'flex items-center transition-all duration-100 hover:cursor-pointer hover:ease-in',
                 {
-                  'border-b border-gray-200 dark:border-gray-500':
+                  'border-Zinc-200 dark:border-Zinc-500 border-b':
                     rowIndex !== rows.length - 1,
                   'rounded-lg bg-[#494949]':
                     selectedRowId === getRowId(row) &&
@@ -84,13 +83,13 @@ export function TableRows<T extends Record<string, any>>({
             >
               {selectedRowIds && setSelectedRowIds && (
                 <div className="flex items-center">
-                  <Checkbox
+                  {/* <Checkbox
                     radius="sm"
                     isSelected={selectedRowIds.includes(getRowId(row))}
                     onValueChange={(isSelected) =>
                       handleCheckboxChange(getRowId(row), isSelected)
                     }
-                  />
+                  /> */}
                 </div>
               )}
               <div

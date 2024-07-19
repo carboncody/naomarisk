@@ -66,7 +66,7 @@ export function Home() {
           <p className="ml-2 text-3xl">{data.users.length}</p>
           <p className="text-xl">medarbejdere</p>
         </div>
-        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-gray-600 via-gray-800 to-gray-900 p-4 font-medium text-white shadow-lg shadow-black">
+        <div className="from-Zinc-600 via-Zinc-800 to-Zinc-900 flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br p-4 font-medium text-white shadow-lg shadow-black">
           <PiWarningFill className="text-3xl" />
           <p className="ml-2 text-3xl">
             {

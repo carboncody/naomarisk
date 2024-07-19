@@ -1,18 +1,20 @@
 'use client';
 
 import { SingleDropdown } from '@components/ui';
-import { NextInput } from '@components/ui/Input';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@components/ui/dialog';
+import { Label } from '@components/ui/label';
 import { useEmployees } from '@lib/api/hooks';
 import { type CreateRiskForm } from '@lib/api/types/risk';
 import type { Project, User } from '@models';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
 import axios, { AxiosError } from 'axios';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -65,9 +67,10 @@ export default function CreateRisk({
   const { data: allEmployees, isError } = useEmployees();
 
   if (isError || !allEmployees) {
-    <div>Something went wrong</div>;
+    return <div>Something went wrong</div>;
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const projectMembers: User[] | undefined = useMemo(() => {
     const projectMemberIds = project.projectUsers.map((pu) => pu.userId);
     return allEmployees?.filter((employee) =>
@@ -76,145 +79,136 @@ export default function CreateRisk({
   }, [allEmployees, project.projectUsers]);
 
   return (
-    <>
-      <Modal
-        className="bg-[#413e3e]"
-        size="4xl"
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        placement="top-center"
-        backdrop="blur"
-        onClose={() => setIsOpen(false)}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-white">
-                Opret Risiko
-              </ModalHeader>
-              <ModalBody className="text-white">
-                <div className="flex w-full gap-5">
-                  <NextInput
-                    {...register('description', {
-                      required: {
-                        value: true,
-                        message: 'Beskrivelse mangler',
-                      },
-                    })}
-                    label="Beskrivelse"
-                    className="w-full"
-                    variant="bordered"
-                    errorMessage={errors.description?.message}
-                    error={!!errors.description}
-                  />
-                </div>
-                <div className="flex w-full gap-5">
-                  <div className="w-full">
-                    <NextInput
-                      {...register('activity', {
-                        required: {
-                          value: false,
-                          message: 'aktivitet mangler',
-                        },
-                      })}
-                      label="Aktivitet"
-                      className="w-full"
-                      variant="bordered"
-                      errorMessage={errors.activity?.message}
-                      error={!!errors.activity}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <NextInput
-                      {...register('comment', {
-                        required: {
-                          value: false,
-                          message: 'Kommentar mangler',
-                        },
-                      })}
-                      label="Kommentar"
-                      className="w-full"
-                      variant="bordered"
-                      errorMessage={errors.comment?.message}
-                      error={!!errors.comment}
-                    />
-                  </div>
-                </div>
-                <div className="flex w-full items-center justify-between gap-5">
-                  <div className="flex w-1/3 gap-4">
-                    <NextInput
-                      {...register('probability', {
-                        validate: {
-                          range: (value) =>
-                            value === null ||
-                            (value >= 0 && value <= 5) ||
-                            'Sandsynlighed skal være mellem 1 og 5',
-                        },
-                      })}
-                      label="Sandsynlighed"
-                      variant="bordered"
-                      type="number"
-                      errorMessage={errors.probability?.message}
-                      error={!!errors.probability}
-                    />
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="bg-[#413e3e]">
+        <DialogHeader>
+          <DialogTitle className="text-white">Opret Risiko</DialogTitle>
+        </DialogHeader>
+        <DialogDescription className="text-white">
+          <div className="flex w-full gap-5">
+            <Input
+              {...register('description', {
+                required: {
+                  value: true,
+                  message: 'Beskrivelse mangler',
+                },
+              })}
+              // label="Beskrivelse"
+              // className="w-full"
+              // variant="bordered"
+              // errorMessage={errors.description?.message}
+              // error={!!errors.description}
+            />
+          </div>
+          <div className="flex w-full gap-5">
+            <div className="w-full">
+              <Label htmlFor="activity">Aktivitet</Label>
+              <Input
+                {...register('activity', {
+                  required: {
+                    value: false,
+                    message: 'aktivitet mangler',
+                  },
+                })}
+                // label="Aktivitet"
+                // className="w-full"
+                // variant="bordered"
+                // errorMessage={errors.activity?.message}
+                // error={!!errors.activity}
+              />
+            </div>
+            <div className="w-full">
+            <Label htmlFor="comment">Kommentar</Label>
+              <Input
+                
+                {...register('comment', {
+                  required: {
+                    value: false,
+                    message: 'Kommentar mangler',
+                  },
+                })}
+                // label="Kommentar"
+                // className="w-full"
+                // variant="bordered"
+                // errorMessage={errors.comment?.message}
+                // error={!!errors.comment}
+              />
+            </div>
+          </div>
+          <div className="flex w-full items-center justify-between gap-5">
+            <div className="flex w-1/3 gap-4">
+            <Label htmlFor="probability">Sandsynlighed</Label>
 
-                    <NextInput
-                      {...register('consequence', {
-                        validate: {
-                          range: (value) =>
-                            value === null ||
-                            (value >= 0 && value <= 5) ||
-                            'Konsekvens skal være mellem 1 og 5',
-                        },
-                      })}
-                      label="Konsekvens"
-                      variant="bordered"
-                      type="number"
-                      errorMessage={errors.consequence?.message}
-                      error={!!errors.consequence}
-                    />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span>Risiko ejer {'->'}</span>
-                    <SingleDropdown
-                      selectedValue={undefined}
-                      options={
-                        projectMembers
-                          ? projectMembers.map((employee) => ({
-                              label: employee.fullName,
-                              value: employee.id,
-                            }))
-                          : []
-                      }
-                      buttonLabel={
-                        projectMembers && watch('riskOwnerUserId')
-                          ? projectMembers.find(
-                              (employee) =>
-                                employee.id === watch('riskOwnerUserId'),
-                            )?.email
-                          : 'Vælg medarbejder'
-                      }
-                      setSelectedValue={(value) => {
-                        if (value === watch('riskOwnerUserId')) {
-                          setValue('riskOwnerUserId', undefined);
-                          return;
-                        }
-                        setValue('riskOwnerUserId', value);
-                      }}
-                    />
-                  </div>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" onClick={onClose}>
-                  Luk
-                </Button>
-                <Button onClick={handleSubmit(onSubmit)}>Opret</Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+              <Input
+                {...register('probability', {
+                  validate: {
+                    range: (value) =>
+                      value === null ||
+                      (value >= 0 && value <= 5) ||
+                      'Sandsynlighed skal være mellem 1 og 5',
+                  },
+                })}
+                // label="Sandsynlighed"
+                // variant="bordered"
+                // type="number"
+                // errorMessage={errors.probability?.message}
+                // error={!!errors.probability}
+              />
+            <Label htmlFor="consequence">Konsekvens</Label>
+
+              <Input
+                {...register('consequence', {
+                  validate: {
+                    range: (value) =>
+                      value === null ||
+                      (value >= 0 && value <= 5) ||
+                      'Konsekvens skal være mellem 1 og 5',
+                  },
+                })}
+                // label="Konsekvens"
+                // variant="bordered"
+                // type="number"
+                // errorMessage={errors.consequence?.message}
+                // error={!!errors.consequence}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span>Risiko ejer {'->'}</span>
+              <SingleDropdown
+                selectedValue={undefined}
+                options={
+                  projectMembers
+                    ? projectMembers.map((employee) => ({
+                        label: employee.fullName,
+                        value: employee.id,
+                      }))
+                    : []
+                }
+                buttonLabel={
+                  projectMembers && watch('riskOwnerUserId')
+                    ? projectMembers.find(
+                        (employee) => employee.id === watch('riskOwnerUserId'),
+                      )?.email
+                    : 'Vælg medarbejder'
+                }
+                setSelectedValue={(value) => {
+                  if (value === watch('riskOwnerUserId')) {
+                    setValue('riskOwnerUserId', undefined);
+                    return;
+                  }
+                  setValue('riskOwnerUserId', value);
+                }}
+              />
+            </div>
+          </div>
+        </DialogDescription>
+        <DialogFooter>
+          <Button variant="destructive" onClick={() => setIsOpen(false)}>
+            Luk
+          </Button>
+          <Button onClick={handleSubmit(onSubmit)}>Opret</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

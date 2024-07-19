@@ -6,9 +6,10 @@ import LoadingSpinner from '@components/ui/LoadSpinner';
 import { SettingsCard } from '@components/ui/SettingsCard';
 import { useMe } from '@lib/api/hooks/users/useMe';
 import { UserRole } from '@models';
-import { Button, Link } from '@nextui-org/react';
 import Error from 'next/error';
 import { CompanySettings } from './components/CompanySetttings';
+import { Button } from '@components/ui/button';
+import Link from 'next/link'; // Import Link from next/link
 
 export function Account() {
   const { data: me, isLoading, error, refetch } = useMe();
@@ -21,12 +22,8 @@ export function Account() {
     );
   }
 
-  if (error) {
-    <Error statusCode={500} message={'Noget gik galt!'} />;
-  }
-
-  if (!me) {
-    return <Error statusCode={500} message={'Noget gik galt!'} />;
+  if (error || !me) {
+    return <Error statusCode={500} title={'Noget gik galt!'} />;
   }
 
   return (
@@ -46,12 +43,12 @@ export function Account() {
       </div>
       <div className="center flex gap-4">
         <Backbutton href={'/'} />
-        <Link href="/account/update-email">
-          <Button>Ændre email</Button>
-        </Link>
-        <Link href="/account/update-password">
-          <Button>Ændre adgangskode</Button>
-        </Link>
+        <Button asChild>
+          <Link href="/account/update-email">Ændre email</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/account/update-password">Ændre adgangskode</Link>
+        </Button>
       </div>
     </div>
   );

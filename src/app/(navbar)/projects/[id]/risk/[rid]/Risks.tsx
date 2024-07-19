@@ -3,9 +3,9 @@
 import EditRisk from '@app/(navbar)/projects/[id]/components/Risks/EditRisk';
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useRisk } from '@lib/api/hooks/risks';
 import { type Risk } from '@models';
-import { Button } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
@@ -84,7 +84,7 @@ export function Risk() {
                     <span className="ml-1 font-light">{risk.probability}</span>
                   </p>
                 </div>
-                <div className="mt-4 border-t border-gray-500 pt-2 font-semibold">
+                <div className="border-Zinc-500 mt-4 border-t pt-2 font-semibold">
                   <p className="flex flex-wrap items-center gap-2">
                     <span>Kommentar</span>
                     <span className="font-light">
@@ -108,7 +108,7 @@ export function Risk() {
                   <FaComment className="h-4 w-4" />
                   Kommentartråd
                 </div>
-                <p className="mt-4 animate-pulse text-sm text-gray-200">
+                <p className="text-Zinc-200 mt-4 animate-pulse text-sm">
                   Kommer snart!
                 </p>
               </div>

@@ -38,7 +38,7 @@ export function TableHeader<T extends Record<string, any>>({
 
   return (
     <div
-      className={`grid ${colCount} rounded-xl bg-gray-200 pl-4 text-sm text-black  `}
+      className={`grid ${colCount} bg-Zinc-200 rounded-xl pl-4 text-sm text-black  `}
     >
       {Object.keys(columns)
         .map((key) => ({
@@ -55,7 +55,7 @@ export function TableHeader<T extends Record<string, any>>({
                 className={clsx(
                   `col-span-${spacing} select-none rounded-lg px-2 py-4`,
                   {
-                    'flex cursor-pointer items-center duration-300 hover:bg-gray-300 hover:shadow-xl hover:ease-in':
+                    'hover:bg-Zinc-300 flex cursor-pointer items-center duration-300 hover:shadow-xl hover:ease-in':
                       sortable,
                   },
                 )}

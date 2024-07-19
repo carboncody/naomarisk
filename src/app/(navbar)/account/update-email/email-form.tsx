@@ -1,14 +1,17 @@
 'use client';
 import Alert from '@components/ui/Alert';
+import { Input } from '@components/ui/Input';
 import InputErrorMessage from '@components/ui/InputErrorMessage';
+import { Button } from '@components/ui/button';
 import { formatError } from '@lib/services/supabase/utils';
 import { UpdateEmailSchema } from '@lib/services/supabase/validationSchema';
-import { Button, Input, Link } from '@nextui-org/react';
 import {
   createClientComponentClient,
   type User,
 } from '@supabase/auth-helpers-nextjs';
+import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
+import { Label } from 'recharts';
 import { ZodError, type z } from 'zod';
 
 type FormData = z.infer<typeof UpdateEmailSchema>;
@@ -70,8 +73,8 @@ export default function EmailForm({ user }: { user: User | undefined }) {
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
+          <Label>Email</Label>
           <Input
-            label="Indtast en nye email"
             name="email"
             type="email"
             value={formData?.email ?? ''}
@@ -85,9 +88,9 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.email}</InputErrorMessage>
         ) : null}
         <div className="form-control my-4">
+          <Label>Bekræft din email</Label>
           <Input
             id="emailConfirm"
-            label="Bekræft din email"
             name="email"
             type="email"
             value={formData.emailConfirm ?? ''}
@@ -106,10 +109,12 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           </button>
         </div>
       </form>
-      <div className=" justify-flex flex justify-center">
-        <Link className="block w-full p-3" href="/account">
-          <Button>Tilbage</Button>
-        </Link>
+      <div className="justify-flex flex justify-center">
+        <Button asChild>
+          <Link className="block w-full p-3" href="/account">
+            Tilbage
+          </Link>
+        </Button>
       </div>
     </div>
   );

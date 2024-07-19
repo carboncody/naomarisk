@@ -24,7 +24,7 @@ export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
         <div className="truncate">
           <span>{employee.email}</span>
           <br />
-          <span className="break-words text-gray-400">
+          <span className="text-Zinc-400 break-words">
             {employee.jobDescription}
           </span>
         </div>
@@ -38,7 +38,7 @@ export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
         <div className="truncate">
           <span>{employee.fullName}</span>
           <br />
-          <span className="break-words text-gray-400">
+          <span className="text-Zinc-400 break-words">
             {employee.jobDescription}
           </span>
         </div>
@@ -50,7 +50,7 @@ export function EmployeeTable({ employee, refetch }: EmployeeTableProps) {
       spacing: 1,
       render: (employee: User) => (
         <div className="truncate">
-          <span className="break-words text-gray-400">{employee.role}</span>
+          <span className="text-Zinc-400 break-words">{employee.role}</span>
         </div>
       ),
     },

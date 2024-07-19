@@ -62,7 +62,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
             {risk.riskowner ? (
               risk.riskowner.fullName ?? risk.riskowner.email
             ) : (
-              <em className="text-gray-400">Ingen ejer</em>
+              <em className="text-Zinc-400">Ingen ejer</em>
             )}
           </span>
         </div>
@@ -96,12 +96,12 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
             <div>
               <p>
                 {risk.probability ?? (
-                  <em className="text-gray-400">Ikke defineret</em>
+                  <em className="text-Zinc-400">Ikke defineret</em>
                 )}
               </p>
               <p>
                 {risk.consequence ?? (
-                  <em className="text-gray-400">Ikke defineret</em>
+                  <em className="text-Zinc-400">Ikke defineret</em>
                 )}
               </p>
             </div>
@@ -114,7 +114,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
           </div>
           <div className="col-span-1 flex justify-end">
             <button
-              className="flex w-16 items-center justify-center rounded-lg text-xl text-white outline-none duration-200 hover:bg-gray-400"
+              className="hover:bg-Zinc-400 flex w-16 items-center justify-center rounded-lg text-xl text-white outline-none duration-200"
               onClick={(e) => {
                 e.stopPropagation();
                 setRiskBeingEdited(risk);

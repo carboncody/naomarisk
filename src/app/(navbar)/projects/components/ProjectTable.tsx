@@ -17,7 +17,7 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
         <div className="truncate">
           <span>{project.name}</span>
           <br />
-          <span className="break-words text-gray-400">
+          <span className="text-Zinc-400 break-words">
             {project.description}
           </span>
         </div>
@@ -50,11 +50,11 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
         <div className="truncate">
           <span className="flex items-center gap-1">
             {dayjs(project.startDate).format('DD MMM')}
-            <span className="text-gray-400">-</span>
+            <span className="text-Zinc-400">-</span>
             {project.dueDate ? (
               dayjs(project.dueDate).format('DD MMM')
             ) : (
-              <p className="text-gray-400">No due date</p>
+              <p className="text-Zinc-400">No due date</p>
             )}
           </span>
         </div>
