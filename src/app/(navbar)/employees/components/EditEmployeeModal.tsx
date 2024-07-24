@@ -90,28 +90,18 @@ export default function EditEmployeeModal({
 
   return (
     <Dialog open={!!employee} onOpenChange={() => setEmployeeBeingEdited(null)}>
-      <DialogContent className="bg-[#413e3e] ">
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700 ">
         <DialogHeader>
-          <DialogTitle className="font-bold text-white">
+          <DialogTitle className="font-bold dark:text-white">
             <span className="text-red-500">Slet </span>/ Rediger medarbejder!
           </DialogTitle>
         </DialogHeader>
-        <div className="text-white">
+        <div className="dark:text-white">
           <div className="flex w-full items-start gap-5">
-            <Input
-              {...register('fullName', {})}
-              value={watch('fullName')}
-              //
-              // label="Navn"
-              // errorMessage={errors.fullName?.message}
-              // isInvalid={!!errors.fullName}
-            />
+            <Input {...register('fullName', {})} value={watch('fullName')} />
             <Input
               {...register('jobDescription')}
               value={watch('jobDescription')}
-
-              // label="Job beskrivelse"
-              // variant="bordered"
             />
           </div>
           <div className="flex h-12 w-1/2 items-center">

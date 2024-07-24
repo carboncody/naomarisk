@@ -42,10 +42,10 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
 
   return (
     <>
-      <div className="mb-3 flex flex-col gap-1 text-white">
+      <div className="mb-3 flex flex-col gap-1 dark:text-white">
         Firma indstillinger
       </div>
-      <div className="text-white">
+      <div className="dark:text-white">
         <div className=" w-full items-start gap-5">
           <Label>Navn</Label>
           <Input

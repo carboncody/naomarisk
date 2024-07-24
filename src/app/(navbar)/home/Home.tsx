@@ -36,14 +36,14 @@ export function Home() {
   }
 
   return (
-    <div className="mx-auto flex h-full max-w-screen-2xl flex-col text-white">
+    <div className="mx-auto flex h-full max-w-screen-2xl flex-col dark:text-white">
       <div className="mt-5 flex items-center justify-between md:mt-10">
-        <span className="select-none text-5xl font-medium text-white">
+        <span className="select-none text-5xl font-medium dark:text-white">
           Welcome {me.fullName},
         </span>
-        <BsBuildingFillGear className="inline h-10 w-10 text-amber-200" />
+        <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" />
       </div>
-      <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-xl text-white md:mt-10">
+      <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-xl dark:text-white md:mt-10">
         <PiShieldWarningBold className="inline h-6 w-6 text-amber-500" />
         <p className="select-none">
           <span>Aktive projekt statisktikker for</span>

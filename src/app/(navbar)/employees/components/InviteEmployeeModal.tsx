@@ -83,7 +83,7 @@ export default function InviteEmployee({
       <DialogTrigger asChild>
         <Button variant="outline">Inviter medarbejder</Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#413e3e] sm:max-w-[425px]">
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
         <DialogHeader>
           <DialogTitle className="text-white">Inviter medarbejder</DialogTitle>
         </DialogHeader>
@@ -103,20 +103,11 @@ export default function InviteEmployee({
                   },
                 },
               })}
-
-              // label="Email"
-              // errorMessage={errors.email?.message}
-              // isInvalid={!!errors.email}
             />
             <Label>Job beskrivelse</Label>
-            <Input
-              {...register('jobDescription')}
-
-              // label="Job beskrivelse"
-              // variant="bordered"
-            />
+            <Input {...register('jobDescription')} />
           </div>
-          <div className="flex h-12 w-1/2 items-center">
+          <div className="mt-3 flex h-12 w-1/2 items-center">
             <label className="mx-2">Rolle {'->'}</label>
             <SingleDropdown
               options={RoleActionDropdownOptions}

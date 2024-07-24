@@ -59,7 +59,7 @@ export function Project() {
               </TabsList>
               <TabsContent value="overview">
                 <div className="flex w-full max-w-screen-2xl gap-4">
-                  <div className="sticky top-12 h-fit w-1/3 rounded-md bg-[#333333] p-4 md:top-20">
+                  <div className="sticky top-12 h-fit w-1/3 rounded-md bg-zinc-200 p-4 dark:bg-[#333333] md:top-20">
                     <Button
                       variant="secondary"
                       className="my-4 w-32 justify-end"
@@ -68,38 +68,38 @@ export function Project() {
                       Rediger Projekt
                     </Button>
                     <p className="mt-2 font-semibold">Projektnavn:</p>
-                    <p className="font-thin">{project.name}</p>
+                    <p className="font-light">{project.name}</p>
                     <p className="mt-2 font-semibold">Beskrivelse:</p>
-                    <p className="font-thin">{project.description}</p>
+                    <p className="font-light">{project.description}</p>
                     <div className="mt-2 flex gap-10 font-semibold">
                       <p>
                         Dato for oprettelse:
                         <br />
-                        <span className="font-thin">
+                        <span className="font-light">
                           {dayjs(project.createdAt).format('DD MMM YYYY')}
                         </span>
                       </p>
                       <p>
                         Slutdato for projekt:
                         <br />
-                        <span className="font-thin">
+                        <span className="font-light">
                           {dayjs(project.dueDate).format('DD MMM YYYY')}
                         </span>
                       </p>
                     </div>
                     <p className="mt-2">Budgettet for projektet:</p>
-                    <p className="font-thin">{project.budget} kr.</p>
+                    <p className="font-light">{project.budget} kr.</p>
                     <div className="mt-10">
                       <CumulativeRiskMatrix risks={project.risks} />
                     </div>
                   </div>
-                  <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-[#333333] p-4">
+                  <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
                     <ProjectEmployee project={project} refetch={refetch} />
                   </div>
                 </div>
               </TabsContent>
               <TabsContent value="risks">
-                <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
+                <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
                   <Risks project={project} />
                 </div>
               </TabsContent>

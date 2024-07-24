@@ -79,9 +79,9 @@ export function MembersModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-[#413e3e] text-white">
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700 dark:text-white">
         <DialogHeader>
-          <DialogTitle className="text-white">
+          <DialogTitle className="dark:text-white">
             Tilføj / Fjern medlemmer
           </DialogTitle>
         </DialogHeader>

@@ -70,12 +70,12 @@ export default function EditProject({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-[#413e3e]">
+      <DialogContent className="w-full bg-zinc-200 dark:bg-[#413e3e]">
         <DialogHeader>
-          <DialogTitle className="text-white">Rediger Projekt</DialogTitle>
+          <DialogTitle className="dark:text-white">Rediger Projekt</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-white">
-          <div className="flex w-full items-start gap-5">
+        <DialogDescription className="dark:text-white">
+          <div className="flex w-full items-start gap-5 text-black dark:text-white">
             <div>
               <Label>Projekt navn</Label>
               <Input
@@ -90,10 +90,6 @@ export default function EditProject({
                   },
                 })}
                 value={watch('name') ?? ''}
-                // label="Projektnavn"
-                // variant="bordered"
-                // isInvalid={!!errors.name}
-                // errorMessage={errors.name?.message}
               />
             </div>
             <div>
@@ -109,7 +105,6 @@ export default function EditProject({
           <div className="mt-5 flex gap-5">
             <div className="flex flex-col">
               <DatePicker
-                // customPlaceholder="Vælg start dato"
                 date={watch('startDate') ?? undefined}
                 setDate={(date: Date | undefined) => {
                   setValue('startDate', date);

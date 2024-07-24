@@ -66,8 +66,10 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           {message}
         </Alert>
       ) : null}
-      <h2 className="mb-4 text-4xl font-semibold">Opdater kode</h2>
-      <p className="mb-4 font-medium">
+      <h2 className="mb-4 text-4xl  font-semibold text-black dark:text-white">
+        Opdater kode
+      </h2>
+      <p className="mb-4 font-medium text-black dark:text-white">
         Hi {user?.email}, Indtast din nye kode nedenfor og bekræft den
       </p>
       <form onSubmit={handleSubmit}>
@@ -107,14 +109,16 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary rounded-xl border bg-white/10 px-2 py-2 text-black">
+          <button className="btn btn-primary rounded-xl border bg-black px-2 py-2 text-white dark:bg-zinc-300 dark:text-black">
             Opdater Kode
           </button>
         </div>
       </form>
       <div className="item-center justify-flex my-4 flex justify-center">
         <Link href="/account">
-          <Button>Tilbage</Button>
+          <Button className="bg-black text-white dark:bg-zinc-300 dark:text-black">
+            Tilbage
+          </Button>
         </Link>
       </div>
     </div>

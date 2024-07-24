@@ -89,11 +89,13 @@ export default function EditRisk({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => setRiskBeingEdited(null)}>
-      <DialogContent className="bg-[#413e3e]">
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
         <DialogHeader>
-          <DialogTitle className="text-white">Edit Risk</DialogTitle>
+          <DialogTitle className="text-black dark:text-white">
+            Edit Risk
+          </DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-white">
+        <DialogDescription className="text-black dark:text-white">
           <div className="flex flex-col gap-4">
             <div className="flex w-full gap-5">
               <div className="w-full">

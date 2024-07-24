@@ -4,10 +4,11 @@ import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeMod
 import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
+import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
 import Error from 'next/error';
 import { useState } from 'react';
-import { EmployeeTable } from './EmployeeTable';
+import { columns } from './components/colums';
 
 export function AllEmployees() {
   const [isNewOpen, setIsNewOpen] = useState(false);
@@ -35,7 +36,7 @@ export function AllEmployees() {
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
+      <div className="justify-top flex min-h-screen flex-col items-center px-8 dark:text-white">
         <div className="mb-4 mt-40 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Medarbejdere</p>
           <div className="flex gap-4">
@@ -44,7 +45,9 @@ export function AllEmployees() {
             </Button>
           </div>
         </div>
-        <EmployeeTable employee={allEmployees ?? []} refetch={refetch} />
+        <div className="w-full">
+          <DataTable data={allEmployees ?? []} columns={columns} />
+        </div>
         <div className=" justify-flex flex justify-center">
           <Backbutton href={'/'} />
         </div>

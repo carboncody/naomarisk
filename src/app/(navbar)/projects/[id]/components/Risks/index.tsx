@@ -41,7 +41,7 @@ export function Risks({ project }: RisksProps) {
   return (
     <>
       <div className="justify-top flex w-full flex-col items-center text-white ">
-        <p className="text-xl font-semibold">
+        <p className="text-xl font-semibold text-black dark:text-white">
           Alle {selectedTab === RiskStatus.Open ? 'åben' : 'lukket'} risici for
           projekt {project.name}
         </p>
@@ -57,7 +57,10 @@ export function Risks({ project }: RisksProps) {
               <TabsTrigger value={RiskStatus.Closed}>Lukket</TabsTrigger>
             </TabsList>
             <TabsContent value={RiskStatus.Open}>
-              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
+              <Button className="w-32" onClick={() => setIsNewOpen(true)}>
+                Tilføj
+              </Button>
+              <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
                 <RiskTable
                   risks={
                     allRisks?.filter(
@@ -70,7 +73,7 @@ export function Risks({ project }: RisksProps) {
               </div>
             </TabsContent>
             <TabsContent value={RiskStatus.Closed}>
-              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
+              <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
                 <RiskTable
                   risks={
                     allRisks?.filter(
@@ -83,9 +86,6 @@ export function Risks({ project }: RisksProps) {
               </div>
             </TabsContent>
           </Tabs>
-          <Button className="w-32" onClick={() => setIsNewOpen(true)}>
-            Tilføj
-          </Button>
         </div>
       </div>
       {isNewOpen && (

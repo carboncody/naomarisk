@@ -80,11 +80,13 @@ export default function CreateRisk({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-[#413e3e]">
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
         <DialogHeader>
-          <DialogTitle className="text-white">Opret Risiko</DialogTitle>
+          <DialogTitle className="text-black dark:text-white">
+            Opret Risiko
+          </DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-white">
+        <DialogDescription className="text-black dark:text-white">
           <div className="flex w-full gap-5">
             <Input
               {...register('description', {
@@ -136,40 +138,39 @@ export default function CreateRisk({
           </div>
           <div className="flex w-full items-center justify-between gap-5">
             <div className="flex w-1/3 gap-4">
-              <Label htmlFor="probability">Sandsynlighed</Label>
+              <div>
+                <Label htmlFor="probability">Sandsynlighed</Label>
 
-              <Input
-                {...register('probability', {
-                  validate: {
-                    range: (value) =>
-                      value === null ||
-                      (value >= 0 && value <= 5) ||
-                      'Sandsynlighed skal være mellem 1 og 5',
-                  },
-                })}
-                // label="Sandsynlighed"
-                // variant="bordered"
-                // type="number"
-                // errorMessage={errors.probability?.message}
-                // error={!!errors.probability}
-              />
-              <Label htmlFor="consequence">Konsekvens</Label>
+                <Input
+                  {...register('probability', {
+                    validate: {
+                      range: (value) =>
+                        value === null ||
+                        (value >= 0 && value <= 5) ||
+                        'Sandsynlighed skal være mellem 1 og 5',
+                    },
+                  })}
+                  // label="Sandsynlighed"
+                  // variant="bordered"
+                  // type="number"
+                  // errorMessage={errors.probability?.message}
+                  // error={!!errors.probability}
+                />
+              </div>
+              <div>
+                <Label htmlFor="consequence">Konsekvens</Label>
 
-              <Input
-                {...register('consequence', {
-                  validate: {
-                    range: (value) =>
-                      value === null ||
-                      (value >= 0 && value <= 5) ||
-                      'Konsekvens skal være mellem 1 og 5',
-                  },
-                })}
-                // label="Konsekvens"
-                // variant="bordered"
-                // type="number"
-                // errorMessage={errors.consequence?.message}
-                // error={!!errors.consequence}
-              />
+                <Input
+                  {...register('consequence', {
+                    validate: {
+                      range: (value) =>
+                        value === null ||
+                        (value >= 0 && value <= 5) ||
+                        'Konsekvens skal være mellem 1 og 5',
+                    },
+                  })}
+                />
+              </div>
             </div>
             <div className="flex items-center gap-2">
               <span>Risiko ejer {'->'}</span>

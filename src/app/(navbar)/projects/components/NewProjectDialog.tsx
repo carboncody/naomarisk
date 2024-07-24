@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { DatePicker } from '@components/ui/DatePickerShadcn';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
@@ -66,57 +67,51 @@ export default function NewProjectDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-[#413e3e]">
+      <DialogContent className="w-full bg-zinc-200 dark:bg-zinc-700">
         <DialogHeader>
-          <DialogTitle className="text-white">Opret nyt projekt</DialogTitle>
+          <DialogTitle className="text-black dark:text-white">
+            Opret nyt projekt
+          </DialogTitle>
         </DialogHeader>
         <DialogDescription>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-3 text-white">
+            <div className="flex flex-col gap-3 text-black dark:text-white">
               <div className="flex gap-3">
-                <Label>Projekt navn</Label>
-                <Input
-                  {...register('name', {
-                    required: {
-                      value: true,
-                      message: 'Projekt navn er påkrævet',
-                    },
-                  })}
-                  // label="Projekt navn"
-                  // isInvalid={!!errors.name}
-                  // errorMessage={errors.name?.message}
-                />
-                <Label>Projekt beskrivelse</Label>
-                <Input
-                  {...register('description')}
-
-                  // label="Projekt beskrivelse"
-                  // variant="bordered"
-                />
-                <Label>Budget [kr.]</Label>
-                <Input
-                  {...register('budget')}
-
-                  // label="Budget [kr.]"
-                  // type="number"
-                />
+                <div className="flex w-full flex-col gap-3">
+                  <Label>Projekt navn</Label>
+                  <Input
+                    {...register('name', {
+                      required: {
+                        value: true,
+                        message: 'Projekt navn er påkrævet',
+                      },
+                    })}
+                  />
+                </div>
+                <div className="flex w-full flex-col gap-3">
+                  <Label>Projekt beskrivelse</Label>
+                  <Input {...register('description')} />
+                </div>
+                <div className="flex w-1/2 flex-col gap-3">
+                  <Label>Budget [kr.]</Label>
+                  <Input {...register('budget')} />
+                </div>
               </div>
-              {/* <div className="flex gap-5">
+              <div className="flex gap-5">
                 <DatePicker
-                  customPlaceholder="Vælg start dato"
-                  date={watch('startDate') ?? null}
-                  setDate={(date: Date | null) => {
+                  date={watch('startDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
                     setValue('startDate', date);
                   }}
                 />
                 <DatePicker
-                  customPlaceholder="Vælg slut dato"
-                  date={watch('dueDate') ?? null}
-                  setDate={(date: Date | null) => {
+                  // customPlaceholder="Vælg slut dato"
+                  date={watch('dueDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
                     setValue('dueDate', date);
                   }}
                 />
-              </div> */}
+              </div>
             </div>
             <DialogFooter>
               <Button variant="destructive" onClick={() => setIsOpen(false)}>

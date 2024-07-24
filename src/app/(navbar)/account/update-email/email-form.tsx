@@ -67,8 +67,10 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           {message}
         </Alert>
       ) : null}
-      <h2 className="mb-4 text-4xl font-semibold">Opdater Email</h2>
-      <p className="mb-4 font-medium">
+      <h2 className="mb-4 text-4xl  font-semibold text-black dark:text-white">
+        Opdater Email
+      </h2>
+      <p className="mb-4 font-medium text-black dark:text-white">
         Hej {user?.email}, Indtast din nye e-mail nedenfor og bekræft den
       </p>
       <form onSubmit={handleSubmit}>
@@ -104,13 +106,16 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.emailConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary rounded-xl border bg-white/10 px-2 py-2 text-black">
+          <button className="btn btn-primary rounded-xl border bg-black px-2 py-2 text-white dark:bg-zinc-300 dark:text-black">
             Opdater Email
           </button>
         </div>
       </form>
-      <div className="justify-flex flex justify-center">
-        <Button asChild>
+      <div className="justify-flex mt-5 flex justify-center">
+        <Button
+          asChild
+          className="bg-black text-white dark:bg-zinc-300 dark:text-black"
+        >
           <Link className="block w-full p-3" href="/account">
             Tilbage
           </Link>
