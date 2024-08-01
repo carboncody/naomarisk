@@ -1,9 +1,9 @@
 'use client';
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useEmployees } from '@lib/api/hooks';
 import type { Project } from '@models';
-import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 import { MembersModal } from './MembersModal';
 import { ProjectEmployeeTable } from './ProjectEmployeeTable';
@@ -39,12 +39,13 @@ export function ProjectEmployee({
 
   return (
     <>
-      <div className="justify-top flex flex-col items-center overflow-y-auto text-white">
+      <div className="justify-top flex flex-col items-center overflow-y-auto dark:text-white">
         <div className="mb-4 flex w-full items-center justify-between">
           <p className="text-3xl font-semibold">Medarbjedere i dette projekt</p>
           <Button
             className="my-4 justify-end font-semibold"
             onClick={() => setIsNewOpen(true)}
+            variant="secondary"
           >
             Tilføj / fjern medlemmer
           </Button>

@@ -1,22 +1,24 @@
 'use client';
 
 import NewProjectDialog from '@app/(navbar)/projects/components/NewProjectDialog';
-import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
+import { DataTable } from '@components/ui/data-table';
 import { useAdmin, useMyProjects } from '@lib/api/hooks';
 import { useAllProjects } from '@lib/api/hooks/projects/useAllProjects';
 import { useMe } from '@lib/providers/me';
-import { Button } from '@nextui-org/react';
+import { type Project } from '@models';
 import Error from 'next/error';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { ProjectTable } from './components/ProjectTable';
+import { columns } from './components/colums';
 
 export function AllProjects() {
   const searchParams = useSearchParams();
   const all = searchParams.get('status');
   const me = useMe();
   const isAdmin = useAdmin(me);
+  const router = useRouter();
 
   const [isNewOpen, setIsNewOpen] = useState(false);
 
@@ -38,8 +40,12 @@ export function AllProjects() {
   }
 
   if (isError) {
-    <Error statusCode={500} message={error.message} />;
+    return <Error statusCode={500} message={error.message} />;
   }
+
+  const handleRowClick = (project: Project) => {
+    router.push(`/projects/${project.id}`);
+  };
 
   return (
     <>
@@ -54,9 +60,12 @@ export function AllProjects() {
             </Button>
           )}
         </div>
-        <ProjectTable projects={allProjects ?? []} />
-        <div className=" justify-flex flex justify-center">
-          <Backbutton href={'/'} />
+        <div className="w-full">
+          <DataTable
+            columns={columns}
+            data={allProjects ?? []}
+            onRowClick={handleRowClick}
+          />
         </div>
       </div>
       {isNewOpen && (

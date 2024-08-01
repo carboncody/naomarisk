@@ -3,15 +3,14 @@
 import EditRisk from '@app/(navbar)/projects/[id]/components/Risks/EditRisk';
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useRisk } from '@lib/api/hooks/risks';
 import { type Risk } from '@models';
-import { Button } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
-import CreateComment from './components/comments/CreateComment';
 
 export function Risk() {
   const pathName = usePathname();
@@ -44,7 +43,7 @@ export function Risk() {
         <div className="flex items-center justify-center">
           <div className="flex w-screen flex-col items-center justify-center px-4">
             <div className="flex w-full max-w-screen-2xl gap-4">
-              <div className="sticky top-12 h-fit w-1/3 rounded-md bg-gray-600 p-4 md:top-20">
+              <div className="sticky top-12 h-fit w-1/3 rounded-md bg-zinc-200 p-4 dark:bg-zinc-700 md:top-20">
                 <Button
                   className="my-4 w-28 justify-end"
                   onClick={() => setRiskBeingEdited(risk)}
@@ -85,7 +84,7 @@ export function Risk() {
                     <span className="ml-1 font-light">{risk.probability}</span>
                   </p>
                 </div>
-                <div className="mt-4 border-t border-gray-500 pt-2 font-semibold">
+                <div className="border-Zinc-500 mt-4 border-t pt-2 font-semibold">
                   <p className="flex flex-wrap items-center gap-2">
                     <span>Kommentar</span>
                     <span className="font-light">
@@ -104,12 +103,14 @@ export function Risk() {
                   <SingleRiskMatrix risk={risk} />
                 </div>
               </div>
-              <div className="w-2/3 overflow-y-auto rounded-lg bg-gray-600 p-4">
+              <div className="w-2/3 overflow-y-auto rounded-lg bg-zinc-200 p-4 dark:bg-zinc-700">
                 <div className="flex w-full items-center gap-2">
                   <FaComment className="h-4 w-4" />
                   Kommentartråd
                 </div>
-                <CreateComment riskId={riskId} />
+                <p className="text-Zinc-200 mt-4 animate-pulse text-sm">
+                  Kommer snart!
+                </p>
               </div>
             </div>
           </div>

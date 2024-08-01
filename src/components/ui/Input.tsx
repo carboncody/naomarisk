@@ -1,31 +1,24 @@
-import { Input } from '@nextui-org/react';
-import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import * as React from 'react';
 
-type NextReactInputProps = ComponentPropsWithoutRef<typeof Input>;
+import { cn } from '@/lib/utils';
 
-export const NextInput = forwardRef<HTMLInputElement, NextReactInputProps>(
-  ({ className, ...props }, ref) => {
-    const hasPlaceholder = props.placeholder !== undefined;
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, ...props }, ref) => {
     return (
-      <Input
-        {...props}
+      <input
+        type={type}
+        className={cn(
+          'flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-800 dark:bg-zinc-950 dark:ring-offset-zinc-950 dark:placeholder:text-zinc-400 dark:focus-visible:ring-zinc-300',
+          className,
+        )}
         ref={ref}
-        className={`form-input w-full flex-grow ${className} rounded-xl bg-[#27272a]`}
-        labelPlacement={hasPlaceholder ? 'outside' : undefined}
-        classNames={{
-          inputWrapper:
-            'border-1 border-gray-400 hover:border-white data-[hover=true]:border-white group-data-[focus=true]:border-white',
-          label:
-            'text-xs text-black md:text-sm text-gray-200 group-hover:text-white group-data-[filled-within=true]:text-white',
-          errorMessage: 'text-red-400',
-        }}
-        variant="bordered"
-        radius="sm"
-        fullWidth
-        color="default"
+        {...props}
       />
     );
   },
 );
+Input.displayName = 'Input';
 
-NextInput.displayName = 'NextInput';
+export { Input };

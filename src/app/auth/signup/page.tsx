@@ -12,9 +12,9 @@ export default function HomePage() {
   const supabase = createClientComponentClient();
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] text-white">
-      <div className="h-[600px] w-[500px] rounded-lg border bg-gray-600">
-        <p className="mt-5 text-center text-4xl text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center dark:bg-gradient-to-b dark:from-[#1c1c1c] dark:to-[#2a2929] dark:text-white">
+      <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 dark:bg-zinc-700">
+        <p className="mt-5 text-center text-4xl dark:text-white">
           Create a new account
         </p>
         <div className="px-5">
