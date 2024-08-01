@@ -226,7 +226,9 @@ export default function EditRisk({
           >
             Close
           </Button>
-          <Button variant="default" onClick={handleSubmit(onSubmit)}>Save</Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

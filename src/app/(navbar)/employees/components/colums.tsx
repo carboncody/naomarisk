@@ -1,11 +1,15 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { type User } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
-import { useRouter } from 'next/navigation';
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
 interface ColumnParams {
   handleEdit: (employee: User) => void;
@@ -18,12 +22,12 @@ export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => (
       <div className="flex flex-col ">
@@ -34,8 +38,8 @@ export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
   },
   {
     accessorKey: 'name',
-    header:'Navn',
-    
+    header: 'Navn',
+
     cell: ({ row }) => (
       <div className="truncate">
         <span>{row.original.fullName}</span>

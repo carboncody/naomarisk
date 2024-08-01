@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/navigation-menu';
 import Link from 'next/link';
 import { SettingsDropdown } from './SettingsDropdown';
-import { ThemeSwitcher } from './ThemeSwitcher';
 
 export function Nav() {
   // TODO : fix this!
@@ -18,8 +17,6 @@ export function Nav() {
 
   return (
     <NavigationMenu className="sticky top-0 z-50 h-10 w-full bg-zinc-200 backdrop-blur-md dark:bg-zinc-700 dark:text-white md:h-16">
-     
-
       <NavigationMenuList className="flex w-full items-center justify-between gap-5">
         <NavigationMenuItem>
           <Link href="/" passHref legacyBehavior>

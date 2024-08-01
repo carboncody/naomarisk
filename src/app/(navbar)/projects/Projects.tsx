@@ -1,18 +1,17 @@
 'use client';
 
 import NewProjectDialog from '@app/(navbar)/projects/components/NewProjectDialog';
-import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { useAdmin, useMyProjects } from '@lib/api/hooks';
 import { useAllProjects } from '@lib/api/hooks/projects/useAllProjects';
 import { useMe } from '@lib/providers/me';
+import { type Project } from '@models';
 import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { columns } from './components/colums';
-import { type Project } from '@models';
 
 export function AllProjects() {
   const searchParams = useSearchParams();
@@ -47,7 +46,7 @@ export function AllProjects() {
   const handleRowClick = (project: Project) => {
     router.push(`/projects/${project.id}`);
   };
-  
+
   return (
     <>
       <div className="justify-top flex flex-col items-center overflow-y-auto px-4">
@@ -67,9 +66,6 @@ export function AllProjects() {
             data={allProjects ?? []}
             onRowClick={handleRowClick}
           />
-        </div>
-        <div className=" justify-flex flex justify-center">
-          <Backbutton href={'/'} />
         </div>
       </div>
       {isNewOpen && (

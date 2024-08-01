@@ -1,10 +1,10 @@
 'use client';
 
-import * as React from "react"
+import * as React from 'react';
 
 import {
-  flexRender,
   SortingState,
+  flexRender,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
@@ -26,13 +26,12 @@ interface DataTableProps<TData, TValue> {
   onRowClick?: (row: TData) => void;
 }
 
-
 export function DataTable<TData, TValue>({
   columns,
   data,
   onRowClick,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,

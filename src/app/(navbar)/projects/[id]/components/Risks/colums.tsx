@@ -39,12 +39,12 @@ export const columns = ({
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           RISK-ID
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => (
       <div className="truncate text-black dark:text-white">
@@ -60,12 +60,12 @@ export const columns = ({
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Ejer
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => (
       <div className="truncate text-black dark:text-white">
@@ -85,12 +85,12 @@ export const columns = ({
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Beskrivelse
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => (
       <div className="col-span-2 flex items-center justify-between truncate text-black dark:text-white">
@@ -104,12 +104,12 @@ export const columns = ({
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Risiko {'->'} Risikoscore
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
       const risk = row.original;
@@ -150,7 +150,7 @@ export const columns = ({
   },
   {
     id: 'actions',
-    header: '', 
+    header: '',
     cell: ({ row }) => {
       const risk = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks

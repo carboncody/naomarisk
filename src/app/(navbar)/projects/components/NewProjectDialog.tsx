@@ -116,7 +116,9 @@ export default function NewProjectDialog({
               <Button variant="destructive" onClick={() => setIsOpen(false)}>
                 Luk
               </Button>
-              <Button variant="default" type="submit">Opret</Button>
+              <Button variant="default" type="submit">
+                Opret
+              </Button>
             </DialogFooter>
           </form>
         </DialogDescription>

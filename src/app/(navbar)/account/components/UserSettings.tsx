@@ -66,8 +66,10 @@ export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
         <div className="grid grid-cols-4 gap-5"></div>
       </div>
       <div className="mt-4 flex items-center gap-4">
-        <Button variant="default" onClick={handleSubmit(onSubmit)}>Opdater</Button>
-        <div >
+        <Button variant="default" onClick={handleSubmit(onSubmit)}>
+          Opdater
+        </Button>
+        <div>
           <ThemeSwitcher />
         </div>
       </div>

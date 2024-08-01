@@ -1,20 +1,21 @@
 'use client';
 
-import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
 import EditEmployeeModal from '@app/(navbar)/employees/components/EditEmployeeModal';
-import { Backbutton } from '@components/ui/BackButton';
+import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
+import { User } from '@models';
 import Error from 'next/error';
 import { useState } from 'react';
 import { columns as getColumns } from './components/colums';
-import { User } from '@models';
 
 export function AllEmployees() {
   const [isNewOpen, setIsNewOpen] = useState(false);
-  const [employeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(null);
+  const [employeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(
+    null,
+  );
 
   const {
     data: allEmployees,
@@ -57,10 +58,10 @@ export function AllEmployees() {
           </div>
         </div>
         <div className="w-full">
-          <DataTable data={allEmployees ?? []} columns={getColumns({ handleEdit })} />
-        </div>
-        <div className=" justify-flex flex justify-center">
-          <Backbutton href={'/'} />
+          <DataTable
+            data={allEmployees ?? []}
+            columns={getColumns({ handleEdit })}
+          />
         </div>
       </div>
       {isNewOpen && (
