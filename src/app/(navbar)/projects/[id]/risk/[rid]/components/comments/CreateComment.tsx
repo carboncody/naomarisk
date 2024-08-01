@@ -1,4 +1,5 @@
-import { Button, Textarea } from '@nextui-org/react';
+import { Button } from '@components/ui/button';
+import { Textarea } from '@components/ui/textarea';
 
 interface CreateCommentProps {
   riskId: string;
@@ -11,19 +12,14 @@ const handelSubmit = () => {
 const CreateComment: React.FC<CreateCommentProps> = ({ riskId }) => {
   return (
     <form onSubmit={handelSubmit}>
-      <h2 className="mb-5 text-xl">kommentarer:</h2>
       <div className="mb-5">
         <Textarea
-          className="bg-gray-600 text-white"
+          className="text-white dark:bg-zinc-600"
           placeholder="Skriv en kommentar..."
-          classNames={{
-            inputWrapper:
-              'bg-gray-600 text-white border-1 border-gray-400 focus:bg-gray-600',
-          }}
         />
       </div>
 
-      <Button type="submit">Kommenter</Button>
+      <Button variant="default">Kommenter</Button>
     </form>
   );
 };
