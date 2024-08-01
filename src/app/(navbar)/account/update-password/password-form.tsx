@@ -1,9 +1,11 @@
 'use client';
 import Alert from '@components/ui/Alert';
+import { Input } from '@components/ui/Input';
 import InputErrorMessage from '@components/ui/InputErrorMessage';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { formatError } from '@lib/services/supabase/utils';
 import { UpdatePasswordSchema } from '@lib/services/supabase/validationSchema';
-import { Button, Input } from '@nextui-org/react';
 import {
   createClientComponentClient,
   type User,
@@ -64,18 +66,19 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           {message}
         </Alert>
       ) : null}
-      <h2 className="mb-4 text-4xl font-semibold">Opdater kode</h2>
-      <p className="mb-4 font-medium">
+      <h2 className="mb-4 text-4xl  font-semibold text-black dark:text-white">
+        Opdater kode
+      </h2>
+      <p className="mb-4 font-medium text-black dark:text-white">
         Hi {user?.email}, Indtast din nye kode nedenfor og bekræft den
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
-          <label htmlFor="password" className="label">
+          <Label htmlFor="password" className="label">
             Kode
-          </label>
+          </Label>
           <Input
             id="Kode"
-            label="Indtast en ny kode"
             name="password"
             type="password"
             value={formData?.password ?? ''}
@@ -89,13 +92,12 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.password}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-5">
-          <label htmlFor="passwordConfirm" className="label">
+          <Label htmlFor="passwordConfirm" className="label">
             Bekræft Kode
-          </label>
+          </Label>
           <Input
             id="passwordConfirm"
             name="passwordConfirm"
-            label="Indstast din kode igen"
             type="password"
             value={formData.passwordConfirm ?? ''}
             onChange={(ev) =>
@@ -107,14 +109,16 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary rounded-xl border bg-white px-2 py-2 text-black">
+          <button className="btn btn-primary rounded-xl border bg-black px-2 py-2 text-white dark:bg-zinc-300 dark:text-black">
             Opdater Kode
           </button>
         </div>
       </form>
       <div className="item-center justify-flex my-4 flex justify-center">
         <Link href="/account">
-          <Button>Tilbage</Button>
+          <Button className="bg-black text-white dark:bg-zinc-300 dark:text-black">
+            Tilbage
+          </Button>
         </Link>
       </div>
     </div>

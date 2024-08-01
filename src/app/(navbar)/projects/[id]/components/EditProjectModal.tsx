@@ -1,17 +1,19 @@
 'use client';
 
-import { DatePicker } from '@components/ui/DatePicker';
-import { NextInput } from '@components/ui/Input';
+import { DatePicker } from '@components/ui/DatePickerShadcn';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@components/ui/dialog';
+import { Label } from '@components/ui/label';
 import { type UpdateProjectForm } from '@lib/api/types';
 import { type Project } from '@models';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -67,89 +69,75 @@ export default function EditProject({
   console.info(watch());
 
   return (
-    <>
-      <Modal
-        className="bg-[#413e3e]"
-        size="4xl"
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        placement="top-center"
-        backdrop="blur"
-        onClose={() => setIsOpen(false)}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-white">
-                Rediger Projekt
-              </ModalHeader>
-              <ModalBody className="text-white">
-                <div className="flex w-full items-start gap-5">
-                  <NextInput
-                    {...register('name', {
-                      required: {
-                        value: true,
-                        message: 'Navn er påkrævet',
-                      },
-                      minLength: {
-                        value: 3,
-                        message: 'Navn skal være mindst 3 tegn',
-                      },
-                    })}
-                    value={watch('name') ?? ''}
-                    label="Projektnavn"
-                    variant="bordered"
-                    isInvalid={!!errors.name}
-                    errorMessage={errors.name?.message}
-                  />
-                  <NextInput
-                    {...register('description')}
-                    value={watch('description') ?? ''}
-                    label="Beskrivelse"
-                    variant="bordered"
-                  />
-                </div>
-                <div className="flex gap-5">
-                  <div className="flex flex-col">
-                    <DatePicker
-                      customPlaceholder="Vælg start dato"
-                      date={watch('startDate') ?? null}
-                      setDate={(date: Date | null) => {
-                        setValue('startDate', date);
-                      }}
-                    />
-                  </div>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="w-full bg-zinc-200 dark:bg-[#413e3e]">
+        <DialogHeader>
+          <DialogTitle className="dark:text-white">Rediger Projekt</DialogTitle>
+        </DialogHeader>
+        <DialogDescription className="dark:text-white">
+          <div className="flex w-full items-start gap-5 text-black dark:text-white">
+            <div>
+              <Label>Projekt navn</Label>
+              <Input
+                {...register('name', {
+                  required: {
+                    value: true,
+                    message: 'Navn er påkrævet',
+                  },
+                  minLength: {
+                    value: 3,
+                    message: 'Navn skal være mindst 3 tegn',
+                  },
+                })}
+                value={watch('name') ?? ''}
+              />
+            </div>
+            <div>
+              <Label>Projekt beskrivelse</Label>
+              <Input
+                {...register('description')}
+                value={watch('description') ?? ''}
+                // label="Beskrivelse"
+                // variant="bordered"
+              />
+            </div>
+          </div>
+          <div className="mt-5 flex gap-5">
+            <div className="flex flex-col">
+              <DatePicker
+                date={watch('startDate') ?? undefined}
+                setDate={(date: Date | undefined) => {
+                  setValue('startDate', date);
+                }}
+              />
+            </div>
 
-                  <div className="flex flex-col">
-                    <DatePicker
-                      customPlaceholder="Vælg slut dato"
-                      date={watch('dueDate') ?? null}
-                      setDate={(date: Date | null) => {
-                        setValue('dueDate', date);
-                      }}
-                    />
-                  </div>
-
-                  <NextInput
-                    {...register('budget')}
-                    value={watch('budget') ?? ''}
-                    label="Budget [kr.]"
-                    variant="bordered"
-                    type="number"
-                  />
-                </div>
-                <div className="grid grid-cols-4 gap-5"></div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" onClick={onClose}>
-                  Luk
-                </Button>
-                <Button onClick={handleSubmit(onSubmit)}>Gem</Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+            <div className="flex flex-col">
+              <DatePicker
+                // customPlaceholder="Vælg slut dato"
+                date={watch('dueDate') ?? undefined}
+                setDate={(date: Date | undefined) => {
+                  setValue('dueDate', date);
+                }}
+              />
+            </div>
+            <Label>Budget [kr.]</Label>
+            <Input
+              {...register('budget')}
+              value={watch('budget') ?? ''}
+              // label="Budget [kr.]"
+              // variant="bordered"
+              type="number"
+            />
+          </div>
+        </DialogDescription>
+        <DialogFooter>
+          <Button variant="destructive" onClick={() => setIsOpen(false)}>
+            Luk
+          </Button>
+          <Button onClick={handleSubmit(onSubmit)}>Gem</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

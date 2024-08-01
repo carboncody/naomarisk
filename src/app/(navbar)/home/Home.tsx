@@ -36,14 +36,14 @@ export function Home() {
   }
 
   return (
-    <div className="mx-auto flex h-full max-w-screen-2xl flex-col text-white">
+    <div className="mx-auto flex h-full max-w-screen-2xl flex-col dark:text-white">
       <div className="mt-5 flex items-center justify-between md:mt-10">
-        <span className="select-none text-5xl font-medium text-white">
+        <span className="select-none text-5xl font-medium dark:text-white">
           Welcome {me.fullName},
         </span>
-        <BsBuildingFillGear className="inline h-10 w-10 text-amber-200" />
+        <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" />
       </div>
-      <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-xl text-white md:mt-10">
+      <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-xl dark:text-white md:mt-10">
         <PiShieldWarningBold className="inline h-6 w-6 text-amber-500" />
         <p className="select-none">
           <span>Aktive projekt statisktikker for</span>
@@ -66,7 +66,7 @@ export function Home() {
           <p className="ml-2 text-3xl">{data.users.length}</p>
           <p className="text-xl">medarbejdere</p>
         </div>
-        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-gray-600 via-gray-800 to-gray-900 p-4 font-medium text-white shadow-lg shadow-black">
+        <div className="from-Zinc-600 via-Zinc-800 to-Zinc-900 flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br p-4 font-medium text-white shadow-lg shadow-black">
           <PiWarningFill className="text-3xl" />
           <p className="ml-2 text-3xl">
             {

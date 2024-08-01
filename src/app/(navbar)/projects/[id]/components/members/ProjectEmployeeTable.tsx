@@ -1,8 +1,9 @@
-import { Table } from '@components/Table';
-import { sortBy } from '@components/Table/sorting/sort.utils';
-import { type TableColumns } from '@components/Table/types/table.columns';
+'use client';
+
+import { DataTable } from '@components/ui/data-table';
 import { type User } from '@models';
 import { useRouter } from 'next/navigation';
+import { columns } from './colums';
 
 interface ProjectEmployeeTableProps {
   projectMemberIds: string[];
@@ -16,40 +17,16 @@ export function ProjectEmployeeTable({
   const rows: User[] = employees.filter((employee) => {
     return projectMemberIds.includes(employee.id);
   });
+
   const router = useRouter();
 
-  const columns: TableColumns<User> = {
-    email: {
-      title: 'Medarbejder email',
-      spacing: 2,
-      render: (employee: User) => (
-        <div className="truncate">
-          <span>{employee.email}</span>
-          <br />
-          <span className="break-words text-gray-400">
-            {employee.jobDescription}
-          </span>
-        </div>
-      ),
-      sort: sortBy('string'),
-    },
-    role: {
-      title: 'Rolle',
-      spacing: 2,
-      render: (employee: User) => (
-        <div className="truncate">
-          <span className="break-words text-gray-400">{employee.role}</span>
-        </div>
-      ),
-    },
+  const handleRowClick = (employee: User) => {
+    router.push(`/employees/${employee.id}`);
   };
 
   return (
-    <Table
-      onRowClick={(employee) => router.push(`/employees/${employee.id}`)}
-      columns={columns}
-      rows={rows}
-      applyMinWidth={false}
-    />
+    <div className="w-full">
+      <DataTable columns={columns} data={rows} onRowClick={handleRowClick} />
+    </div>
   );
 }

@@ -1,16 +1,20 @@
 'use client';
 
 import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
+import EditEmployeeModal from '@app/(navbar)/employees/components/EditEmployeeModal';
 import { Backbutton } from '@components/ui/BackButton';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
+import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
-import { Button } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
-import { EmployeeTable } from './EmployeeTable';
+import { columns as getColumns } from './components/colums';
+import { User } from '@models';
 
 export function AllEmployees() {
   const [isNewOpen, setIsNewOpen] = useState(false);
+  const [employeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(null);
 
   const {
     data: allEmployees,
@@ -30,12 +34,20 @@ export function AllEmployees() {
   }
 
   if (isError) {
-    <Error statusCode={500} message={error.message} />;
+    return <Error statusCode={500} message={error.message} />;
   }
+
+  const handleEdit = (employee: User) => {
+    setEmployeeBeingEdited(employee);
+  };
+
+  const handleCloseModal = () => {
+    setEmployeeBeingEdited(null);
+  };
 
   return (
     <>
-      <div className="justify-top flex min-h-screen flex-col items-center px-8 text-white">
+      <div className="justify-top flex min-h-screen flex-col items-center px-8 dark:text-white">
         <div className="mb-4 mt-40 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Medarbejdere</p>
           <div className="flex gap-4">
@@ -44,7 +56,9 @@ export function AllEmployees() {
             </Button>
           </div>
         </div>
-        <EmployeeTable employee={allEmployees ?? []} refetch={refetch} />
+        <div className="w-full">
+          <DataTable data={allEmployees ?? []} columns={getColumns({ handleEdit })} />
+        </div>
         <div className=" justify-flex flex justify-center">
           <Backbutton href={'/'} />
         </div>
@@ -53,6 +67,14 @@ export function AllEmployees() {
         <InviteEmployee
           isOpen={isNewOpen}
           setIsOpen={setIsNewOpen}
+          refetch={refetch}
+        />
+      )}
+      {employeeBeingEdited && (
+        <EditEmployeeModal
+          isOpen={!!employeeBeingEdited}
+          employee={employeeBeingEdited}
+          setEmployeeBeingEdited={setEmployeeBeingEdited}
           refetch={refetch}
         />
       )}

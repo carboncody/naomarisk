@@ -1,4 +1,4 @@
-import { Button } from '@nextui-org/react';
+import { Button } from '@components/ui/button';
 import Link from 'next/link';
 
 interface BackButtonProps {
@@ -7,9 +7,9 @@ interface BackButtonProps {
 
 export function Backbutton({ href }: BackButtonProps) {
   return (
-    <div className="justify-center py-4">
+    <div className="py- justify-center">
       <Link href={href}>
-        <Button>Tilbage</Button>
+        <Button variant="secondary">Tilbage</Button>
       </Link>
     </div>
   );

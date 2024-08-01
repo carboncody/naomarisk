@@ -1,17 +1,19 @@
 'use client';
 
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { SingleDropdown } from '@components/ui';
-import { NextInput } from '@components/ui/Input';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { type CreateUserForm } from '@lib/api/types';
 import { UserRole } from '@models';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -77,73 +79,61 @@ export default function InviteEmployee({
   }
 
   return (
-    <>
-      <Modal
-        className="bg-[#413e3e]"
-        size="4xl"
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        placement="top-center"
-        backdrop="blur"
-        onClose={() => setIsOpen(false)}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-white">
-                Inviter medarbejder
-              </ModalHeader>
-              <ModalBody className="text-white">
-                <div className="flex w-full items-start gap-5">
-                  <NextInput
-                    {...register('email', {
-                      required: {
-                        value: true,
-                        message: 'Email is required',
-                      },
-                      validate: {
-                        email: (value) => {
-                          const regex =
-                            /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                          return regex.test(value) || 'Invalid email';
-                        },
-                      },
-                    })}
-                    className="col-span-2"
-                    label="Email"
-                    errorMessage={errors.email?.message}
-                    isInvalid={!!errors.email}
-                  />
-                  <NextInput
-                    {...register('jobDescription')}
-                    label="Job beskrivelse"
-                    variant="bordered"
-                  />
-                </div>
-                <div className="flex h-12 w-1/2 items-center">
-                  <label className="mx-2">Rolle {'->'}</label>
-                  <SingleDropdown
-                    options={RoleActionDropdownOptions}
-                    buttonLabel={'Roller'}
-                    selectedValue={watch('role')}
-                    setSelectedValue={(value) => {
-                      if (!value) return;
-                      setValue('role', value as UserRole);
-                    }}
-                  />
-                </div>
-                <div className="grid grid-cols-4 gap-5"></div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" onClick={onClose}>
-                  Luk
-                </Button>
-                <Button onClick={handleSubmit(onSubmit)}>Opret</Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline">Inviter medarbejder</Button>
+      </DialogTrigger>
+      <DialogContent className="bg-zinc-400 dark:bg-zinc-700">
+        <DialogHeader>
+          <DialogTitle className="text-white">Inviter medarbejder</DialogTitle>
+        </DialogHeader>
+        <div className="dark:text-white">
+          <div className="flex w-full items-start gap-5">
+            <div className="w-1/2">
+              <Label className="text-white">Email</Label>
+              <Input
+                className="mt-1"
+                {...register('email', {
+                  required: {
+                    value: true,
+                    message: 'Email is required',
+                  },
+                  validate: {
+                    email: (value) => {
+                      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+                      return regex.test(value) || 'Invalid email';
+                    },
+                  },
+                })}
+              />
+            </div>
+            <div className="w-1/2">
+              <Label className="text-white">Job beskrivelse</Label>
+              <Input className="mb-1" {...register('jobDescription')} />
+            </div>
+          </div>
+          <div className="mt-10 flex h-12 w-1/2 items-center">
+            <label className="mx-2 text-white">Rolle {'->'}</label>
+            <SingleDropdown
+              options={RoleActionDropdownOptions}
+              buttonLabel={'Roller'}
+              selectedValue={watch('role')}
+              setSelectedValue={(value) => {
+                if (!value) return;
+                setValue('role', value as UserRole);
+              }}
+            />
+          </div>
+        </div>
+        <DialogFooter className="flex justify-between">
+          <Button variant="destructive" onClick={() => setIsOpen(false)}>
+            Luk
+          </Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+            Opret
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

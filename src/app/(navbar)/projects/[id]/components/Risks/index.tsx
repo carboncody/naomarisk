@@ -1,9 +1,10 @@
 'use client';
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
 import { useProjectRisks } from '@lib/api/hooks/risks';
 import { RiskStatus, type Project } from '@models';
-import { Button, Tab, Tabs } from '@nextui-org/react';
 import Error from 'next/error';
 import { useState } from 'react';
 import CreateRisk from './CreateRisk';
@@ -34,35 +35,58 @@ export function Risks({ project }: RisksProps) {
   }
 
   if (isError) {
-    <Error statusCode={500} message={error.message} />;
+    return <Error statusCode={500} title={error.message} />;
   }
 
   return (
     <>
       <div className="justify-top flex w-full flex-col items-center text-white ">
-        <p className="text-xl font-semibold">
+        <p className="text-xl font-semibold text-black dark:text-white">
           Alle {selectedTab === RiskStatus.Open ? 'åben' : 'lukket'} risici for
           projekt {project.name}
         </p>
 
         <div className="mb-4 flex w-full items-center justify-between">
           <Tabs
-            aria-label="Options"
-            selectedKey={selectedTab}
-            onSelectionChange={(value) => setSelectedTab(value as RiskStatus)}
+            value={selectedTab}
+            onValueChange={(value) => setSelectedTab(value as RiskStatus)}
+            className="w-full"
           >
-            <Tab key="OPEN" title="Åben" />
-            <Tab className="border-0" key="CLOSED" title="Lukket" />
+            <TabsList>
+              <TabsTrigger value={RiskStatus.Open}>Åben</TabsTrigger>
+              <TabsTrigger value={RiskStatus.Closed}>Lukket</TabsTrigger>
+            </TabsList>
+            <TabsContent value={RiskStatus.Open}>
+              <Button className="w-32" onClick={() => setIsNewOpen(true)}>
+                Tilføj
+              </Button>
+              <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
+                <RiskTable
+                  risks={
+                    allRisks?.filter(
+                      (risk) => risk.status === RiskStatus.Open,
+                    ) ?? []
+                  }
+                  refetch={refetch}
+                  project={project}
+                />
+              </div>
+            </TabsContent>
+            <TabsContent value={RiskStatus.Closed}>
+              <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
+                <RiskTable
+                  risks={
+                    allRisks?.filter(
+                      (risk) => risk.status === RiskStatus.Closed,
+                    ) ?? []
+                  }
+                  refetch={refetch}
+                  project={project}
+                />
+              </div>
+            </TabsContent>
           </Tabs>
-          <Button className="w-32" onClick={() => setIsNewOpen(true)}>
-            Tilføj
-          </Button>
         </div>
-        <RiskTable
-          risks={allRisks?.filter((risk) => risk.status === selectedTab) ?? []}
-          refetch={refetch}
-          project={project}
-        />
       </div>
       {isNewOpen && (
         <CreateRisk

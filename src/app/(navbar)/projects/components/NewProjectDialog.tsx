@@ -1,16 +1,18 @@
 'use client';
 
-import { DatePicker } from '@components/ui/DatePicker';
-import { NextInput } from '@components/ui/Input';
-import { type CreateProjectForm } from '@lib/api/types';
 import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { DatePicker } from '@components/ui/DatePickerShadcn';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
+import { type CreateProjectForm } from '@lib/api/types';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -64,74 +66,61 @@ export default function NewProjectDialog({
   }
 
   return (
-    <>
-      <Modal
-        className="bg-[#413e3e]"
-        size="4xl"
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        placement="top-center"
-        backdrop="blur"
-        onClose={() => setIsOpen(false)}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-white">
-                Opret nyt projekt
-              </ModalHeader>
-              <ModalBody className="text-white">
-                <div className="flex gap-3">
-                  <NextInput
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="w-full bg-zinc-200 dark:bg-zinc-700">
+        <DialogHeader>
+          <DialogTitle className="text-black dark:text-white">
+            Opret nyt projekt
+          </DialogTitle>
+        </DialogHeader>
+        <DialogDescription>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-3 text-black dark:text-white">
+              <div className="flex gap-3">
+                <div className="flex w-full flex-col gap-3">
+                  <Label>Projekt navn</Label>
+                  <Input
                     {...register('name', {
                       required: {
                         value: true,
-                        message: 'Projekt navn er påkrævet',
+                        message: 'Projekt navn er påkrævet',
                       },
                     })}
-                    label="Projekt navn"
-                    isInvalid={!!errors.name}
-                    errorMessage={errors.name?.message}
-                  />
-                  <NextInput
-                    {...register('description')}
-                    label="Projekt beskrivelse"
-                    variant="bordered"
-                  />
-                  <NextInput
-                    {...register('budget')}
-                    className="col-span-2"
-                    label="Budget [kr.]"
-                    type="number"
                   />
                 </div>
-                <div className="flex gap-5">
-                  <DatePicker
-                    customPlaceholder="Vælg start dato"
-                    date={watch('startDate') ?? null}
-                    setDate={(date: Date | null) => {
-                      setValue('startDate', date);
-                    }}
-                  />
-                  <DatePicker
-                    customPlaceholder="Vælg slut dato"
-                    date={watch('dueDate') ?? null}
-                    setDate={(date: Date | null) => {
-                      setValue('dueDate', date);
-                    }}
-                  />
+                <div className="flex w-full flex-col gap-3">
+                  <Label>Projekt beskrivelse</Label>
+                  <Input {...register('description')} />
                 </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" onClick={onClose}>
-                  Luk
-                </Button>
-                <Button onClick={handleSubmit(onSubmit)}>Opret</Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+                <div className="flex w-1/2 flex-col gap-3">
+                  <Label>Budget [kr.]</Label>
+                  <Input {...register('budget')} />
+                </div>
+              </div>
+              <div className="flex gap-5">
+                <DatePicker
+                  date={watch('startDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
+                    setValue('startDate', date ?? null);
+                  }}
+                />
+                <DatePicker
+                  date={watch('dueDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
+                    setValue('dueDate', date ?? null);
+                  }}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="destructive" onClick={() => setIsOpen(false)}>
+                Luk
+              </Button>
+              <Button variant="default" type="submit">Opret</Button>
+            </DialogFooter>
+          </form>
+        </DialogDescription>
+      </DialogContent>
+    </Dialog>
   );
 }

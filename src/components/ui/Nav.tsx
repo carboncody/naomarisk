@@ -1,12 +1,15 @@
+'use client';
+
 import {
-  Button,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from '@nextui-org/react';
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu';
 import Link from 'next/link';
 import { SettingsDropdown } from './SettingsDropdown';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 export function Nav() {
   // TODO : fix this!
@@ -14,60 +17,46 @@ export function Nav() {
   // const isAdmin = me.role === UserRole.Owner || me.role === UserRole.Manager;
 
   return (
-    <Navbar
-      className="sticky h-10 w-full bg-white/10 text-white backdrop-blur-md md:h-16"
-      classNames={{
-        wrapper: 'max-w-[2024px]',
-      }}
-    >
-      <NavbarContent>
-        <NavbarBrand>
-          <Link href={'/'}>
-            <span className="bg-gradient-to-br from-white via-amber-50 to-amber-200 bg-clip-text text-xl font-medium text-transparent md:text-2xl">
-              Naoma Risk
-            </span>
+    <NavigationMenu className="sticky top-0 z-50 h-10 w-full bg-zinc-200 backdrop-blur-md dark:bg-zinc-700 dark:text-white md:h-16">
+     
+
+      <NavigationMenuList className="flex w-full items-center justify-between gap-5">
+        <NavigationMenuItem>
+          <Link href="/" passHref legacyBehavior>
+            <NavigationMenuLink className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text text-xl font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200 md:text-2xl">
+              nRisk
+            </NavigationMenuLink>
           </Link>
-        </NavbarBrand>
-      </NavbarContent>
-      <NavbarContent justify="center">
-        {
-          <NavbarItem>
-            <Link href={'/projects?status=all'}>
-              <Button
-                disableAnimation
-                className="text-md bg-transparent text-white"
-              >
+        </NavigationMenuItem>
+
+        <div className="flex justify-center">
+          <NavigationMenuItem>
+            <Link href="/projects?status=all" passHref legacyBehavior>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Alle Projekter
-              </Button>
+              </NavigationMenuLink>
             </Link>
-          </NavbarItem>
-        }
-        <NavbarItem>
-          <Link href={'/projects'}>
-            <Button
-              disableAnimation
-              className="text-md bg-transparent text-white"
-            >
-              Mine Projekter
-            </Button>
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href={'/employees'}>
-            <Button
-              disableAnimation
-              className="text-md bg-transparent text-white"
-            >
-              Medarbejdere
-            </Button>
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent className="gap-4 sm:flex md:text-lg" justify="end">
-        <NavbarItem>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/projects" passHref legacyBehavior>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Mine Projekter
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/employees" passHref legacyBehavior>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Medarbejdere
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        </div>
+
+        <NavigationMenuItem>
           <SettingsDropdown />
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 }
