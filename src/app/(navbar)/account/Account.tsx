@@ -21,7 +21,7 @@ export function Account() {
     );
   }
 
-  if (error || !me) {
+  if (error ?? !me) {
     return <Error statusCode={500} title={'Noget gik galt!'} />;
   }
 

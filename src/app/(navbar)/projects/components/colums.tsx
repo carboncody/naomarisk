@@ -1,13 +1,25 @@
 'use client';
 
+import { Button } from '@components/ui/button';
 import { type Project } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
+import { ArrowUpDown } from 'lucide-react';
 
 export const columns: ColumnDef<Project>[] = [
   {
     accessorKey: 'name',
-    header: 'NAVN',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Navn
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="flex flex-col ">
         <span>{row.original.name}</span>
@@ -17,7 +29,17 @@ export const columns: ColumnDef<Project>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: 'OPRETTET',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Oprettet
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="truncate">
         <span>
@@ -28,7 +50,17 @@ export const columns: ColumnDef<Project>[] = [
   },
   {
     accessorKey: 'risks.length',
-    header: 'RISKS',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Risici
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="truncate">
         <span>{row.original.risks.length}</span>

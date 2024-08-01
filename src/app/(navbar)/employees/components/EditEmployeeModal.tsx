@@ -123,10 +123,10 @@ export default function EditEmployeeModal({
             Slet Medarbejder
           </Button>
           <div className="flex items-center gap-2">
-            <Button onClick={() => setEmployeeBeingEdited(null)}>
+            <Button variant="secondary" onClick={() => setEmployeeBeingEdited(null)}>
               Fortryd
             </Button>
-            <Button
+            <Button variant="default"
               className="bg-[#616161] text-white"
               onClick={handleSubmit(onSubmit)}
             >

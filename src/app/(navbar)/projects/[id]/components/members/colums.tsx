@@ -1,12 +1,24 @@
 'use client';
 
+import { Button } from '@components/ui/button';
 import { type User } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'email',
-    header: 'Medarbejder email',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="truncate">
         <span>{row.original.email}</span>
@@ -19,7 +31,17 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'role',
-    header: 'Rolle',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Rolle
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="truncate">
         <span className="text-Zinc-400 break-words">{row.original.role}</span>

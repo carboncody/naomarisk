@@ -34,7 +34,7 @@ export function SingleDropdown({
     <DropdownMenu>
       <DropdownMenuTrigger>
         {customTriggerBtn ?? (
-          <Button className="text-md">
+          <Button className="text-md dark:bg-zinc-500">
             {selectedValue
               ? options.find((option) => option.value === selectedValue)?.label
               : buttonLabel}

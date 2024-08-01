@@ -5,7 +5,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -13,7 +12,7 @@ import { ColorMap, RiskMap } from '@lib/calc/threshholds';
 import { type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import clsx from 'clsx';
-import { MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 function getStyleColor(risk: Risk): string | undefined {
@@ -36,7 +35,17 @@ export const columns = ({
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
     accessorKey: 'customId',
-    header: 'Risk-ID',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          RISK-ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="truncate text-black dark:text-white">
         <span>{row.original.customId}</span>
@@ -47,7 +56,17 @@ export const columns = ({
   },
   {
     accessorKey: 'riskowner',
-    header: 'Ejer',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Ejer
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="truncate text-black dark:text-white">
         <span>
@@ -62,7 +81,17 @@ export const columns = ({
   },
   {
     accessorKey: 'description',
-    header: 'Beskrivelse',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Beskrivelse
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <div className="col-span-2 flex items-center justify-between truncate text-black dark:text-white">
         <span>{row.original.description}</span>
@@ -71,7 +100,17 @@ export const columns = ({
   },
   {
     accessorKey: 'riskScore',
-    header: 'Risiko -> Risikoscore',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Risiko {'->'} Risikoscore
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const risk = row.original;
       return (
@@ -111,7 +150,7 @@ export const columns = ({
   },
   {
     id: 'actions',
-    header: 'Actions',
+    header: '', 
     cell: ({ row }) => {
       const risk = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -126,16 +165,15 @@ export const columns = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() =>
                 router.push(`/projects/${projectId}/risk/${risk.id}`)
               }
             >
-              View
+              Vis
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleEdit(risk)}>
-              Edit
+              Rediger
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </DropdownMenuContent>

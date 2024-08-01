@@ -88,21 +88,19 @@ export default function CreateRisk({
         </DialogHeader>
         <DialogDescription className="text-black dark:text-white">
           <div className="flex w-full gap-5">
-            <Input
-              {...register('description', {
-                required: {
-                  value: true,
-                  message: 'Beskrivelse mangler',
-                },
-              })}
-              // label="Beskrivelse"
-              // className="w-full"
-              // variant="bordered"
-              // errorMessage={errors.description?.message}
-              // error={!!errors.description}
-            />
+            <div className="mb-3 w-full">
+              <Label htmlFor="Name">Beskrivelse</Label>
+              <Input
+                {...register('description', {
+                  required: {
+                    value: true,
+                    message: 'Beskrivelse mangler',
+                  },
+                })}
+              />
+            </div>
           </div>
-          <div className="flex w-full gap-5">
+          <div className="mb-3 flex w-full gap-5">
             <div className="w-full">
               <Label htmlFor="activity">Aktivitet</Label>
               <Input
@@ -112,11 +110,6 @@ export default function CreateRisk({
                     message: 'aktivitet mangler',
                   },
                 })}
-                // label="Aktivitet"
-                // className="w-full"
-                // variant="bordered"
-                // errorMessage={errors.activity?.message}
-                // error={!!errors.activity}
               />
             </div>
             <div className="w-full">
@@ -128,11 +121,6 @@ export default function CreateRisk({
                     message: 'Kommentar mangler',
                   },
                 })}
-                // label="Kommentar"
-                // className="w-full"
-                // variant="bordered"
-                // errorMessage={errors.comment?.message}
-                // error={!!errors.comment}
               />
             </div>
           </div>
@@ -150,11 +138,6 @@ export default function CreateRisk({
                         'Sandsynlighed skal være mellem 1 og 5',
                     },
                   })}
-                  // label="Sandsynlighed"
-                  // variant="bordered"
-                  // type="number"
-                  // errorMessage={errors.probability?.message}
-                  // error={!!errors.probability}
                 />
               </div>
               <div>
@@ -206,7 +189,9 @@ export default function CreateRisk({
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button onClick={handleSubmit(onSubmit)}>Opret</Button>
+          <Button onClick={handleSubmit(onSubmit)} variant="default">
+            Opret
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -12,6 +12,7 @@ import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { columns } from './components/colums';
+import { type Project } from '@models';
 
 export function AllProjects() {
   const searchParams = useSearchParams();
@@ -43,10 +44,10 @@ export function AllProjects() {
     return <Error statusCode={500} message={error.message} />;
   }
 
-  const handleRowClick = (project) => {
+  const handleRowClick = (project: Project) => {
     router.push(`/projects/${project.id}`);
   };
-
+  
   return (
     <>
       <div className="justify-top flex flex-col items-center overflow-y-auto px-4">

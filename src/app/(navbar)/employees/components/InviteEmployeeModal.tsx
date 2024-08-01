@@ -83,32 +83,37 @@ export default function InviteEmployee({
       <DialogTrigger asChild>
         <Button variant="outline">Inviter medarbejder</Button>
       </DialogTrigger>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent className="bg-zinc-400 dark:bg-zinc-700">
         <DialogHeader>
           <DialogTitle className="text-white">Inviter medarbejder</DialogTitle>
         </DialogHeader>
-        <div className="text-white">
+        <div className="dark:text-white">
           <div className="flex w-full items-start gap-5">
-            <Label>Email</Label>
-            <Input
-              {...register('email', {
-                required: {
-                  value: true,
-                  message: 'Email is required',
-                },
-                validate: {
-                  email: (value) => {
-                    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                    return regex.test(value) || 'Invalid email';
+            <div className="w-1/2">
+              <Label className="text-white">Email</Label>
+              <Input
+                className="mt-1"
+                {...register('email', {
+                  required: {
+                    value: true,
+                    message: 'Email is required',
                   },
-                },
-              })}
-            />
-            <Label>Job beskrivelse</Label>
-            <Input {...register('jobDescription')} />
+                  validate: {
+                    email: (value) => {
+                      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+                      return regex.test(value) || 'Invalid email';
+                    },
+                  },
+                })}
+              />
+            </div>
+            <div className="w-1/2">
+              <Label className="text-white">Job beskrivelse</Label>
+              <Input className="mb-1" {...register('jobDescription')} />
+            </div>
           </div>
-          <div className="mt-3 flex h-12 w-1/2 items-center">
-            <label className="mx-2">Rolle {'->'}</label>
+          <div className="mt-10 flex h-12 w-1/2 items-center">
+            <label className="mx-2 text-white">Rolle {'->'}</label>
             <SingleDropdown
               options={RoleActionDropdownOptions}
               buttonLabel={'Roller'}
@@ -119,13 +124,14 @@ export default function InviteEmployee({
               }}
             />
           </div>
-          <div className="grid grid-cols-4 gap-5"></div>
         </div>
         <DialogFooter className="flex justify-between">
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button onClick={handleSubmit(onSubmit)}>Opret</Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+            Opret
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

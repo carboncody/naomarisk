@@ -101,14 +101,13 @@ export default function NewProjectDialog({
                 <DatePicker
                   date={watch('startDate') ?? undefined}
                   setDate={(date: Date | undefined) => {
-                    setValue('startDate', date);
+                    setValue('startDate', date ?? null);
                   }}
                 />
                 <DatePicker
-                  // customPlaceholder="Vælg slut dato"
                   date={watch('dueDate') ?? undefined}
                   setDate={(date: Date | undefined) => {
-                    setValue('dueDate', date);
+                    setValue('dueDate', date ?? null);
                   }}
                 />
               </div>
@@ -117,7 +116,7 @@ export default function NewProjectDialog({
               <Button variant="destructive" onClick={() => setIsOpen(false)}>
                 Luk
               </Button>
-              <Button type="submit">Opret</Button>
+              <Button variant="default" type="submit">Opret</Button>
             </DialogFooter>
           </form>
         </DialogDescription>

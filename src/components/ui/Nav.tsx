@@ -18,15 +18,13 @@ export function Nav() {
 
   return (
     <NavigationMenu className="sticky top-0 z-50 h-10 w-full bg-zinc-200 backdrop-blur-md dark:bg-zinc-700 dark:text-white md:h-16">
-      <div className="mx-10">
-        <ThemeSwitcher />
-      </div>
+     
 
       <NavigationMenuList className="flex w-full items-center justify-between gap-5">
         <NavigationMenuItem>
           <Link href="/" passHref legacyBehavior>
             <NavigationMenuLink className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text text-xl font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200 md:text-2xl">
-              Naoma Risk
+              nRisk
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

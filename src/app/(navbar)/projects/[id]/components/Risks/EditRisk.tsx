@@ -153,11 +153,8 @@ export default function EditRisk({
                       },
                     })}
                     id="probability"
-                    value={watch('probability')}
+                    value={watch('probability') ?? ''}
                     type="number"
-                    variant="bordered"
-                    errorMessage={errors.probability?.message}
-                    error={!!errors.probability}
                   />
                 </div>
                 <div className="w-full">
@@ -172,11 +169,8 @@ export default function EditRisk({
                       },
                     })}
                     id="consequence"
-                    value={watch('consequence')}
+                    value={watch('consequence') ?? ''}
                     type="number"
-                    variant="bordered"
-                    errorMessage={errors.consequence?.message}
-                    error={!!errors.consequence}
                   />
                 </div>
               </div>
@@ -188,7 +182,7 @@ export default function EditRisk({
                     buttonLabel={
                       StatusDropdownOptions.find(
                         (option) => option.value === watch('status'),
-                      )?.label || 'Select Status'
+                      )?.label ?? 'Select Status'
                     }
                     selectedValue={watch('status')}
                     setSelectedValue={(value) =>
@@ -232,7 +226,7 @@ export default function EditRisk({
           >
             Close
           </Button>
-          <Button onClick={handleSubmit(onSubmit)}>Save</Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>Save</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
