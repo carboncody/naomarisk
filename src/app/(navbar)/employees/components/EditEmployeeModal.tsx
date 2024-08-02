@@ -10,6 +10,7 @@ import {
 import { SingleDropdown } from '@components/ui';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { type UpdateUserForm } from '@lib/api/types';
 import { UserRole, type User } from '@models';
 import axios, { AxiosError } from 'axios';
@@ -98,13 +99,19 @@ export default function EditEmployeeModal({
         </DialogHeader>
         <div className="dark:text-white">
           <div className="flex w-full items-start gap-5">
-            <Input {...register('fullName', {})} value={watch('fullName')} />
-            <Input
-              {...register('jobDescription')}
-              value={watch('jobDescription')}
-            />
+            <div className="w-full">
+              <Label className="mb-2">Navn</Label>
+              <Input {...register('fullName', {})} value={watch('fullName')} />
+            </div>
+            <div className="w-full">
+              <Label className="mb-2">Jobbeskrivelse</Label>
+              <Input
+                {...register('jobDescription')}
+                value={watch('jobDescription')}
+              />
+            </div>
           </div>
-          <div className="flex h-12 w-1/2 items-center">
+          <div className="mt-5 flex h-12 w-1/2 items-center">
             <label className="mx-2">Rolle {'->'}</label>
             <SingleDropdown
               options={RoleActionDropdownOptions}

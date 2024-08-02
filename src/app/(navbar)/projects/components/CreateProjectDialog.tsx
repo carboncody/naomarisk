@@ -17,19 +17,19 @@ import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-interface NewProjectDialogProps {
+interface CreateProjectDialogProps {
   myId: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   refetch: () => void;
 }
 
-export default function NewProjectDialog({
+export default function CreateProjectDialog({
   myId,
   isOpen,
   setIsOpen,
   refetch,
-}: NewProjectDialogProps) {
+}: CreateProjectDialogProps) {
   const {
     register,
     handleSubmit,
@@ -98,18 +98,24 @@ export default function NewProjectDialog({
                 </div>
               </div>
               <div className="flex gap-5">
-                <DatePicker
-                  date={watch('startDate') ?? undefined}
-                  setDate={(date: Date | undefined) => {
-                    setValue('startDate', date ?? null);
-                  }}
-                />
-                <DatePicker
-                  date={watch('dueDate') ?? undefined}
-                  setDate={(date: Date | undefined) => {
-                    setValue('dueDate', date ?? null);
-                  }}
-                />
+                <div className="space-y-1">
+                  <Label>Start Dato</Label>
+                  <DatePicker
+                    date={watch('startDate') ?? undefined}
+                    setDate={(date: Date | undefined) => {
+                      setValue('startDate', date ?? null);
+                    }}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label>Slut Dato</Label>
+                  <DatePicker
+                    date={watch('dueDate') ?? undefined}
+                    setDate={(date: Date | undefined) => {
+                      setValue('dueDate', date ?? null);
+                    }}
+                  />
+                </div>
               </div>
             </div>
             <DialogFooter>

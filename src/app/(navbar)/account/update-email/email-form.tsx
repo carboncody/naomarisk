@@ -3,6 +3,7 @@ import Alert from '@components/ui/Alert';
 import { Input } from '@components/ui/Input';
 import InputErrorMessage from '@components/ui/InputErrorMessage';
 import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { formatError } from '@lib/services/supabase/utils';
 import { UpdateEmailSchema } from '@lib/services/supabase/validationSchema';
 import {
@@ -11,7 +12,6 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
-import { Label } from 'recharts';
 import { ZodError, type z } from 'zod';
 
 type FormData = z.infer<typeof UpdateEmailSchema>;

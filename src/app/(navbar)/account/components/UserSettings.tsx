@@ -45,7 +45,7 @@ export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
       </div>
       <div className="dark:text-white">
         <div className=" w-full items-start gap-5">
-          <Label>Navn</Label>
+          <Label className="mb-2">Navn</Label>
           <Input
             {...register('fullName', {
               required: {
@@ -57,7 +57,7 @@ export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
             className="mb-2"
           />
 
-          <Label>Job beskrivelse</Label>
+          <Label className="mb-2">Job beskrivelse</Label>
           <Input
             {...register('jobDescription')}
             value={watch('jobDescription') ?? ''}

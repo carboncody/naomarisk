@@ -79,6 +79,7 @@ export default function EditProject({
             <div>
               <Label>Projekt navn</Label>
               <Input
+                className="mt-2 w-full"
                 {...register('name', {
                   required: {
                     value: true,
@@ -95,10 +96,9 @@ export default function EditProject({
             <div>
               <Label>Projekt beskrivelse</Label>
               <Input
+                className="mt-2 w-full"
                 {...register('description')}
                 value={watch('description') ?? ''}
-                // label="Beskrivelse"
-                // variant="bordered"
               />
             </div>
           </div>
@@ -114,7 +114,6 @@ export default function EditProject({
 
             <div className="flex flex-col">
               <DatePicker
-                // customPlaceholder="Vælg slut dato"
                 date={watch('dueDate') ?? undefined}
                 setDate={(date: Date | undefined) => {
                   setValue('dueDate', date);
@@ -125,8 +124,6 @@ export default function EditProject({
             <Input
               {...register('budget')}
               value={watch('budget') ?? ''}
-              // label="Budget [kr.]"
-              // variant="bordered"
               type="number"
             />
           </div>
