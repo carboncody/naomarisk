@@ -10,7 +10,8 @@ import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { FaComment } from 'react-icons/fa';
+import { FaComment } from 'react-icons/fa6';
+import CreateComment from './components/comments/CreateComment';
 
 export function Risk() {
   const pathName = usePathname();
@@ -45,6 +46,7 @@ export function Risk() {
             <div className="flex w-full max-w-screen-2xl gap-4">
               <div className="sticky top-12 h-fit w-1/3 rounded-md bg-zinc-200 p-4 dark:bg-zinc-700 md:top-20">
                 <Button
+                  variant="default"
                   className="my-4 w-28 justify-end"
                   onClick={() => setRiskBeingEdited(risk)}
                 >
@@ -108,8 +110,8 @@ export function Risk() {
                   <FaComment className="h-4 w-4" />
                   Kommentartråd
                 </div>
-                <p className="text-Zinc-200 mt-4 animate-pulse text-sm">
-                  Kommer snart!
+                <p className="text-Zinc-200 mt-4  text-sm">
+                  <CreateComment riskId={riskId} />
                 </p>
               </div>
             </div>

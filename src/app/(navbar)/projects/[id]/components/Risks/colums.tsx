@@ -121,7 +121,7 @@ export const columns = ({
             }}
             className={clsx('col-span-1 flex items-center gap-2')}
           >
-            <div>
+            <div className="text-black dark:text-white">
               <p>Sansynlighed :</p>
               <p>Konsekvens :</p>
             </div>

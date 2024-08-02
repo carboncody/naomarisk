@@ -50,7 +50,7 @@ export function AllProjects() {
   return (
     <>
       <div className="justify-top flex flex-col items-center overflow-y-auto px-4">
-        <div className="mb-4 mt-40 flex w-full justify-between">
+        <div className="mb-4 mt-10 flex w-full justify-between">
           <p className="text-3xl font-semibold">
             {isAdmin && all ? 'Alle' : 'Mine'} Projekter
           </p>
