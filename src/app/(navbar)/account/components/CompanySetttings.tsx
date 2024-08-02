@@ -47,7 +47,7 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
       </div>
       <div className="dark:text-white">
         <div className=" w-full items-start gap-5">
-          <Label className='mb-2'>Navn</Label>
+          <Label className="mb-2">Navn</Label>
           <Input
             {...register('name', {
               required: {
@@ -58,13 +58,13 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
             value={watch('name') ?? ''}
             className="mb-2"
           />
-          <Label className='mb-2'>CVR nr.</Label>
+          <Label className="mb-2">CVR nr.</Label>
           <Input
             {...register('cvr')}
             value={watch('cvr') ?? ''}
             className="mb-2"
           />
-          <Label className='mb-2'>Email</Label>
+          <Label className="mb-2">Email</Label>
           <Input
             {...register('email')}
             value={watch('email') ?? ''}

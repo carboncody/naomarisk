@@ -15,6 +15,7 @@ import {
 } from 'src/components/ui/Charts/chart';
 
 import { GrStatusInfo } from 'react-icons/gr';
+import { PieSectorDataItem } from 'recharts/types/polar/Pie';
 import {
   Card,
   CardContent,
@@ -23,7 +24,6 @@ import {
   CardHeader,
   CardTitle,
 } from 'src/components/ui/Charts/card';
-import { PieSectorDataItem } from 'recharts/types/polar/Pie';
 interface RisksPiechartProps {
   risks: Risk[];
 }
