@@ -19,7 +19,7 @@ export function SettingsDropdown() {
 
   const triggerButton = (
     <button className="outline-none">
-      <FaGear className="h-5 w-5 text-amber-200" />
+      <FaGear className="h-5 w-5 text-amber-500 dark:text-amber-200" />
     </button>
   );
 

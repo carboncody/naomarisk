@@ -1,13 +1,16 @@
 'use client';
 import Alert from '@components/ui/Alert';
+import { Input } from '@components/ui/Input';
 import InputErrorMessage from '@components/ui/InputErrorMessage';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { formatError } from '@lib/services/supabase/utils';
 import { UpdateEmailSchema } from '@lib/services/supabase/validationSchema';
-import { Button, Input, Link } from '@nextui-org/react';
 import {
   createClientComponentClient,
   type User,
 } from '@supabase/auth-helpers-nextjs';
+import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import { ZodError, type z } from 'zod';
 
@@ -64,14 +67,16 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           {message}
         </Alert>
       ) : null}
-      <h2 className="mb-4 text-4xl font-semibold">Opdater Email</h2>
-      <p className="mb-4 font-medium">
+      <h2 className="mb-4 text-4xl  font-semibold text-black dark:text-white">
+        Opdater Email
+      </h2>
+      <p className="mb-4 font-medium text-black dark:text-white">
         Hej {user?.email}, Indtast din nye e-mail nedenfor og bekræft den
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
+          <Label>Email</Label>
           <Input
-            label="Indtast en nye email"
             name="email"
             type="email"
             value={formData?.email ?? ''}
@@ -85,9 +90,9 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.email}</InputErrorMessage>
         ) : null}
         <div className="form-control my-4">
+          <Label>Bekræft din email</Label>
           <Input
             id="emailConfirm"
-            label="Bekræft din email"
             name="email"
             type="email"
             value={formData.emailConfirm ?? ''}
@@ -101,15 +106,20 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           <InputErrorMessage>{errors?.emailConfirm}</InputErrorMessage>
         ) : null}
         <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary rounded-xl border bg-white px-2 py-2 text-black">
+          <button className="btn btn-primary rounded-xl border bg-black px-2 py-2 text-white dark:bg-zinc-300 dark:text-black">
             Opdater Email
           </button>
         </div>
       </form>
-      <div className=" justify-flex flex justify-center">
-        <Link className="block w-full p-3" href="/account">
-          <Button>Tilbage</Button>
-        </Link>
+      <div className="justify-flex mt-5 flex justify-center">
+        <Button
+          asChild
+          className="bg-black text-white dark:bg-zinc-300 dark:text-black"
+        >
+          <Link className="block w-full p-3" href="/account">
+            Tilbage
+          </Link>
+        </Button>
       </div>
     </div>
   );

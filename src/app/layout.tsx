@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className={`font-sans ${inter.variable}`}>
-        <main className="h-screen overflow-auto bg-gradient-to-b from-[#1c1c1c] to-[#2a2929] text-white">
+        <main className="h-screen overflow-auto bg-zinc-100 from-[#1c1c1c] to-[#2a2929] font-light dark:bg-gradient-to-b dark:text-white">
           <Providers>
             <Toast />
             {children}

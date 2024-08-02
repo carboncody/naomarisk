@@ -1,15 +1,15 @@
 'use client';
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EditProject from '@app/(navbar)/projects/[id]/components/EditProjectModal';
 import { CumulativeRiskMatrix } from '@components/RiskMatrix/CumulativeRiskMatrix';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Button } from '@components/ui/button';
 import { useProject } from '@lib/api/hooks';
-import { Button, Tab, Tabs } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { RiskChart } from './components/Riskchart';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
 
@@ -47,77 +47,63 @@ export function Project() {
         <div className="flex items-center justify-center">
           <div className="flex w-screen flex-col items-center justify-center px-4">
             <Tabs
-              aria-label="Options"
-              selectedKey={selectedTab}
-              className="mb-5"
-              onSelectionChange={(tab) =>
-                setSelectedTab(tab as 'risks' | 'overview' | 'employees')
+              value={selectedTab}
+              onValueChange={(tab) =>
+                setSelectedTab(tab as 'risks' | 'overview')
               }
+              className="mb-5"
             >
-              <Tab key="risks" title="Risiskoregister" />
-              <Tab key="overview" title="Oversigt" />
-              <Tab key="employees" title="Medarbejdere" />
-            </Tabs>
-            {selectedTab === 'overview' && (
-              <div className="flex w-full max-w-screen-2xl gap-4">
-                <div className="sticky top-12 h-fit w-1/3 rounded-md bg-[#333333] p-4 md:top-20">
-                  <Button
-                    className="my-4 w-32 justify-end"
-                    onClick={() => setIsEditOpen(true)}
-                  >
-                    Rediger Projekt
-                  </Button>
-                  <p className="mt-2 font-semibold">Projektnavn:</p>
-                  <p className="font-thin">{project.name}</p>
-                  <p className="mt-2 font-semibold">Beskrivelse:</p>
-                  <p className="font-thin">{project.description}</p>
-                  <div className="mt-2 flex gap-10 font-semibold">
-                    <p>
-                      Dato for oprettelse:
-                      <br />
-                      <p className="font-thin">
-                        {dayjs(project.createdAt).format('DD MMM YYYY')}
+              <TabsList>
+                <TabsTrigger value="risks">Risiskoregister</TabsTrigger>
+                <TabsTrigger value="overview">Oversigt</TabsTrigger>
+              </TabsList>
+              <TabsContent value="overview">
+                <div className="flex w-full max-w-screen-2xl gap-4">
+                  <div className="sticky top-12 h-fit w-1/3 rounded-md bg-zinc-200 p-4 dark:bg-[#333333] md:top-20">
+                    <Button
+                      variant="secondary"
+                      className="my-4 w-32 justify-end"
+                      onClick={() => setIsEditOpen(true)}
+                    >
+                      Rediger Projekt
+                    </Button>
+                    <p className="mt-2 font-semibold">Projektnavn:</p>
+                    <p className="font-light">{project.name}</p>
+                    <p className="mt-2 font-semibold">Beskrivelse:</p>
+                    <p className="font-light">{project.description}</p>
+                    <div className="mt-2 flex gap-10 font-semibold">
+                      <p>
+                        Dato for oprettelse:
+                        <br />
+                        <span className="font-light">
+                          {dayjs(project.createdAt).format('DD MMM YYYY')}
+                        </span>
                       </p>
-                    </p>
-
-                    <p>
-                      Slutdato for projekt:
-                      <br />
-                      <p className="font-thin">
-                        {dayjs(project.dueDate).format('DD MMM YYYY')}
+                      <p>
+                        Slutdato for projekt:
+                        <br />
+                        <span className="font-light">
+                          {dayjs(project.dueDate).format('DD MMM YYYY')}
+                        </span>
                       </p>
-                    </p>
-                  </div>
-                  <p className="mt-2">Budgettet for projektet:</p>
-                  <p className="font-thin">{project.budget} kr.</p>
-                  <div className="mt-10">
-                    <CumulativeRiskMatrix risks={project.risks} />
-                  </div>
-                </div>
-                <div className="flex w-2/3 flex-col items-center justify-center overflow-y-auto rounded-md bg-[#333333] p-4">
-                  <div className="my-5 w-full">
-                    <p className="flex items-center justify-center text-2xl font-semibold">
-                      Projekt Risici:
-                    </p>
-                    <div>
-                      <RiskChart projects={project} refetch={refetch} />
+                    </div>
+                    <p className="mt-2">Budgettet for projektet:</p>
+                    <p className="font-light">{project.budget} kr.</p>
+                    <div className="mt-10">
+                      <CumulativeRiskMatrix risks={project.risks} />
                     </div>
                   </div>
+                  <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
+                    <ProjectEmployee project={project} refetch={refetch} />
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {selectedTab === 'risks' && (
-              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
-                <Risks project={project} />
-              </div>
-            )}
-
-            {selectedTab === 'employees' && (
-              <div className="w-full overflow-y-auto rounded-md bg-[#333333] p-4">
-                <ProjectEmployee project={project} refetch={refetch} />
-              </div>
-            )}
+              </TabsContent>
+              <TabsContent value="risks">
+                <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
+                  <Risks project={project} />
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>

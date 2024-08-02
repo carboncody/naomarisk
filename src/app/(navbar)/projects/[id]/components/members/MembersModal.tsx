@@ -1,15 +1,17 @@
+'use client';
+
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'; // Adjust the import path according to your setup
 import { SingleDropdown } from '@components/ui';
 import { PlusMinusButton } from '@components/ui/PlusMinusButton';
+import { Button } from '@components/ui/button';
 import type { UpdateProjectForm } from '@lib/api/types';
 import { type User } from '@models';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -52,7 +54,7 @@ export function MembersModal({
           toast.error('Du har ikke rettigheder til at ændre projekter');
           return;
         }
-        toast.error('Noget gik galt -' + error.code);
+        toast.error('Noget gik galt - ' + error.code);
         return;
       }
       toast.error('Noget gik galt, beklager.');
@@ -76,91 +78,77 @@ export function MembersModal({
   });
 
   return (
-    <Modal
-      className="bg-[#413e3e]"
-      size="xl"
-      isOpen={isOpen}
-      onOpenChange={setIsOpen}
-      placement="top-center"
-      backdrop="blur"
-      onClose={() => setIsOpen(false)}
-    >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className="flex flex-col gap-1 text-white">
-              Tilføj / Fjern medlemmer
-            </ModalHeader>
-            <ModalBody className="text-white">
-              <div className="flex w-full items-center justify-center pr-6 text-gray-300">
-                <span className="w-full">Medlemmer</span>
-                <span className="w-full">Firma rolle</span>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700 dark:text-white">
+        <DialogHeader>
+          <DialogTitle className="dark:text-white">
+            Tilføj / Fjern medlemmer
+          </DialogTitle>
+        </DialogHeader>
+        <div className="text-Zinc-300 flex w-full items-center justify-center pr-6">
+          <span className="w-full">Medlemmer</span>
+          <span className="w-full">Firma rolle</span>
+        </div>
+
+        {projectMembers && projectMembers.length > 0 ? (
+          projectMembers.map((member, index) => (
+            <div
+              className="border-1 flex w-full items-center justify-center rounded-xl p-1"
+              key={index}
+            >
+              <div className="w-full">
+                <span className="truncate">{member.email}</span>
               </div>
-
-              {projectMembers && projectMembers.length > 0 ? (
-                projectMembers.map((member, index) => (
-                  <div
-                    className="flex w-full items-center justify-center rounded-xl border-1 p-1"
-                    key={index}
-                  >
-                    <div className="w-full">
-                      <span className="truncate">{member.email}</span>
-                    </div>
-                    <div className="w-full">
-                      <span className="truncate">{member.role}</span>
-                    </div>
-                    <div className="text-center">
-                      <PlusMinusButton
-                        type="minus"
-                        onClick={() => removeMember(member.id)}
-                      />
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="w-full p-2 text-center text-gray-400">
-                  Ingen medlemmer
-                </div>
-              )}
-
-              {isAdding && (
-                <div className="w-full">
-                  <SingleDropdown
-                    selectedValue={undefined}
-                    options={employees
-                      .filter(
-                        (employee) =>
-                          !watch('projectUserIds')?.includes(employee.id),
-                      )
-                      .map((employee) => ({
-                        label: employee.email,
-                        value: employee.id,
-                        href: undefined,
-                      }))}
-                    buttonLabel={'Vælg medlem'}
-                    setSelectedValue={(id: string | undefined) =>
-                      id && addMember(id)
-                    }
-                  />
-                </div>
-              )}
-
-              <div className="mr-8 text-center">
+              <div className="w-full">
+                <span className="truncate">{member.role}</span>
+              </div>
+              <div className="text-center">
                 <PlusMinusButton
-                  type={isAdding ? 'minus' : 'plus'}
-                  onClick={() => setIsAdding(!isAdding)}
+                  type="minus"
+                  onClick={() => removeMember(member.id)}
                 />
               </div>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="danger" onClick={onClose}>
-                Luk
-              </Button>
-              <Button onClick={handleSubmit(onSubmit)}>Gem</Button>
-            </ModalFooter>
-          </>
+            </div>
+          ))
+        ) : (
+          <div className="text-Zinc-400 w-full p-2 text-center">
+            Ingen medlemmer
+          </div>
         )}
-      </ModalContent>
-    </Modal>
+
+        {isAdding && (
+          <div className="w-full">
+            <SingleDropdown
+              selectedValue={undefined}
+              options={employees
+                .filter(
+                  (employee) => !watch('projectUserIds')?.includes(employee.id),
+                )
+                .map((employee) => ({
+                  label: employee.email,
+                  value: employee.id,
+                  href: undefined,
+                }))}
+              buttonLabel={'Vælg medlem'}
+              setSelectedValue={(id: string | undefined) => id && addMember(id)}
+            />
+          </div>
+        )}
+
+        <div className="mr-8 text-center">
+          <PlusMinusButton
+            type={isAdding ? 'minus' : 'plus'}
+            onClick={() => setIsAdding(!isAdding)}
+          />
+        </div>
+
+        <DialogFooter>
+          <Button variant="destructive" onClick={() => setIsOpen(false)}>
+            Luk
+          </Button>
+          <Button onClick={handleSubmit(onSubmit)}>Gem</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

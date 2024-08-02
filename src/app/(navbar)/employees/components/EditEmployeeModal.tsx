@@ -1,16 +1,18 @@
 'use client';
 
-import { NextInput, SingleDropdown } from '@components/ui';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { SingleDropdown } from '@components/ui';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
 import { type UpdateUserForm } from '@lib/api/types';
 import { UserRole, type User } from '@models';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -88,74 +90,62 @@ export default function EditEmployeeModal({
   ];
 
   return (
-    <>
-      <Modal
-        className="bg-[#413e3e]"
-        size="4xl"
-        isOpen={!!employee}
-        onOpenChange={() => setEmployeeBeingEdited(null)}
-        placement="top-center"
-        backdrop="blur"
-        onClose={() => setEmployeeBeingEdited(null)}
-      >
-        <ModalContent>
-          <>
-            <ModalHeader className="flex flex-col gap-1  font-bold text-white">
-              <p className="flex items-center">
-                <span className="text-red-500">Slet </span>/ Rediger
-                medarbejder!
-              </p>
-            </ModalHeader>
-            <ModalBody className="text-white">
-              <div className="flex w-full items-start gap-5">
-                <NextInput
-                  {...register('fullName', {})}
-                  value={watch('fullName')}
-                  className="col-span-2"
-                  label="Navn"
-                  errorMessage={errors.fullName?.message}
-                  isInvalid={!!errors.fullName}
-                />
-                <NextInput
-                  {...register('jobDescription')}
-                  value={watch('jobDescription')}
-                  label="Job beskrivelse"
-                  variant="bordered"
-                />
-              </div>
-              <div className="flex h-12 w-1/2 items-center">
-                <label className="mx-2">Rolle {'->'}</label>
-                <SingleDropdown
-                  options={RoleActionDropdownOptions}
-                  buttonLabel={'Roller'}
-                  selectedValue={watch('role')}
-                  setSelectedValue={(value) => {
-                    if (!value) return;
-                    setValue('role', value as UserRole);
-                  }}
-                />
-              </div>
-              <div className="grid grid-cols-4 gap-5"></div>
-            </ModalBody>
-            <ModalFooter className="flex justify-between">
-              <Button color="danger" onClick={handleSubmit(onDelete)}>
-                Slet Medarbejder
-              </Button>
-              <div className="flex items-center gap-2">
-                <Button onClick={() => setEmployeeBeingEdited(null)}>
-                  Fortryd
-                </Button>
-                <Button
-                  className="bg-[#616161] text-white"
-                  onClick={handleSubmit(onSubmit)}
-                >
-                  Gem ændringer
-                </Button>
-              </div>
-            </ModalFooter>
-          </>
-        </ModalContent>
-      </Modal>
-    </>
+    <Dialog open={!!employee} onOpenChange={() => setEmployeeBeingEdited(null)}>
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700 ">
+        <DialogHeader>
+          <DialogTitle className="font-bold dark:text-white">
+            <span className="text-red-500">Slet </span>/ Rediger medarbejder!
+          </DialogTitle>
+        </DialogHeader>
+        <div className="dark:text-white">
+          <div className="flex w-full items-start gap-5">
+            <div className="w-full">
+              <Label className="mb-2">Navn</Label>
+              <Input {...register('fullName', {})} value={watch('fullName')} />
+            </div>
+            <div className="w-full">
+              <Label className="mb-2">Jobbeskrivelse</Label>
+              <Input
+                {...register('jobDescription')}
+                value={watch('jobDescription')}
+              />
+            </div>
+          </div>
+          <div className="mt-5 flex h-12 w-1/2 items-center">
+            <label className="mx-2">Rolle {'->'}</label>
+            <SingleDropdown
+              options={RoleActionDropdownOptions}
+              buttonLabel={'Roller'}
+              selectedValue={watch('role')}
+              setSelectedValue={(value) => {
+                if (!value) return;
+                setValue('role', value as UserRole);
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-4 gap-5"></div>
+        </div>
+        <DialogFooter className="flex justify-between">
+          <Button variant="destructive" onClick={handleSubmit(onDelete)}>
+            Slet Medarbejder
+          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => setEmployeeBeingEdited(null)}
+            >
+              Fortryd
+            </Button>
+            <Button
+              variant="default"
+              className="bg-[#616161] text-white"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Gem ændringer
+            </Button>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

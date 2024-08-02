@@ -1,18 +1,20 @@
 'use client';
 
 import { SingleDropdown } from '@components/ui';
-import { NextInput } from '@components/ui/Input';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@components/ui/dialog';
+import { Label } from '@components/ui/label';
 import { useEmployees } from '@lib/api/hooks';
 import { type UpdateRiskForm } from '@lib/api/types/risk';
 import { RiskStatus, type Project, type Risk, type User } from '@models';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
 import axios from 'axios';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -31,6 +33,7 @@ export default function EditRisk({
   setRiskBeingEdited,
   project,
   refetch,
+  isOpen,
 }: EditRiskProps) {
   const {
     register,
@@ -49,15 +52,9 @@ export default function EditRisk({
     },
   });
 
-  const StatusDropdowOptions: { label: string; value: RiskStatus }[] = [
-    {
-      label: 'Open',
-      value: RiskStatus.Open,
-    },
-    {
-      label: 'Closed',
-      value: RiskStatus.Closed,
-    },
+  const StatusDropdownOptions: { label: string; value: RiskStatus }[] = [
+    { label: 'Open', value: RiskStatus.Open },
+    { label: 'Closed', value: RiskStatus.Closed },
   ];
 
   async function onSubmit(data: UpdateRiskForm) {
@@ -68,7 +65,7 @@ export default function EditRisk({
 
     try {
       await axios.patch(`/api/risk/${riskElement.id}`, data);
-      toast.success('Projektet er opdateret!');
+      toast.success('Risk updated successfully!');
       refetch();
       setRiskBeingEdited(null);
     } catch (error) {
@@ -79,9 +76,10 @@ export default function EditRisk({
   const { data: allEmployees, isError } = useEmployees();
 
   if (isError || !allEmployees) {
-    <div>Something went wrong</div>;
+    return <div>Something went wrong</div>;
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const projectMembers: User[] | undefined = useMemo(() => {
     const projectMemberIds = project.projectUsers.map((pu) => pu.userId);
     return allEmployees?.filter((employee) =>
@@ -89,126 +87,117 @@ export default function EditRisk({
     );
   }, [allEmployees, project.projectUsers]);
 
-  console.info(watch());
-
   return (
-    <>
-      <Modal
-        isOpen={!!riskElement}
-        onOpenChange={() => setRiskBeingEdited(null)}
-        size="4xl"
-        placement="top-center"
-        backdrop="blur"
-        className="bg-[#413e3e]"
-        onClose={() => setRiskBeingEdited(null)}
-      >
-        <ModalContent>
-          <ModalHeader className="flex flex-col gap-1 text-white">
-            Rediger Risk
-          </ModalHeader>
-          <ModalBody className="text-white">
+    <Dialog open={isOpen} onOpenChange={() => setRiskBeingEdited(null)}>
+      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
+        <DialogHeader>
+          <DialogTitle className="text-black dark:text-white">
+            Edit Risk
+          </DialogTitle>
+        </DialogHeader>
+        <DialogDescription className="text-black dark:text-white">
+          <div className="flex flex-col gap-4">
             <div className="flex w-full gap-5">
-              <NextInput
-                {...register('description', {
-                  required: {
-                    value: true,
-                    message: 'Beskrivelse mangler',
-                  },
-                })}
-                value={watch('description')}
-                label="Beskrivelse"
-                className="w-full"
-                variant="bordered"
-                errorMessage={errors.description?.message}
-                error={!!errors.description}
-              />
+              <div className="w-full">
+                <Label htmlFor="description">Description</Label>
+                <Input
+                  className="mt-2 w-full"
+                  {...register('description', {
+                    required: {
+                      value: true,
+                      message: 'Description is required',
+                    },
+                  })}
+                  id="description"
+                  value={watch('description')}
+                  // variant="bordered"
+                  // errorMessage={errors.description?.message}
+                  // error={!!errors.description}
+                />
+              </div>
             </div>
             <div className="flex w-full gap-5">
               <div className="w-full">
-                <NextInput
-                  {...register('activity', {
-                    required: {
-                      value: false,
-                      message: 'aktivitet mangler',
-                    },
-                  })}
+                <Label htmlFor="activity">Activity</Label>
+                <Input
+                  className="mt-2 w-full"
+                  {...register('activity')}
+                  id="activity"
                   value={watch('activity')}
-                  label="Aktivitet"
-                  className="w-full"
-                  variant="bordered"
-                  errorMessage={errors.activity?.message}
-                  error={!!errors.activity}
+                  // variant="bordered"
+                  // errorMessage={errors.activity?.message}
+                  // error={!!errors.activity}
                 />
               </div>
               <div className="w-full">
-                <NextInput
-                  {...register('comment', {
-                    required: {
-                      value: false,
-                      message: 'Kommentar mangler',
-                    },
-                  })}
+                <Label htmlFor="comment">Comment</Label>
+                <Input
+                  className="mt-2 w-full"
+                  {...register('comment')}
+                  id="comment"
                   value={watch('comment')}
-                  label="Kommentar"
-                  className="w-full"
-                  variant="bordered"
-                  errorMessage={errors.comment?.message}
-                  error={!!errors.comment}
+                  // variant="bordered"
+                  // errorMessage={errors.comment?.message}
+                  // error={!!errors.comment}
                 />
               </div>
             </div>
             <div className="flex w-full items-center justify-between gap-5">
               <div className="flex w-1/3 gap-4">
-                <NextInput
-                  {...register('probability', {
-                    validate: {
-                      range: (value) =>
-                        value === null ||
-                        (value >= 0 && value <= 5) ||
-                        'Sandsynlighed skal være mellem 1 og 5',
-                    },
-                  })}
-                  value={watch('probability')}
-                  label="Sandsynlighed"
-                  variant="bordered"
-                  type="number"
-                  errorMessage={errors.probability?.message}
-                  error={!!errors.probability}
-                />
-                <NextInput
-                  {...register('consequence', {
-                    validate: {
-                      range: (value) =>
-                        value === null ||
-                        (value >= 0 && value <= 5) ||
-                        'Konsekvens skal være mellem 1 og 5',
-                    },
-                  })}
-                  value={watch('consequence')}
-                  label="Konsekvens"
-                  variant="bordered"
-                  type="number"
-                  errorMessage={errors.consequence?.message}
-                  error={!!errors.consequence}
-                />
+                <div className="w-full">
+                  <Label htmlFor="probability">Probability</Label>
+                  <Input
+                    className="mt-2"
+                    {...register('probability', {
+                      validate: {
+                        range: (value) =>
+                          value === null ||
+                          (value >= 0 && value <= 5) ||
+                          'Probability must be between 0 and 5',
+                      },
+                    })}
+                    id="probability"
+                    value={watch('probability') ?? ''}
+                    type="number"
+                  />
+                </div>
+                <div className="w-full">
+                  <Label htmlFor="consequence">Consequence</Label>
+                  <Input
+                    className="mt-2"
+                    {...register('consequence', {
+                      validate: {
+                        range: (value) =>
+                          value === null ||
+                          (value >= 0 && value <= 5) ||
+                          'Consequence must be between 0 and 5',
+                      },
+                    })}
+                    id="consequence"
+                    value={watch('consequence') ?? ''}
+                    type="number"
+                  />
+                </div>
               </div>
-              <div className="flex items-center gap-14">
+              <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <span>Status {'->'}</span>
                   <SingleDropdown
-                    options={StatusDropdowOptions}
-                    buttonLabel={'Status'}
+                    options={StatusDropdownOptions}
+                    buttonLabel={
+                      StatusDropdownOptions.find(
+                        (option) => option.value === watch('status'),
+                      )?.label ?? 'Select Status'
+                    }
                     selectedValue={watch('status')}
-                    setSelectedValue={(value) => {
-                      if (!value) return;
-                      setValue('status', value as RiskStatus);
-                    }}
+                    setSelectedValue={(value) =>
+                      setValue('status', value as RiskStatus)
+                    }
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <span>Risiko ejer {'->'}</span>
+                  <span>Risk Owner {'->'}</span>
                   <SingleDropdown
-                    selectedValue={watch('riskOwnerUserId')}
                     options={
                       projectMembers
                         ? projectMembers.map((employee) => ({
@@ -223,8 +212,9 @@ export default function EditRisk({
                             (employee) =>
                               employee.id === watch('riskOwnerUserId'),
                           )?.email
-                        : 'Vælg medarbejder'
+                        : 'Select Employee'
                     }
+                    selectedValue={watch('riskOwnerUserId')}
                     setSelectedValue={(value) =>
                       value && setValue('riskOwnerUserId', value)
                     }
@@ -232,15 +222,20 @@ export default function EditRisk({
                 </div>
               </div>
             </div>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="danger" onClick={() => setRiskBeingEdited(null)}>
-              Luk
-            </Button>
-            <Button onClick={handleSubmit(onSubmit)}>Gem</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+          </div>
+        </DialogDescription>
+        <DialogFooter>
+          <Button
+            variant="destructive"
+            onClick={() => setRiskBeingEdited(null)}
+          >
+            Close
+          </Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+            Save
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
