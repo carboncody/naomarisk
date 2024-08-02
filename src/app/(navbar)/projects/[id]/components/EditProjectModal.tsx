@@ -79,6 +79,7 @@ export default function EditProject({
             <div>
               <Label>Projekt navn</Label>
               <Input
+                className="mt-2 w-full"
                 {...register('name', {
                   required: {
                     value: true,
@@ -95,6 +96,7 @@ export default function EditProject({
             <div>
               <Label>Projekt beskrivelse</Label>
               <Input
+                className="mt-2 w-full"
                 {...register('description')}
                 value={watch('description') ?? ''}
               />
