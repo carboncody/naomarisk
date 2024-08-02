@@ -69,7 +69,7 @@ export const columns: ColumnDef<Project>[] = [
   },
   {
     accessorKey: 'period',
-    header: 'PERIODE',
+    header: 'Periode',
     cell: ({ row }) => (
       <div className="truncate">
         <span className="flex items-center gap-1">

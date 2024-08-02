@@ -97,8 +97,6 @@ export default function EditProject({
               <Input
                 {...register('description')}
                 value={watch('description') ?? ''}
-                // label="Beskrivelse"
-                // variant="bordered"
               />
             </div>
           </div>
@@ -114,7 +112,6 @@ export default function EditProject({
 
             <div className="flex flex-col">
               <DatePicker
-                // customPlaceholder="Vælg slut dato"
                 date={watch('dueDate') ?? undefined}
                 setDate={(date: Date | undefined) => {
                   setValue('dueDate', date);
@@ -125,8 +122,6 @@ export default function EditProject({
             <Input
               {...register('budget')}
               value={watch('budget') ?? ''}
-              // label="Budget [kr.]"
-              // variant="bordered"
               type="number"
             />
           </div>

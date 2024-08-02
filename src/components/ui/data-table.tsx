@@ -3,12 +3,12 @@
 import * as React from 'react';
 
 import {
-  SortingState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
   type ColumnDef,
+  type SortingState,
 } from '@tanstack/react-table';
 
 import {

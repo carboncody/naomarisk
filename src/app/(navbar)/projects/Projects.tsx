@@ -1,6 +1,5 @@
 'use client';
 
-import NewProjectDialog from '@app/(navbar)/projects/components/NewProjectDialog';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
@@ -11,6 +10,7 @@ import { type Project } from '@models';
 import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import CreateProjectDialog from './components/CreateProjectDialog';
 import { columns } from './components/colums';
 
 export function AllProjects() {
@@ -69,7 +69,7 @@ export function AllProjects() {
         </div>
       </div>
       {isNewOpen && (
-        <NewProjectDialog
+        <CreateProjectDialog
           myId={me.id}
           isOpen={isNewOpen}
           setIsOpen={setIsNewOpen}
