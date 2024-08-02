@@ -101,6 +101,7 @@ export default function EditRisk({
               <div className="w-full">
                 <Label htmlFor="description">Description</Label>
                 <Input
+                  className="mt-2 w-full"
                   {...register('description', {
                     required: {
                       value: true,
@@ -119,6 +120,7 @@ export default function EditRisk({
               <div className="w-full">
                 <Label htmlFor="activity">Activity</Label>
                 <Input
+                  className="mt-2 w-full"
                   {...register('activity')}
                   id="activity"
                   value={watch('activity')}
@@ -130,6 +132,7 @@ export default function EditRisk({
               <div className="w-full">
                 <Label htmlFor="comment">Comment</Label>
                 <Input
+                  className="mt-2 w-full"
                   {...register('comment')}
                   id="comment"
                   value={watch('comment')}
@@ -144,6 +147,7 @@ export default function EditRisk({
                 <div className="w-full">
                   <Label htmlFor="probability">Probability</Label>
                   <Input
+                    className="mt-2"
                     {...register('probability', {
                       validate: {
                         range: (value) =>
@@ -160,6 +164,7 @@ export default function EditRisk({
                 <div className="w-full">
                   <Label htmlFor="consequence">Consequence</Label>
                   <Input
+                    className="mt-2"
                     {...register('consequence', {
                       validate: {
                         range: (value) =>

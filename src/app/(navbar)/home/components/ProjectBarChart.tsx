@@ -1,15 +1,25 @@
-import type { Project } from '@models';
+import { type Project } from '@models';
 import { useMemo } from 'react';
+import { GrStatusInfo } from 'react-icons/gr';
+import { Bar, BarChart, XAxis } from 'recharts';
+import 'src/components/ui/styles.css';
+
 import {
-  Bar,
-  BarChart,
-  Legend,
-  Rectangle,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@components/ui/Charts/card';
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from 'src/components/ui/Charts/chart';
 
 interface ProjectBarChartProps {
   projects: Project[];
@@ -24,43 +34,49 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
     }));
   }, [projects]);
 
+  const chartConfig = {
+    risici: {
+      // icon: PiWarningFill,
+      label: 'risici',
+      color: 'hsl(var(--chart-1))',
+    },
+    Brugere: {
+      // icon: FaUsers,
+      label: 'Brugere',
+      color: 'hsl(var(--chart-2))',
+    },
+  } satisfies ChartConfig;
+
   return (
-    <ResponsiveContainer
-      className="rounded-lg p-4 shadow-2xl shadow-black"
-      width="100%"
-      height="100%"
-    >
-      <BarChart
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <XAxis dataKey="name" className="text-white" />
-        <YAxis />
-        <Tooltip
-          wrapperClassName="text-black bg-white/50 backdrop-blur-md rounded-lg"
-          cursor={false}
-          filterNull
-          separator=" -> "
-        />
-        <Legend />
-        <Bar
-          dataKey="risici"
-          fill="#ffeb3a"
-          activeBar={<Rectangle fill="yellow" stroke="#4caf4f" />}
-        />
-        <Bar
-          dataKey="Brugere"
-          fill="#4caf4f"
-          activeBar={<Rectangle fill="green" stroke="yellow" />}
-        />
-      </BarChart>
-    </ResponsiveContainer>
+    <Card className="flex flex-col bg-zinc-200 shadow-xl">
+      <CardHeader className="items-center pb-0">
+        <CardTitle>Projekt Oversigt</CardTitle>
+        <CardDescription>Alle projekter</CardDescription>
+      </CardHeader>
+      <CardContent className="flex-1 pb-0">
+        <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+          <BarChart accessibilityLayer data={data}>
+            <XAxis
+              dataKey="name"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+              tickFormatter={(value) => value.slice(0, 6)}
+            />
+            <ChartLegend content={<ChartLegendContent />} />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Bar dataKey="risici" fill="var(--color-risici)" radius={4} />
+            <Bar dataKey="Brugere" fill="var(--color-Brugere)" radius={4} />
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col gap-2 text-sm">
+        <div className="flex items-center gap-2 font-medium leading-none">
+          Projekter fordelt ved antal risici og deltagerer{' '}
+          <GrStatusInfo className="h-4 w-4 " />
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
