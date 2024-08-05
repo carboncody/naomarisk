@@ -1,7 +1,19 @@
-enum Thresholds {
+import { type Risk } from '@models';
+
+export enum Thresholds {
   'GREEN',
   'YELLOW',
   'RED',
+}
+
+export function getThreshold(risk: Risk): Thresholds {
+  const riskValue =
+    risk.probability && risk.consequence
+      ? risk.probability * risk.consequence
+      : 0;
+
+  const threshold = RiskMap[riskValue];
+  return threshold ? threshold : Thresholds.GREEN;
 }
 
 export const RiskMap: Record<number, Thresholds> = {

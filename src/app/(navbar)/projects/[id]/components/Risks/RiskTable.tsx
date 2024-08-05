@@ -2,7 +2,6 @@
 
 import { DataTable } from '@components/ui/data-table';
 import { type Project, type Risk } from '@models';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import EditRisk from './EditRisk';
 import { columns } from './colums';
@@ -14,7 +13,6 @@ interface RiskTableProps {
 }
 
 export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
-  const router = useRouter();
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
 
   const rows = risks.map((risk) => ({

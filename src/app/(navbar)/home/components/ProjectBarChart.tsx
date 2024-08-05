@@ -11,7 +11,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@components/ui/Charts/card';
+} from '@components/ui/card';
 import {
   ChartContainer,
   ChartLegend,
@@ -68,7 +68,11 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
             <ChartLegend content={<ChartLegendContent />} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Bar dataKey="Risici" fill="var(--color-Risici)" radius={4} />
-            <Bar dataKey="Medarbejdere" fill="var(--color-Medarbejdere)" radius={4} />
+            <Bar
+              dataKey="Medarbejdere"
+              fill="var(--color-Medarbejdere)"
+              radius={4}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>

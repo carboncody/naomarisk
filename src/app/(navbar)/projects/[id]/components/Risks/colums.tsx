@@ -8,7 +8,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ColorMap, RiskMap } from '@lib/calc/threshholds';
+import {
+  ColorMap,
+  RiskMap,
+  Thresholds,
+  getThreshold,
+} from '@lib/calc/threshholds';
+import { cn } from '@lib/utils';
 import { type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import clsx from 'clsx';
@@ -34,11 +40,26 @@ export const columns = ({
   projectId,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
+    accessorKey: 'Score',
+    cell: ({ row }) => (
+      <div
+        style={{
+          background: getStyleColor(row.original),
+        }}
+        className={cn(
+          'h-3 w-3 rounded-full',
+          getThreshold(row.original) === Thresholds.RED && 'animate-ping',
+        )}
+      />
+    ),
+  },
+  {
     accessorKey: 'customId',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           RISK-ID
@@ -60,6 +81,7 @@ export const columns = ({
       return (
         <Button
           variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Ejer
@@ -85,6 +107,7 @@ export const columns = ({
       return (
         <Button
           variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Beskrivelse
@@ -104,6 +127,7 @@ export const columns = ({
       return (
         <Button
           variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Risiko {'->'} Risikoscore
@@ -159,7 +183,7 @@ export const columns = ({
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="h-8 w-8 p-0 bg-transparent dark:bg-transparent">
+            <Button className="h-8 w-8 bg-transparent p-0 dark:bg-transparent">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>

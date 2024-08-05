@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border dark:border-zinc-700">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

@@ -2,7 +2,7 @@ import { type Risk } from '@models';
 import { useMemo } from 'react';
 import { FaLockOpen } from 'react-icons/fa6';
 import { IoLockClosed } from 'react-icons/io5';
-import { Cell, Pie, PieChart, Sector } from 'recharts';
+import { Cell, Pie, PieChart } from 'recharts';
 import 'src/components/ui/styles.css';
 
 import {
@@ -15,7 +15,6 @@ import {
 } from 'src/components/ui/Charts/chart';
 
 import { GrStatusInfo } from 'react-icons/gr';
-import { PieSectorDataItem } from 'recharts/types/polar/Pie';
 import {
   Card,
   CardContent,
@@ -23,7 +22,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from 'src/components/ui/Charts/card';
+} from 'src/components/ui/card';
 interface RisksPiechartProps {
   risks: Risk[];
 }

@@ -146,7 +146,9 @@ export function MembersModal({
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button onClick={handleSubmit(onSubmit)}>Gem</Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+            Gem
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

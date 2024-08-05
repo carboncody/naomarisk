@@ -11,6 +11,7 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
@@ -34,6 +35,7 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >

@@ -70,7 +70,7 @@ export default function EditProject({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-full bg-zinc-200 dark:bg-[#413e3e]">
+      <DialogContent className="w-full">
         <DialogHeader>
           <DialogTitle className="dark:text-white">Rediger Projekt</DialogTitle>
         </DialogHeader>
@@ -101,15 +101,15 @@ export default function EditProject({
                 value={watch('description') ?? ''}
               />
             </div>
-                <div className="flex flex-col">
-                  <Label className="mb-2">Budget [kr.]</Label>
-                  <Input
-                    className="w-full"
-                    {...register('budget')}
-                    value={watch('budget') ?? ''}
-                    type="number"
-                  />
-                </div>
+            <div className="flex flex-col">
+              <Label className="mb-2">Budget [kr.]</Label>
+              <Input
+                className="w-full"
+                {...register('budget')}
+                value={watch('budget') ?? ''}
+                type="number"
+              />
+            </div>
           </div>
           <div className="mt-5 flex gap-5">
             <div className="flex flex-col">
@@ -137,7 +137,9 @@ export default function EditProject({
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button variant="default" onClick={handleSubmit(onSubmit)}>Gem</Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+            Gem
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

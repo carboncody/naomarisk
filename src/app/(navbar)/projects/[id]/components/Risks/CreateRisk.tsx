@@ -66,10 +66,6 @@ export default function CreateRisk({
 
   const { data: allEmployees, isError } = useEmployees();
 
-  if (isError || !allEmployees) {
-    return <div>Something went wrong</div>;
-  }
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const projectMembers: User[] | undefined = useMemo(() => {
     const projectMemberIds = project.projectUsers.map((pu) => pu.userId);
@@ -77,6 +73,10 @@ export default function CreateRisk({
       projectMemberIds.includes(employee.id),
     );
   }, [allEmployees, project.projectUsers]);
+
+  if (isError || !allEmployees) {
+    return <div>Something went wrong</div>;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -89,7 +89,9 @@ export default function CreateRisk({
         <DialogDescription className="text-black dark:text-white">
           <div className="flex w-full gap-5">
             <div className="mb-3 w-full">
-              <Label htmlFor="Name">Beskrivelse</Label>
+              <Label className="mb-2" htmlFor="Name">
+                Beskrivelse
+              </Label>
               <Input
                 {...register('description', {
                   required: {
@@ -102,7 +104,9 @@ export default function CreateRisk({
           </div>
           <div className="mb-3 flex w-full gap-5">
             <div className="w-full">
-              <Label htmlFor="activity">Aktivitet</Label>
+              <Label className="mb-2" htmlFor="activity">
+                Aktivitet
+              </Label>
               <Input
                 {...register('activity', {
                   required: {
@@ -113,7 +117,9 @@ export default function CreateRisk({
               />
             </div>
             <div className="w-full">
-              <Label htmlFor="comment">Kommentar</Label>
+              <Label className="mb-2" htmlFor="comment">
+                Kommentar
+              </Label>
               <Input
                 {...register('comment', {
                   required: {
@@ -127,8 +133,9 @@ export default function CreateRisk({
           <div className="flex w-full items-center justify-between gap-5">
             <div className="flex w-1/3 gap-4">
               <div>
-                <Label htmlFor="probability">Sandsynlighed</Label>
-
+                <Label className="mb-2" htmlFor="probability">
+                  Sandsynlighed
+                </Label>
                 <Input
                   {...register('probability', {
                     validate: {
@@ -141,8 +148,9 @@ export default function CreateRisk({
                 />
               </div>
               <div>
-                <Label htmlFor="consequence">Konsekvens</Label>
-
+                <Label className="mb-2" htmlFor="consequence">
+                  Konsekvens
+                </Label>
                 <Input
                   {...register('consequence', {
                     validate: {

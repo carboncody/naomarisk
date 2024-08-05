@@ -22,8 +22,8 @@ export function CumulativeRiskMatrix({ risks }: CumulativeRiskMatrixProps) {
   });
 
   return (
-    <div className="text-Zinc-300 flex -translate-x-6 items-center">
-      <em className="translate-x-8 rotate-[270deg] text-xs md:text-sm">
+    <div className="flex -translate-x-6 items-center dark:text-zinc-300">
+      <em className="-ml-16 translate-x-8 rotate-[270deg] text-xs md:text-sm">
         Sandsynlighed
       </em>
       <div className="flex flex-col items-center">
@@ -40,7 +40,7 @@ export function CumulativeRiskMatrix({ risks }: CumulativeRiskMatrixProps) {
                 <div
                   key={`${rowIndex}-${colIndex}`}
                   className={clsx(
-                    '3xl:w-16 3xl:h-16 border-Zinc-900 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border text-black',
+                    '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black dark:border-zinc-900',
                     color === 'red' && 'text-white',
                   )}
                   style={{ backgroundColor: color }}

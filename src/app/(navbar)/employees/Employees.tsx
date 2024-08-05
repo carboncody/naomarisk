@@ -57,7 +57,7 @@ export function AllEmployees() {
             </Button>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full rounded-xl p-4 dark:bg-zinc-800">
           <DataTable
             data={allEmployees ?? []}
             columns={getColumns({ handleEdit })}

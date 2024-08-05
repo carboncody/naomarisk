@@ -21,6 +21,7 @@ export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
     header: ({ column }) => {
       return (
         <Button
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
@@ -63,7 +64,10 @@ export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button
+              className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+              variant="ghost"
+            >
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>

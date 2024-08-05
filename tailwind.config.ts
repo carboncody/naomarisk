@@ -23,6 +23,9 @@ const config = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
+      borderWidth: {
+        DEFAULT: '0.5px',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },

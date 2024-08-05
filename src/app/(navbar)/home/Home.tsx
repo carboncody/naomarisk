@@ -1,7 +1,7 @@
 'use client';
 
-import { Card, CardTitle } from '@components/ui/Charts/card';
 import LoadingSpinner from '@components/ui/LoadSpinner';
+import { Card, CardTitle } from '@components/ui/card';
 import { useCompany } from '@lib/api/hooks';
 import { useMe } from '@lib/providers/me';
 import { ProjectStatus, RiskStatus } from '@models';

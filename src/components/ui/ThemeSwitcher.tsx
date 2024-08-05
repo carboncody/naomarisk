@@ -1,7 +1,7 @@
 'use client';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import { Switch } from './switch';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -21,16 +21,19 @@ export function ThemeSwitcher() {
   }
 
   return (
-    <div>
-      <Switch
-        id="airplane-mode"
-        // checked={theme === 'dark'}
-        onCheckedChange={() => {
-          console.log('theme', theme);
-          setTheme(theme === 'light' ? 'dark' : 'light');
-          localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
-        }}
-      />
+    <div
+      onClick={() => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+      }}
+      className="cursor-pointer"
+    >
+      {theme === 'light' ? (
+        <FaMoon className="text-2xl text-gray-800" />
+      ) : (
+        <FaSun className="text-2xl text-yellow-500" />
+      )}
     </div>
   );
 }
