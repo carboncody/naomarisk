@@ -15,7 +15,7 @@ import {
 } from 'src/components/ui/Charts/chart';
 
 import { GrStatusInfo } from 'react-icons/gr';
-import { PieSectorDataItem } from 'recharts/types/polar/Pie';
+import { type PieSectorDataItem } from 'recharts/types/polar/Pie';
 import {
   Card,
   CardContent,

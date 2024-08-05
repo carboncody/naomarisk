@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { RiskChart } from './components/Riskchart';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
 
@@ -91,6 +92,11 @@ export function Project() {
                     <p className="font-light">{project.budget} kr.</p>
                     <div className="mt-10">
                       <CumulativeRiskMatrix risks={project.risks} />
+                    </div>
+                    <div>
+                      <div>
+                        <RiskChart projects={project} />
+                      </div>
                     </div>
                   </div>
                   <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
