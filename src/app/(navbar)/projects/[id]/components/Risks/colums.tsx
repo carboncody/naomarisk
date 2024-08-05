@@ -47,7 +47,7 @@ export const columns = ({
           background: getStyleColor(row.original),
         }}
         className={cn(
-          'h-3 w-3 rounded-full',
+          'h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-400',
           getThreshold(row.original) === Thresholds.RED,
         )}
       />
@@ -143,7 +143,9 @@ export const columns = ({
             style={{
               color: getStyleColor(risk),
             }}
-            className={clsx('col-span-1 flex items-center gap-2')}
+            className={clsx(
+              'col-span-1 flex items-center gap-2 text-black dark:text-white',
+            )}
           >
             <div className="text-black dark:text-white">
               <p>Sansynlighed :</p>
@@ -183,10 +185,7 @@ export const columns = ({
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="h-8 w-8 bg-transparent p-0 dark:bg-transparent">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
+            <MoreHorizontal className="h-4 w-4 text-zinc-400 hover:text-black dark:text-zinc-400 dark:hover:text-white" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem
@@ -200,6 +199,12 @@ export const columns = ({
               Rediger
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="group-hover:bg-red-500 group-hover:text-white dark:group-hover:bg-red-400"
+              onClick={() => handleEdit(risk)}
+            >
+              Slet
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

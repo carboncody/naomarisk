@@ -60,7 +60,7 @@ export function AllProjects() {
             </Button>
           )}
         </div>
-        <div className="w-full p-4 dark:bg-zinc-800">
+        <div className="w-full rounded-lg p-4 dark:bg-zinc-800">
           <DataTable
             columns={columns}
             data={allProjects ?? []}

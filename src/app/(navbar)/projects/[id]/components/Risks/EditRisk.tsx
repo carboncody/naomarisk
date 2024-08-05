@@ -88,7 +88,7 @@ export default function EditRisk({
 
   return (
     <Dialog open={isOpen} onOpenChange={() => setRiskBeingEdited(null)}>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
             Edit Risk

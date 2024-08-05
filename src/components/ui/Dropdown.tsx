@@ -34,14 +34,14 @@ export function SingleDropdown({
     <DropdownMenu>
       <DropdownMenuTrigger>
         {customTriggerBtn ?? (
-          <Button className="text-md dark:bg-zinc-500">
+          <Button className="text-md">
             {selectedValue
               ? options.find((option) => option.value === selectedValue)?.label
               : buttonLabel}
           </Button>
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-[#413e3e] text-white">
+      <DropdownMenuContent className="">
         <DropdownMenuLabel className="text-md">{buttonLabel}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {options.map((option) => (
@@ -51,11 +51,11 @@ export function SingleDropdown({
             asChild
           >
             {option.href ? (
-              <a href={option.href} className="text-white no-underline">
+              <a href={option.href} className="no-underline dark:text-white">
                 {option.label}
               </a>
             ) : (
-              <span className="text-white">{option.label}</span>
+              <span className="dark:text-white">{option.label}</span>
             )}
           </DropdownMenuItem>
         ))}

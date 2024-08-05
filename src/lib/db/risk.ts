@@ -21,6 +21,9 @@ export async function RiskService() {
       include: {
         riskowner: true,
       },
+      orderBy: {
+        customId: 'asc',
+      },
     });
   }
 
