@@ -52,14 +52,16 @@ export function Risks({ project }: RisksProps) {
             onValueChange={(value) => setSelectedTab(value as RiskStatus)}
             className="w-full"
           >
-            <TabsList>
-              <TabsTrigger value={RiskStatus.Open}>Åben</TabsTrigger>
-              <TabsTrigger value={RiskStatus.Closed}>Lukket</TabsTrigger>
-            </TabsList>
-            <TabsContent value={RiskStatus.Open}>
-              <Button className="w-32" onClick={() => setIsNewOpen(true)}>
+            <div className="flex w-full items-center justify-between">
+              <TabsList>
+                <TabsTrigger value={RiskStatus.Open}>Åben</TabsTrigger>
+                <TabsTrigger value={RiskStatus.Closed}>Lukket</TabsTrigger>
+              </TabsList>
+              <Button className="flex w-32" onClick={() => setIsNewOpen(true)}>
                 Tilføj
               </Button>
+            </div>
+            <TabsContent value={RiskStatus.Open}>
               <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
                 <RiskTable
                   risks={

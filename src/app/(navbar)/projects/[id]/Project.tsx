@@ -17,9 +17,9 @@ export function Project() {
   const pathName = usePathname();
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'risks'>(
-    'overview',
-  );
+  const [selectedTab, setSelectedTab] = useState<
+    'overview' | 'risks' | 'employees'
+  >('overview');
 
   const {
     data: project,
@@ -49,17 +49,20 @@ export function Project() {
             <Tabs
               value={selectedTab}
               onValueChange={(tab) =>
-                setSelectedTab(tab as 'risks' | 'overview')
+                setSelectedTab(tab as 'risks' | 'overview' | 'employees')
               }
               className="mb-5"
             >
               <TabsList>
                 <TabsTrigger value="risks">Risiskoregister</TabsTrigger>
                 <TabsTrigger value="overview">Oversigt</TabsTrigger>
+                <TabsTrigger value="employees">
+                  Medarbejdertildeling
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="overview">
                 <div className="flex w-full max-w-screen-2xl gap-4">
-                  <div className="sticky top-12 h-fit w-1/3 rounded-md bg-zinc-200 p-4 dark:bg-[#333333] md:top-20">
+                  <div className="sticky top-12 h-fit w-full rounded-md bg-zinc-200 p-4 dark:bg-[#333333] md:top-20">
                     <Button
                       variant="secondary"
                       className="my-4 w-32 justify-end"
@@ -93,9 +96,11 @@ export function Project() {
                       <CumulativeRiskMatrix risks={project.risks} />
                     </div>
                   </div>
-                  <div className="h-fit w-2/3 overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
-                    <ProjectEmployee project={project} refetch={refetch} />
-                  </div>
+                </div>
+              </TabsContent>
+              <TabsContent value="employees">
+                <div className="h-fit w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-[#333333]">
+                  <ProjectEmployee project={project} refetch={refetch} />
                 </div>
               </TabsContent>
               <TabsContent value="risks">

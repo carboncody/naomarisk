@@ -29,20 +29,20 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
   const data = useMemo(() => {
     return projects.map((project) => ({
       name: project.name,
-      risici: project.risks.length,
-      Brugere: project.projectUsers.length,
+      Risici: project.risks.length,
+      Medarbejdere: project.projectUsers.length,
     }));
   }, [projects]);
 
   const chartConfig = {
-    risici: {
+    Risici: {
       // icon: PiWarningFill,
-      label: 'risici',
+      label: 'Risici',
       color: 'hsl(var(--chart-1))',
     },
-    Brugere: {
+    Medarbejdere: {
       // icon: FaUsers,
-      label: 'Brugere',
+      label: 'Medarbejdere',
       color: 'hsl(var(--chart-2))',
     },
   } satisfies ChartConfig;
@@ -63,17 +63,18 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
               axisLine={false}
               // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
               tickFormatter={(value) => value.slice(0, 6)}
+              className="truncate"
             />
             <ChartLegend content={<ChartLegendContent />} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar dataKey="risici" fill="var(--color-risici)" radius={4} />
-            <Bar dataKey="Brugere" fill="var(--color-Brugere)" radius={4} />
+            <Bar dataKey="Risici" fill="var(--color-Risici)" radius={4} />
+            <Bar dataKey="Medarbejdere" fill="var(--color-Medarbejdere)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          Projekter fordelt ved antal risici og deltagerer{' '}
+          Projekter fordelt ved antal Risici og deltagerer{' '}
           <GrStatusInfo className="h-4 w-4 " />
         </div>
       </CardFooter>

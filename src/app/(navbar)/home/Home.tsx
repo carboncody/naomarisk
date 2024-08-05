@@ -1,5 +1,6 @@
 'use client';
 
+import { Card, CardTitle } from '@components/ui/Charts/card';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { useCompany } from '@lib/api/hooks';
 import { useMe } from '@lib/providers/me';
@@ -43,7 +44,7 @@ export function Home() {
         </span>
         <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" />
       </div>
-      <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-xl dark:text-white md:mt-10">
+      <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-lg dark:text-white md:mt-10">
         <PiShieldWarningBold className="inline h-6 w-6 text-amber-500" />
         <p className="select-none">
           <span>Aktive projekt statisktikker for</span>
@@ -51,31 +52,38 @@ export function Home() {
         </p>
       </div>
       <div className="mb-5 flex items-center gap-4 md:mb-10">
-        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-amber-200 via-amber-500 to-amber-600 p-4 font-medium text-white shadow-lg shadow-zinc-600 dark:from-yellow-400 dark:via-yellow-600 dark:to-yellow-800">
-          <FaCubes className="text-3xl" />
-          <p className="ml-2 text-3xl">
-            {
-              data.projects.filter((p) => p.status !== ProjectStatus.Closed)
-                .length
-            }
-          </p>
-          <p className="text-xl">Aktive projekter</p>
-        </div>
-        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-green-300 via-green-500 to-green-600 p-4 font-medium text-white shadow-lg shadow-zinc-600 dark:from-teal-500 dark:via-teal-600 dark:to-teal-700">
-          <FaUsers className="text-3xl" />
-          <p className="ml-2 text-3xl">{data.users.length}</p>
-          <p className="text-xl">Medarbejdere</p>
-        </div>
-        <div className="flex items-end justify-center gap-2 rounded-lg bg-gradient-to-br from-zinc-300 via-zinc-500 to-zinc-600 p-4 font-medium text-white shadow-lg shadow-zinc-600 dark:from-gray-500 dark:via-gray-600 dark:to-gray-700">
-          <PiWarningFill className="text-3xl" />
-          <p className="ml-2 text-3xl">
-            {
-              allRisksInCompany.filter((r) => r.status !== RiskStatus.Closed)
-                .length
-            }
-          </p>
-          <p className="text-xl">Åben risici</p>
-        </div>
+        <Card className="p-4 shadow-xl">
+          <CardTitle className="flex items-center gap-3">
+            <FaCubes className="text-3xl" />
+            <p className="ml-2 text-3xl">
+              {
+                data.projects.filter((p) => p.status !== ProjectStatus.Closed)
+                  .length
+              }
+            </p>
+            <p className="text-lg">Aktive projekter</p>
+          </CardTitle>
+        </Card>
+        <Card className="bg-[#2a9d90]  p-4 shadow-xl dark:bg-[#2eb88a]">
+          <CardTitle className="flex items-center gap-3">
+            <FaUsers className="text-3xl" />
+            <p className="ml-2 text-3xl">{data.users.length}</p>
+            <p className="text-lg">Medarbejdere</p>
+          </CardTitle>
+        </Card>
+
+        <Card className="bg-[#e76e50] p-4 shadow-xl dark:bg-[#2662d9]">
+          <CardTitle className="flex items-center gap-3">
+            <PiWarningFill className="text-3xl" />
+            <p className=" text-3xl">
+              {
+                allRisksInCompany.filter((r) => r.status !== RiskStatus.Closed)
+                  .length
+              }
+            </p>
+            <p className="text-lg">Åben risici</p>
+          </CardTitle>
+        </Card>
       </div>
 
       <div className="items-cemter grid h-[50vh] w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">

@@ -51,7 +51,7 @@ export default function EditRisk({
       activity: riskElement.activity,
     },
   });
-
+  
   const StatusDropdownOptions: { label: string; value: RiskStatus }[] = [
     { label: 'Open', value: RiskStatus.Open },
     { label: 'Closed', value: RiskStatus.Closed },
@@ -59,7 +59,7 @@ export default function EditRisk({
 
   async function onSubmit(data: UpdateRiskForm) {
     const { probability, consequence } = data;
-
+    
     data.probability = probability ? +probability : null;
     data.consequence = consequence ? +consequence : null;
 
@@ -72,20 +72,20 @@ export default function EditRisk({
       toast.error('Error - something went wrong');
     }
   }
-
+  
   const { data: allEmployees, isError } = useEmployees();
-
-  if (isError || !allEmployees) {
-    return <div>Something went wrong</div>;
-  }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  
   const projectMembers: User[] | undefined = useMemo(() => {
     const projectMemberIds = project.projectUsers.map((pu) => pu.userId);
     return allEmployees?.filter((employee) =>
       projectMemberIds.includes(employee.id),
     );
   }, [allEmployees, project.projectUsers]);
+  
+  if (isError || !allEmployees) {
+    return <div>Something went wrong</div>;
+  }
+
 
   return (
     <Dialog open={isOpen} onOpenChange={() => setRiskBeingEdited(null)}>

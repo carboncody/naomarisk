@@ -88,12 +88,12 @@ export function RisksPiechart({ risks }: RisksPiechartProps) {
               innerRadius={60}
               strokeWidth={5}
               activeIndex={0}
-              activeShape={({
-                outerRadius = 0,
-                ...props
-              }: PieSectorDataItem) => (
-                <Sector {...props} outerRadius={outerRadius + 5} />
-              )}
+              // activeShape={({
+              //   outerRadius = 0,
+              //   ...props
+              // }: PieSectorDataItem) => (
+              //   <Sector {...props} outerRadius={outerRadius + 5} />
+              // )}
               label={({ name, value }) => `${name} -> ${value}`}
             >
               {data.map((entry, index) => (

@@ -39,8 +39,8 @@ export function ProjectEmployee({
 
   return (
     <>
-      <div className="justify-top flex flex-col items-center overflow-y-auto dark:text-white">
-        <div className="mb-4 flex w-full items-center justify-between">
+      <div className="justify-top flex flex-col items-center overflow-y-auto dark:text-white w-full">
+        <div className="mb-4 flex w-full items-center justify-between gap-28">
           <p className="text-3xl font-semibold">Medarbjedere i dette projekt</p>
           <Button
             className="my-4 justify-end font-semibold"
@@ -50,10 +50,12 @@ export function ProjectEmployee({
             Tilføj / fjern medlemmer
           </Button>
         </div>
-        <ProjectEmployeeTable
-          projectMemberIds={projectMemberIds}
-          employees={allEmployees ?? []}
-        />
+        <div className="w-full">
+          <ProjectEmployeeTable
+            projectMemberIds={projectMemberIds}
+            employees={allEmployees ?? []}
+          />
+        </div>
       </div>
       {isNewOpen && (
         <MembersModal

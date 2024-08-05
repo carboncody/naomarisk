@@ -101,9 +101,19 @@ export default function EditProject({
                 value={watch('description') ?? ''}
               />
             </div>
+                <div className="flex flex-col">
+                  <Label className="mb-2">Budget [kr.]</Label>
+                  <Input
+                    className="w-full"
+                    {...register('budget')}
+                    value={watch('budget') ?? ''}
+                    type="number"
+                  />
+                </div>
           </div>
           <div className="mt-5 flex gap-5">
             <div className="flex flex-col">
+              <Label className="mb-2">Startdato</Label>
               <DatePicker
                 date={watch('startDate') ?? undefined}
                 setDate={(date: Date | undefined) => {
@@ -113,6 +123,7 @@ export default function EditProject({
             </div>
 
             <div className="flex flex-col">
+              <Label className="mb-2">Slutdato</Label>
               <DatePicker
                 date={watch('dueDate') ?? undefined}
                 setDate={(date: Date | undefined) => {
@@ -120,19 +131,13 @@ export default function EditProject({
                 }}
               />
             </div>
-            <Label>Budget [kr.]</Label>
-            <Input
-              {...register('budget')}
-              value={watch('budget') ?? ''}
-              type="number"
-            />
           </div>
         </DialogDescription>
         <DialogFooter>
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button onClick={handleSubmit(onSubmit)}>Gem</Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>Gem</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
