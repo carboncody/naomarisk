@@ -48,7 +48,7 @@ export const columns = ({
         }}
         className={cn(
           'h-3 w-3 rounded-full',
-          getThreshold(row.original) === Thresholds.RED && 'animate-ping',
+          getThreshold(row.original) === Thresholds.RED,
         )}
       />
     ),
