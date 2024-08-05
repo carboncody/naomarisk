@@ -67,7 +67,7 @@ export function RisksPiechart({ risks }: RisksPiechartProps) {
   } satisfies ChartConfig;
 
   return (
-    <Card className="flex flex-col bg-zinc-200 shadow-xl">
+    <Card className="flex flex-col bg-zinc-200 shadow-xl dark:bg-zinc-800">
       <CardHeader className="items-center pb-0">
         <CardTitle>Risici Status</CardTitle>
         <CardDescription>Alle projekter</CardDescription>
