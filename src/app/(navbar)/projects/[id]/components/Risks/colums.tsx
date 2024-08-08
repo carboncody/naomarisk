@@ -144,12 +144,14 @@ export const columns = ({
         <div className="grid grid-cols-2">
           <div
             className={clsx(
-              'col-span-1 flex items-center gap-2 text-black dark:text-white',
-              threshold === Thresholds.RED && 'text-red-500 dark:text-red-300',
+              'col-span-1 flex items-center gap-2',
+              threshold === Thresholds.RED && 'text-red-500 dark:text-red-400',
               threshold === Thresholds.GREEN &&
                 'text-green-500 dark:text-green-400',
               threshold === Thresholds.YELLOW &&
                 'text-yellow-500 dark:text-yellow-400',
+              (!risk.probability || !risk.consequence) &&
+                'text-zinc-500 dark:text-zinc-400',
             )}
           >
             <div className="text-black dark:text-white">
@@ -192,7 +194,11 @@ export const columns = ({
           <DropdownMenuTrigger asChild>
             <MoreHorizontal className="h-4 w-4 text-zinc-400 hover:text-black dark:text-zinc-400 dark:hover:text-white" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
             <DropdownMenuItem
               onClick={() =>
                 router.push(`/projects/${projectId}/risk/${risk.id}`)
