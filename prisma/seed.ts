@@ -3,7 +3,7 @@ import { PrismaClient, RiskStatus, UserRole } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const myEmail = 'kvi@naoma.dk';
+const myEmail = 'jpa@naoma.dk';
 
 async function main() {
   for (let i = 0; i < 3; i++) {
