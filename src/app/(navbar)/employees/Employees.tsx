@@ -6,7 +6,7 @@ import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
-import { User } from '@models';
+import { type User } from '@models';
 import Error from 'next/error';
 import { useState } from 'react';
 import { columns as getColumns } from './components/colums';

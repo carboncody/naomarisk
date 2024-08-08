@@ -32,11 +32,13 @@ function getStyleColor(risk: Risk): string | undefined {
 
 interface ColumnParams {
   handleEdit: (risk: Risk) => void;
+  handleDelete: (risk: Risk) => void;
   projectId: string;
 }
 
 export const columns = ({
   handleEdit,
+  handleDelete,
   projectId,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
@@ -201,7 +203,7 @@ export const columns = ({
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="group-hover:bg-red-500 group-hover:text-white dark:group-hover:bg-red-400"
-              onClick={() => handleEdit(risk)}
+              onClick={() => handleDelete(risk)}
             >
               Slet
             </DropdownMenuItem>
