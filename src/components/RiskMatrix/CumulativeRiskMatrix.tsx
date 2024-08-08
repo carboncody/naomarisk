@@ -1,12 +1,18 @@
 import { ColorMap, RiskMap } from '@lib/calc/threshholds';
 import type { Risk } from '@models';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 interface CumulativeRiskMatrixProps {
   risks: Risk[];
+  href?: string;
 }
 
-export function CumulativeRiskMatrix({ risks }: CumulativeRiskMatrixProps) {
+export function CumulativeRiskMatrix({
+  risks,
+  href,
+}: CumulativeRiskMatrixProps) {
+  const router = useRouter();
   const matrix: number[][] = Array.from({ length: 5 }, () =>
     Array<number>(5).fill(0),
   );
@@ -16,7 +22,8 @@ export function CumulativeRiskMatrix({ risks }: CumulativeRiskMatrixProps) {
     if (probability && consequence) {
       const score = probability * consequence;
       if (RiskMap[score] && matrix[5 - probability]) {
-        matrix[5 - probability]![consequence - 1]++;
+        // @ts-expect-error this is already verified
+        matrix[5 - probability][consequence - 1]++;
       }
     }
   });
@@ -42,8 +49,14 @@ export function CumulativeRiskMatrix({ risks }: CumulativeRiskMatrixProps) {
                   className={clsx(
                     '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black dark:border-zinc-900',
                     color === 'red' && 'text-white',
+                    href && 'cursor-pointer duration-200 hover:opacity-80',
                   )}
                   style={{ backgroundColor: color }}
+                  onClick={() => {
+                    if (href) {
+                      router.push(`${href}&score=${score}`);
+                    }
+                  }}
                 >
                   {count > 0 ? count : ''}
                 </div>
