@@ -139,14 +139,17 @@ export const columns = ({
     },
     cell: ({ row }) => {
       const risk = row.original;
+      const threshold = getThreshold(risk);
       return (
         <div className="grid grid-cols-2">
           <div
-            style={{
-              color: getStyleColor(risk),
-            }}
             className={clsx(
               'col-span-1 flex items-center gap-2 text-black dark:text-white',
+              threshold === Thresholds.RED && 'text-red-500 dark:text-red-300',
+              threshold === Thresholds.GREEN &&
+                'text-green-500 dark:text-green-400',
+              threshold === Thresholds.YELLOW &&
+                'text-yellow-500 dark:text-yellow-400',
             )}
           >
             <div className="text-black dark:text-white">

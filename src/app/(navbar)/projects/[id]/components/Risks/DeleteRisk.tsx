@@ -24,7 +24,6 @@ interface DeleteRiskProps {
 export function DeleteRisk({
   setRiskBeingDeleted,
   riskElement,
-  project,
   refetch,
   isOpen,
 }: DeleteRiskProps) {

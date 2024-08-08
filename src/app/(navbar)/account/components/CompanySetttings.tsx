@@ -14,13 +14,7 @@ interface CompanySettingsProps {
 }
 
 export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<UpdateCompanyForm>();
+  const { register, handleSubmit, watch, reset } = useForm<UpdateCompanyForm>();
 
   useEffect(() => {
     reset({

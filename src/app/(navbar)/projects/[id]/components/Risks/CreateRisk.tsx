@@ -33,13 +33,7 @@ export default function CreateRisk({
   refetch,
   project,
 }: CreateRiskProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<CreateRiskForm>({
+  const { register, handleSubmit, setValue, watch } = useForm<CreateRiskForm>({
     defaultValues: {
       probability: 0,
       consequence: 0,

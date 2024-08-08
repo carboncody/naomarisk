@@ -29,13 +29,7 @@ export default function InviteEmployee({
   setIsOpen,
   refetch,
 }: InviteEmployeeProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<CreateUserForm>({
+  const { register, handleSubmit, setValue, watch } = useForm<CreateUserForm>({
     defaultValues: {
       fullName: '',
       email: '',

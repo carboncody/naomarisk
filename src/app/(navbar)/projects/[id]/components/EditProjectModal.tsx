@@ -31,21 +31,16 @@ export default function EditProject({
   project,
   refetch,
 }: EditProjectProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<UpdateProjectForm>({
-    defaultValues: {
-      name: project.name ?? '',
-      startDate: project.startDate ?? new Date(),
-      dueDate: project.dueDate ?? undefined,
-      budget: project.budget ?? '0',
-      description: project.description ?? '',
-    },
-  });
+  const { register, handleSubmit, setValue, watch } =
+    useForm<UpdateProjectForm>({
+      defaultValues: {
+        name: project.name ?? '',
+        startDate: project.startDate ?? new Date(),
+        dueDate: project.dueDate ?? undefined,
+        budget: project.budget ?? '0',
+        description: project.description ?? '',
+      },
+    });
 
   async function onSubmit(data: UpdateProjectForm) {
     try {

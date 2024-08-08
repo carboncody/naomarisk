@@ -15,13 +15,7 @@ interface UserSettingsProps {
 }
 
 export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<UpdateUserForm>();
+  const { register, handleSubmit, watch, reset } = useForm<UpdateUserForm>();
 
   useEffect(() => {
     reset(me);

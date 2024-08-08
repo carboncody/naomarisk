@@ -30,21 +30,16 @@ export default function CreateProjectDialog({
   setIsOpen,
   refetch,
 }: CreateProjectDialogProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<CreateProjectForm>({
-    defaultValues: {
-      name: '',
-      description: '',
-      startDate: new Date(),
-      dueDate: undefined,
-      projectUserIds: [myId],
-    },
-  });
+  const { register, handleSubmit, setValue, watch } =
+    useForm<CreateProjectForm>({
+      defaultValues: {
+        name: '',
+        description: '',
+        startDate: new Date(),
+        dueDate: undefined,
+        projectUserIds: [myId],
+      },
+    });
 
   async function onSubmit(data: CreateProjectForm) {
     try {
