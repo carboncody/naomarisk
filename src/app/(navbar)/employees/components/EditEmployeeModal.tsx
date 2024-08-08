@@ -29,13 +29,7 @@ export default function EditEmployeeModal({
   setEmployeeBeingEdited,
   employee,
 }: EditEmployeeModalProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<UpdateUserForm>({
+  const { register, handleSubmit, setValue, watch } = useForm<UpdateUserForm>({
     defaultValues: {
       fullName: employee.fullName,
       jobDescription: employee.jobDescription,
@@ -91,7 +85,7 @@ export default function EditEmployeeModal({
 
   return (
     <Dialog open={!!employee} onOpenChange={() => setEmployeeBeingEdited(null)}>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700 ">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="font-bold dark:text-white">
             <span className="text-red-500">Slet </span>/ Rediger medarbejder!

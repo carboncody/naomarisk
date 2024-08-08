@@ -83,7 +83,7 @@ export default function InviteEmployee({
       <DialogTrigger asChild>
         <Button variant="outline">Inviter medarbejder</Button>
       </DialogTrigger>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="dark:text-white">
             Inviter medarbejder

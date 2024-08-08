@@ -67,7 +67,7 @@ export default function CreateProjectDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-full bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent className="w-full">
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
             Opret nyt projekt

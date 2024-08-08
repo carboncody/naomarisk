@@ -80,7 +80,7 @@ export default function CreateRisk({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
             Opret Risiko

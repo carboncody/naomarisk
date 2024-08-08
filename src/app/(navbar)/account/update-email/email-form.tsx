@@ -58,68 +58,66 @@ export default function EmailForm({ user }: { user: User | undefined }) {
     setFormSuccess(true);
     setMessage('Email opdateret');
   };
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center text-white">
-      {message ? (
-        <Alert
-          className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}
-        >
-          {message}
-        </Alert>
-      ) : null}
-      <h2 className="mb-4 text-4xl  font-semibold text-black dark:text-white">
-        Opdater Email
-      </h2>
-      <p className="mb-4 font-medium text-black dark:text-white">
-        Hej {user?.email}, Indtast din nye e-mail nedenfor og bekræft den
-      </p>
-      <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <Label>Email</Label>
-          <Input
-            name="email"
-            type="email"
-            value={formData?.email ?? ''}
-            onChange={(ev) =>
-              setFormData({ ...formData, email: ev.target.value })
-            }
-            className="input input-bordered"
-          />
-        </div>
-        {errors?.email ? (
-          <InputErrorMessage>{errors?.email}</InputErrorMessage>
+    <div className="flex items-center justify-center ">
+      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 text-white dark:border-transparent dark:bg-zinc-900">
+        {message ? (
+          <Alert
+            className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}
+          >
+            {message}
+          </Alert>
         ) : null}
-        <div className="form-control my-4">
-          <Label>Bekræft din email</Label>
-          <Input
-            id="emailConfirm"
-            name="email"
-            type="email"
-            value={formData.emailConfirm ?? ''}
-            onChange={(ev) =>
-              setFormData({ ...formData, emailConfirm: ev.target.value })
-            }
-            className="input input-bordered"
-          />
+        <h2 className="top-0 mb-4 text-4xl font-semibold text-black dark:text-white">
+          Opdater Email
+        </h2>
+        <p className="mb-4 font-medium text-black dark:text-white">
+          Hej {user?.email}, Indtast din nye e-mail nedenfor og bekræft den
+        </p>
+        <form onSubmit={handleSubmit}>
+          <div className="form-control">
+            <Label className="mb-2">Email</Label>
+            <Input
+              name="email"
+              type="email"
+              value={formData?.email ?? ''}
+              onChange={(ev) =>
+                setFormData({ ...formData, email: ev.target.value })
+              }
+              className="input input-bordered"
+            />
+          </div>
+          {errors?.email ? (
+            <InputErrorMessage>{errors?.email}</InputErrorMessage>
+          ) : null}
+          <div className="form-control my-4">
+            <Label className="mb-2">Bekræft din email</Label>
+            <Input
+              id="emailConfirm"
+              name="email"
+              type="email"
+              value={formData.emailConfirm ?? ''}
+              onChange={(ev) =>
+                setFormData({ ...formData, emailConfirm: ev.target.value })
+              }
+              className="input input-bordered"
+            />
+          </div>
+          {errors?.emailConfirm ? (
+            <InputErrorMessage>{errors?.emailConfirm}</InputErrorMessage>
+          ) : null}
+          <div className="form-control mt-6 justify-center text-center">
+            <Button>Opdater Email</Button>
+          </div>
+        </form>
+        <div className="justify-flex mt-5 flex justify-center">
+          <Button asChild>
+            <Link className="block p-3" href="/account">
+              Tilbage
+            </Link>
+          </Button>
         </div>
-        {errors?.emailConfirm ? (
-          <InputErrorMessage>{errors?.emailConfirm}</InputErrorMessage>
-        ) : null}
-        <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary rounded-xl border bg-black px-2 py-2 text-white dark:bg-zinc-300 dark:text-black">
-            Opdater Email
-          </button>
-        </div>
-      </form>
-      <div className="justify-flex mt-5 flex justify-center">
-        <Button
-          asChild
-          className="bg-black text-white dark:bg-zinc-300 dark:text-black"
-        >
-          <Link className="block w-full p-3" href="/account">
-            Tilbage
-          </Link>
-        </Button>
       </div>
     </div>
   );

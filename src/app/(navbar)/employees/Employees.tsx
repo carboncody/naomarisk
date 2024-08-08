@@ -49,15 +49,13 @@ export function AllEmployees() {
   return (
     <>
       <div className="justify-top flex min-h-screen flex-col items-center px-8 dark:text-white">
-        <div className="mb-4 mt-40 flex w-full justify-between">
+        <div className="mb-4 mt-10 flex w-full justify-between">
           <p className="text-3xl font-semibold">Alle Medarbejdere</p>
           <div className="flex gap-4">
-            <Button className="w-32" onClick={() => setIsNewOpen(true)}>
-              Tilføj
-            </Button>
+            <Button onClick={() => setIsNewOpen(true)}>Tilføj</Button>
           </div>
         </div>
-        <div className="w-full rounded-xl p-4 dark:bg-zinc-800">
+        <div className="w-full rounded-xl border p-4 dark:border-transparent dark:bg-zinc-900">
           <DataTable
             data={allEmployees ?? []}
             columns={getColumns({ handleEdit })}
