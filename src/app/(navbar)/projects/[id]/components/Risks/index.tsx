@@ -52,6 +52,8 @@ export function Risks({ project }: RisksProps) {
       ? allRisks.filter((risk) => {
           if (scoreMatch && risk.probability && risk.consequence) {
             return risk.probability * risk.consequence === scoreMatch;
+          } else if (scoreMatch) {
+            return false;
           }
           return risk.status === statusMatch;
         })
@@ -76,15 +78,15 @@ export function Risks({ project }: RisksProps) {
         {filters.score && (
           <div className="my-4 flex w-full justify-end">
             <div className="flex items-center">
-              <div className="rounded-l-lg bg-gray-200 px-2 font-light text-black dark:bg-zinc-700 dark:text-white">
-                <span className="text-zinc-400 dark:text-zinc-400">
+              <div className="rounded-l-lg border border-r-0 border-zinc-400 bg-gray-200 px-2 font-light text-black dark:border-transparent dark:bg-zinc-700 dark:text-white">
+                <span className="text-zinc-500 dark:text-zinc-400">
                   Filtering for riskscore
                 </span>{' '}
                 {filters.score}
               </div>
               <div
                 onClick={() => setFilters({})}
-                className="flex h-full items-center justify-center rounded-r-lg border-l border-dashed bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400"
+                className="border-l-dashed flex h-full items-center justify-center rounded-r-lg border border-dashed border-black bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400"
               >
                 <RxCross2 />
               </div>
