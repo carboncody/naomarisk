@@ -52,3 +52,15 @@ export async function PATCH(req: Request) {
   const risk = await riskService.updateRisk(riskId, body);
   return NextResponse.json({ status: 200, risk });
 }
+
+export async function DELETE(req: Request) {
+  const riskId = req.url.split('/risk/')[1];
+
+  if (!riskId) {
+    return NextResponse.json({ status: 400, error: 'No risk id in url' });
+  }
+
+  const riskService = await RiskService();
+  await riskService.deleteRisk(riskId);
+  return NextResponse.json({ status: 200 });
+}

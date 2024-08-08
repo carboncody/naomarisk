@@ -47,6 +47,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       {riskBeingDeleted && (
         <DeleteRisk
           isOpen={!!riskBeingDeleted}
+          riskElement={riskBeingDeleted}
           setRiskBeingDeleted={setRiskBeingDeleted}
           project={project}
           refetch={refetch}

@@ -67,9 +67,14 @@ export async function RiskService() {
     });
   }
 
+  async function deleteRisk(id: string) {
+    return await db.risk.delete({ where: { id } });
+  }
+
   return {
     getRisk,
     getProjectRisks,
+    deleteRisk,
     createRisk,
     updateRisk,
   };

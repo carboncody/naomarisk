@@ -10,19 +10,33 @@ import {
   DialogTitle,
 } from '@components/ui/dialog';
 import { type Project, type Risk } from '@models';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 
 interface DeleteRiskProps {
+  refetch: () => void;
+  riskElement: Risk;
   project: Project;
   isOpen: boolean;
   setRiskBeingDeleted: (risk: Risk | null) => void;
-  refetch: () => void;
 }
 
-export function DeleteRisk({ isOpen, setRiskBeingDeleted }: DeleteRiskProps) {
+export function DeleteRisk({
+  setRiskBeingDeleted,
+  riskElement,
+  project,
+  refetch,
+  isOpen,
+}: DeleteRiskProps) {
   const handleDelete = async () => {
-    console.log('delete');
-    toast.success('Risiko er slettet');
+    try {
+      await axios.delete(`/api/risk/${riskElement.id}`);
+      toast.success('Risk Deleted successfully!');
+      refetch();
+      setRiskBeingDeleted(null);
+    } catch (error) {
+      toast.error('Error - something went wrong');
+    }
   };
 
   return (
