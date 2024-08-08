@@ -125,6 +125,14 @@ export function Project() {
                                 {project.budget} kr.
                               </td>
                             </tr>
+                            <tr className="border-b dark:border-zinc-700">
+                              <th className="px-4 py-2 text-lg font-semibold">
+                                Antal risici i projekt
+                              </th>
+                              <td className="px-4 py-2">
+                                {project.risks.length}
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>

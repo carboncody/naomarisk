@@ -58,68 +58,66 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
     setMessage('Din adgangskode blev opdateret.');
   };
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center text-white">
-      {message ? (
-        <Alert
-          className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}
-        >
-          {message}
-        </Alert>
-      ) : null}
-      <h2 className="mb-4 text-4xl  font-semibold text-black dark:text-white">
-        Opdater kode
-      </h2>
-      <p className="mb-4 font-medium text-black dark:text-white">
-        Hi {user?.email}, Indtast din nye kode nedenfor og bekræft den
-      </p>
-      <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <Label htmlFor="password" className="label">
-            Kode
-          </Label>
-          <Input
-            id="Kode"
-            name="password"
-            type="password"
-            value={formData?.password ?? ''}
-            onChange={(ev) =>
-              setFormData({ ...formData, password: ev.target.value })
-            }
-            className="input input-bordered"
-          />
-        </div>
-        {errors?.password ? (
-          <InputErrorMessage>{errors?.password}</InputErrorMessage>
+    <div className="flex items-center justify-center ">
+      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 dark:border-transparent dark:bg-zinc-900">
+        {message ? (
+          <Alert
+            className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}
+          >
+            {message}
+          </Alert>
         ) : null}
-        <div className="form-control mt-5">
-          <Label htmlFor="passwordConfirm" className="label">
-            Bekræft Kode
-          </Label>
-          <Input
-            id="passwordConfirm"
-            name="passwordConfirm"
-            type="password"
-            value={formData.passwordConfirm ?? ''}
-            onChange={(ev) =>
-              setFormData({ ...formData, passwordConfirm: ev.target.value })
-            }
-          />
+        <h2 className="mb-4 text-4xl  font-semibold text-black dark:text-white">
+          Opdater kode
+        </h2>
+        <p className="mb-4 font-medium text-black dark:text-white">
+          Hi {user?.email}, Indtast din nye kode nedenfor og bekræft den
+        </p>
+        <form onSubmit={handleSubmit}>
+          <div className="form-control">
+            <Label htmlFor="password" className="label mb-2">
+              Kode
+            </Label>
+            <Input
+              id="Kode"
+              name="password"
+              type="password"
+              value={formData?.password ?? ''}
+              onChange={(ev) =>
+                setFormData({ ...formData, password: ev.target.value })
+              }
+              className="input input-bordered"
+            />
+          </div>
+          {errors?.password ? (
+            <InputErrorMessage>{errors?.password}</InputErrorMessage>
+          ) : null}
+          <div className="form-control mt-5">
+            <Label htmlFor="passwordConfirm" className="label mb-2">
+              Bekræft Kode
+            </Label>
+            <Input
+              id="passwordConfirm"
+              name="passwordConfirm"
+              type="password"
+              value={formData.passwordConfirm ?? ''}
+              onChange={(ev) =>
+                setFormData({ ...formData, passwordConfirm: ev.target.value })
+              }
+            />
+          </div>
+          {errors?.passwordConfirm ? (
+            <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
+          ) : null}
+          <div className="form-control mt-6 justify-center text-center">
+            <Button>Opdater Kode</Button>
+          </div>
+        </form>
+        <div className="item-center justify-flex my-4 flex justify-center">
+          <Link href="/account">
+            <Button>Tilbage</Button>
+          </Link>
         </div>
-        {errors?.passwordConfirm ? (
-          <InputErrorMessage>{errors?.passwordConfirm}</InputErrorMessage>
-        ) : null}
-        <div className="form-control mt-6 justify-center text-center">
-          <button className="btn btn-primary rounded-xl border bg-black px-2 py-2 text-white dark:bg-zinc-300 dark:text-black">
-            Opdater Kode
-          </button>
-        </div>
-      </form>
-      <div className="item-center justify-flex my-4 flex justify-center">
-        <Link href="/account">
-          <Button className="bg-black text-white dark:bg-zinc-300 dark:text-black">
-            Tilbage
-          </Button>
-        </Link>
       </div>
     </div>
   );

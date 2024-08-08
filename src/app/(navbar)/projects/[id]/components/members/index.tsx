@@ -50,7 +50,7 @@ export function ProjectEmployee({
             Tilføj / fjern medlemmer
           </Button>
         </div>
-        <div className="w-full rounded-md bg-zinc-200 p-4 dark:bg-zinc-800">
+        <div className="w-full rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
           <ProjectEmployeeTable
             projectMemberIds={projectMemberIds}
             employees={allEmployees ?? []}

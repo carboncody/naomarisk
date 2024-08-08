@@ -14,13 +14,7 @@ interface CompanySettingsProps {
 }
 
 export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<UpdateCompanyForm>();
+  const { register, handleSubmit, watch, reset } = useForm<UpdateCompanyForm>();
 
   useEffect(() => {
     reset({
@@ -74,9 +68,7 @@ export function CompanySettings({ company, refetchMe }: CompanySettingsProps) {
         <div className="grid grid-cols-4 gap-5"></div>
       </div>
       <div className="mt-4">
-        <Button variant="default" onClick={handleSubmit(onSubmit)}>
-          Opdater
-        </Button>
+        <Button onClick={handleSubmit(onSubmit)}>Opdater</Button>
       </div>
     </>
   );

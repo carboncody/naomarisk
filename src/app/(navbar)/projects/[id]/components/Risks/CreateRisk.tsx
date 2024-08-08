@@ -33,13 +33,7 @@ export default function CreateRisk({
   refetch,
   project,
 }: CreateRiskProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<CreateRiskForm>({
+  const { register, handleSubmit, setValue, watch } = useForm<CreateRiskForm>({
     defaultValues: {
       probability: 0,
       consequence: 0,
@@ -80,7 +74,7 @@ export default function CreateRisk({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
             Opret Risiko

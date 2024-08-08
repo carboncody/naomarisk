@@ -109,7 +109,7 @@ export function Risks({ project }: RisksProps) {
               </Button>
             </div>
             <TabsContent value={RiskStatus.Open}>
-              <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-zinc-800">
+              <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
                 <RiskTable
                   risks={filteredRisks}
                   refetch={refetch}
@@ -118,7 +118,7 @@ export function Risks({ project }: RisksProps) {
               </div>
             </TabsContent>
             <TabsContent value={RiskStatus.Closed}>
-              <div className="w-full overflow-y-auto rounded-md bg-zinc-200 p-4 dark:bg-zinc-800">
+              <div className="w-full overflow-y-auto rounded-md p-4 dark:bg-zinc-900">
                 <RiskTable
                   risks={
                     allRisks?.filter(

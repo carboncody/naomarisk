@@ -30,21 +30,16 @@ export default function CreateProjectDialog({
   setIsOpen,
   refetch,
 }: CreateProjectDialogProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<CreateProjectForm>({
-    defaultValues: {
-      name: '',
-      description: '',
-      startDate: new Date(),
-      dueDate: undefined,
-      projectUserIds: [myId],
-    },
-  });
+  const { register, handleSubmit, setValue, watch } =
+    useForm<CreateProjectForm>({
+      defaultValues: {
+        name: '',
+        description: '',
+        startDate: new Date(),
+        dueDate: undefined,
+        projectUserIds: [myId],
+      },
+    });
 
   async function onSubmit(data: CreateProjectForm) {
     try {
@@ -67,7 +62,7 @@ export default function CreateProjectDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-full bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent className="w-full">
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
             Opret nyt projekt

@@ -79,7 +79,7 @@ export function MembersModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700 dark:text-white">
+      <DialogContent className="dark:text-white">
         <DialogHeader>
           <DialogTitle className="dark:text-white">
             Tilføj / Fjern medlemmer
@@ -93,7 +93,7 @@ export function MembersModal({
         {projectMembers && projectMembers.length > 0 ? (
           projectMembers.map((member, index) => (
             <div
-              className="border-1 flex w-full items-center justify-center rounded-xl p-1"
+              className="flex w-full items-center justify-center rounded-xl border p-1"
               key={index}
             >
               <div className="w-full">

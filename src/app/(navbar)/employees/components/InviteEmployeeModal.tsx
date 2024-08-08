@@ -29,13 +29,7 @@ export default function InviteEmployee({
   setIsOpen,
   refetch,
 }: InviteEmployeeProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<CreateUserForm>({
+  const { register, handleSubmit, setValue, watch } = useForm<CreateUserForm>({
     defaultValues: {
       fullName: '',
       email: '',
@@ -83,7 +77,7 @@ export default function InviteEmployee({
       <DialogTrigger asChild>
         <Button variant="outline">Inviter medarbejder</Button>
       </DialogTrigger>
-      <DialogContent className="bg-zinc-200 dark:bg-zinc-700">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle className="dark:text-white">
             Inviter medarbejder

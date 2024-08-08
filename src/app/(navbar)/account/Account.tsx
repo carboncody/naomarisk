@@ -28,7 +28,7 @@ export function Account() {
   return (
     <div>
       <div className="flex w-full">
-        <div className="dark:border-Zinc-300 ml-5 mt-[100px] flex h-[500px] w-0 rounded-2xl border bg-zinc-200 dark:bg-zinc-700 md:w-1/2" />
+        <div className="dark:border-Zinc-300 ml-5 mt-[100px] flex h-[500px] w-0 rounded-2xl border dark:border-transparent dark:bg-zinc-900 md:w-1/2" />
         <div className="mt-[100px] flex w-full flex-col justify-center gap-y-5 px-4 md:w-1/2 md:px-10">
           <SettingsCard>
             <UserSettings me={me} refetchMe={refetch} />
@@ -42,12 +42,12 @@ export function Account() {
       </div>
       <div className="center ml-5 flex gap-4">
         <Link href="/">
-          <Button className="border dark:border-zinc-300">Tilbage</Button>
+          <Button>Tilbage</Button>
         </Link>
-        <Button className="border dark:border-zinc-300" asChild>
+        <Button asChild>
           <Link href="/account/update-email">Ændre email</Link>
         </Button>
-        <Button className="border dark:border-zinc-300" asChild>
+        <Button asChild>
           <Link href="/account/update-password">Ændre adgangskode</Link>
         </Button>
       </div>

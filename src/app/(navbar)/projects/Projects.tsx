@@ -55,12 +55,10 @@ export function AllProjects() {
             {isAdmin && all ? 'Alle' : 'Mine'} Projekter
           </p>
           {isAdmin && (
-            <Button className="w-32" onClick={() => setIsNewOpen(true)}>
-              Tilføj
-            </Button>
+            <Button onClick={() => setIsNewOpen(true)}>Tilføj</Button>
           )}
         </div>
-        <div className="w-full rounded-lg p-4 dark:bg-zinc-800">
+        <div className="w-full rounded-lg border border-zinc-300 p-4 dark:border-transparent dark:bg-zinc-900">
           <DataTable
             columns={columns}
             data={allProjects ?? []}
