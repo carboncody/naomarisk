@@ -28,6 +28,23 @@ export async function UserService() {
     return db.user.findUnique({ where: { id } });
   }
 
+  async function getUserFromEmail(
+    email: string,
+  ): Promise<ActionResponse<User>> {
+    const user = await db.user.findUnique({ where: { email } });
+
+    if (!user) {
+      return {
+        error: {
+          code: 404,
+          message: `User with email ${email} not found`,
+        },
+      };
+    }
+
+    return { data: user };
+  }
+
   async function updateOrCreateUser(email: string) {
     return await db.user.upsert({
       where: {
@@ -159,6 +176,7 @@ export async function UserService() {
   return {
     getMe,
     getUsersInCompany,
+    getUserFromEmail,
     getUserFromId,
     updateOrCreateUser,
     updateUser,

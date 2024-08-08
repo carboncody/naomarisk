@@ -3,6 +3,22 @@ import { UserService } from '@lib/db';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 
+export async function GET(req: Request) {
+  const userEmail = req.url.split('/user/')[1];
+
+  if (!userEmail) {
+    return NextResponse.json({ status: 400, error: 'No user id in url' });
+  }
+
+  const userService = await UserService();
+  const { error, data: employee } =
+    await userService.getUserFromEmail(userEmail);
+  if (error) {
+    return NextResponse.json({ error }, { status: error.code });
+  }
+  return NextResponse.json(employee);
+}
+
 export async function PATCH(req: Request) {
   const supabase = createServerClient();
   const {
