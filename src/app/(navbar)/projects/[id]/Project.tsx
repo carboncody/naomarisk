@@ -25,7 +25,6 @@ export function Project() {
 
   useEffect(() => {
     const view = searchParams.get('view');
-    console.info('use effect is being triggered');
     if (view === 'risks') {
       setSelectedTab(view);
     }
@@ -53,9 +52,9 @@ export function Project() {
 
   return (
     <>
-      <div className="p-10 dark:bg-zinc-900 ">
+      <div className="p-10">
         <div className="items-left justify-left flex">
-          <div className="items-left justify-left flex w-screen flex-col rounded-lg px-4 dark:bg-zinc-900">
+          <div className="items-left justify-left flex w-screen flex-col rounded-lg px-4">
             <Tabs
               value={selectedTab}
               onValueChange={(tab) =>
@@ -132,10 +131,13 @@ export function Project() {
                     </div>
 
                     <div className="mt-5 flex w-full flex-col gap-4 md:flex-row">
-                      <div className="flex w-full items-center justify-center rounded-xl shadow dark:bg-zinc-950 dark:shadow-none">
-                        <ProjectRiskMatrix risks={project.risks} />
+                      <div className="flex w-full items-center justify-center rounded-xl border shadow dark:border-zinc-700 dark:shadow-none">
+                        <ProjectRiskMatrix
+                          projectId={project.id}
+                          risks={project.risks}
+                        />
                       </div>
-                      <div className="w-full  rounded-xl  shadow dark:shadow-none">
+                      <div className="w-full rounded-xl border shadow dark:border-zinc-700 dark:shadow-none">
                         <RiskChart project={project} />
                       </div>
                     </div>
