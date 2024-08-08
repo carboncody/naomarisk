@@ -131,7 +131,7 @@ export function Project() {
                                 Antal risici i projekt
                               </th>
                               <td className="px-4 py-2">
-                                {project.risks.length} 
+                                {project.risks.length}
                               </td>
                             </tr>
                           </tbody>
