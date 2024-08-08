@@ -11,8 +11,8 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ProjectRiskMatrix } from './components/ProjectRiskMatrix';
 import { Risks } from './components/Risks';
-import { ProjectEmployee } from './components/members';
 import { RiskChart } from './components/Risks/RiskChart';
+import { ProjectEmployee } from './components/members';
 
 export function Project() {
   const pathName = usePathname();

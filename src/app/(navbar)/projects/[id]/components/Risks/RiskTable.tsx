@@ -2,11 +2,11 @@
 
 import { DataTable } from '@components/ui/data-table';
 import { type Project, type Risk } from '@models';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { DeleteRisk } from './DeleteRisk';
 import EditRisk from './EditRisk';
 import { columns } from './colums';
-import { useRouter } from 'next/navigation';
 
 interface RiskTableProps {
   refetch: () => void;
@@ -14,8 +14,7 @@ interface RiskTableProps {
   project: Project;
 }
 
-export default function RiskTable({ risks, project, refetch
- }: RiskTableProps) {
+export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const router = useRouter();
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);

@@ -1,5 +1,5 @@
-import { Employees } from './Employees';
+import { Employee } from './Employee';
 
 export default function Page() {
-  return <Employees />;
+  return <Employee />;
 }

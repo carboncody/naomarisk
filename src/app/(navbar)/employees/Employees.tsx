@@ -46,7 +46,7 @@ export function AllEmployees() {
   };
 
   const handleRowClick = (employee: User) => {
-    router.push(`/employees/${employee.id}`);
+    router.push(`/employees/${encodeURIComponent(employee.email)}`);
   };
 
   return (
