@@ -41,9 +41,9 @@ export function Employee() {
 
   return (
     <>
-      <div className="flex w-full gap-5 p-5">
+      <div className="flex w-full items-center justify-center gap-36 p-5">
         <div className="flex flex-col items-center justify-center gap-5">
-          <Card>
+          <Card className="border dark:border-transparent">
             <CardTitle className="p-5">{employee.fullName}</CardTitle>
             <CardContent> Position: {employee.role}</CardContent>
           </Card>
@@ -53,7 +53,7 @@ export function Employee() {
             </CardContent>
           </Card>
         </div>
-        <div className="w-full">
+        <div className="w-1/3">
           <ProjectEmployeeChart />
         </div>
       </div>
