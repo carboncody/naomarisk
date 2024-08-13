@@ -46,7 +46,7 @@ export function CreateComment({ riskId, setComments }: CreateCommentProps) {
             }
           }}
           onChange={(e) => setContent(e.target.value)}
-          className="dark:text-white dark:bg-zinc-800"
+          className="dark:bg-zinc-800 dark:text-white"
           placeholder="Skriv en kommentar..."
         />
       </div>

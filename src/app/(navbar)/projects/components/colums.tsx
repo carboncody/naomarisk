@@ -60,48 +60,39 @@ export const columns: ColumnDef<Project>[] = [
 
       return (
         <HoverCard>
-          <HoverCardTrigger className="flex h-full items-center justify-center gap-2 rounded hover:cursor-default hover:bg-white dark:hover:bg-zinc-950">
+          <HoverCardTrigger className="flex h-8 items-center gap-2 rounded hover:cursor-default hover:bg-white dark:hover:bg-zinc-950">
             <div className={cn('h-3 w-3 rounded-full', circleColor)} />
             <div className="it flex justify-center"> {openRisks.length}</div>
           </HoverCardTrigger>
-          <HoverCardContent align="start">
-            <div className="truncate">
-              <div className="truncate">
-                <span className="flex flex-col gap-2">
-                  <p className="gap-1 text-red-400">
-                    Antal åbne risici:{' '}
-                    {
-                      openRisks.filter(
-                        (risk) =>
-                          (risk.probability ?? 0) * (risk.consequence ?? 0) >
-                          15,
-                      ).length
-                    }
-                  </p>
-                  <p className="gap-1 text-yellow-400">
-                    Antal åbne risici:{' '}
-                    {
-                      openRisks.filter(
-                        (risk) =>
-                          (risk.probability ?? 0) * (risk.consequence ?? 0) >
-                            4 &&
-                          (risk.probability ?? 0) * (risk.consequence ?? 0) <=
-                            15,
-                      ).length
-                    }
-                  </p>
-                  <p className="gap-1 text-green-400">
-                    Antal åbne risici:{' '}
-                    {
-                      openRisks.filter(
-                        (risk) =>
-                          (risk.probability ?? 0) * (risk.consequence ?? 0) < 5,
-                      ).length
-                    }
-                  </p>
-                </span>
-              </div>
-            </div>
+          <HoverCardContent align="start" className="flex flex-col gap-2">
+            <p className="gap-1 text-red-400">
+              Antal åbne risici:{' '}
+              {
+                openRisks.filter(
+                  (risk) =>
+                    (risk.probability ?? 0) * (risk.consequence ?? 0) > 15,
+                ).length
+              }
+            </p>
+            <p className="gap-1 text-yellow-400">
+              Antal åbne risici:{' '}
+              {
+                openRisks.filter(
+                  (risk) =>
+                    (risk.probability ?? 0) * (risk.consequence ?? 0) > 4 &&
+                    (risk.probability ?? 0) * (risk.consequence ?? 0) <= 15,
+                ).length
+              }
+            </p>
+            <p className="gap-1 text-green-400">
+              Antal åbne risici:{' '}
+              {
+                openRisks.filter(
+                  (risk) =>
+                    (risk.probability ?? 0) * (risk.consequence ?? 0) < 5,
+                ).length
+              }
+            </p>
           </HoverCardContent>
         </HoverCard>
       );
