@@ -41,7 +41,7 @@ export function SingleDropdown({
           </Button>
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="">
+      <DropdownMenuContent onMouseDown={(e) => e.stopPropagation()}>
         <DropdownMenuLabel className="text-md">{buttonLabel}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {options.map((option) => (

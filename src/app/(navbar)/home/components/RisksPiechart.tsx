@@ -56,7 +56,7 @@ export function RisksPiechart({ risks }: RisksPiechartProps) {
   const chartConfig = {
     OPEN: {
       icon: FaLockOpen,
-      label: 'Åbnerisici',
+      label: 'Åbne risici',
       color: 'hsl(var(--chart-1))',
     },
     CLOSED: {

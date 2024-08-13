@@ -40,7 +40,6 @@ export default function EditRisk({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
   } = useForm<UpdateRiskForm>({
     defaultValues: {
       description: riskElement.description,
