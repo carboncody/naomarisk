@@ -87,7 +87,7 @@ export function RiskChart({ project }: RiskChartProps) {
   };
 
   return (
-    <Card className="flex flex-col rounded-xl border-0 bg-white shadow-none dark:bg-zinc-950">
+    <Card className="flex flex-col rounded-xl border-0 bg-white shadow-none dark:bg-zinc-900">
       <CardHeader className="items-center pb-0">
         <CardTitle>Risikooversigt</CardTitle>
         <CardDescription>Antal risici baseret på risikoscore</CardDescription>
