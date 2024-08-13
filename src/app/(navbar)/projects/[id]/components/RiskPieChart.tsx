@@ -42,7 +42,7 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
   return (
     <HoverCard>
       <HoverCardTrigger>
-        <div className='flex gap-2 items-center justify-center'>
+        <div className="flex items-center justify-center gap-2">
           <PieChart width={50} height={50}>
             <Pie
               dataKey="value"
@@ -64,8 +64,11 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
             </Pie>
           </PieChart>
           <div className="flex flex-col gap-2">
-            <span>  {(((total-open) / total) * 100).toFixed(1)}% Progress</span>
-            <span></span>
+            <span>
+              {' '}
+              {(((total - open) / total) * 100).toFixed(1)}% fremdrift
+            </span>
+            <span>{open + '/' + total} åben</span>
           </div>
         </div>
       </HoverCardTrigger>
