@@ -42,10 +42,6 @@ export function AllEmployees() {
     setEmployeeBeingEdited(employee);
   };
 
-  const handleCloseModal = () => {
-    setEmployeeBeingEdited(null);
-  };
-
   return (
     <>
       <div className="justify-top flex min-h-screen flex-col items-center px-8 dark:text-white">

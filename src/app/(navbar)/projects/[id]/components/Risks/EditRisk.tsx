@@ -35,13 +35,7 @@ export default function EditRisk({
   refetch,
   isOpen,
 }: EditRiskProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<UpdateRiskForm>({
+  const { register, handleSubmit, setValue, watch } = useForm<UpdateRiskForm>({
     defaultValues: {
       description: riskElement.description,
       probability: riskElement.probability ?? null,

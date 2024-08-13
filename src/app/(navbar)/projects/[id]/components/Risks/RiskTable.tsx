@@ -2,6 +2,7 @@
 
 import { DataTable } from '@components/ui/data-table';
 import { type Project, type Risk } from '@models';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { DeleteRisk } from './DeleteRisk';
 import EditRisk from './EditRisk';
@@ -16,6 +17,7 @@ interface RiskTableProps {
 export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
+  const router = useRouter();
 
   const rows = risks.map((risk) => ({
     ...risk,
@@ -25,9 +27,9 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
         : 0,
   }));
 
-  // const handleRowClick = (risk: Risk) => {
-  //   router.push(`/projects/${project.id}/risk/${risk.id}`);
-  // };
+  const handleRowClick = (risk: Risk) => {
+    router.push(`/projects/${project.id}/risk/${risk.id}`);
+  };
 
   const handleEdit = (risk: Risk) => {
     setRiskBeingEdited(risk);
@@ -42,6 +44,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
       <DataTable
         columns={columns({ handleEdit, handleDelete, projectId: project.id })}
         data={rows}
+        onRowClick={handleRowClick}
       />
 
       {riskBeingDeleted && (
