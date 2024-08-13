@@ -48,7 +48,8 @@ export const columns: ColumnDef<Project>[] = [
           <p className="text-red-400">
             {
               row.original.risks.filter(
-                (risk) => risk.probability * risk.consequence > 15,
+                (risk) =>
+                  (risk.probability ?? 0) * (risk.consequence ?? 0) > 15,
               ).length
             }
           </p>
@@ -57,8 +58,8 @@ export const columns: ColumnDef<Project>[] = [
             {
               row.original.risks.filter(
                 (risk) =>
-                  risk.probability * risk.consequence > 4 &&
-                  risk.probability * risk.consequence <= 15,
+                  (risk.probability ?? 0) * (risk.consequence ?? 0) > 4 &&
+                  (risk.probability ?? 0) * (risk.consequence ?? 0) <= 15,
               ).length
             }
           </p>
@@ -66,11 +67,10 @@ export const columns: ColumnDef<Project>[] = [
           <p className="text-green-400">
             {
               row.original.risks.filter(
-                (risk) => risk.probability * risk.consequence < 5,
+                (risk) => (risk.probability ?? 0) * (risk.consequence ?? 0) < 5,
               ).length
             }
           </p>
-          <p></p>
         </span>
       </div>
     ),
