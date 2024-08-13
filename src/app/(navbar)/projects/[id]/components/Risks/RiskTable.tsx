@@ -2,11 +2,11 @@
 
 import { DataTable } from '@components/ui/data-table';
 import { type Project, type Risk } from '@models';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { DeleteRisk } from './DeleteRisk';
 import EditRisk from './EditRisk';
 import { columns } from './colums';
-import { useRouter } from 'next/navigation';
 
 interface RiskTableProps {
   refetch: () => void;

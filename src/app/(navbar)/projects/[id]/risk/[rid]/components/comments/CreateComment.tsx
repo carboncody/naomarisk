@@ -10,7 +10,7 @@ const handelSubmit = () => {
   toast.error('Funktionalitet ikke tilgængelig endnu');
 };
 
-const CreateComment: React.FC<CreateCommentProps> = ( ) => {
+const CreateComment: React.FC<CreateCommentProps> = () => {
   return (
     <form onSubmit={handelSubmit}>
       <div className="mb-5">
