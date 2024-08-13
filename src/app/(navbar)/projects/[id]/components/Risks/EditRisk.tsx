@@ -43,6 +43,7 @@ export default function EditRisk({
       status: riskElement.status,
       comment: riskElement.comment,
       activity: riskElement.activity,
+      riskOwnerUserId: riskElement.riskOwnerUserId,
     },
   });
 
@@ -103,9 +104,6 @@ export default function EditRisk({
                   })}
                   id="description"
                   value={watch('description')}
-                  // variant="bordered"
-                  // errorMessage={errors.description?.message}
-                  // error={!!errors.description}
                 />
               </div>
             </div>
@@ -117,9 +115,6 @@ export default function EditRisk({
                   {...register('activity')}
                   id="activity"
                   value={watch('activity')}
-                  // variant="bordered"
-                  // errorMessage={errors.activity?.message}
-                  // error={!!errors.activity}
                 />
               </div>
               <div className="w-full">
@@ -129,9 +124,6 @@ export default function EditRisk({
                   {...register('comment')}
                   id="comment"
                   value={watch('comment')}
-                  // variant="bordered"
-                  // errorMessage={errors.comment?.message}
-                  // error={!!errors.comment}
                 />
               </div>
             </div>

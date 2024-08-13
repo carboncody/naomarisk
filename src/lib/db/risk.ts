@@ -1,3 +1,5 @@
+import { env } from '@env';
+import { sendRiskAssignmentEmail } from '@lib/services/email';
 import { db } from '@server/db';
 import { type CreateRiskForm } from '../api/types';
 import { type UpdateRiskForm } from '../api/types/risk';
@@ -47,7 +49,16 @@ export async function RiskService() {
           probability: data.probability ? +data.probability : null,
           consequence: data.consequence ? +data.consequence : null,
         },
+        include: { riskowner: true },
       });
+
+      if (newRisk.riskowner) {
+        void sendRiskAssignmentEmail({
+          email: newRisk.riskowner.email,
+          risk: newRisk.description,
+          link: `${env.frontendUrl}/projects/${projectId}/risks/${newRisk.id}`,
+        });
+      }
 
       return newRisk;
     } catch (error) {
@@ -56,15 +67,35 @@ export async function RiskService() {
   }
 
   async function updateRisk(id: string, data: UpdateRiskForm) {
-    console.info('updateRisk: ', data);
-    await db.risk.update({
+    let newOwner = false;
+
+    if (data.riskOwnerUserId) {
+      const prevRiskOwner = await db.risk.findUniqueOrThrow({
+        where: { id },
+        include: { riskowner: true },
+      });
+      if (prevRiskOwner.riskOwnerUserId !== data.riskOwnerUserId) {
+        newOwner = true;
+      }
+    }
+
+    const updatedRisk = await db.risk.update({
       where: { id },
       data: {
         ...data,
         probability: data.probability ? +data.probability : null,
         consequence: data.consequence ? +data.consequence : null,
       },
+      include: { riskowner: true },
     });
+
+    if (newOwner && updatedRisk.riskowner) {
+      void sendRiskAssignmentEmail({
+        email: updatedRisk.riskowner.email,
+        risk: updatedRisk.description,
+        link: `${env.frontendUrl}/projects/${updatedRisk.projectId}/risks/${updatedRisk.id}`,
+      });
+    }
   }
 
   async function deleteRisk(id: string) {
