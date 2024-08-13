@@ -1,4 +1,6 @@
+import { env } from '@env';
 import type { ActionResponse } from '@lib/api/types';
+import { sendProjectAssignmentEmail } from '@lib/services/email';
 import { UserRole, type Project } from '@prisma/client';
 import { db } from '@server/db';
 import type { CreateProjectForm, UpdateProjectForm } from '../api/types';
@@ -101,6 +103,12 @@ export async function ProjectService() {
         },
       });
 
+      void sendProjectAssignmentEmail({
+        emails: projectUserIds,
+        project: project.name,
+        link: `${env.frontendUrl}/projects/${project.id}`,
+      });
+
       return {
         data: project,
       };
@@ -153,6 +161,24 @@ export async function ProjectService() {
         };
       }
 
+      const prevProject = await db.project.findUnique({
+        where: { id },
+        include: {
+          projectUsers: {
+            include: { user: true },
+          },
+        },
+      });
+
+      if (!prevProject) {
+        return {
+          error: {
+            code: 404,
+            message: `Project with id ${id} not found`,
+          },
+        };
+      }
+
       const updatedProject = await db.project.update({
         where: { id },
         data: {
@@ -168,6 +194,28 @@ export async function ProjectService() {
               }
             : undefined,
         },
+        include: {
+          projectUsers: {
+            include: { user: true },
+          },
+        },
+      });
+
+      const projectProjectEmails = prevProject.projectUsers.map(
+        (projectUser) => projectUser.user.email,
+      );
+      const newProjectProjectEmails = updatedProject.projectUsers.map(
+        (projectUser) => projectUser.user.email,
+      );
+
+      const newAssignedEmails = newProjectProjectEmails.filter(
+        (email) => !projectProjectEmails.includes(email),
+      );
+
+      void sendProjectAssignmentEmail({
+        emails: newAssignedEmails,
+        project: updatedProject.name,
+        link: `${env.frontendUrl}/projects/${updatedProject.id}`,
       });
 
       return {
