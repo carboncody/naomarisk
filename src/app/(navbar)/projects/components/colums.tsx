@@ -75,9 +75,6 @@ export const columns: ColumnDef<Project>[] = [
       </div>
     ),
   },
-  // const open = project.risks.filter(
-  //   (risk) => risk.status === RiskStatus.Open,
-  // ).length;
   {
     accessorKey: 'risks.length',
     header: ({ column }) => {

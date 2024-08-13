@@ -80,8 +80,6 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
           {' '}
           Risici lukket : {total - open}
         </p>
-        {/* <p> Antal risici i alt : {total}</p> */}
-        {/* <p> Fremdrift : {(((total-open) / total) * 100).toFixed(1)}%</p> */}
       </HoverCardContent>
     </HoverCard>
   );
