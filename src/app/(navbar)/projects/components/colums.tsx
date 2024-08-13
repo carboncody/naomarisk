@@ -16,7 +16,7 @@ export const columns: ColumnDef<Project>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Navn
+          Projekt Navn
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -25,6 +25,76 @@ export const columns: ColumnDef<Project>[] = [
       <div className="flex flex-col ">
         <span>{row.original.name}</span>
         <span className="text-Zinc-400 ">{row.original.description}</span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'risks.length',
+    header: ({ column }) => {
+      return (
+        <Button
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Risicifordeling
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="truncate">
+        <span className="flex gap-2">
+          <p className="text-red-400">
+            {
+              row.original.risks.filter(
+                (risk) =>
+                  (risk.probability ?? 0) * (risk.consequence ?? 0) > 15,
+              ).length
+            }
+          </p>
+          /{' '}
+          <p className="text-yellow-400">
+            {
+              row.original.risks.filter(
+                (risk) =>
+                  (risk.probability ?? 0) * (risk.consequence ?? 0) > 4 &&
+                  (risk.probability ?? 0) * (risk.consequence ?? 0) <= 15,
+              ).length
+            }
+          </p>
+          /{' '}
+          <p className="text-green-400">
+            {
+              row.original.risks.filter(
+                (risk) => (risk.probability ?? 0) * (risk.consequence ?? 0) < 5,
+              ).length
+            }
+          </p>
+        </span>
+      </div>
+    ),
+  },
+  // const open = project.risks.filter(
+  //   (risk) => risk.status === RiskStatus.Open,
+  // ).length;
+  {
+    accessorKey: 'risks.length',
+    header: ({ column }) => {
+      return (
+        <Button
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Totlat antal risici
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="truncate">
+        <span>{row.original.risks.length}</span>
       </div>
     ),
   },
@@ -51,7 +121,7 @@ export const columns: ColumnDef<Project>[] = [
     ),
   },
   {
-    accessorKey: 'risks.length',
+    accessorKey: 'updatedAt',
     header: ({ column }) => {
       return (
         <Button
@@ -59,14 +129,16 @@ export const columns: ColumnDef<Project>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Risici
+          Sidst opdateret
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
       <div className="truncate">
-        <span>{row.original.risks.length}</span>
+        <span>
+          {dayjs(row.original.updatedAt).format('kl. HH:MM - DD MMM')}
+        </span>
       </div>
     ),
   },

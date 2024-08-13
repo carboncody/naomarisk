@@ -10,9 +10,10 @@ import Error from 'next/error';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ProjectRiskMatrix } from './components/ProjectRiskMatrix';
+import { RiskChart } from './components/RiskChart';
+import { RiskPieChart } from './components/RiskPieChart';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
-import { RiskChart } from './components/members/RiskChart';
 
 export function Project() {
   const pathName = usePathname();
@@ -79,7 +80,7 @@ export function Project() {
                     >
                       Rediger Projekt
                     </Button>
-                    <div className="rounded-lg bg-white p-6 shadow dark:bg-zinc-950 dark:text-white">
+                    <div className="rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-900 dark:text-white ">
                       <h2 className="mb-4 text-2xl font-bold">
                         Projekt Information
                       </h2>
@@ -125,27 +126,27 @@ export function Project() {
                                 {project.budget} kr.
                               </td>
                             </tr>
-                            <tr className="border-b dark:border-zinc-700">
-                              <th className="px-4 py-2 text-lg font-semibold">
-                                Antal risici i projekt
-                              </th>
-                              <td className="px-4 py-2">
-                                {project.risks.length}
-                              </td>
-                            </tr>
                           </tbody>
                         </table>
+                        <div className="mt-5">
+                          <p className="mt-4 text-xl font-normal">
+                            Risici i projektet: {project.risks.length}
+                          </p>
+                          <div className="mt-2 flex w-full items-center gap-5">
+                            <RiskPieChart project={project} />
+                          </div>
+                        </div>
                       </div>
                     </div>
 
                     <div className="mt-5 flex w-full flex-col gap-4 md:flex-row">
-                      <div className="flex w-full items-center justify-center rounded-xl border shadow dark:border-zinc-700 dark:shadow-none">
+                      <div className="flex w-full items-center justify-center rounded-xl border shadow dark:border-transparent dark:bg-zinc-900 dark:shadow-none">
                         <ProjectRiskMatrix
                           projectId={project.id}
                           risks={project.risks}
                         />
                       </div>
-                      <div className="w-full rounded-xl border shadow dark:border-zinc-700 dark:shadow-none">
+                      <div className="w-full rounded-xl border shadow dark:border-transparent dark:bg-zinc-900 dark:shadow-none">
                         <RiskChart project={project} />
                       </div>
                     </div>
