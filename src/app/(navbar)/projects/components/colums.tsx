@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@components/ui/button';
-import { RiskStatus, type Project } from '@models';
+import { type Project } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { ArrowUpDown } from 'lucide-react';
@@ -37,18 +37,40 @@ export const columns: ColumnDef<Project>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Åbne risici
+          Risicifordeling
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
       <div className="truncate">
-        <span>
-          {
-            row.original.risks.filter((risk) => risk.status === RiskStatus.Open)
-              .length
-          }
+        <span className="flex gap-2">
+          <p className="text-red-400">
+            {
+              row.original.risks.filter(
+                (risk) => risk.probability * risk.consequence > 15,
+              ).length
+            }
+          </p>
+          /{' '}
+          <p className="text-yellow-400">
+            {
+              row.original.risks.filter(
+                (risk) =>
+                  risk.probability * risk.consequence > 4 &&
+                  risk.probability * risk.consequence <= 15,
+              ).length
+            }
+          </p>
+          /{' '}
+          <p className="text-green-400">
+            {
+              row.original.risks.filter(
+                (risk) => risk.probability * risk.consequence < 5,
+              ).length
+            }
+          </p>
+          <p></p>
         </span>
       </div>
     ),
