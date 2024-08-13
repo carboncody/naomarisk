@@ -13,6 +13,10 @@ export async function RiskService() {
         project: {
           include: { projectUsers: true },
         },
+        comments: {
+          include: { author: true },
+          orderBy: { createdAt: 'desc' },
+        },
       },
     });
   }

@@ -3,6 +3,7 @@
 import { env } from '@env';
 import { Resend } from 'resend';
 import { InviteEmail } from './templates/invite';
+import { NewComment } from './templates/new-comment';
 import { ProjectAssignment } from './templates/project-assignment';
 import { RiskAssignment } from './templates/risk-assignment';
 
@@ -58,6 +59,29 @@ export async function sendRiskAssignmentEmail({
     to: [email],
     subject: 'Nyt risiko tildelt til dig',
     react: <RiskAssignment risk={risk} link={link} />,
+  });
+
+  if (error) {
+    return console.error({ error });
+  }
+}
+
+export async function sendNewCommentEmail({
+  email,
+  comment,
+  link,
+  risk,
+}: {
+  email: string;
+  comment: string;
+  link: string;
+  risk: string;
+}) {
+  const { error } = await resend.emails.send({
+    from: 'NAOMA Risk <it@naoma.dk>',
+    to: [email],
+    subject: 'Nyt kommentar på risiko',
+    react: <NewComment comment={comment} link={link} risk={risk} />,
   });
 
   if (error) {

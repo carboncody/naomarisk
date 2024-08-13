@@ -41,7 +41,6 @@ export default function EditRisk({
       probability: riskElement.probability ?? null,
       consequence: riskElement.consequence ?? null,
       status: riskElement.status,
-      comment: riskElement.comment,
       activity: riskElement.activity,
       riskOwnerUserId: riskElement.riskOwnerUserId,
     },
@@ -115,15 +114,6 @@ export default function EditRisk({
                   {...register('activity')}
                   id="activity"
                   value={watch('activity')}
-                />
-              </div>
-              <div className="w-full">
-                <Label htmlFor="comment">Comment</Label>
-                <Input
-                  className="mt-2 w-full"
-                  {...register('comment')}
-                  id="comment"
-                  value={watch('comment')}
                 />
               </div>
             </div>

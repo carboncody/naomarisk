@@ -101,7 +101,7 @@ export interface Risk {
   probability: number | null;
   consequence: number | null;
   status: RiskStatus;
-  comment?: string;
+  comments: Comment[];
   activity?: string;
   riskowner: User;
   userId: string;
@@ -109,4 +109,18 @@ export interface Risk {
   projectId: string;
   riskOwnerUserId: string;
   user: User[];
+}
+
+export interface Comment {
+  id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  resolvedAt: Date | null;
+  authorId: string;
+  author: User;
+  resolvedById: string | null;
+  resolvedBy: User | null;
+  risk: Risk;
+  riskId: string;
 }

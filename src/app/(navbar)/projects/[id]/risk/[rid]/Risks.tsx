@@ -11,7 +11,7 @@ import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
-import CreateComment from './components/comments/CreateComment';
+import { Comments } from './components/comments';
 
 export function Risk() {
   const pathName = usePathname();
@@ -86,14 +86,7 @@ export function Risk() {
                     <span className="ml-1 font-light">{risk.probability}</span>
                   </p>
                 </div>
-                <div className="border-Zinc-500 mt-4 border-t pt-2 font-semibold">
-                  <p className="flex flex-wrap items-center gap-2">
-                    <span>Kommentar</span>
-                    <span className="font-light">
-                      {risk.comment ?? 'Ingen'}
-                    </span>
-                  </p>
-
+                <div className="mt-4 border-t border-zinc-300 pt-2 font-semibold dark:border-zinc-700">
                   <p className="lex mt-2 flex-wrap items-center gap-2">
                     <span>Aktivitet</span>
                     <span className="ml-2 font-light">
@@ -111,7 +104,7 @@ export function Risk() {
                   Kommentartråd
                 </div>
                 <p className="text-Zinc-200 mt-4  text-sm">
-                  <CreateComment riskId={riskId} />
+                  <Comments riskId={riskId} comments={risk.comments} />
                 </p>
               </div>
             </div>

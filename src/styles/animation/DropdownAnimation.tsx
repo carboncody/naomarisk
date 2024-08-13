@@ -7,6 +7,7 @@ interface DropdownAnimationProps {
   speed?: 'fast' | 'slow';
   className?: string;
   initial?: boolean;
+  layout?: boolean;
 }
 
 export function DropdownAnimation({
@@ -15,6 +16,7 @@ export function DropdownAnimation({
   className,
   speed = 'fast',
   initial = false,
+  layout = false,
 }: DropdownAnimationProps) {
   const dropdownVariants: Variants = {
     hidden: {
@@ -46,6 +48,7 @@ export function DropdownAnimation({
           initial="hidden"
           animate="visible"
           exit="hidden"
+          layout={layout}
           variants={dropdownVariants}
           className={clsx('overflow-clip', className)}
         >
