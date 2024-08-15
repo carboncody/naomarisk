@@ -2,6 +2,7 @@
 
 import EditRisk from '@app/(navbar)/projects/[id]/components/Risks/EditRisk';
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
+import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { useRisk } from '@lib/api/hooks/risks';
 import { type Risk } from '@models';
@@ -13,10 +14,9 @@ import { FaComment } from 'react-icons/fa6';
 import { Comments } from './components/comments';
 
 export function Risk() {
-  const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
   const pathName = usePathname();
-  const riskId = pathName?.split('/').pop();
-  const riskDecodedId = decodeURIComponent(riskId ?? '');
+  const riskId = pathName?.split('/risk/')[1];
+  const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
 
   const {
     data: risk,
@@ -24,9 +24,17 @@ export function Risk() {
     isLoading,
     isRefetching,
     refetch,
-  } = useRisk(riskDecodedId);
+  } = useRisk(riskId ?? '');
 
-  if ((!riskDecodedId || error) ?? !risk) {
+  if (isLoading && !isRefetching) {
+    return (
+      <div className="h-[80vh]">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if ((!riskId || error) ?? !risk) {
     return <Error statusCode={404} title="Invalid risk id in the URL" />;
   }
 
@@ -95,8 +103,8 @@ export function Risk() {
                   <FaComment className="h-4 w-4" />
                   Kommentartråd
                 </div>
-                <p className="text-Zinc-200 mt-4 text-sm">
-                  <Comments riskId={riskDecodedId} comments={risk.comments} />
+                <p className="text-Zinc-200 mt-4  text-sm">
+                  <Comments riskId={riskId} comments={risk.comments} />
                 </p>
               </div>
             </div>
