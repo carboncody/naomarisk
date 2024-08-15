@@ -101,20 +101,34 @@ export function MembersModal({
         </DialogHeader>
         <div className="text-Zinc-300 flex w-full items-center justify-center pr-6">
           <span className="w-full">Medlemmer</span>
-          <span className="w-full">Firma rolle</span>
+          <span className="w-full">Projekt rolle</span>
         </div>
 
-        {projectMembers && projectMembers.length > 0 ? (
-          projectMembers.map((member, index) => (
+        {assignments.length > 0 ? (
+          assignments.map((member, index) => (
             <div
               className="flex w-full items-center justify-center rounded-xl border p-1"
               key={index}
             >
               <div className="w-full">
-                <span className="truncate">{member.email}</span>
+                <span className="truncate">
+                  {employees.find((emp) => emp.id === member.userId)
+                    ?.fullName ?? 'Bruger'}
+                </span>
               </div>
               <div className="w-full">
-                <span className="truncate">{member.role}</span>
+                {/* <span className="truncate">{member.role}</span> */}
+                <SingleDropdown
+                  selectedValue={member.role}
+                  options={Object.values(ProjectRole).map((role) => ({
+                    label: role,
+                    value: role,
+                  }))}
+                  buttonLabel={member.role || 'Vælg rolle'}
+                  setSelectedValue={(role) =>
+                    role && addMember(member.userId, role as ProjectRole)
+                  }
+                />
               </div>
               <div className="text-center">
                 <PlusMinusButton
