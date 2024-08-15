@@ -52,9 +52,19 @@ export function Risk() {
                 >
                   Rediger Risk
                 </Button>
-                <div>
-                  <span className="mt-2 font-semibold">Risk ID:</span>
-                  <span className="ml-1 font-light">{risk.customId}</span>
+                <div className="flex gap-8">
+                  <div>
+                    <span className="mt-2 font-semibold">Risk ID:</span>
+                    <span className="ml-1 font-light">{risk.customId}</span>
+                  </div>
+                  <div>
+                    <span className="mt-2 font-semibold">Risiko Ejer:</span>
+                    <span className="ml-1 font-light">
+                      {risk.riskowner?.fullName
+                        ? risk.riskowner.fullName
+                        : 'Ingen ejer'}
+                    </span>
+                  </div>
                 </div>
                 <p className="mt-2 font-semibold">Beskrivelse:</p>
                 <p className="font-light">{risk.description}</p>

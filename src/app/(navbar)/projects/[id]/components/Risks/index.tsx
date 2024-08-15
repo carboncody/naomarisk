@@ -18,7 +18,9 @@ interface RisksProps {
 
 export function Risks({ project }: RisksProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<RiskStatus>(RiskStatus.Open);
+  const [selectedTab, setSelectedTab] = useState<RiskStatus | 'all'>(
+    RiskStatus.Open,
+  );
   const score = useSearchParams().get('score');
   const [filters, setFilters] = useState<{ score?: number }>({
     score: score ? Number(score) : undefined,
@@ -62,10 +64,23 @@ export function Risks({ project }: RisksProps) {
 
   const filteredRisks = getFilteredRisks();
 
+  const activeTabRisks =
+    selectedTab === 'all'
+      ? project.risks
+      : filteredRisks.filter((risk) => {
+          return (
+            risk.status === selectedTab ||
+            (selectedTab === RiskStatus.Open &&
+              risk.status === RiskStatus.Open) ||
+            (selectedTab === RiskStatus.Closed &&
+              risk.status === RiskStatus.Closed)
+          );
+        });
+
   return (
     <>
-      <div className="justify-top flex w-full flex-col items-center text-white ">
-        <p className="text-xl font-semibold text-black dark:text-white">
+      <div className="justify-top flex w-full flex-col items-center">
+        <p className="text-xl font-semibold">
           Projekt: {project.name}, har{' '}
           {selectedTab === RiskStatus.Open
             ? project.risks.filter((risk) => risk.status === RiskStatus.Open)
@@ -101,10 +116,13 @@ export function Risks({ project }: RisksProps) {
             </div>
           </div>
         )}
+
         <div className="mb-4 flex w-full items-center justify-between">
           <Tabs
             value={selectedTab}
-            onValueChange={(value) => setSelectedTab(value as RiskStatus)}
+            onValueChange={(value) =>
+              setSelectedTab(value as RiskStatus | 'all')
+            }
             className="w-full"
           >
             <div className="flex w-full items-center justify-between">
@@ -117,32 +135,10 @@ export function Risks({ project }: RisksProps) {
                 Tilføj
               </Button>
             </div>
-            <TabsContent value={'all'}>
+            <TabsContent value={selectedTab}>
               <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
                 <RiskTable
-                  risks={allRisks ?? []}
-                  refetch={refetch}
-                  project={project}
-                />
-              </div>
-            </TabsContent>
-            <TabsContent value={RiskStatus.Open}>
-              <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
-                <RiskTable
-                  risks={filteredRisks}
-                  refetch={refetch}
-                  project={project}
-                />
-              </div>
-            </TabsContent>
-            <TabsContent value={RiskStatus.Closed}>
-              <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
-                <RiskTable
-                  risks={
-                    allRisks?.filter(
-                      (risk) => risk.status === RiskStatus.Closed,
-                    ) ?? []
-                  }
+                  risks={activeTabRisks}
                   refetch={refetch}
                   project={project}
                 />
@@ -151,14 +147,13 @@ export function Risks({ project }: RisksProps) {
           </Tabs>
         </div>
       </div>
-      {isNewOpen && (
-        <CreateRisk
-          isOpen={isNewOpen}
-          setIsOpen={setIsNewOpen}
-          refetch={refetch}
-          project={project}
-        />
-      )}
+
+      <CreateRisk
+        isOpen={isNewOpen}
+        setIsOpen={setIsNewOpen}
+        refetch={refetch}
+        project={project}
+      />
     </>
   );
 }

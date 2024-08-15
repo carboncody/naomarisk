@@ -15,7 +15,13 @@ import { Label } from '@components/ui/label';
 import { Textarea } from '@components/ui/textarea';
 import { useEmployees } from '@lib/api/hooks';
 import { type UpdateRiskForm } from '@lib/api/types/risk';
-import { RiskStatus, type Project, type Risk, type User } from '@models';
+import {
+  ProjectStatus,
+  RiskStatus,
+  type Project,
+  type Risk,
+  type User,
+} from '@models';
 import axios from 'axios';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -165,9 +171,9 @@ export default function EditRisk({
                         (option) => option.value === watch('status'),
                       )?.label ?? 'Select Status'
                     }
-                    selectedValue={watch('status')}
+                    selectedValue={watch('status') ?? ProjectStatus.Planning}
                     setSelectedValue={(value) =>
-                      setValue('status', value as RiskStatus)
+                      value && setValue('status', value as RiskStatus)
                     }
                   />
                 </div>
@@ -190,9 +196,9 @@ export default function EditRisk({
                           )?.email
                         : 'Select Employee'
                     }
-                    selectedValue={watch('riskOwnerUserId')}
+                    selectedValue={watch('riskOwnerUserId') ?? null}
                     setSelectedValue={(value) =>
-                      value && setValue('riskOwnerUserId', value)
+                      setValue('riskOwnerUserId', value)
                     }
                   />
                 </div>

@@ -167,16 +167,14 @@ export const columns = ({
           className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Aktivitet<br />(mitigerende handling)
+          Aktivitet
+          <br />
+          <span className="text-xs">(mitigerende handling)</span>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="col-span-1 flex items-center justify-between truncate text-black dark:text-white">
-        <span>{row.original.activity}</span>
-      </div>
-    ),
+    cell: ({ row }) => row.original.activity,
   },
   {
     id: 'actions',

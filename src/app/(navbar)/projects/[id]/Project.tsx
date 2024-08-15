@@ -104,6 +104,14 @@ export function Project() {
                             </tr>
                             <tr className="border-b dark:border-zinc-700">
                               <th className="px-4 py-2 text-lg font-semibold">
+                                Projekt ejer
+                              </th>
+                              <td className="px-4 py-2">
+                                {project.projectUsers[0]?.user.fullName}
+                              </td>
+                            </tr>
+                            <tr className="border-b dark:border-zinc-700">
+                              <th className="px-4 py-2 text-lg font-semibold">
                                 Dato for oprettelse
                               </th>
                               <td className="px-4 py-2">

@@ -6,7 +6,7 @@ export type CreateRiskForm = {
   consequence: number | null;
   status: RiskStatus;
   activity: string | undefined;
-  riskOwnerUserId: string | undefined;
+  riskOwnerUserId: string | null;
 };
 
 export type UpdateRiskForm = Partial<CreateRiskForm> & {

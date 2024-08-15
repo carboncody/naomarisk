@@ -148,7 +148,7 @@ export default function CreateRisk({
             <div className="flex items-center gap-2">
               <span>Risiko ejer {'->'}</span>
               <SingleDropdown
-                selectedValue={undefined}
+                selectedValue={null}
                 options={
                   projectMembers
                     ? projectMembers.map((employee) => ({
@@ -166,7 +166,7 @@ export default function CreateRisk({
                 }
                 setSelectedValue={(value) => {
                   if (value === watch('riskOwnerUserId')) {
-                    setValue('riskOwnerUserId', undefined);
+                    setValue('riskOwnerUserId', null);
                     return;
                   }
                   setValue('riskOwnerUserId', value);
