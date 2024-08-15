@@ -2,7 +2,6 @@
 
 import EditRisk from '@app/(navbar)/projects/[id]/components/Risks/EditRisk';
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
-import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { useRisk } from '@lib/api/hooks/risks';
 import { type Risk } from '@models';
@@ -26,18 +25,20 @@ export function Risk() {
     refetch,
   } = useRisk(riskId ?? '');
 
-  if (isLoading && !isRefetching) {
-    return (
-      <div className="h-[80vh]">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
+  // if (isLoading && !isRefetching) {
+  //   return (
+  //     <div className="h-[80vh]">
+  //       <LoadingSpinner size="lg" />
+  //     </div>
+  //   );
+  // }
 
-  if ((!riskId || error) ?? !risk) {
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  if (!riskId || error || !risk) {
     return <Error statusCode={404} title="Invalid risk id in the URL" />;
   }
 
+  console.log('The risk bieng loaded:', risk);
   return (
     <>
       <div className="py-10">
