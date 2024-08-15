@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
+import { Textarea } from '@components/ui/textarea';
 import { useEmployees } from '@lib/api/hooks';
 import { type UpdateRiskForm } from '@lib/api/types/risk';
 import { RiskStatus, type Project, type Risk, type User } from '@models';
@@ -109,7 +110,7 @@ export default function EditRisk({
             <div className="flex w-full gap-5">
               <div className="w-full">
                 <Label htmlFor="activity">Activity</Label>
-                <Input
+                <Textarea
                   className="mt-2 w-full"
                   {...register('activity')}
                   id="activity"

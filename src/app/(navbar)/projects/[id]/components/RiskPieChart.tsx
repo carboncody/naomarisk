@@ -22,19 +22,23 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
   const open = project.risks.filter(
     (risk) => risk.status === RiskStatus.Open,
   ).length;
+  const closed = project.risks.filter(
+    (risk) => risk.status === RiskStatus.Closed,
+  ).length;
   const total = project.risks.length;
 
   const data = [
     {
       name: 'Lukket',
-      value: total - open,
+      value: closed,
       fill: '#00b10e',
       label: 'Åbne risici',
     },
     {
-      name: 'Total',
-      value: total,
+      name: 'Åben',
+      value: open,
       fill: 'hsl(var(--chart-6))',
+      // fill: '#FF0000',
       label: 'alle risici',
     },
   ];
@@ -68,13 +72,13 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
               {' '}
               {(((total - open) / total) * 100).toFixed(1)}% fremdrift
             </span>
-            <span>{open + '/' + total} åben</span>
+            <span>{open + '/' + total} åbne/antal af risici</span>
           </div>
         </div>
       </HoverCardTrigger>
       <HoverCardContent className="flex flex-col gap-1">
         <p className="text-red-500 dark:text-red-400">
-          Atal risici åbne : {open}
+          Antal risici åbne : {open}
         </p>
         <p className="text-green-600 dark:text-green-400">
           {' '}

@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
+import { Textarea } from '@components/ui/textarea';
 import { useEmployees } from '@lib/api/hooks';
 import { type CreateRiskForm } from '@lib/api/types/risk';
 import type { Project, User } from '@models';
@@ -101,7 +102,7 @@ export default function CreateRisk({
               <Label className="mb-2" htmlFor="activity">
                 Aktivitet
               </Label>
-              <Input
+              <Textarea
                 {...register('activity', {
                   required: {
                     value: false,
