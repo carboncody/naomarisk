@@ -17,7 +17,6 @@ import {
 import { cn } from '@lib/utils';
 import { type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
-import clsx from 'clsx';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -42,19 +41,55 @@ export const columns = ({
   projectId,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
-    accessorKey: 'Score',
-    cell: ({ row }) => (
-      <div
-        style={{
-          background: getStyleColor(row.original),
-        }}
-        className={cn(
-          'h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-400',
-          getThreshold(row.original) === Thresholds.RED,
-        )}
-      />
-    ),
+    accessorKey: 'riskScore',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Risikoscore
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const risk = row.original;
+      const threshold = getThreshold(risk);
+      return (
+        <div
+          className={cn(
+            'flex items-center gap-2',
+            threshold === Thresholds.RED && 'text-red-500 dark:text-red-300',
+            threshold === Thresholds.GREEN &&
+              'text-green-500 dark:text-green-400',
+            threshold === Thresholds.YELLOW &&
+              'text-yellow-500 dark:text-yellow-400',
+          )}
+        >
+          <div
+            style={{
+              background: getStyleColor(row.original),
+            }}
+            className={cn(
+              'h-3 w-3 rounded-full bg-zinc-400 dark:bg-zinc-400',
+              getThreshold(row.original) === Thresholds.RED,
+            )}
+          />
+          {risk.probability && risk.consequence ? (
+            <em>
+              {' '}
+              {'->'} {risk.probability * risk.consequence}
+            </em>
+          ) : (
+            <em className="text-zinc-400"> {'->'} --</em>
+          )}
+        </div>
+      );
+    },
   },
+
   {
     accessorKey: 'customId',
     header: ({ column }) => {
@@ -124,7 +159,7 @@ export const columns = ({
     ),
   },
   {
-    accessorKey: 'riskScore',
+    accessorKey: 'activity',
     header: ({ column }) => {
       return (
         <Button
@@ -132,54 +167,16 @@ export const columns = ({
           className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Risiko {'->'} Risikoscore
+          Aktivitet
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => {
-      const risk = row.original;
-      const threshold = getThreshold(risk);
-      return (
-        <div className="grid grid-cols-2">
-          <div
-            className={clsx(
-              'col-span-1 flex items-center gap-2',
-              threshold === Thresholds.RED && 'text-red-500 dark:text-red-400',
-              threshold === Thresholds.GREEN &&
-                'text-green-500 dark:text-green-400',
-              threshold === Thresholds.YELLOW &&
-                'text-yellow-500 dark:text-yellow-400',
-              (!risk.probability || !risk.consequence) &&
-                'text-zinc-500 dark:text-zinc-400',
-            )}
-          >
-            <div className="text-black dark:text-white">
-              <p>Sansynlighed :</p>
-              <p>Konsekvens :</p>
-            </div>
-            <div>
-              <p>
-                {risk.probability ?? (
-                  <em className="text-Zinc-400">Ikke defineret</em>
-                )}
-              </p>
-              <p>
-                {risk.consequence ?? (
-                  <em className="text-Zinc-400">Ikke defineret</em>
-                )}
-              </p>
-            </div>
-            {risk.probability && risk.consequence && (
-              <em>
-                {' '}
-                {'->'} {risk.probability * risk.consequence}
-              </em>
-            )}
-          </div>
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <div className="col-span-1 flex items-center justify-between truncate text-black dark:text-white">
+        <span>{row.original.activity}</span>
+      </div>
+    ),
   },
   {
     id: 'actions',
@@ -192,7 +189,12 @@ export const columns = ({
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <MoreHorizontal className="h-4 w-4 text-zinc-400 hover:text-black dark:text-zinc-400 dark:hover:text-white" />
+            <Button
+              variant="ghost"
+              className="text-zinc-400 hover:text-black dark:text-zinc-400 dark:hover:text-white"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"

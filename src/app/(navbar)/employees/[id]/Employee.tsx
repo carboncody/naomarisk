@@ -5,7 +5,7 @@ import { Card, CardContent, CardTitle } from '@components/ui/card';
 import { useEmployee } from '@lib/api/hooks/users/useEmployee';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
-import { CompanySettings } from './components/CompanySettings';
+import CompanySettings from './components/CompanySettings';
 import { ProjectEmployeeChart } from './components/ProjectEmployeeChart';
 import UserInfo from './components/UserInfo';
 
@@ -54,13 +54,13 @@ export function Employee() {
           </Card>
         </div>
         <div className="w-1/3">
-          <ProjectEmployeeChart />
+          <ProjectEmployeeChart employee={employee} />
         </div>
       </div>
       <hr className="m-5 h-px border-0 bg-zinc-300 dark:bg-zinc-700" />
       <div className=" flex w-full flex-col gap-5 p-5 md:flex-row">
         <UserInfo employee={employee} refetch={refetch} />
-        <CompanySettings />
+        <CompanySettings employee={employee} refetch={refetch} />
       </div>
     </>
   );

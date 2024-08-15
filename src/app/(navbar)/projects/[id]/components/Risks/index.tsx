@@ -70,9 +70,17 @@ export function Risks({ project }: RisksProps) {
           {selectedTab === RiskStatus.Open
             ? project.risks.filter((risk) => risk.status === RiskStatus.Open)
                 .length
-            : project.risks.filter((risk) => risk.status === RiskStatus.Closed)
-                .length}{' '}
-          {selectedTab === RiskStatus.Open ? 'åbne' : 'lukkede'} risici
+            : selectedTab === RiskStatus.Closed
+              ? project.risks.filter(
+                  (risk) => risk.status === RiskStatus.Closed,
+                ).length
+              : project.risks.length}{' '}
+          {selectedTab === RiskStatus.Open
+            ? 'åbne'
+            : selectedTab === RiskStatus.Closed
+              ? 'lukkede'
+              : ''}{' '}
+          risici
         </p>
 
         {filters.score && (
@@ -101,6 +109,7 @@ export function Risks({ project }: RisksProps) {
           >
             <div className="flex w-full items-center justify-between">
               <TabsList>
+                <TabsTrigger value={'all'}> Alle </TabsTrigger>
                 <TabsTrigger value={RiskStatus.Open}>Åben</TabsTrigger>
                 <TabsTrigger value={RiskStatus.Closed}>Lukket</TabsTrigger>
               </TabsList>
@@ -108,6 +117,15 @@ export function Risks({ project }: RisksProps) {
                 Tilføj
               </Button>
             </div>
+            <TabsContent value={'all'}>
+              <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
+                <RiskTable
+                  risks={allRisks ?? []}
+                  refetch={refetch}
+                  project={project}
+                />
+              </div>
+            </TabsContent>
             <TabsContent value={RiskStatus.Open}>
               <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
                 <RiskTable
@@ -118,7 +136,7 @@ export function Risks({ project }: RisksProps) {
               </div>
             </TabsContent>
             <TabsContent value={RiskStatus.Closed}>
-              <div className="w-full overflow-y-auto rounded-md p-4 dark:bg-zinc-900">
+              <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
                 <RiskTable
                   risks={
                     allRisks?.filter(

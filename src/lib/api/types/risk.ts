@@ -5,7 +5,6 @@ export type CreateRiskForm = {
   probability: number | null;
   consequence: number | null;
   status: RiskStatus;
-  comment: string | undefined;
   activity: string | undefined;
   riskOwnerUserId: string | undefined;
 };

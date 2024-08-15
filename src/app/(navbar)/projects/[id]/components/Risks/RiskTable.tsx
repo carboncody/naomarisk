@@ -15,9 +15,9 @@ interface RiskTableProps {
 }
 
 export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
-  const router = useRouter();
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
+  const router = useRouter();
 
   const rows = risks.map((risk) => ({
     ...risk,

@@ -110,19 +110,6 @@ export default function CreateRisk({
                 })}
               />
             </div>
-            <div className="w-full">
-              <Label className="mb-2" htmlFor="comment">
-                Kommentar
-              </Label>
-              <Input
-                {...register('comment', {
-                  required: {
-                    value: false,
-                    message: 'Kommentar mangler',
-                  },
-                })}
-              />
-            </div>
           </div>
           <div className="flex w-full items-center justify-between gap-5">
             <div className="flex w-1/3 gap-4">

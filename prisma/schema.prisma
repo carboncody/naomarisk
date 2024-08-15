@@ -135,12 +135,27 @@ model Risk {
   projectId       String
 
   comments Comment[]
+  children ChildRisk[]
 
   @@unique([projectId, customId])
 }
 
+model ChildRisk {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  probability Int?
+  consequence Int?
+  comment     String?
+  activity    String?
+
+  parentId String
+  parent   Risk   @relation(fields: [parentId], references: [id], onDelete: Cascade)
+}
+
 model Comment {
   id         String    @id @default(uuid())
+  content    String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   resolvedAt DateTime?

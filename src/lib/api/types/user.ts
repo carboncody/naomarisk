@@ -5,6 +5,8 @@ export type CreateUserForm = {
   email: string;
   jobDescription?: string;
   role: UserRole;
+  company?: string;
+  cvr?: string;
 };
 
 export type UpdateUserForm = Partial<CreateUserForm>;

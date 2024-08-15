@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { Project } from '@models';
+import type { Project, User } from '@models';
 
 import {
   Card,
@@ -26,17 +26,15 @@ import {
 } from 'src/components/ui/Charts/chart';
 import 'src/components/ui/styles.css';
 
-interface RiskChartProps {
+interface ProjectEmployeeChartProps {
   project?: Project;
+  employee: User;
 }
 
-interface RiskData {
-  name: string;
-  fillColor: string;
-  antal: number;
-}
-
-export function ProjectEmployeeChart({ project }: RiskChartProps) {
+export function ProjectEmployeeChart({
+  project,
+  employee,
+}: ProjectEmployeeChartProps) {
   //   const router = useRouter();
   //   const riskData = useMemo<RiskData[]>(() => {
   //     return Object.keys(RiskMap).map((riskscore) => {
@@ -65,17 +63,17 @@ export function ProjectEmployeeChart({ project }: RiskChartProps) {
   //   } satisfies ChartConfig;
 
   const chartData = [
-    { month: 'January', desktop: 5 },
-    { month: 'February', desktop: 3 },
-    { month: 'March', desktop: 3 },
-    { month: 'April', desktop: 3 },
-    { month: 'May', desktop: 2 },
-    { month: 'June', desktop: 2 },
+    { month: 'January', risk: 5 },
+    { month: 'February', risk: 3 },
+    { month: 'March', risk: 3 },
+    { month: 'April', risk: 3 },
+    { month: 'May', risk: 2 },
+    { month: 'June', risk: 2 },
   ];
 
   const chartConfig = {
-    desktop: {
-      label: 'riskscore',
+    risk: {
+      label: 'Risk',
       color: '#2563eb',
     },
   } satisfies ChartConfig;
@@ -103,7 +101,7 @@ export function ProjectEmployeeChart({ project }: RiskChartProps) {
       <CardHeader className="items-center pb-0">
         <CardTitle>Antal Projekter</CardTitle>
         <CardDescription>
-          Antal åbne risici som (FullName) ejer{' '}
+          Antal åbne risici som {employee.fullName} ejer{' '}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -136,7 +134,7 @@ export function ProjectEmployeeChart({ project }: RiskChartProps) {
               content={<ChartTooltipContent labelKey="name" nameKey="Risici" />}
               cursor={{ opacity: 0.2 }}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+            <Bar dataKey="risk" fill="var(--color-risk)" radius={4} />
             <Bar
               dataKey="mobile"
               fill="var(--color-mobile)"

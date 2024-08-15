@@ -35,20 +35,14 @@ export default function EditRisk({
   refetch,
   isOpen,
 }: EditRiskProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<UpdateRiskForm>({
+  const { register, handleSubmit, setValue, watch } = useForm<UpdateRiskForm>({
     defaultValues: {
       description: riskElement.description,
       probability: riskElement.probability ?? null,
       consequence: riskElement.consequence ?? null,
       status: riskElement.status,
-      comment: riskElement.comment,
       activity: riskElement.activity,
+      riskOwnerUserId: riskElement.riskOwnerUserId,
     },
   });
 
@@ -109,9 +103,6 @@ export default function EditRisk({
                   })}
                   id="description"
                   value={watch('description')}
-                  // variant="bordered"
-                  // errorMessage={errors.description?.message}
-                  // error={!!errors.description}
                 />
               </div>
             </div>
@@ -123,21 +114,6 @@ export default function EditRisk({
                   {...register('activity')}
                   id="activity"
                   value={watch('activity')}
-                  // variant="bordered"
-                  // errorMessage={errors.activity?.message}
-                  // error={!!errors.activity}
-                />
-              </div>
-              <div className="w-full">
-                <Label htmlFor="comment">Comment</Label>
-                <Input
-                  className="mt-2 w-full"
-                  {...register('comment')}
-                  id="comment"
-                  value={watch('comment')}
-                  // variant="bordered"
-                  // errorMessage={errors.comment?.message}
-                  // error={!!errors.comment}
                 />
               </div>
             </div>

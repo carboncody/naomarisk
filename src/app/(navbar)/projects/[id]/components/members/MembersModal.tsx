@@ -6,7 +6,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'; // Adjust the import path according to your setup
+} from '@/components/ui/dialog';
 import { SingleDropdown } from '@components/ui';
 import { PlusMinusButton } from '@components/ui/PlusMinusButton';
 import { Button } from '@components/ui/button';

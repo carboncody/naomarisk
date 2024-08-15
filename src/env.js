@@ -8,6 +8,7 @@ const envSchema = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
+    FRONTEND_URL: z.string().default('https://naomarisk.vercel.app'),
   },
 
   client: {
@@ -19,6 +20,7 @@ const envSchema = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     resendApiKey: process.env.RESEND_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
+    FRONTEND_URL: process.env.FRONTEND_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
   },
@@ -27,6 +29,9 @@ const envSchema = createEnv({
 });
 
 export const env = {
+  get frontendUrl() {
+    return envSchema.FRONTEND_URL;
+  },
   get db() {
     return envSchema.DATABASE_URL;
   },

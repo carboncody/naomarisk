@@ -98,7 +98,7 @@ export async function UserService() {
       }
 
       const createdUser = await db.user.update({
-        where: { email },
+        where: { email: user.email },
         data: {
           fullName: fullName,
           jobDescription: jobDescription,
