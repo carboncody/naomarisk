@@ -2,6 +2,7 @@
 
 import { DatePicker } from '@components/ui/DatePickerShadcn';
 import { Input } from '@components/ui/Input';
+import { UserDropdown } from '@components/ui/abstractions/dropdowns/UserDropdown';
 import { Button } from '@components/ui/button';
 import {
   Dialog,
@@ -13,7 +14,7 @@ import {
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
 import { type UpdateProjectForm } from '@lib/api/types';
-import { type Project } from '@models';
+import { ProjectRole, type Project } from '@models';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -31,7 +32,7 @@ export default function EditProject({
   project,
   refetch,
 }: EditProjectProps) {
-  const { register, handleSubmit, setValue, watch } =
+  const { register, handleSubmit, setValue, getValues, watch } =
     useForm<UpdateProjectForm>({
       defaultValues: {
         name: project.name ?? '',
@@ -39,6 +40,10 @@ export default function EditProject({
         dueDate: project.dueDate ?? undefined,
         budget: project.budget ?? '0',
         description: project.description ?? '',
+        assignments: project.projectUsers.map((pu) => ({
+          userId: pu.userId,
+          role: pu.role,
+        })),
       },
     });
 
@@ -60,8 +65,6 @@ export default function EditProject({
       toast.error('Noget gik galt, beklager.');
     }
   }
-
-  console.info(watch());
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -106,23 +109,88 @@ export default function EditProject({
               />
             </div>
           </div>
-          <div className="mt-5 flex gap-5">
-            <div className="flex flex-col">
-              <Label className="mb-2">Startdato</Label>
-              <DatePicker
-                date={watch('startDate') ?? undefined}
-                setDate={(date: Date | undefined) => {
-                  setValue('startDate', date);
-                }}
-              />
-            </div>
+          <div className="mt-5 flex justify-between gap-5">
+            <div className="flex gap-5">
+              <div className="flex flex-col">
+                <Label className="mb-2">Startdato</Label>
+                <DatePicker
+                  date={watch('startDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
+                    setValue('startDate', date);
+                  }}
+                />
+              </div>
 
-            <div className="flex flex-col">
-              <Label className="mb-2">Slutdato</Label>
-              <DatePicker
-                date={watch('dueDate') ?? undefined}
-                setDate={(date: Date | undefined) => {
-                  setValue('dueDate', date);
+              <div className="flex flex-col">
+                <Label className="mb-2">Slutdato</Label>
+                <DatePicker
+                  date={watch('dueDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
+                    setValue('dueDate', date);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-end ">
+              <Label className="mb-2">Projekt Manager</Label>
+              <UserDropdown
+                users={project.projectUsers.map((pu) => pu.user)}
+                placeholder="Vælg Projektmanager"
+                selectedUserId={
+                  watch('assignments')?.find(
+                    (pu) => pu.role === ProjectRole.MANAGER,
+                  )?.userId ?? null
+                }
+                setSelectedUserId={(value) => {
+                  const assignments = getValues('assignments');
+
+                  if (!assignments) {
+                    if (!value) {
+                      return setValue('assignments', []);
+                    }
+                    setValue('assignments', [
+                      {
+                        userId: value,
+                        role: ProjectRole.MANAGER,
+                      },
+                    ]);
+                    return;
+                  }
+
+                  if (!value) {
+                    setValue(
+                      'assignments',
+                      assignments.filter(
+                        (pu) => pu.role !== ProjectRole.MANAGER,
+                      ),
+                    );
+                    return;
+                  }
+
+                  const currentManager = assignments.find(
+                    (pu) => pu.role === ProjectRole.MANAGER,
+                  );
+
+                  if (currentManager) {
+                    setValue('assignments', [
+                      ...assignments.filter(
+                        (pu) => pu.userId !== currentManager.userId,
+                      ),
+                      {
+                        userId: value,
+                        role: ProjectRole.MANAGER,
+                      },
+                    ]);
+                    return;
+                  }
+
+                  setValue('assignments', [
+                    ...assignments,
+                    {
+                      userId: value,
+                      role: ProjectRole.MANAGER,
+                    },
+                  ]);
                 }}
               />
             </div>

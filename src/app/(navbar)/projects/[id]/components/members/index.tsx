@@ -63,7 +63,7 @@ export function ProjectEmployee({
           projectId={project.id}
           setIsOpen={setIsNewOpen}
           refetchProject={refetchProject}
-          projectMemberIds={projectMemberIds}
+          assignments={project.projectUsers}
           employees={allEmployees ?? []}
         />
       )}

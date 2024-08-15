@@ -57,7 +57,7 @@ export async function ProjectService() {
     employeeEmail: string,
     createProjectForm: CreateProjectForm,
   ): Promise<ActionResponse<Project>> {
-    const { projectUserIds, ...rest } = createProjectForm;
+    const { assignments, ...rest } = createProjectForm;
 
     try {
       const creator = await db.user.findUnique({
@@ -95,16 +95,26 @@ export async function ProjectService() {
               id: company.id,
             },
           },
-          projectUsers: projectUserIds
+          projectUsers: assignments
             ? {
-                create: projectUserIds.map((id) => ({ userId: id })),
+                create: assignments.map((assignment) => ({
+                  userId: assignment.userId,
+                  role: assignment.role,
+                })),
               }
             : undefined,
+        },
+        include: {
+          projectUsers: {
+            include: { user: true },
+          },
         },
       });
 
       void sendProjectAssignmentEmail({
-        emails: projectUserIds,
+        emails: project.projectUsers.map(
+          (projectUser) => projectUser.user.email,
+        ),
         project: project.name,
         link: `${env.frontendUrl}/projects/${project.id}`,
       });
@@ -127,7 +137,7 @@ export async function ProjectService() {
     id: string,
     updateProjectForm: UpdateProjectForm,
   ): Promise<ActionResponse<Project>> {
-    const { projectUserIds, ...rest } = updateProjectForm;
+    const { assignments, ...rest } = updateProjectForm;
 
     try {
       const user = await db.user.findUnique({
@@ -183,13 +193,16 @@ export async function ProjectService() {
         where: { id },
         data: {
           ...rest,
-          projectUsers: projectUserIds
+          projectUsers: assignments
             ? {
                 deleteMany: {
                   projectId: id,
                 },
                 createMany: {
-                  data: projectUserIds.map((id) => ({ userId: id })),
+                  data: assignments.map((assignment) => ({
+                    userId: assignment.userId,
+                    role: assignment.role,
+                  })),
                 },
               }
             : undefined,

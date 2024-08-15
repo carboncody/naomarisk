@@ -11,7 +11,8 @@ import { SingleDropdown } from '@components/ui';
 import { PlusMinusButton } from '@components/ui/PlusMinusButton';
 import { Button } from '@components/ui/button';
 import type { UpdateProjectForm } from '@lib/api/types';
-import { type User } from '@models';
+import { ProjectAssignmentForm } from '@lib/api/types/project';
+import { ProjectRole, type User } from '@models';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,7 +21,7 @@ import toast from 'react-hot-toast';
 interface MembersModalProps {
   projectId: string;
   isOpen: boolean;
-  projectMemberIds: string[];
+  assignments: ProjectAssignmentForm[];
   employees: User[];
   refetchProject: () => void;
   setIsOpen: (isOpen: boolean) => void;
@@ -29,7 +30,7 @@ interface MembersModalProps {
 export function MembersModal({
   projectId,
   isOpen,
-  projectMemberIds,
+  assignments,
   employees,
   refetchProject,
   setIsOpen,
@@ -38,7 +39,10 @@ export function MembersModal({
   const { handleSubmit, watch, setValue, getValues } =
     useForm<UpdateProjectForm>({
       defaultValues: {
-        projectUserIds: projectMemberIds,
+        assignments: assignments.map((ass) => ({
+          userId: ass.userId,
+          role: ass.role,
+        })),
       },
     });
 
@@ -63,18 +67,28 @@ export function MembersModal({
 
   function removeMember(id: string) {
     setValue(
-      'projectUserIds',
-      getValues('projectUserIds')?.filter((x) => x !== id),
+      'assignments',
+      getValues('assignments')?.filter(
+        (assignment) => assignment.userId !== id,
+      ),
     );
   }
 
-  function addMember(id: string) {
-    setValue('projectUserIds', [...(getValues('projectUserIds') ?? []), id]);
+  function addMember(id: string, role: ProjectRole) {
+    setValue('assignments', [
+      ...(getValues('assignments') ?? []),
+      {
+        userId: id,
+        role: role,
+      },
+    ]);
     setIsAdding(false);
   }
 
   const projectMembers: User[] = employees.filter((employee) => {
-    return watch('projectUserIds')?.includes(employee.id);
+    return watch('assignments')
+      ?.map((assignment) => assignment.userId)
+      ?.includes(employee.id);
   });
 
   return (

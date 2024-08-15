@@ -13,6 +13,7 @@ import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
 import { type CreateProjectForm } from '@lib/api/types';
+import { ProjectRole } from '@models';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -37,7 +38,12 @@ export default function CreateProjectDialog({
         description: '',
         startDate: new Date(),
         dueDate: undefined,
-        projectUserIds: [myId],
+        assignments: [
+          {
+            userId: myId,
+            role: ProjectRole.MEMBER,
+          },
+        ],
       },
     });
 

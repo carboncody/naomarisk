@@ -1,2 +1,2 @@
-import { SingleDropdown } from './Dropdown';
+import { SingleDropdown } from './abstractions/dropdowns/Dropdown';
 export { SingleDropdown };

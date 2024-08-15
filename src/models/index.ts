@@ -22,6 +22,11 @@ export enum UserStatus {
   Inactive = 'INACTIVE',
 }
 
+export enum ProjectRole {
+  MEMBER = 'MEMBER',
+  MANAGER = 'MANAGER',
+}
+
 // Interfaces
 export interface Company {
   id: string;
@@ -90,6 +95,7 @@ export interface ProjectUser {
   userId: string;
   project: Project;
   projectId: string;
+  role: ProjectRole;
 }
 
 export interface Risk {

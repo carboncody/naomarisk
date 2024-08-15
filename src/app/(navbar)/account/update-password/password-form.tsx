@@ -1,7 +1,7 @@
 'use client';
 import Alert from '@components/ui/Alert';
 import { Input } from '@components/ui/Input';
-import InputErrorMessage from '@components/ui/InputErrorMessage';
+import InputErrorMessage from '@components/ui/abstractions/InputErrorMessage';
 import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
 import { formatError } from '@lib/services/supabase/utils';
