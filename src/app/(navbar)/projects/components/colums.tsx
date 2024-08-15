@@ -15,7 +15,7 @@ import { ArrowUpDown } from 'lucide-react';
 export const columns: ColumnDef<Project>[] = [
   {
     accessorKey: 'riskScore',
-    header: ({ column }) => {
+    header: () => {
       return (
         <Button
           variant="ghost"
