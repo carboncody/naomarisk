@@ -28,10 +28,8 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   }));
 
   const handleRowClick = (risk: Risk) => {
-    console.log(
-      `Navigating to: /projects/${project.id}/risk/${encodeURIComponent(risk.id)}`,
-    );
-    router.push(`/projects/${project.id}/risk/${encodeURIComponent(risk.id)}`);
+    const encodedRiskId = encodeURIComponent(risk.id);
+    router.push(`/projects/${project.id}/risk/${encodedRiskId}`);
   };
 
   const handleEdit = (risk: Risk) => {

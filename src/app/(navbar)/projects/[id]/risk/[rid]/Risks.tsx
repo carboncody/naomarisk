@@ -13,9 +13,10 @@ import { FaComment } from 'react-icons/fa6';
 import { Comments } from './components/comments';
 
 export function Risk() {
-  const pathName = usePathname();
-  const riskId = pathName?.split('/risk/')[1];
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
+  const pathName = usePathname();
+  const riskId = pathName?.split('/').pop();
+  const riskDecodedId = decodeURIComponent(riskId ?? '');
 
   const {
     data: risk,
@@ -23,22 +24,12 @@ export function Risk() {
     isLoading,
     isRefetching,
     refetch,
-  } = useRisk(riskId ?? '');
+  } = useRisk(riskDecodedId);
 
-  // if (isLoading && !isRefetching) {
-  //   return (
-  //     <div className="h-[80vh]">
-  //       <LoadingSpinner size="lg" />
-  //     </div>
-  //   );
-  // }
-
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  if (!riskId || error || !risk) {
+  if ((!riskDecodedId || error) ?? !risk) {
     return <Error statusCode={404} title="Invalid risk id in the URL" />;
   }
 
-  console.log('The risk bieng loaded:', risk);
   return (
     <>
       <div className="py-10">
@@ -104,8 +95,8 @@ export function Risk() {
                   <FaComment className="h-4 w-4" />
                   Kommentartråd
                 </div>
-                <p className="text-Zinc-200 mt-4  text-sm">
-                  <Comments riskId={riskId} comments={risk.comments} />
+                <p className="text-Zinc-200 mt-4 text-sm">
+                  <Comments riskId={riskDecodedId} comments={risk.comments} />
                 </p>
               </div>
             </div>
