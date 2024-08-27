@@ -6,6 +6,7 @@ import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { useProject } from '@lib/api/hooks';
+import { type Phase } from '@models';
 import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -15,10 +16,16 @@ import { RiskChart } from './components/RiskChart';
 import { RiskPieChart } from './components/RiskPieChart';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
+import { DeletePhase } from './components/phase/DeletePhase';
+import EditPhase from './components/phase/EditPhase';
 import { phaseTableColumns } from './components/phase/phaseTableColumns';
 
 export function Project() {
   const pathName = usePathname();
+  const [phaseBeingEdited, setPhaseBeingEdited] = useState<Phase | null>(null);
+  const [phaseBeingDeleted, setPhaseBeingDeleted] = useState<Phase | null>(
+    null,
+  );
   const searchParams = useSearchParams();
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -52,6 +59,14 @@ export function Project() {
   if ((!projectId || error) ?? !project) {
     return <Error statusCode={404} title="Project not found in the url" />;
   }
+
+  const handleEdit = (phase: Phase) => {
+    setPhaseBeingEdited(phase);
+  };
+
+  const handleDelete = (phase: Phase) => {
+    setPhaseBeingDeleted(phase);
+  };
 
   return (
     <>
@@ -180,11 +195,33 @@ export function Project() {
                 <div className="w-full overflow-y-auto rounded-md p-4">
                   <DataTable
                     columns={phaseTableColumns({
+                      handleEdit,
+                      handleDelete,
                       projectId: project.id,
                       risks: project.risks,
                     })}
                     data={project.phases}
                   />
+
+                  {phaseBeingDeleted && (
+                    <DeletePhase
+                      isOpen={!!phaseBeingDeleted}
+                      phaseElement={phaseBeingDeleted}
+                      setPhaseBeingDeleted={setPhaseBeingDeleted}
+                      project={project}
+                      refetch={refetch}
+                    />
+                  )}
+
+                  {phaseBeingEdited && (
+                    <EditPhase
+                      isOpen={!!phaseBeingEdited}
+                      refetch={refetch}
+                      setPhaseBeingEdited={setPhaseBeingEdited}
+                      project={project}
+                      PhaseElement={phaseBeingEdited}
+                    />
+                  )}
                 </div>
               </TabsContent>
             </Tabs>

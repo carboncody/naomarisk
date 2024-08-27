@@ -2,7 +2,7 @@
 
 import { type Phase } from '@prisma/client';
 import { db } from '@server/db';
-import type { ActionResponse } from '../api/types';
+import type { ActionResponse, CreatePhaseForm } from '../api/types';
 
 export async function PhaseService() {
   async function getPhase(id: string) {
@@ -21,7 +21,7 @@ export async function PhaseService() {
 
   async function createPhase(
     projectId: string,
-    data: { name: string; startDate: Date; endDate: Date },
+    data: CreatePhaseForm,
   ): Promise<ActionResponse<Phase>> {
     try {
       const project = await db.project.findUnique({ where: { id: projectId } });

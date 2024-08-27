@@ -50,7 +50,9 @@ export async function ProjectService() {
         projectUsers: {
           include: { user: true },
         },
-        phases: true,
+        phases: {
+          include: { projectRisks: true, mitigationRisks: true },
+        },
         company: true,
       },
     });

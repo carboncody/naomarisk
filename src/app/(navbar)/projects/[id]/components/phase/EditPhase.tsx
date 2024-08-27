@@ -1,32 +1,136 @@
-import { type Phase } from '@models';
-import 'src/components/ui/styles.css';
-import { PhaseDropdown } from './PhaseDropdown';
+'use client';
 
-interface EditPhaseprops {
-  phases: Phase[];
+import { DatePicker } from '@components/ui/DatePickerShadcn';
+import { Input } from '@components/ui/Input';
+import { Button } from '@components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@components/ui/dialog';
+import { Label } from '@components/ui/label';
+import { type UpdatePhaseForm } from '@lib/api/types';
+import { type Project } from '@models';
+import { type Phase } from '@prisma/client';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+
+interface EditPhaseProps {
+  isOpen: boolean;
+  project: Project;
+  setPhaseBeingEdited: (phase: Phase | null) => void;
+  refetch: () => void;
+  PhaseElement: Phase;
 }
 
-export function EditPhase({ phases }: EditPhaseprops) {
+export default function EditPhase({
+  PhaseElement,
+  setPhaseBeingEdited,
+  refetch,
+  isOpen,
+}: EditPhaseProps) {
+  const { register, handleSubmit, watch, setValue } = useForm<UpdatePhaseForm>({
+    defaultValues: {
+      name: PhaseElement.name,
+      startDate: PhaseElement.startDate,
+      endDate: PhaseElement.endDate,
+      description: PhaseElement.description,
+    },
+  });
+  console.log(PhaseElement);
+
+  async function onSubmit(data: UpdatePhaseForm) {
+    try {
+      await axios.patch(`/api/phase/${PhaseElement.id}`, data);
+      toast.success('Phase updated successfully!');
+      refetch();
+      setPhaseBeingEdited(null);
+    } catch (error) {
+      toast.error('Error - something went wrong');
+    }
+  }
+
   return (
-    <div className="w-full rounded-md border p-5 dark:border-zinc-800">
-      <div className="flex gap-5">
-        <div className="w-full">
-          <div className=" mb-4 rounded-md bg-zinc-200 p-3 dark:bg-zinc-800">
-            Projektfase for risiko
+    <Dialog open={isOpen} onOpenChange={() => setPhaseBeingEdited(null)}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="text-black dark:text-white">
+            Edit Phase
+          </DialogTitle>
+        </DialogHeader>
+        <DialogDescription className="text-black dark:text-white">
+          <div className="flex flex-col gap-4">
+            <div className="flex w-full gap-5">
+              <div className="w-full">
+                <Label htmlFor="description">Fase navn</Label>
+                <Input
+                  className="mt-2 w-full"
+                  {...register('name', {
+                    required: {
+                      value: true,
+                      message: 'name is required',
+                    },
+                  })}
+                  id="name"
+                  value={watch('name')}
+                />
+              </div>
+              <div className="w-full">
+                <Label htmlFor="description">Description</Label>
+                <Input
+                  className="mt-2 w-full"
+                  {...register('description', {
+                    required: {
+                      value: true,
+                      message: 'Description is required',
+                    },
+                  })}
+                  id="description"
+                  value={watch('description')}
+                />
+              </div>
+            </div>
+            <div className="flex gap-5">
+              <div className="space-y-1">
+                <Label>Start Dato</Label>
+                <DatePicker
+                  date={watch('startDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
+                    setValue('startDate', date ?? null);
+                  }}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label>Slut Dato</Label>
+                <DatePicker
+                  date={watch('endDate') ?? undefined}
+                  setDate={(date: Date | undefined) => {
+                    setValue('endDate', date ?? null);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-between gap-5">
+              <div className="flex items-center gap-4"></div>
+            </div>
           </div>
-          <div>
-            <PhaseDropdown />
-          </div>
-        </div>
-        <div className="w-full">
-          <div className=" mb-4 rounded-md bg-zinc-200 p-3 dark:bg-zinc-800">
-            Mitigerende projektfase for risiko
-          </div>
-          <div className="w-full">
-            <PhaseDropdown />
-          </div>
-        </div>
-      </div>
-    </div>
+        </DialogDescription>
+        <DialogFooter>
+          <Button
+            variant="destructive"
+            onClick={() => setPhaseBeingEdited(null)}
+          >
+            Close
+          </Button>
+          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+            Save
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

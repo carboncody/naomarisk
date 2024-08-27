@@ -69,7 +69,7 @@ async function main() {
       }
 
       // Create phases for the project
-      const numPhases = faker.number.int({ min: 3, max: 6 });
+      const numPhases = 5;
       const startDate = project.startDate ? dayjs(project.startDate) : dayjs();
       const endDate = project.dueDate
         ? dayjs(project.dueDate)
@@ -86,7 +86,14 @@ async function main() {
 
         await prisma.phase.create({
           data: {
-            name: `Phase ${p + 1}`,
+            name: faker.helpers.arrayElement([
+              'Description',
+              'Projektering',
+              'Program',
+              'Udførelse',
+              'Afslutning',
+            ]),
+            description: faker.lorem.sentence(),
             startDate: phaseStartDate,
             endDate: phaseEndDate,
             projectId: project.id,

@@ -173,7 +173,8 @@ export const riskTableColumns = ({
         </Button>
       );
     },
-    cell: ({}) => {
+    cell: ({ row }) => {
+      // console.log('phase', row.original.);
       return <PhaseProgressBar riskPhase={1} mitigatingPhase={3} />;
     },
   },

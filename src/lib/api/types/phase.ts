@@ -1,5 +1,8 @@
 export type CreatePhaseForm = {
   name: string;
-  startDate: Date;
-  endDate: Date;
+  description: string;
+  startDate: Date | null;
+  endDate: Date | null;
 };
+
+export type UpdatePhaseForm = Partial<CreatePhaseForm>;

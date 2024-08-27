@@ -135,6 +135,7 @@ export interface Phase {
   createdAt: Date;
   updatedAt: Date;
   name: string;
+  description: string;
   startDate: Date;
   endDate: Date;
   project: Project;
