@@ -12,6 +12,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
 import { Comments } from './components/comments';
+import { EditPhase } from '@components/phase/EditPhase';
 
 export function Risk() {
   const pathName = usePathname();
@@ -116,6 +117,9 @@ export function Risk() {
                 <p className="text-Zinc-200 mt-4  text-sm">
                   <Comments riskId={riskId} comments={risk.comments} />
                 </p>
+                <div className='mt-10'>
+                  <EditPhase />
+                </div>
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { PhaseProgressBar } from '@components/phase/PhaseProgressBar';
 import {
   ColorMap,
   RiskMap,
@@ -157,6 +158,24 @@ export const columns = ({
         <span>{row.original.description}</span>
       </div>
     ),
+  },
+  {
+    accessorKey: 'phase',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Projekt Fase
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({}) => {
+      return <PhaseProgressBar riskPhase={1} mitigatingPhase={3} />;
+    },
   },
   {
     accessorKey: 'activity',

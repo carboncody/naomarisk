@@ -14,6 +14,7 @@ import { RiskChart } from './components/RiskChart';
 import { RiskPieChart } from './components/RiskPieChart';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
+import { EditPhase } from '@components/phase/EditPhase';
 
 export function Project() {
   const pathName = usePathname();
@@ -21,7 +22,7 @@ export function Project() {
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
-    'overview' | 'risks' | 'employees'
+    'overview' | 'risks' | 'employees'| 'phases'
   >('risks');
 
   useEffect(() => {
@@ -59,7 +60,7 @@ export function Project() {
             <Tabs
               value={selectedTab}
               onValueChange={(tab) =>
-                setSelectedTab(tab as 'risks' | 'overview' | 'employees')
+                setSelectedTab(tab as 'risks' | 'overview' | 'employees'| 'phases')
               }
               className="mb-5"
             >
@@ -69,6 +70,7 @@ export function Project() {
                 <TabsTrigger value="employees">
                   Medarbejdertildeling
                 </TabsTrigger>
+                <TabsTrigger value="phases">Projektfase</TabsTrigger>
               </TabsList>
               <TabsContent value="overview">
                 <div className="flex w-full gap-4">
@@ -140,7 +142,7 @@ export function Project() {
                           <p className="mt-4 text-xl font-normal">
                             Risici i projektet: {project.risks.length}
                           </p>
-                          <div className="mt-2 flex w-full items-center gap-5">
+                          <div className="mt-2 flex w-full items-center gap-5 cursor-pointer">
                             <RiskPieChart project={project} />
                           </div>
                         </div>
@@ -169,6 +171,11 @@ export function Project() {
               <TabsContent value="risks">
                 <div className="w-full overflow-y-auto rounded-md p-4">
                   <Risks project={project} />
+                </div>
+              </TabsContent>
+              <TabsContent value="phases">
+                <div className="w-full overflow-y-auto rounded-md p-4">
+                  <EditPhase />
                 </div>
               </TabsContent>
             </Tabs>
