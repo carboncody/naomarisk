@@ -6,6 +6,7 @@ import type { CreateRiskForm } from './risk';
 import type { CreateUserForm, UpdateUserForm } from './user';
 
 export * from './comment';
+export * from './phase';
 export type {
   ActionResponse,
   CreateCompanyForm,
