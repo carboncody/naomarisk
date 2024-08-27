@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { PrismaClient, RiskStatus, UserRole } from '@prisma/client';
+import dayjs from 'dayjs';
 
 const prisma = new PrismaClient();
 
@@ -67,6 +68,38 @@ async function main() {
         });
       }
 
+      // Create phases for the project
+      const numPhases = faker.number.int({ min: 3, max: 6 });
+      const startDate = project.startDate ? dayjs(project.startDate) : dayjs();
+      const endDate = project.dueDate
+        ? dayjs(project.dueDate)
+        : startDate.add(1, 'month');
+      const phaseDuration = endDate.diff(startDate) / numPhases;
+
+      let currentDate = startDate;
+
+      for (let p = 0; p < numPhases; p++) {
+        const phaseStartDate = currentDate.toDate();
+        const phaseEndDate = currentDate
+          .add(phaseDuration, 'millisecond')
+          .toDate();
+
+        await prisma.phase.create({
+          data: {
+            name: `Phase ${p + 1}`,
+            startDate: phaseStartDate,
+            endDate: phaseEndDate,
+            projectId: project.id,
+          },
+        });
+
+        currentDate = dayjs(phaseEndDate);
+      }
+
+      const phases = await prisma.phase.findMany({
+        where: { projectId: project.id },
+      });
+
       for (let l = 0; l < 10; l++) {
         await prisma.risk.create({
           data: {
@@ -80,13 +113,16 @@ async function main() {
             ]),
             projectId: project.id,
             riskOwnerUserId: faker.helpers.arrayElement(users).id,
+            projectPhaseId: faker.helpers.arrayElement(phases).id,
+            mitigationPhaseId:
+              faker.helpers.arrayElement([...phases, null])?.id ?? null,
           },
         });
       }
     }
   }
 
-  console.info('Database seeded successfull! 🎉🎉🎉');
+  console.info('Database seeded successfully! 🎉🎉🎉');
 }
 
 main()
@@ -94,6 +130,7 @@ main()
     await prisma.$disconnect();
   })
   .catch(async (e) => {
+    console.error(e);
     await prisma.$disconnect();
-    throw e;
+    process.exit(1);
   });
