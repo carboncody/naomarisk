@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { PhaseProgressBar } from '@components/phase/PhaseProgressBar';
+import { PhaseProgressBar } from '@app/(navbar)/projects/[id]/components/phase/PhaseProgressBar';
 import {
   ColorMap,
   RiskMap,
@@ -36,7 +36,7 @@ interface ColumnParams {
   projectId: string;
 }
 
-export const columns = ({
+export const riskTableColumns = ({
   handleEdit,
   handleDelete,
   projectId,

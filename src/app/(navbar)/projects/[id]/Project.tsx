@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EditProject from '@app/(navbar)/projects/[id]/components/EditProjectModal';
 import LoadingSpinner from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
+import { DataTable } from '@components/ui/data-table';
 import { useProject } from '@lib/api/hooks';
 import dayjs from 'dayjs';
 import Error from 'next/error';
@@ -14,7 +15,7 @@ import { RiskChart } from './components/RiskChart';
 import { RiskPieChart } from './components/RiskPieChart';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
-import { EditPhase } from '@components/phase/EditPhase';
+import { phaseTableColumns } from './components/phase/phaseTableColumns';
 
 export function Project() {
   const pathName = usePathname();
@@ -22,7 +23,7 @@ export function Project() {
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
-    'overview' | 'risks' | 'employees'| 'phases'
+    'overview' | 'risks' | 'employees' | 'phases'
   >('risks');
 
   useEffect(() => {
@@ -60,7 +61,9 @@ export function Project() {
             <Tabs
               value={selectedTab}
               onValueChange={(tab) =>
-                setSelectedTab(tab as 'risks' | 'overview' | 'employees'| 'phases')
+                setSelectedTab(
+                  tab as 'risks' | 'overview' | 'employees' | 'phases',
+                )
               }
               className="mb-5"
             >
@@ -142,7 +145,7 @@ export function Project() {
                           <p className="mt-4 text-xl font-normal">
                             Risici i projektet: {project.risks.length}
                           </p>
-                          <div className="mt-2 flex w-full items-center gap-5 cursor-pointer">
+                          <div className="mt-2 flex w-full cursor-pointer items-center gap-5">
                             <RiskPieChart project={project} />
                           </div>
                         </div>
@@ -175,7 +178,13 @@ export function Project() {
               </TabsContent>
               <TabsContent value="phases">
                 <div className="w-full overflow-y-auto rounded-md p-4">
-                  <EditPhase />
+                  <DataTable
+                    columns={phaseTableColumns({
+                      projectId: project.id,
+                      risks: project.risks,
+                    })}
+                    data={project.phases}
+                  />
                 </div>
               </TabsContent>
             </Tabs>

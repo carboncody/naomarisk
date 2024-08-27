@@ -27,12 +27,12 @@ export function PhaseProgressBar({
         <div>
           <div className="flex gap-1 rounded-md">
             {Array.from({ length: totalPhases }, (_, index) => {
-              let bgColor = 'bg-zinc-300 dark:bg-zinc-500 border'; 
+              let bgColor = 'bg-zinc-300 dark:bg-zinc-500 border';
 
               if (index < riskPhase) {
-                bgColor = 'bg-blue-400 dark:bg-blue-500'; 
+                bgColor = 'bg-blue-400 dark:bg-blue-500';
               } else if (index < mitigatingPhase) {
-                bgColor = 'bg-white dark:bg-zinc-200 border'; 
+                bgColor = 'bg-white dark:bg-zinc-200 border';
               }
 
               return (
@@ -46,12 +46,16 @@ export function PhaseProgressBar({
         </div>
       </HoverCardTrigger>
       <HoverCardContent>
-        <div className="bg-white dark:bg-zinc-800 p-3 rounded-md shadow-md">
+        <div className="rounded-md bg-white p-3 shadow-md dark:bg-zinc-800">
           <div>
-            <strong>Risiko fase:</strong> <span className="text-blue-500 dark:text-blue-400">{phaseLabels[riskPhase - 1]}</span>
+            <strong>Risiko fase:</strong>{' '}
+            <span className="text-blue-500 dark:text-blue-400">
+              {phaseLabels[riskPhase - 1]}
+            </span>
           </div>
           <div>
-            <strong>Mitigerende fase:</strong> <span>{phaseLabels[mitigatingPhase - 1]}</span>
+            <strong>Mitigerende fase:</strong>{' '}
+            <span>{phaseLabels[mitigatingPhase - 1]}</span>
           </div>
         </div>
       </HoverCardContent>

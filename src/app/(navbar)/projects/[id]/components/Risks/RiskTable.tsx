@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { DeleteRisk } from './DeleteRisk';
 import EditRisk from './EditRisk';
-import { columns } from './colums';
+import { riskTableColumns } from './riskTableColumns';
 
 interface RiskTableProps {
   refetch: () => void;
@@ -42,7 +42,11 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   return (
     <>
       <DataTable
-        columns={columns({ handleEdit, handleDelete, projectId: project.id })}
+        columns={riskTableColumns({
+          handleEdit,
+          handleDelete,
+          projectId: project.id,
+        })}
         data={rows}
         onRowClick={handleRowClick}
       />
