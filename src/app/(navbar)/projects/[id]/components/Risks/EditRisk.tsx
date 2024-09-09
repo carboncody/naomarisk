@@ -162,8 +162,8 @@ export default function EditRisk({
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <span>Status {'->'}</span>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Status</span>
                   <SingleDropdown
                     options={StatusDropdownOptions}
                     buttonLabel={
@@ -177,8 +177,8 @@ export default function EditRisk({
                     }
                   />
                 </div>
-                <div className="flex items-center gap-2">
-                  <span>Risk Owner {'->'}</span>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Risko Ejer</span>
                   <SingleDropdown
                     options={
                       projectMembers
@@ -199,6 +199,35 @@ export default function EditRisk({
                     selectedValue={watch('riskOwnerUserId') ?? null}
                     setSelectedValue={(value) =>
                       setValue('riskOwnerUserId', value)
+                    }
+                  />
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Fase</span>
+                  <SingleDropdown
+                    options={project.phases.map((phase) => ({
+                      label: phase.name,
+                      value: phase.id,
+                    }))}
+                    buttonLabel={'Vælg fase'}
+                    selectedValue={watch('projectPhase') ?? null}
+                    setSelectedValue={(value) =>
+                      value && setValue('projectPhase', value as projectPhase)
+                    }
+                  />
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Mitigrerende Fase</span>
+                  <SingleDropdown
+                    options={project.phases.map((phase) => ({
+                      label: phase.name,
+                      value: phase.id,
+                    }))}
+                    buttonLabel={'Vælg mitigrerende Fase'}
+                    selectedValue={watch('mitigatingPhase') ?? null}
+                    setSelectedValue={(value) =>
+                      value &&
+                      setValue('mitigatingPhase', value as mitigationPhase)
                     }
                   />
                 </div>

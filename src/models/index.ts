@@ -141,4 +141,5 @@ export interface Phase {
   projectId: string;
   projectRisks: Risk[];
   mitigationRisks: Risk[];
+  description: string;
 }
