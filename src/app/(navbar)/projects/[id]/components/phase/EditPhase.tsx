@@ -13,8 +13,7 @@ import {
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
 import { type UpdatePhaseForm } from '@lib/api/types';
-import { type Project } from '@models';
-import { type Phase } from '@prisma/client';
+import type { Phase, Project } from '@models';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -24,11 +23,11 @@ interface EditPhaseProps {
   project: Project;
   setPhaseBeingEdited: (phase: Phase | null) => void;
   refetch: () => void;
-  PhaseElement: Phase;
+  phaseElement: Phase;
 }
 
 export default function EditPhase({
-  PhaseElement,
+  phaseElement,
   setPhaseBeingEdited,
   refetch,
 
@@ -36,17 +35,16 @@ export default function EditPhase({
 }: EditPhaseProps) {
   const { register, handleSubmit, watch, setValue } = useForm<UpdatePhaseForm>({
     defaultValues: {
-      name: PhaseElement.name,
-      startDate: PhaseElement.startDate,
-      endDate: PhaseElement.endDate,
-      description: PhaseElement.description ?? '',
+      name: phaseElement.name,
+      startDate: phaseElement.startDate,
+      endDate: phaseElement.endDate,
+      description: phaseElement.description ?? '',
     },
   });
-  console.log(PhaseElement);
 
   async function onSubmit(data: UpdatePhaseForm) {
     try {
-      await axios.patch(`/api/phase/${PhaseElement.id}`, data);
+      await axios.patch(`/api/phase/${phaseElement.id}`, data);
       toast.success('Phase updated successfully!');
       refetch();
       setPhaseBeingEdited(null);

@@ -14,7 +14,7 @@ import {
 import { Label } from '@components/ui/label';
 import { type CreatePhaseForm } from '@lib/api/types'; // Ensure you have a type for CreatePhaseForm
 import { type Project } from '@models';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -42,19 +42,11 @@ export default function CreatePhase({
 
   async function onSubmit(data: CreatePhaseForm) {
     try {
-      console.log('ProjetID:', project.id);
-      console.log('data:', data);
       await axios.post(`/api/phase/${project.id}`, data);
       toast.success('Phase created successfully!');
       refetch();
       setIsOpen(false);
     } catch (error) {
-      if (error instanceof AxiosError && error.response?.status === 409) {
-        toast.error(
-          'An error occurred while creating a unique ID for the phase. Please try again.',
-        );
-        return;
-      }
       toast.error('Error - something went wrong!');
     }
   }
@@ -105,7 +97,9 @@ export default function CreatePhase({
                 <DatePicker
                   date={watch('startDate') ?? undefined}
                   setDate={(date: Date | undefined) => {
-                    setValue('startDate', date ?? undefined);
+                    if (date) {
+                      setValue('startDate', date);
+                    }
                   }}
                 />
               </div>
@@ -114,7 +108,9 @@ export default function CreatePhase({
                 <DatePicker
                   date={watch('endDate') ?? undefined}
                   setDate={(date: Date | undefined) => {
-                    setValue('endDate', date ?? undefined);
+                    if (date) {
+                      setValue('endDate', date);
+                    }
                   }}
                 />
               </div>

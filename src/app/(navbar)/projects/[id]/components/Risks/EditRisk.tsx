@@ -210,9 +210,9 @@ export default function EditRisk({
                       value: phase.id,
                     }))}
                     buttonLabel={'Vælg fase'}
-                    selectedValue={watch('projectPhase') ?? null}
+                    selectedValue={watch('projectPhaseId') ?? null}
                     setSelectedValue={(value) =>
-                      value && setValue('projectPhase', value as projectPhase)
+                      setValue('projectPhaseId', value)
                     }
                   />
                 </div>
@@ -224,10 +224,9 @@ export default function EditRisk({
                       value: phase.id,
                     }))}
                     buttonLabel={'Vælg mitigrerende Fase'}
-                    selectedValue={watch('mitigatingPhase') ?? null}
+                    selectedValue={watch('mitigationPhaseId') ?? null}
                     setSelectedValue={(value) =>
-                      value &&
-                      setValue('mitigatingPhase', value as mitigationPhase)
+                      setValue('mitigationPhaseId', value)
                     }
                   />
                 </div>

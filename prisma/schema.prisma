@@ -176,12 +176,13 @@ model Comment {
 }
 
 model Phase {
-  id        String   @id @default(uuid())
-  name      String
-  startDate DateTime
-  endDate   DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  name        String
+  startDate   DateTime
+  description String?
+  endDate     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   project   Project @relation(fields: [projectId], references: [id])
   projectId String

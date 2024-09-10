@@ -68,7 +68,7 @@ export function PhaseTable({ project, refetch }: PhaseTableProps) {
             refetch={refetch}
             setPhaseBeingEdited={setPhaseBeingEdited}
             project={project}
-            PhaseElement={phaseBeingEdited}
+            phaseElement={phaseBeingEdited}
           />
         )}
         <CreatePhase

@@ -38,9 +38,7 @@ export function Risk() {
     return <Error statusCode={404} title="Invalid risk id in the URL" />;
   }
 
-  //calculate riscscore = consequence * probability
-
-  const riscscore = risk.consequence * risk.probability;
+  const riscscore = (risk.consequence ?? 0) * (risk.probability ?? 0);
 
   return (
     <>
@@ -77,8 +75,8 @@ export function Risk() {
                   <div>
                     <span className="mt-2 font-semibold">Risiko Manager:</span>
                     <span className="ml-1 font-light">
-                      {risk.riskmanager?.fullName
-                        ? risk.riskmanager.fullName
+                      {risk.riskowner
+                        ? risk.riskowner.fullName
                         : 'Ingen Manager'}
                     </span>
                   </div>
