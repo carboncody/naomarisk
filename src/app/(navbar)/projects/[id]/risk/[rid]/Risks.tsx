@@ -38,6 +38,8 @@ export function Risk() {
     return <Error statusCode={404} title="Invalid risk id in the URL" />;
   }
 
+  const riscscore = (risk.consequence ?? 0) * (risk.probability ?? 0);
+
   return (
     <>
       <div className="py-10">
@@ -52,11 +54,16 @@ export function Risk() {
                 >
                   Rediger Risk
                 </Button>
-                <div className="flex gap-8">
-                  <div>
-                    <span className="mt-2 font-semibold">Risk ID:</span>
-                    <span className="ml-1 font-light">{risk.customId}</span>
-                  </div>
+                <div>
+                  <span className="mt-2 font-semibold">Risk ID:</span>
+                  <span className="ml-1 font-light">{risk.customId}</span>
+                </div>
+
+                <div>
+                  <p className="mt-2 font-semibold">Beskrivelse:</p>
+                  <p className="font-light">{risk.description}</p>
+                </div>
+                <div className="mt-6 flex gap-8">
                   <div>
                     <span className="mt-2 font-semibold">Risiko Ejer:</span>
                     <span className="ml-1 font-light">
@@ -65,10 +72,16 @@ export function Risk() {
                         : 'Ingen ejer'}
                     </span>
                   </div>
+                  <div>
+                    <span className="mt-2 font-semibold">Risiko Manager:</span>
+                    <span className="ml-1 font-light">
+                      {risk.riskowner
+                        ? risk.riskowner.fullName
+                        : 'Ingen Manager'}
+                    </span>
+                  </div>
                 </div>
-                <p className="mt-2 font-semibold">Beskrivelse:</p>
-                <p className="font-light">{risk.description}</p>
-                <div className="mt-2 flex gap-10 font-semibold">
+                <div className="mt-6 flex gap-10 font-semibold">
                   <p>
                     Dato for oprettelse:
                     <br />
@@ -85,24 +98,50 @@ export function Risk() {
                     </p>
                   </p>
                 </div>
-                <div className="mt-2 flex gap-10 font-light">
-                  <p>
-                    <span className="font-semibold">Konsekvens:</span>
-                    <span className="ml-1 font-light">{risk.consequence}</span>
+                <div className="mt-6 flex gap-10 font-light">
+                  <p className="flex flex-col">
+                    <p>
+                      <span className="font-semibold">Konsekvens:</span>
+                      <span className="ml-1 font-light">
+                        {risk.consequence}
+                      </span>
+                    </p>
+                    <p>
+                      <span className="font-semibold">Sandsynlighed:</span>
+                      <span className="ml-1 font-light">
+                        {risk.probability}
+                      </span>
+                    </p>
                   </p>
 
                   <p>
-                    <span className="font-semibold">Sandsynlighed:</span>
-                    <span className="ml-1 font-light">{risk.probability}</span>
+                    <span className="font-semibold">Risikoscore:</span>
+                    <span className="ml-1 font-light">{riscscore}</span>
                   </p>
                 </div>
                 <div className="mt-4 border-t border-zinc-300 pt-2 font-semibold dark:border-zinc-700">
-                  <p className="lex mt-2 flex-wrap items-center gap-2">
-                    <span>Aktivitet</span>
-                    <span className="ml-2 font-light">
-                      {risk.activity ?? 'Ingen'}
-                    </span>
+                  <p className="mt-2 flex flex-wrap items-center justify-between">
+                    <div className="overflow-x-clip truncate">
+                      <span>Aktivitet:</span>
+                      <span className="ml-2 font-light">
+                        {risk.activity ?? 'Ingen aktivitet'}
+                      </span>
+                    </div>
                   </p>
+                  <div className="flex gap-3 ">
+                    <span>
+                      <span className="font-semibold">Fase:</span>
+                      <span className="ml-2 font-light">
+                        {risk.projectPhase?.name ?? 'Ingen fase'}
+                      </span>
+                    </span>
+                    <span>
+                      <span className="font-semibold">Mitigrerende fase:</span>
+                      <span className="ml-2 font-light">
+                        {risk.mitigationPhase?.name ?? 'Ingen fase'}
+                      </span>
+                    </span>
+                  </div>
                 </div>
                 <div className="mt-10">
                   <SingleRiskMatrix risk={risk} />

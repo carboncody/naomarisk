@@ -18,6 +18,7 @@ export async function ProjectService() {
         projectUsers: {
           include: { user: true },
         },
+        phases: true,
         company: true,
       },
     });
@@ -35,6 +36,7 @@ export async function ProjectService() {
         projectUsers: {
           include: { user: true },
         },
+        phases: true,
         company: true,
       },
     });
@@ -47,6 +49,9 @@ export async function ProjectService() {
         risks: true,
         projectUsers: {
           include: { user: true },
+        },
+        phases: {
+          include: { mitigationRisks: true, projectRisks: true },
         },
         company: true,
       },
@@ -198,6 +203,7 @@ export async function ProjectService() {
           projectUsers: {
             include: { user: true },
           },
+          phases: true,
         },
       });
 

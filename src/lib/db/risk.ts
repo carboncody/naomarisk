@@ -52,6 +52,8 @@ export async function RiskService() {
           projectId,
           probability: data.probability ? +data.probability : null,
           consequence: data.consequence ? +data.consequence : null,
+          projectPhaseId: data.projectPhaseId ?? null,
+          mitigationPhaseId: data.mitigationPhaseId ?? null,
         },
         include: { riskowner: true },
       });
@@ -89,6 +91,8 @@ export async function RiskService() {
         ...data,
         probability: data.probability ? +data.probability : null,
         consequence: data.consequence ? +data.consequence : null,
+        projectPhaseId: data.projectPhaseId ?? null,
+        mitigationPhaseId: data.mitigationPhaseId ?? null,
       },
       include: { riskowner: true },
     });

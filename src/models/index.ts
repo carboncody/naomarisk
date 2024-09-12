@@ -81,6 +81,7 @@ export interface Project {
   companyId: string;
   risks: Risk[];
   projectUsers: ProjectUser[];
+  phases: Phase[];
 }
 
 export interface ProjectUser {
@@ -109,6 +110,10 @@ export interface Risk {
   projectId: string;
   riskOwnerUserId: string;
   user: User[];
+  mitigationPhase: Phase;
+  mitigationPhaseId: string;
+  projectPhase: Phase;
+  projectPhaseId: string;
 }
 
 export interface Comment {
@@ -123,4 +128,18 @@ export interface Comment {
   resolvedBy: User | null;
   risk: Risk;
   riskId: string;
+}
+
+export interface Phase {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  project: Project;
+  projectId: string;
+  projectRisks: Risk[];
+  mitigationRisks: Risk[];
+  description: string;
 }
