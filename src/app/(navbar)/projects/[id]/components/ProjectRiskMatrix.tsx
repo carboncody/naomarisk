@@ -32,4 +32,3 @@ export function ProjectRiskMatrix({ projectId, risks }: Props) {
     </Card>
   );
 }
-
