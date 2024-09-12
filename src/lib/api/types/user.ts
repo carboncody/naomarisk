@@ -4,7 +4,7 @@ export type CreateUserForm = {
   fullName: string;
   email: string;
   jobDescription?: string;
-  role: UserRole;
+  role?: UserRole;
   company?: string;
   cvr?: string;
 };

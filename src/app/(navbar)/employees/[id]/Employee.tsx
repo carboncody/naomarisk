@@ -1,12 +1,10 @@
 'use client';
 
 import LoadingSpinner from '@components/ui/LoadSpinner';
-import { Card, CardContent, CardTitle } from '@components/ui/card';
 import { useEmployee } from '@lib/api/hooks/users/useEmployee';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import CompanySettings from './components/CompanySettings';
-import { ProjectEmployeeChart } from './components/ProjectEmployeeChart';
 import UserInfo from './components/UserInfo';
 
 export function Employee() {
@@ -41,23 +39,10 @@ export function Employee() {
 
   return (
     <>
-      <div className="flex w-full items-center justify-center gap-36 p-5">
-        <div className="flex flex-col items-center justify-center gap-5">
-          <Card className="border dark:border-transparent">
-            <CardTitle className="p-5">{employee.fullName}</CardTitle>
-            <CardContent> Position: {employee.role}</CardContent>
-          </Card>
-          <Card className="flex h-[200px] w-full items-center  justify-center ">
-            <CardContent>
-              <div>Profile picture</div>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="w-1/3">
-          <ProjectEmployeeChart employee={employee} />
-        </div>
+      <div className="justify-left flex w-full items-center  p-5">
+        <span className="text-3xl font-medium">Instillinger for brugeren:</span>
+        <span className="text-3xl font-light">{employee.fullName}</span>
       </div>
-      <hr className="m-5 h-px border-0 bg-zinc-300 dark:bg-zinc-700" />
       <div className=" flex w-full flex-col gap-5 p-5 md:flex-row">
         <UserInfo employee={employee} refetch={refetch} />
         <CompanySettings employee={employee} refetch={refetch} />

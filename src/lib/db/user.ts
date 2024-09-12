@@ -31,7 +31,14 @@ export async function UserService() {
   async function getUserFromEmail(
     email: string,
   ): Promise<ActionResponse<User>> {
-    const user = await db.user.findUnique({ where: { email } });
+    const user = await db.user.findUnique({
+      where: { email },
+      include: {
+        projectUsers: {
+          include: { project: true },
+        },
+      },
+    });
 
     if (!user) {
       return {

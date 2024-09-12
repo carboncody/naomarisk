@@ -8,14 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@components/ui/card';
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Rectangle,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import {
   ChartContainer,
   ChartLegend,
@@ -35,32 +28,10 @@ export function ProjectEmployeeChart({
   project,
   employee,
 }: ProjectEmployeeChartProps) {
-  //   const router = useRouter();
-  //   const riskData = useMemo<RiskData[]>(() => {
-  //     return Object.keys(RiskMap).map((riskscore) => {
-  //       const score = Number(riskscore);
-  //       const antal = project.risks.filter((risk: Risk) =>
-  //         risk.probability && risk.consequence
-  //           ? risk.probability * risk.consequence === score
-  //           : false,
-  //       ).length;
-
-  //       const riskThreshold = RiskMap[score];
-  //       const color = ColorMap[riskThreshold! as Thresholds];
-
-  //       return {
-  //         name: riskscore,
-  //         fillColor: color,
-  //         antal,
-  //       };
-  //     });
-  //   }, [project]);
-
-  //   const chartConfig = {
-  //     Risici: {
-  //       label: 'Risici',
-  //     },
-  //   } satisfies ChartConfig;
+  // console.info(
+  //   'employee: ',
+  //   employee.projectUsers.map((p) => p.project),
+  // );
 
   const chartData = [
     { month: 'January', risk: 5 },
@@ -78,23 +49,19 @@ export function ProjectEmployeeChart({
     },
   } satisfies ChartConfig;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const CustomBarShape = (props: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { x, y, width, height, fillColor } = props;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    return (
-      <Rectangle
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        fill={fillColor}
-        radius={4}
-        className="hover:cursor-pointer"
-      />
-    );
-  };
+  // const CustomBarShape = (props: any) => {
+  //   return (
+  //     <Rectangle
+  //       x={x}
+  //       y={y}
+  //       width={width}
+  //       height={height}
+  //       fill={fillColor}
+  //       radius={4}
+  //       className="hover:cursor-pointer"
+  //     />
+  //   );
+  // };
 
   return (
     <Card className="flex flex-col rounded-xl border-0 bg-white shadow-none dark:bg-zinc-950">
@@ -135,20 +102,7 @@ export function ProjectEmployeeChart({
               cursor={{ opacity: 0.2 }}
             />
             <Bar dataKey="risk" fill="var(--color-risk)" radius={4} />
-            <Bar
-              dataKey="mobile"
-              fill="var(--color-mobile)"
-              radius={4}
-              //   shape={<CustomBarShape />}
-              //   onClick={(e) => {
-              //     const typedEvent = e as unknown as { name: string };
-              //     if (typedEvent.name) {
-              //       router.push(
-              //         `/projects/${project.id}?view=risks&score=${typedEvent.name}`,
-              //       );
-              //     }
-              //   }}
-            />
+            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
             <ChartLegend content={<ChartLegendContent />} />
           </BarChart>
         </ChartContainer>
