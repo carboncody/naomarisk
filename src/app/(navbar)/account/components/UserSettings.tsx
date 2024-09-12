@@ -18,7 +18,13 @@ export default function UserSettings({ me, refetchMe }: UserSettingsProps) {
   const { register, handleSubmit, watch, reset } = useForm<UpdateUserForm>();
 
   useEffect(() => {
-    reset(me);
+    reset({
+      fullName: me.fullName,
+      jobDescription: me.jobDescription,
+      email: me.email,
+      role: me.role,
+      company: me.companyId,
+    });
   }, [me, reset]);
 
   async function onSubmit(data: UpdateUserForm) {

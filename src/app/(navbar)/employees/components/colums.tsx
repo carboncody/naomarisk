@@ -17,6 +17,26 @@ interface ColumnParams {
 
 export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
   {
+    accessorKey: 'name',
+    header: ({ column }) => {
+      return (
+        <Button
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Navn
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="truncate">
+        <span>{row.original.fullName}</span>
+      </div>
+    ),
+  },
+  {
     accessorKey: 'email',
     header: ({ column }) => {
       return (
@@ -34,16 +54,6 @@ export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
       <div className="flex flex-col ">
         <span>{row.original.email}</span>
         <span className="text-Zinc-400">{row.original.jobDescription}</span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'name',
-    header: 'Navn',
-
-    cell: ({ row }) => (
-      <div className="truncate">
-        <span>{row.original.fullName}</span>
       </div>
     ),
   },

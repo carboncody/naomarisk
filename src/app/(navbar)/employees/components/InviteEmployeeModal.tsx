@@ -113,7 +113,7 @@ export default function InviteEmployee({
             <SingleDropdown
               options={RoleActionDropdownOptions}
               buttonLabel={'Roller'}
-              selectedValue={watch('role')}
+              selectedValue={watch('role')!}
               setSelectedValue={(value) => {
                 if (!value) return;
                 setValue('role', value as UserRole);

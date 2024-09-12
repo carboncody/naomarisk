@@ -77,7 +77,7 @@ export async function UserService() {
     editorEmail: string,
     updateUserForm: UpdateUserForm,
   ): Promise<ActionResponse<User>> {
-    const { fullName, email, jobDescription, role } = updateUserForm;
+    const { fullName, jobDescription, role } = updateUserForm;
 
     try {
       const user = await db.user.findUnique({
@@ -152,11 +152,11 @@ export async function UserService() {
           },
         };
       }
-      const createUser = await db.user.create({
+      const createUser: User = await db.user.create({
         data: {
           email: data.email,
           fullName: data.email,
-          role: data.role,
+          role: data.role ?? UserRole.Owner,
           company: {
             connect: { id: creatorsCompany.companyId },
           },

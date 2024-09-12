@@ -12,9 +12,16 @@ import {
   DialogTitle,
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
+import { Textarea } from '@components/ui/textarea';
 import { useEmployees } from '@lib/api/hooks';
 import { type UpdateRiskForm } from '@lib/api/types/risk';
-import { RiskStatus, type Project, type Risk, type User } from '@models';
+import {
+  ProjectStatus,
+  RiskStatus,
+  type Project,
+  type Risk,
+  type User,
+} from '@models';
 import axios from 'axios';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -109,7 +116,7 @@ export default function EditRisk({
             <div className="flex w-full gap-5">
               <div className="w-full">
                 <Label htmlFor="activity">Activity</Label>
-                <Input
+                <Textarea
                   className="mt-2 w-full"
                   {...register('activity')}
                   id="activity"
@@ -155,8 +162,8 @@ export default function EditRisk({
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <span>Status {'->'}</span>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Status</span>
                   <SingleDropdown
                     options={StatusDropdownOptions}
                     buttonLabel={
@@ -164,14 +171,14 @@ export default function EditRisk({
                         (option) => option.value === watch('status'),
                       )?.label ?? 'Select Status'
                     }
-                    selectedValue={watch('status')}
+                    selectedValue={watch('status') ?? ProjectStatus.Planning}
                     setSelectedValue={(value) =>
-                      setValue('status', value as RiskStatus)
+                      value && setValue('status', value as RiskStatus)
                     }
                   />
                 </div>
-                <div className="flex items-center gap-2">
-                  <span>Risk Owner {'->'}</span>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Risko Ejer</span>
                   <SingleDropdown
                     options={
                       projectMembers
@@ -189,9 +196,37 @@ export default function EditRisk({
                           )?.email
                         : 'Select Employee'
                     }
-                    selectedValue={watch('riskOwnerUserId')}
+                    selectedValue={watch('riskOwnerUserId') ?? null}
                     setSelectedValue={(value) =>
-                      value && setValue('riskOwnerUserId', value)
+                      setValue('riskOwnerUserId', value)
+                    }
+                  />
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Fase</span>
+                  <SingleDropdown
+                    options={project.phases.map((phase) => ({
+                      label: phase.name,
+                      value: phase.id,
+                    }))}
+                    buttonLabel={'Vælg fase'}
+                    selectedValue={watch('projectPhaseId') ?? null}
+                    setSelectedValue={(value) =>
+                      setValue('projectPhaseId', value)
+                    }
+                  />
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <span>Mitigrerende Fase</span>
+                  <SingleDropdown
+                    options={project.phases.map((phase) => ({
+                      label: phase.name,
+                      value: phase.id,
+                    }))}
+                    buttonLabel={'Vælg mitigrerende Fase'}
+                    selectedValue={watch('mitigationPhaseId') ?? null}
+                    setSelectedValue={(value) =>
+                      setValue('mitigationPhaseId', value)
                     }
                   />
                 </div>

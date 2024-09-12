@@ -1,7 +1,16 @@
-import { ColorMap, RiskMap } from '@lib/calc/threshholds';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@components/ui/hover-card';
+import { ColorMap, RiskMap, Thresholds } from '@lib/calc/threshholds';
 import type { Risk } from '@models';
 import clsx from 'clsx';
 import { IoIosWarning } from 'react-icons/io';
+import {
+  ConsequenceDescription,
+  ProbabilityDescription,
+} from './RiskMatrixDescription';
 
 interface SingleRiskMatrixProps {
   risk: Risk;
@@ -21,7 +30,7 @@ export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
   }
 
   return (
-    <div className="text-Zinc-300 flex -translate-x-6 items-center">
+    <div className="flex -translate-x-6 items-center text-zinc-300">
       <em className="translate-x-8 rotate-[270deg] text-xs md:text-sm">
         Sandsynlighed
       </em>
@@ -35,19 +44,50 @@ export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
               const score = (5 - rowIndex) * (colIndex + 1);
               const threshold = RiskMap[score];
               const color = threshold ? ColorMap[threshold] : 'green';
+
               return (
-                <div
-                  key={`${rowIndex}-${colIndex}`}
-                  className={clsx(
-                    '3xl:w-16 3xl:h-16 border-Zinc-900 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border text-black',
-                    color === 'red' && 'text-white',
-                  )}
-                  style={{ backgroundColor: color }}
-                >
-                  {hasDot && (
-                    <IoIosWarning className="h-6 w-6 animate-pulse text-black" />
-                  )}
-                </div>
+                <HoverCard key={`${rowIndex}-${colIndex}`}>
+                  <HoverCardTrigger>
+                    <div
+                      className={clsx(
+                        '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black',
+                        color === 'red' && 'text-white',
+                      )}
+                      style={{ backgroundColor: color }}
+                    >
+                      {hasDot && (
+                        <IoIosWarning className="h-6 w-6 animate-pulse text-black" />
+                      )}
+                    </div>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="flex w-80 flex-col gap-2 text-sm">
+                    <p
+                      className={clsx(
+                        'italic',
+                        threshold === Thresholds.RED &&
+                          'text-red-500 dark:text-red-300',
+                        threshold === Thresholds.GREEN &&
+                          'text-green-500 dark:text-green-400',
+                        threshold === Thresholds.YELLOW &&
+                          'text-yellow-600 dark:text-yellow-400',
+                      )}
+                    >
+                      Scoren er {score}
+                    </p>
+                    <p>
+                      • Sandsynlighed er {5 - rowIndex} -{' '}
+                      <span className="font-semibold">
+                        {ProbabilityDescription[5 - rowIndex]?.toLowerCase()}
+                      </span>
+                    </p>
+                    <p>
+                      • Konsekvens er {colIndex + 1} -{' '}
+                      <span className="font-semibold">
+                        {ConsequenceDescription[colIndex + 1]?.toLowerCase()}
+                      </span>
+                    </p>
+                  </HoverCardContent>
+                </HoverCard>
               );
             })}
           </div>

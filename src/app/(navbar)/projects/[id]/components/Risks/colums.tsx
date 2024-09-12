@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -19,6 +22,7 @@ import { type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { PhaseProgressBar } from '../phase/PhaseProgressBar';
 
 function getStyleColor(risk: Risk): string | undefined {
   const riskValue =
@@ -121,7 +125,7 @@ export const columns = ({
           className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Ejer
+          Risikoejer
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -159,6 +163,25 @@ export const columns = ({
     ),
   },
   {
+    accessorKey: 'phase',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Projekt Fase
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: () => {
+      // console.log('phase', row.original.);
+      return <PhaseProgressBar riskPhase={1} mitigatingPhase={3} />;
+    },
+  },
+  {
     accessorKey: 'activity',
     header: ({ column }) => {
       return (
@@ -168,15 +191,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Aktivitet
+          <br />
+          <span className="text-xs">(mitigerende handling)</span>
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="col-span-1 flex items-center justify-between truncate text-black dark:text-white">
-        <span>{row.original.activity}</span>
-      </div>
-    ),
+    cell: ({ row }) => row.original.activity,
   },
   {
     id: 'actions',

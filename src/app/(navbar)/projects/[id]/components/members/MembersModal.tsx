@@ -119,7 +119,7 @@ export function MembersModal({
         {isAdding && (
           <div className="w-full">
             <SingleDropdown
-              selectedValue={undefined}
+              selectedValue={null}
               options={employees
                 .filter(
                   (employee) => !watch('projectUserIds')?.includes(employee.id),
@@ -130,7 +130,7 @@ export function MembersModal({
                   href: undefined,
                 }))}
               buttonLabel={'Vælg medlem'}
-              setSelectedValue={(id: string | undefined) => id && addMember(id)}
+              setSelectedValue={(id: string | null) => id && addMember(id)}
             />
           </div>
         )}

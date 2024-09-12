@@ -110,7 +110,7 @@ export default function EditEmployeeModal({
             <SingleDropdown
               options={RoleActionDropdownOptions}
               buttonLabel={'Roller'}
-              selectedValue={watch('role')}
+              selectedValue={watch('role') ?? null}
               setSelectedValue={(value) => {
                 if (!value) return;
                 setValue('role', value as UserRole);

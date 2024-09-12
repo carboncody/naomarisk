@@ -14,6 +14,7 @@ import { RiskPieChart } from './components/RiskPieChart';
 import { Risks } from './components/Risks';
 import { RiskChart } from './components/Risks/RiskChart';
 import { ProjectEmployee } from './components/members';
+import { PhaseTable } from './components/phase/PhaseTable';
 
 export function Project() {
   const pathName = usePathname();
@@ -21,7 +22,7 @@ export function Project() {
   const projectId = pathName?.split('/projects/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
-    'overview' | 'risks' | 'employees'
+    'overview' | 'risks' | 'employees' | 'phases'
   >('risks');
 
   useEffect(() => {
@@ -59,7 +60,9 @@ export function Project() {
             <Tabs
               value={selectedTab}
               onValueChange={(tab) =>
-                setSelectedTab(tab as 'risks' | 'overview' | 'employees')
+                setSelectedTab(
+                  tab as 'risks' | 'overview' | 'employees' | 'phases',
+                )
               }
               className="mb-5"
             >
@@ -67,8 +70,9 @@ export function Project() {
                 <TabsTrigger value="risks">Risiskoregister</TabsTrigger>
                 <TabsTrigger value="overview">Oversigt</TabsTrigger>
                 <TabsTrigger value="employees">
-                  Medarbejdertildeling
+                  Medarbejder tildeling
                 </TabsTrigger>
+                <TabsTrigger value="phases">Projektfase</TabsTrigger>
               </TabsList>
               <TabsContent value="overview">
                 <div className="flex w-full gap-4">
@@ -104,6 +108,14 @@ export function Project() {
                             </tr>
                             <tr className="border-b dark:border-zinc-700">
                               <th className="px-4 py-2 text-lg font-semibold">
+                                Projektleder
+                              </th>
+                              <td className="px-4 py-2">
+                                {project.projectUsers[0]?.user.fullName}
+                              </td>
+                            </tr>
+                            <tr className="border-b dark:border-zinc-700">
+                              <th className="px-4 py-2 text-lg font-semibold">
                                 Dato for oprettelse
                               </th>
                               <td className="px-4 py-2">
@@ -112,7 +124,7 @@ export function Project() {
                             </tr>
                             <tr className="border-b dark:border-zinc-700">
                               <th className="px-4 py-2 text-lg font-semibold">
-                                Slutdato for projekt
+                                Slutdato for projektet
                               </th>
                               <td className="px-4 py-2">
                                 {dayjs(project.dueDate).format('DD MMM YYYY')}
@@ -120,7 +132,7 @@ export function Project() {
                             </tr>
                             <tr className="border-b dark:border-zinc-700">
                               <th className="px-4 py-2 text-lg font-semibold">
-                                Budgettet for projektet
+                                Budget for projektet
                               </th>
                               <td className="px-4 py-2">
                                 {project.budget} kr.
@@ -132,7 +144,7 @@ export function Project() {
                           <p className="mt-4 text-xl font-normal">
                             Risici i projektet: {project.risks.length}
                           </p>
-                          <div className="mt-2 flex w-full items-center gap-5">
+                          <div className="mt-2 flex w-full cursor-pointer items-center gap-5">
                             <RiskPieChart project={project} />
                           </div>
                         </div>
@@ -162,6 +174,9 @@ export function Project() {
                 <div className="w-full overflow-y-auto rounded-md p-4">
                   <Risks project={project} />
                 </div>
+              </TabsContent>
+              <TabsContent value="phases">
+                <PhaseTable project={project} refetch={refetch} />
               </TabsContent>
             </Tabs>
           </div>
