@@ -176,8 +176,13 @@ export const columns = ({
         </Button>
       );
     },
-    cell: () => {
-      // console.log('phase', row.original.);
+    cell: ({ row }) => {
+      console.log(
+        'mitigation',
+        row.original.mitigationPhaseId,
+        'fase',
+        row.original.projectPhaseId,
+      );
       return <PhaseProgressBar riskPhase={1} mitigatingPhase={3} />;
     },
   },

@@ -10,9 +10,9 @@ import Error from 'next/error';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ProjectRiskMatrix } from './components/ProjectRiskMatrix';
-import { RiskChart } from './components/RiskChart';
 import { RiskPieChart } from './components/RiskPieChart';
 import { Risks } from './components/Risks';
+import { RiskChart } from './components/Risks/RiskChart';
 import { ProjectEmployee } from './components/members';
 import { PhaseTable } from './components/phase/PhaseTable';
 

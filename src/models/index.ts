@@ -43,8 +43,8 @@ export interface Contact {
   address?: string;
   phone?: string;
   website?: string;
-  users: User[];
-  companies: Company[];
+  users?: User[];
+  companies?: Company[];
 }
 
 export interface User {
