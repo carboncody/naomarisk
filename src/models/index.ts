@@ -5,9 +5,10 @@ export enum RiskStatus {
 }
 
 export enum ProjectStatus {
-  Planning = 'PLANNING',
-  Open = 'OPEN',
-  Closed = 'CLOSED',
+  PLANNING = 'PLANNING',
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+  ARCHIVED = 'ARCHIVED',
 }
 
 export enum UserRole {

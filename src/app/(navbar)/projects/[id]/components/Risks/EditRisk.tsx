@@ -92,14 +92,14 @@ export default function EditRisk({
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
-            Edit Risk
+            Rediger Risk
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="text-black dark:text-white">
           <div className="flex flex-col gap-4">
             <div className="flex w-full gap-5">
               <div className="w-full">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">Beskrivelse</Label>
                 <Input
                   className="mt-2 w-full"
                   {...register('description', {
@@ -115,7 +115,7 @@ export default function EditRisk({
             </div>
             <div className="flex w-full gap-5">
               <div className="w-full">
-                <Label htmlFor="activity">Activity</Label>
+                <Label htmlFor="activity">Aktivitet</Label>
                 <Textarea
                   className="mt-2 w-full"
                   {...register('activity')}
@@ -125,11 +125,11 @@ export default function EditRisk({
               </div>
             </div>
             <div className="flex w-full items-center justify-between gap-5">
-              <div className="flex w-1/3 gap-4">
+              <div className="flex w-1/2 gap-4">
                 <div className="w-full">
-                  <Label htmlFor="probability">Probability</Label>
+                  <Label htmlFor="probability">Sansynlighed</Label>
                   <Input
-                    className="mt-2"
+                    className="mt-2 w-full"
                     {...register('probability', {
                       validate: {
                         range: (value) =>
@@ -144,9 +144,9 @@ export default function EditRisk({
                   />
                 </div>
                 <div className="w-full">
-                  <Label htmlFor="consequence">Consequence</Label>
+                  <Label htmlFor="consequence">Konsekvens</Label>
                   <Input
-                    className="mt-2"
+                    className="mt-2 w-full"
                     {...register('consequence', {
                       validate: {
                         range: (value) =>
@@ -160,8 +160,6 @@ export default function EditRisk({
                     type="number"
                   />
                 </div>
-              </div>
-              <div className="flex items-center gap-4">
                 <div className="flex flex-col items-start gap-2">
                   <span>Status</span>
                   <SingleDropdown
@@ -169,67 +167,69 @@ export default function EditRisk({
                     buttonLabel={
                       StatusDropdownOptions.find(
                         (option) => option.value === watch('status'),
-                      )?.label ?? 'Select Status'
+                      )?.label ?? 'Vælg Status'
                     }
-                    selectedValue={watch('status') ?? ProjectStatus.Planning}
+                    selectedValue={watch('status') ?? ProjectStatus.PLANNING}
                     setSelectedValue={(value) =>
                       value && setValue('status', value as RiskStatus)
                     }
                   />
                 </div>
-                <div className="flex flex-col items-start gap-2">
-                  <span>Risko Ejer</span>
-                  <SingleDropdown
-                    options={
-                      projectMembers
-                        ? projectMembers.map((employee) => ({
-                            label: employee.fullName,
-                            value: employee.id,
-                          }))
-                        : []
-                    }
-                    buttonLabel={
-                      projectMembers && watch('riskOwnerUserId')
-                        ? projectMembers.find(
-                            (employee) =>
-                              employee.id === watch('riskOwnerUserId'),
-                          )?.email
-                        : 'Select Employee'
-                    }
-                    selectedValue={watch('riskOwnerUserId') ?? null}
-                    setSelectedValue={(value) =>
-                      setValue('riskOwnerUserId', value)
-                    }
-                  />
-                </div>
-                <div className="flex flex-col items-start gap-2">
-                  <span>Fase</span>
-                  <SingleDropdown
-                    options={project.phases.map((phase) => ({
-                      label: phase.name,
-                      value: phase.id,
-                    }))}
-                    buttonLabel={'Vælg fase'}
-                    selectedValue={watch('projectPhaseId') ?? null}
-                    setSelectedValue={(value) =>
-                      setValue('projectPhaseId', value)
-                    }
-                  />
-                </div>
-                <div className="flex flex-col items-start gap-2">
-                  <span>Mitigrerende Fase</span>
-                  <SingleDropdown
-                    options={project.phases.map((phase) => ({
-                      label: phase.name,
-                      value: phase.id,
-                    }))}
-                    buttonLabel={'Vælg mitigrerende Fase'}
-                    selectedValue={watch('mitigationPhaseId') ?? null}
-                    setSelectedValue={(value) =>
-                      setValue('mitigationPhaseId', value)
-                    }
-                  />
-                </div>
+              </div>
+              <div className="flex w-1/2 flex-col items-start gap-2">
+                <span>Risko Ejer</span>
+                <SingleDropdown
+                  options={
+                    projectMembers
+                      ? projectMembers.map((employee) => ({
+                          label: employee.fullName,
+                          value: employee.id,
+                        }))
+                      : []
+                  }
+                  buttonLabel={
+                    projectMembers && watch('riskOwnerUserId')
+                      ? projectMembers.find(
+                          (employee) =>
+                            employee.id === watch('riskOwnerUserId'),
+                        )?.email ?? 'Vælg risiko ejer'
+                      : 'Vælg risiko ejer'
+                  }
+                  selectedValue={watch('riskOwnerUserId') ?? null}
+                  setSelectedValue={(value) =>
+                    setValue('riskOwnerUserId', value)
+                  }
+                />
+              </div>
+            </div>
+            <div className="flex w-full items-center gap-5">
+              <div className="flex w-full flex-col items-start gap-2">
+                <span>Fase</span>
+                <SingleDropdown
+                  options={project.phases.map((phase) => ({
+                    label: phase.name,
+                    value: phase.id,
+                  }))}
+                  buttonLabel={'Vælg fase'}
+                  selectedValue={watch('projectPhaseId') ?? null}
+                  setSelectedValue={(value) =>
+                    setValue('projectPhaseId', value)
+                  }
+                />
+              </div>
+              <div className="flex w-full flex-col items-start gap-2">
+                <span>Mitigrerende Fase</span>
+                <SingleDropdown
+                  options={project.phases.map((phase) => ({
+                    label: phase.name,
+                    value: phase.id,
+                  }))}
+                  buttonLabel={'Vælg mitigrerende Fase'}
+                  selectedValue={watch('mitigationPhaseId') ?? null}
+                  setSelectedValue={(value) =>
+                    setValue('mitigationPhaseId', value)
+                  }
+                />
               </div>
             </div>
           </div>
@@ -239,10 +239,10 @@ export default function EditRisk({
             variant="destructive"
             onClick={() => setRiskBeingEdited(null)}
           >
-            Close
+            Luk
           </Button>
           <Button variant="default" onClick={handleSubmit(onSubmit)}>
-            Save
+            Gem
           </Button>
         </DialogFooter>
       </DialogContent>

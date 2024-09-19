@@ -11,7 +11,7 @@ export async function RiskService() {
       include: {
         riskowner: true,
         project: {
-          include: { projectUsers: true },
+          include: { projectUsers: true, phases: true },
         },
         comments: {
           include: { author: true },

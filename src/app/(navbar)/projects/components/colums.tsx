@@ -18,9 +18,14 @@ import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 
-export const columns: ColumnDef<Project>[] = [
+interface ColumnParams {
+  handleArchive: (project: Project) => void;
+}
+
+export const columns = ({
+  handleArchive,
+}: ColumnParams): ColumnDef<Project>[] => [
   {
     accessorKey: 'riskScore',
     header: () => {
@@ -190,7 +195,7 @@ export const columns: ColumnDef<Project>[] = [
     id: 'actions',
     header: '',
     cell: ({ row }) => {
-      const risk = row.original;
+      const project = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const router = useRouter();
 
@@ -211,7 +216,7 @@ export const columns: ColumnDef<Project>[] = [
           >
             <DropdownMenuItem
               className="group-hover:bg-red-500 group-hover:text-white dark:group-hover:bg-red-400"
-              onClick={() => toast.error('Not implemented')}
+              onClick={() => handleArchive(project)}
             >
               Arkiver Projekt
             </DropdownMenuItem>
