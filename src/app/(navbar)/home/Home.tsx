@@ -60,7 +60,7 @@ export function Home() {
             <FaCubes className="text-3xl" />
             <p className="ml-2 text-3xl">
               {
-                data.projects.filter((p) => p.status !== ProjectStatus.Closed)
+                data.projects.filter((p) => p.status !== ProjectStatus.CLOSED)
                   .length
               }
             </p>
