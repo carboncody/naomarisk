@@ -42,7 +42,7 @@ export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
   return (
     <>
       <DataTable
-        columns={columns({ handleEdit, handleDelete, projectId: project.id })}
+        columns={columns({ handleEdit, handleDelete, project })}
         data={rows}
         onRowClick={handleRowClick}
       />

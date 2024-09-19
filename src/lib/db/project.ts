@@ -207,22 +207,24 @@ export async function ProjectService() {
         },
       });
 
-      const projectProjectEmails = prevProject.projectUsers.map(
-        (projectUser) => projectUser.user.email,
-      );
-      const newProjectProjectEmails = updatedProject.projectUsers.map(
-        (projectUser) => projectUser.user.email,
-      );
+      if (projectUserIds && projectUserIds.length > 0) {
+        const projectProjectEmails = prevProject.projectUsers.map(
+          (projectUser) => projectUser.user.email,
+        );
+        const newProjectProjectEmails = updatedProject.projectUsers.map(
+          (projectUser) => projectUser.user.email,
+        );
 
-      const newAssignedEmails = newProjectProjectEmails.filter(
-        (email) => !projectProjectEmails.includes(email),
-      );
+        const newAssignedEmails = newProjectProjectEmails.filter(
+          (email) => !projectProjectEmails.includes(email),
+        );
 
-      void sendProjectAssignmentEmail({
-        emails: newAssignedEmails,
-        project: updatedProject.name,
-        link: `${env.frontendUrl}/projects/${updatedProject.id}`,
-      });
+        void sendProjectAssignmentEmail({
+          emails: newAssignedEmails,
+          project: updatedProject.name,
+          link: `${env.frontendUrl}/projects/${updatedProject.id}`,
+        });
+      }
 
       return {
         data: updatedProject,

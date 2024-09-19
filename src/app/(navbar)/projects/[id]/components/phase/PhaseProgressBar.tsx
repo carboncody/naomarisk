@@ -1,37 +1,43 @@
 import { HoverCard, HoverCardTrigger } from '@components/ui/hover-card';
+import type { Phase } from '@models';
 import { HoverCardContent } from '@radix-ui/react-hover-card';
+import dayjs from 'dayjs';
 import 'src/components/ui/styles.css';
 
 interface PhaseProgressBarProps {
-  riskPhase: number;
-  mitigatingPhase: number;
+  riskPhaseId: string;
+  mitigatingPhaseId: string;
+  projectPhases: Phase[];
 }
 
 export function PhaseProgressBar({
-  riskPhase,
-  mitigatingPhase,
+  riskPhaseId,
+  projectPhases,
+  mitigatingPhaseId,
 }: PhaseProgressBarProps) {
-  const totalPhases = 5;
+  const sortedProjectPhases = projectPhases.sort(
+    (a, b) => dayjs(a.startDate).valueOf() - dayjs(b.startDate).valueOf(),
+  );
 
-  const phaseLabels = [
-    'Definition',
-    'Program',
-    'Projektering',
-    'Udførelse',
-    'Afslutning',
-  ];
+  const projectPhaseIndex = sortedProjectPhases.findIndex(
+    (phase) => phase.id === riskPhaseId,
+  );
+
+  const mitigatingPhaseIndex = sortedProjectPhases.findIndex(
+    (phase) => phase.id === mitigatingPhaseId,
+  );
 
   return (
     <HoverCard>
       <HoverCardTrigger>
         <div>
           <div className="flex gap-1 rounded-md">
-            {Array.from({ length: totalPhases }, (_, index) => {
+            {Array.from({ length: sortedProjectPhases.length }, (_, index) => {
               let bgColor = 'bg-zinc-300 dark:bg-zinc-500 border';
 
-              if (index < riskPhase) {
+              if (index < projectPhaseIndex) {
                 bgColor = 'bg-blue-400 dark:bg-blue-500';
-              } else if (index < mitigatingPhase) {
+              } else if (index < mitigatingPhaseIndex) {
                 bgColor = 'bg-white dark:bg-zinc-200 border';
               }
 
@@ -50,12 +56,17 @@ export function PhaseProgressBar({
           <div>
             <strong>Risiko fase:</strong>{' '}
             <span className="text-blue-500 dark:text-blue-400">
-              {phaseLabels[riskPhase - 1]}
+              {projectPhases.find((phase) => phase.id === riskPhaseId)?.name}
             </span>
           </div>
           <div>
             <strong>Mitigerende fase:</strong>{' '}
-            <span>{phaseLabels[mitigatingPhase - 1]}</span>
+            <span>
+              {
+                projectPhases.find((phase) => phase.id === mitigatingPhaseId)
+                  ?.name
+              }
+            </span>
           </div>
         </div>
       </HoverCardContent>
