@@ -19,7 +19,7 @@ export function RiskAssignment({ risk, link }: { risk: string; link: string }) {
           <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
             <Section className="mt-[32px]">
               <Text className="text-center text-[24px] font-normal text-black">
-                Du er blevet tildelt et nyt risiko
+                Du er blevet tildelt en ny risiko
               </Text>
             </Section>
             <Heading className="mx-0 my-[15px] p-0 text-center text-[24px] font-normal text-black">

@@ -18,13 +18,16 @@ import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 interface ColumnParams {
   handleArchive: (project: Project) => void;
+  // handleEdit: (project: Project) => void;
 }
 
 export const columns = ({
   handleArchive,
+  // handleEdit,
 }: ColumnParams): ColumnDef<Project>[] => [
   {
     accessorKey: 'riskScore',
@@ -216,8 +219,14 @@ export const columns = ({
           >
             <DropdownMenuItem
               className="group-hover:bg-red-500 group-hover:text-white dark:group-hover:bg-red-400"
+              onClick={() => toast.error('Not implemented yet')}
+              >
+              Rediger Projekt
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:bg-red-500 hover:text-white dark:hover:bg-red-400 text-red-600"
               onClick={() => handleArchive(project)}
-            >
+              >
               Arkiver Projekt
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -12,12 +12,14 @@ import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { ArchiveProject } from './ArchiveProject';
+import EditProject from './[id]/components/EditProjectModal';
 import CreateProjectDialog from './components/CreateProjectDialog';
 import { columns } from './components/colums';
 
 export function AllProjects() {
   const [projectBeingArchived, setProjectBeingArchived] =
     useState<Project | null>(null);
+    const [isEditOpen, setIsEditOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<ProjectStatus | 'ALL'>(
     ProjectStatus.OPEN,
   );
@@ -71,6 +73,10 @@ export function AllProjects() {
     setProjectBeingArchived(project);
   };
 
+  // const handleEdit = (project: Project) => {
+  //   setIsEditOpen(project);
+  // };
+
   return (
     <>
       <div className="justify-top flex flex-col items-center overflow-y-auto px-4">
@@ -102,12 +108,21 @@ export function AllProjects() {
           </Tabs>
 
           <DataTable
-            columns={columns({ handleArchive })}
+            columns={columns({ handleArchive})}
             data={filteredProjects}
             onRowClick={handleRowClick}
           />
         </div>
       </div>
+
+      {/* {isEditOpen && (
+        <EditProject
+          isOpen={isEditOpen}
+          setIsOpen={setIsEditOpen}
+          project={project}
+          refetch={refetch}
+        />
+      )} */}
 
       <ArchiveProject
         isOpen={!!projectBeingArchived}

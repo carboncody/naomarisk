@@ -57,7 +57,7 @@ export async function sendRiskAssignmentEmail({
   const { error } = await resend.emails.send({
     from: 'NAOMA Risk <it@naoma.dk>',
     to: [email],
-    subject: 'Nyt risiko tildelt til dig',
+    subject: 'Ny risiko tildelt til dig',
     react: <RiskAssignment risk={risk} link={link} />,
   });
 

@@ -81,21 +81,7 @@ export function Risks({ project }: RisksProps) {
     <>
       <div className="justify-top flex w-full flex-col items-center">
         <p className="text-xl font-semibold">
-          Projekt: {project.name}, har{' '}
-          {selectedTab === RiskStatus.Open
-            ? project.risks.filter((risk) => risk.status === RiskStatus.Open)
-                .length
-            : selectedTab === RiskStatus.Closed
-              ? project.risks.filter(
-                  (risk) => risk.status === RiskStatus.Closed,
-                ).length
-              : project.risks.length}{' '}
-          {selectedTab === RiskStatus.Open
-            ? 'åbne'
-            : selectedTab === RiskStatus.Closed
-              ? 'lukkede'
-              : ''}{' '}
-          risici
+          Projekt: {project.name}
         </p>
 
         {filters.score && (
