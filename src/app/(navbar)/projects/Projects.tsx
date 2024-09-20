@@ -12,14 +12,13 @@ import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { ArchiveProject } from './ArchiveProject';
-import EditProject from './[id]/components/EditProjectModal';
 import CreateProjectDialog from './components/CreateProjectDialog';
 import { columns } from './components/colums';
 
 export function AllProjects() {
   const [projectBeingArchived, setProjectBeingArchived] =
     useState<Project | null>(null);
-    const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<ProjectStatus | 'ALL'>(
     ProjectStatus.OPEN,
   );
@@ -108,7 +107,7 @@ export function AllProjects() {
           </Tabs>
 
           <DataTable
-            columns={columns({ handleArchive})}
+            columns={columns({ handleArchive })}
             data={filteredProjects}
             onRowClick={handleRowClick}
           />

@@ -124,8 +124,6 @@ export async function RiskService() {
     return await db.risk.delete({ where: { id } });
   }
 
-
-
   return {
     getRisk,
     getProjectRisks,

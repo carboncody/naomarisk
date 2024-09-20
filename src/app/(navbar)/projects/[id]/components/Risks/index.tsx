@@ -80,9 +80,7 @@ export function Risks({ project }: RisksProps) {
   return (
     <>
       <div className="justify-top flex w-full flex-col items-center">
-        <p className="text-xl font-semibold">
-          Projekt: {project.name}
-        </p>
+        <p className="text-xl font-semibold">Projekt: {project.name}</p>
 
         {filters.score && (
           <div className="my-4 flex w-full justify-end">
