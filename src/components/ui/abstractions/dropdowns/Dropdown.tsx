@@ -2,8 +2,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@components/ui/button';
@@ -34,18 +32,19 @@ export function SingleDropdown({
 }: SingleDropdownProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="w-full">
         {customTriggerBtn ?? (
-          <Button className="text-md">
+          <Button className="text-md w-full">
             {selectedValue
               ? options.find((option) => option.value === selectedValue)?.label
               : buttonLabel}
           </Button>
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent onMouseDown={(e) => e.stopPropagation()}>
-        <DropdownMenuLabel className="text-md">{buttonLabel}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent
+        onMouseDown={(e) => e.stopPropagation()}
+        style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
+      >
         {options.map((option) => (
           <DropdownMenuItem
             key={option.value}
@@ -58,13 +57,16 @@ export function SingleDropdown({
             }}
             asChild
           >
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full items-center justify-between truncate">
               {option.href ? (
-                <a href={option.href} className="no-underline dark:text-white">
+                <a
+                  href={option.href}
+                  className="truncate no-underline dark:text-white"
+                >
                   {option.label}
                 </a>
               ) : (
-                <span className="dark:text-white">{option.label}</span>
+                <span className="truncate dark:text-white">{option.label}</span>
               )}
               <Check
                 className={cn(

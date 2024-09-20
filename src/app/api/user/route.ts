@@ -2,6 +2,7 @@ import { type CreateUserForm, type UpdateUserForm } from '@lib/api/types';
 import { UserService } from '@lib/db';
 import { sendInviteEmail } from '@lib/services/email';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
+import { User } from '@models';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -37,10 +38,11 @@ export async function POST(req: Request) {
     user.email,
     body,
   );
+  const typedEmployee = employee as User;
   if (error) {
     return NextResponse.json({ error }, { status: error.code });
   }
-  void sendInviteEmail(employee.email, employee.company.name);
+  void sendInviteEmail(employee.email, typedEmployee.company.email);
 
   return NextResponse.json({ employee });
 }

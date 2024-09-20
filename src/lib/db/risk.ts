@@ -11,7 +11,7 @@ export async function RiskService() {
       include: {
         riskowner: true,
         project: {
-          include: { projectUsers: true },
+          include: { projectUsers: true, phases: true },
         },
         comments: {
           include: { author: true },
@@ -52,8 +52,17 @@ export async function RiskService() {
           projectId,
           probability: data.probability ? +data.probability : null,
           consequence: data.consequence ? +data.consequence : null,
+          projectPhaseId: data.projectPhaseId ?? null,
+          mitigationPhaseId: data.mitigationPhaseId ?? null,
         },
         include: { riskowner: true },
+      });
+
+      void db.project.update({
+        where: { id: newRisk.projectId },
+        data: {
+          updatedAt: new Date(),
+        },
       });
 
       if (newRisk.riskowner) {
@@ -89,8 +98,17 @@ export async function RiskService() {
         ...data,
         probability: data.probability ? +data.probability : null,
         consequence: data.consequence ? +data.consequence : null,
+        projectPhaseId: data.projectPhaseId ?? null,
+        mitigationPhaseId: data.mitigationPhaseId ?? null,
       },
       include: { riskowner: true },
+    });
+
+    void db.project.update({
+      where: { id: updatedRisk.projectId },
+      data: {
+        updatedAt: new Date(),
+      },
     });
 
     if (newOwner && updatedRisk.riskowner) {

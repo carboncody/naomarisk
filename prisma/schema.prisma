@@ -31,6 +31,7 @@ enum ProjectStatus {
   PLANNING
   OPEN
   CLOSED
+  ARCHIVED
 }
 
 enum ProjectRole {
@@ -108,6 +109,7 @@ model Project {
   risks    Risk[]
 
   projectUsers ProjectUser[]
+  phases       Phase[]
 }
 
 model ProjectUser {
@@ -141,8 +143,12 @@ model Risk {
   project         Project @relation(fields: [projectId], references: [id])
   projectId       String
 
-  comments Comment[]
-  children ChildRisk[]
+  comments          Comment[]
+  children          ChildRisk[]
+  mitigationPhase   Phase?      @relation("MitigationPhase", fields: [mitigationPhaseId], references: [id])
+  mitigationPhaseId String?
+  projectPhase      Phase?      @relation("ProjectPhase", fields: [projectPhaseId], references: [id])
+  projectPhaseId    String?
 
   @@unique([projectId, customId])
 }
@@ -175,4 +181,20 @@ model Comment {
 
   risk   Risk   @relation(fields: [riskId], references: [id])
   riskId String
+}
+
+model Phase {
+  id          String   @id @default(uuid())
+  name        String
+  startDate   DateTime
+  description String?
+  endDate     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String
+
+  projectRisks    Risk[] @relation("ProjectPhase")
+  mitigationRisks Risk[] @relation("MitigationPhase")
 }

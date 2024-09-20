@@ -39,8 +39,11 @@ export function Home() {
   return (
     <div className="mx-auto flex h-full max-w-screen-2xl flex-col dark:text-white">
       <div className="mt-5 flex items-center justify-between md:mt-10">
-        <span className="select-none text-5xl font-medium dark:text-white">
-          Welcome {me.fullName},
+        <span className="flex select-none gap-2 text-5xl font-medium dark:text-white">
+          Velkommen til{' '}
+          <p className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200">
+            nRisk
+          </p>
         </span>
         <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" />
       </div>
@@ -57,7 +60,7 @@ export function Home() {
             <FaCubes className="text-3xl" />
             <p className="ml-2 text-3xl">
               {
-                data.projects.filter((p) => p.status !== ProjectStatus.Closed)
+                data.projects.filter((p) => p.status !== ProjectStatus.CLOSED)
                   .length
               }
             </p>

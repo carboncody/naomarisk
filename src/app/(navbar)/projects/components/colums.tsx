@@ -2,6 +2,12 @@
 
 import { Button } from '@components/ui/button';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@components/ui/dropdown-menu';
+import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
@@ -10,9 +16,19 @@ import { cn } from '@lib/utils';
 import { RiskStatus, type Project } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
-export const columns: ColumnDef<Project>[] = [
+interface ColumnParams {
+  handleArchive: (project: Project) => void;
+  // handleEdit: (project: Project) => void;
+}
+
+export const columns = ({
+  handleArchive,
+  // handleEdit,
+}: ColumnParams): ColumnDef<Project>[] => [
   {
     accessorKey: 'riskScore',
     header: () => {
@@ -177,5 +193,45 @@ export const columns: ColumnDef<Project>[] = [
         </span>
       </div>
     ),
+  },
+  {
+    id: 'actions',
+    header: '',
+    cell: ({ row }) => {
+      const project = row.original;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const router = useRouter();
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="text-zinc-400 hover:text-black dark:text-zinc-400 dark:hover:text-white"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <DropdownMenuItem
+              className="group-hover:bg-red-500 group-hover:text-white dark:group-hover:bg-red-400"
+              onClick={() => toast.error('Not implemented yet')}
+            >
+              Rediger Projekt
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-red-600 hover:bg-red-500 hover:text-white dark:hover:bg-red-400"
+              onClick={() => handleArchive(project)}
+            >
+              Arkiver Projekt
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];

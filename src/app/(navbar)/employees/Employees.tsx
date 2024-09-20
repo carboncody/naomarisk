@@ -8,10 +8,13 @@ import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
 import { type User } from '@models';
 import Error from 'next/error';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { columns as getColumns } from './components/colums';
 
 export function AllEmployees() {
+  const router = useRouter();
+
   const [isNewOpen, setIsNewOpen] = useState(false);
   const [employeeBeingEdited, setEmployeeBeingEdited] = useState<User | null>(
     null,
@@ -42,6 +45,10 @@ export function AllEmployees() {
     setEmployeeBeingEdited(employee);
   };
 
+  const handleRowClick = (employee: User) => {
+    router.push(`/employees/${encodeURIComponent(employee.email)}`);
+  };
+
   return (
     <>
       <div className="justify-top flex min-h-screen flex-col items-center px-8 dark:text-white">
@@ -55,6 +62,7 @@ export function AllEmployees() {
           <DataTable
             data={allEmployees ?? []}
             columns={getColumns({ handleEdit })}
+            onRowClick={handleRowClick}
           />
         </div>
       </div>

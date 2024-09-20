@@ -7,6 +7,8 @@ export type CreateRiskForm = {
   status: RiskStatus;
   activity: string | undefined;
   riskOwnerUserId: string | null;
+  projectPhaseId: string | null;
+  mitigationPhaseId: string | null;
 };
 
 export type UpdateRiskForm = Partial<CreateRiskForm> & {

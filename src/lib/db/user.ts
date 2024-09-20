@@ -28,6 +28,30 @@ export async function UserService() {
     return db.user.findUnique({ where: { id } });
   }
 
+  async function getUserFromEmail(
+    email: string,
+  ): Promise<ActionResponse<User>> {
+    const user = await db.user.findUnique({
+      where: { email },
+      include: {
+        projectUsers: {
+          include: { project: true },
+        },
+      },
+    });
+
+    if (!user) {
+      return {
+        error: {
+          code: 404,
+          message: `User with email ${email} not found`,
+        },
+      };
+    }
+
+    return { data: user };
+  }
+
   async function updateOrCreateUser(email: string) {
     return await db.user.upsert({
       where: {
@@ -128,11 +152,11 @@ export async function UserService() {
           },
         };
       }
-      const createUser = await db.user.create({
+      const createUser: User = await db.user.create({
         data: {
           email: data.email,
           fullName: data.email,
-          role: data.role,
+          role: data.role ?? UserRole.Owner,
           company: {
             connect: { id: creatorsCompany.companyId },
           },
@@ -159,6 +183,7 @@ export async function UserService() {
   return {
     getMe,
     getUsersInCompany,
+    getUserFromEmail,
     getUserFromId,
     updateOrCreateUser,
     updateUser,

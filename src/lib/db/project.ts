@@ -18,6 +18,7 @@ export async function ProjectService() {
         projectUsers: {
           include: { user: true },
         },
+        phases: true,
         company: true,
       },
     });
@@ -35,6 +36,7 @@ export async function ProjectService() {
         projectUsers: {
           include: { user: true },
         },
+        phases: true,
         company: true,
       },
     });
@@ -47,6 +49,9 @@ export async function ProjectService() {
         risks: true,
         projectUsers: {
           include: { user: true },
+        },
+        phases: {
+          include: { mitigationRisks: true, projectRisks: true },
         },
         company: true,
       },
@@ -211,25 +216,28 @@ export async function ProjectService() {
           projectUsers: {
             include: { user: true },
           },
+          phases: true,
         },
       });
 
-      const projectProjectEmails = prevProject.projectUsers.map(
-        (projectUser) => projectUser.user.email,
-      );
-      const newProjectProjectEmails = updatedProject.projectUsers.map(
-        (projectUser) => projectUser.user.email,
-      );
+      if (projectUserIds && projectUserIds.length > 0) {
+        const projectProjectEmails = prevProject.projectUsers.map(
+          (projectUser) => projectUser.user.email,
+        );
+        const newProjectProjectEmails = updatedProject.projectUsers.map(
+          (projectUser) => projectUser.user.email,
+        );
 
-      const newAssignedEmails = newProjectProjectEmails.filter(
-        (email) => !projectProjectEmails.includes(email),
-      );
+        const newAssignedEmails = newProjectProjectEmails.filter(
+          (email) => !projectProjectEmails.includes(email),
+        );
 
-      void sendProjectAssignmentEmail({
-        emails: newAssignedEmails,
-        project: updatedProject.name,
-        link: `${env.frontendUrl}/projects/${updatedProject.id}`,
-      });
+        void sendProjectAssignmentEmail({
+          emails: newAssignedEmails,
+          project: updatedProject.name,
+          link: `${env.frontendUrl}/projects/${updatedProject.id}`,
+        });
+      }
 
       return {
         data: updatedProject,
