@@ -63,7 +63,12 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
       </PieChart>
       <div className="flex flex-col gap-2">
         <span> {(((total - open) / total) * 100).toFixed(1)}% fremdrift</span>
-        <span className='flex gap-1'><p className="text-red-500 dark:text-red-400">{open} Åbne risici</p> / <p  className="text-green-600 dark:text-green-400">{closed} Lukkede af risici</p></span>
+        <span className="flex gap-1">
+          <p className="text-red-500 dark:text-red-400">{open} Åbne risici</p> /{' '}
+          <p className="text-green-600 dark:text-green-400">
+            {closed} Lukkede af risici
+          </p>
+        </span>
       </div>
     </div>
   );
