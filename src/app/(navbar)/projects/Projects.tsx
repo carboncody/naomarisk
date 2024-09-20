@@ -18,6 +18,7 @@ import { columns } from './components/colums';
 export function AllProjects() {
   const [projectBeingArchived, setProjectBeingArchived] =
     useState<Project | null>(null);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<ProjectStatus | 'ALL'>(
     ProjectStatus.OPEN,
   );
@@ -71,6 +72,10 @@ export function AllProjects() {
     setProjectBeingArchived(project);
   };
 
+  // const handleEdit = (project: Project) => {
+  //   setIsEditOpen(project);
+  // };
+
   return (
     <>
       <div className="justify-top flex flex-col items-center overflow-y-auto px-4">
@@ -108,6 +113,15 @@ export function AllProjects() {
           />
         </div>
       </div>
+
+      {/* {isEditOpen && (
+        <EditProject
+          isOpen={isEditOpen}
+          setIsOpen={setIsEditOpen}
+          project={project}
+          refetch={refetch}
+        />
+      )} */}
 
       <ArchiveProject
         isOpen={!!projectBeingArchived}

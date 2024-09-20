@@ -58,6 +58,13 @@ export async function RiskService() {
         include: { riskowner: true },
       });
 
+      void db.project.update({
+        where: { id: newRisk.projectId },
+        data: {
+          updatedAt: new Date(),
+        },
+      });
+
       if (newRisk.riskowner) {
         void sendRiskAssignmentEmail({
           email: newRisk.riskowner.email,
@@ -95,6 +102,13 @@ export async function RiskService() {
         mitigationPhaseId: data.mitigationPhaseId ?? null,
       },
       include: { riskowner: true },
+    });
+
+    void db.project.update({
+      where: { id: updatedRisk.projectId },
+      data: {
+        updatedAt: new Date(),
+      },
     });
 
     if (newOwner && updatedRisk.riskowner) {

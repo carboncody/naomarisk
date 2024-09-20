@@ -92,7 +92,7 @@ export default function EditRisk({
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
-            Rediger Risk
+            Rediger Risiko
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="text-black dark:text-white">
