@@ -69,7 +69,7 @@ export function RisksPiechart({ risks }: RisksPiechartProps) {
   return (
     <Card className="flex flex-col border shadow-xl dark:border-transparent dark:bg-zinc-900">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Risici Status</CardTitle>
+        <CardTitle>Status over risici</CardTitle>
         <CardDescription>Alle projekter</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
