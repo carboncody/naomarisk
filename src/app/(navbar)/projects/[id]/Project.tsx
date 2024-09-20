@@ -199,7 +199,7 @@ export function Project() {
                           <p className="mt-4 text-xl font-normal">
                             Risici i projektet: {project.risks.length}
                           </p>
-                          <div className="mt-2 flex w-full cursor-pointer items-center gap-5">
+                          <div className="mt-2 flex w-full items-center gap-5">
                             <RiskPieChart project={project} />
                           </div>
                         </div>

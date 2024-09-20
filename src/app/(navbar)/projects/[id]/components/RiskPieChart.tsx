@@ -5,11 +5,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@components/ui/Charts/chart';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@components/ui/hover-card';
 import { RiskStatus, type Project } from '@models';
 import { Cell, Pie, PieChart } from 'recharts';
 import 'src/components/ui/styles.css';
@@ -31,60 +26,45 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
     {
       name: 'Lukket',
       value: closed,
-      fill: '#00b10e',
+      // fill: '#00b10e',
+      fill: 'hsl(var(--Lukket))',
       label: 'Åbne risici',
     },
     {
       name: 'Åben',
       value: open,
-      fill: 'hsl(var(--chart-6))',
+      fill: 'hsl(var(--Åben))',
       // fill: '#FF0000',
       label: 'alle risici',
     },
   ];
 
   return (
-    <HoverCard>
-      <HoverCardTrigger>
-        <div className="flex items-center justify-center gap-2">
-          <PieChart width={50} height={50}>
-            <Pie
-              dataKey="value"
-              data={data}
-              isAnimationActive={false}
-              innerRadius="80%"
-              className="stroke-none"
-              outerRadius="100%"
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  className="border-0 stroke-none outline-none focus:outline-none"
-                  fill={entry.fill}
-                />
-              ))}
-              <ChartTooltip content={<ChartTooltipContent />} label={true} />
-              <ChartLegend content={<ChartLegendContent />} />
-            </Pie>
-          </PieChart>
-          <div className="flex flex-col gap-2">
-            <span>
-              {' '}
-              {(((total - open) / total) * 100).toFixed(1)}% fremdrift
-            </span>
-            <span>{open + '/' + total} åbne/antal af risici</span>
-          </div>
-        </div>
-      </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col gap-1">
-        <p className="text-red-500 dark:text-red-400">
-          Antal risici åbne : {open}
-        </p>
-        <p className="text-green-600 dark:text-green-400">
-          {' '}
-          Risici lukket : {total - open}
-        </p>
-      </HoverCardContent>
-    </HoverCard>
+    <div className="flex items-center justify-center gap-2">
+      <PieChart width={50} height={50}>
+        <Pie
+          dataKey="value"
+          data={data}
+          isAnimationActive={false}
+          innerRadius="80%"
+          className="stroke-none"
+          outerRadius="100%"
+        >
+          {data.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              className="border-0 stroke-none outline-none focus:outline-none"
+              fill={entry.fill}
+            />
+          ))}
+          <ChartTooltip content={<ChartTooltipContent />} label={true} />
+          <ChartLegend content={<ChartLegendContent />} />
+        </Pie>
+      </PieChart>
+      <div className="flex flex-col gap-2">
+        <span> {(((total - open) / total) * 100).toFixed(1)}% fremdrift</span>
+        <span className='flex gap-1'><p className="text-red-500 dark:text-red-400">{open} Åbne risici</p> / <p  className="text-green-600 dark:text-green-400">{closed} Lukkede af risici</p></span>
+      </div>
+    </div>
   );
 }

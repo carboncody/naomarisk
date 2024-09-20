@@ -19,13 +19,12 @@ export function PhaseProgressBar({
     (a, b) => dayjs(a.startDate).valueOf() - dayjs(b.startDate).valueOf(),
   );
 
-  const projectPhaseIndex = sortedProjectPhases.findIndex(
-    (phase) => phase.id === riskPhaseId,
-  );
+  const projectPhaseIndex =
+    sortedProjectPhases.findIndex((phase) => phase.id === riskPhaseId) + 1;
 
-  const mitigatingPhaseIndex = sortedProjectPhases.findIndex(
-    (phase) => phase.id === mitigatingPhaseId,
-  );
+  const mitigatingPhaseIndex =
+    sortedProjectPhases.findIndex((phase) => phase.id === mitigatingPhaseId) +
+    1;
 
   return (
     <HoverCard>
@@ -33,7 +32,7 @@ export function PhaseProgressBar({
         <div>
           <div className="flex gap-1 rounded-md">
             {Array.from({ length: sortedProjectPhases.length }, (_, index) => {
-              let bgColor = 'bg-zinc-300 dark:bg-zinc-500 border';
+              let bgColor = 'bg-white dark:bg-zinc-200 border';
 
               if (index < projectPhaseIndex) {
                 bgColor = 'bg-blue-400 dark:bg-blue-500';
@@ -42,10 +41,7 @@ export function PhaseProgressBar({
               }
 
               return (
-                <div
-                  key={index}
-                  className={`h-5 w-5 rounded-md ${bgColor}`}
-                ></div>
+                <div key={index} className={`h-5 w-5 rounded-md ${bgColor}`} />
               );
             })}
           </div>
