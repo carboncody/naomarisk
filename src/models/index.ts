@@ -119,10 +119,6 @@ export interface Risk {
   mitigationPhaseId: string;
   projectPhase: Phase;
   projectPhaseId: string;
-  timeProbability: number | null;
-  timeConsequence: number | null;
-  economicProbability: number | null;
-  economicConsequence: number | null;
 }
 
 export interface Comment {
