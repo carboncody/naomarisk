@@ -121,7 +121,7 @@ export default function CreateProjectDialog({
             </div>
             <DialogFooter>
               <Button variant="destructive" onClick={() => setIsOpen(false)}>
-                Luk
+                Luk!
               </Button>
               <Button variant="default" type="submit">
                 Opret
