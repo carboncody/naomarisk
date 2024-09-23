@@ -13,11 +13,14 @@ import {
   SheetTrigger,
 } from '@components/ui/sheet';
 import { useRisk } from '@lib/api/hooks/risks';
+import type { UpdateRiskForm } from '@lib/api/types/risk';
 import { type Risk } from '@models';
+import axios from 'axios';
 import dayjs from 'dayjs';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaComment } from 'react-icons/fa6';
 import { Comments } from './components/comments';
 
@@ -48,9 +51,19 @@ export function Risk() {
 
   const riscscore = (risk.consequence ?? 0) * (risk.probability ?? 0);
 
+  async function onSubmit(data: UpdateRiskForm) {
+    try {
+      await axios.patch(`/api/risk/${risk?.id}`, data);
+      toast.success('Risk updated successfully!');
+      void refetch();
+    } catch (error) {
+      toast.error('Error - something went wrong');
+    }
+  }
+
   return (
     <>
-      <div className="py-10">
+      <div className="py-2">
         <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-4">
           <Button className="w-20" onClick={() => window.history.back()}>
             {'<- '}Back
@@ -96,17 +109,19 @@ export function Risk() {
               </div>
 
               <div>
-                <span className="mt-2 font-semibold">Risk ID:</span>
+                <span className="mt-2 text-muted-foreground">Risk ID:</span>
                 <span className="ml-1 font-light">{risk.customId}</span>
               </div>
 
               <div>
-                <p className="mt-2 font-semibold">Beskrivelse:</p>
+                <p className="mt-2 text-muted-foreground">Beskrivelse:</p>
                 <p className="font-light">{risk.description}</p>
               </div>
-              <div className="mt-6 flex gap-8">
+              <div className="mt-6 flex flex-col gap-2">
                 <div>
-                  <span className="mt-2 font-semibold">Risiko Ejer:</span>
+                  <span className="mt-2 text-muted-foreground">
+                    Risiko Ejer:
+                  </span>
                   <span className="ml-1 font-light">
                     {risk.riskowner?.fullName
                       ? risk.riskowner.fullName
@@ -114,13 +129,15 @@ export function Risk() {
                   </span>
                 </div>
                 <div>
-                  <span className="mt-2 font-semibold">Risiko Manager:</span>
+                  <span className="mt-2 text-muted-foreground">
+                    Risiko Manager:
+                  </span>
                   <span className="ml-1 font-light">
                     {risk.riskowner ? risk.riskowner.fullName : 'Ingen Manager'}
                   </span>
                 </div>
               </div>
-              <div className="mt-6 flex items-center gap-10 font-semibold">
+              <div className="mt-6 flex items-center gap-10 text-muted-foreground">
                 <p>
                   Dato for oprettelse:
                   <br />
@@ -140,13 +157,15 @@ export function Risk() {
               <div className="mt-6 flex gap-10 font-light">
                 <p className="flex flex-col">
                   <p>
-                    <span className="font-semibold">Konsekvens:</span>
+                    <span className="text-muted-foreground">Konsekvens:</span>
                     <span className="ml-1 font-light">
                       {risk.consequence ?? 'Udefineret'}
                     </span>
                   </p>
                   <p>
-                    <span className="font-semibold">Sandsynlighed:</span>
+                    <span className="text-muted-foreground">
+                      Sandsynlighed:
+                    </span>
                     <span className="ml-1 font-light">
                       {risk.probability ?? 'Udefineret'}
                     </span>
@@ -154,36 +173,89 @@ export function Risk() {
                 </p>
 
                 <p>
-                  <span className="font-semibold">Risikoscore:</span>
+                  <span className="text-muted-foreground">Risikoscore:</span>
                   <span className="ml-1 font-light">{riscscore}</span>
                 </p>
               </div>
               <div className="mt-4 border-t border-zinc-300 pt-2 dark:border-zinc-700">
                 <div className="mt-10">
-                  <SingleRiskMatrix risk={risk} />
+                  <SingleRiskMatrix
+                    probability={risk.probability}
+                    consequence={risk.consequence}
+                    onCellClick={(score) => {
+                      const { probability, consequence } = score;
+                      void onSubmit({
+                        probability,
+                        consequence,
+                      } as UpdateRiskForm);
+                    }}
+                  />
                 </div>
               </div>
             </div>
-            <div className="w-2/3 overflow-y-auto  rounded-lg border p-4 font-semibold dark:border-transparent dark:bg-zinc-900">
+            <div className="w-2/3 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
               <p className="mt-2 flex flex-wrap items-center justify-between">
-                <div className="overflow-x-clip truncate ">
-                  <span>Aktivitet:</span>
-                  <span className="ml-2 font-light">
+                <div className="flex items-center overflow-x-clip truncate">
+                  <span className="text-muted-foreground">Aktivitet:</span>
+                  <p className="ml-2 font-light">
                     {risk.activity ?? 'Ingen aktivitet'}
-                  </span>
+                  </p>
                 </div>
               </p>
-              <hr className="my-4 border-zinc-300 dark:border-zinc-700" />
+              <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
+              <div className="flex w-full items-center justify-center">
+                <div className="w-1/2">
+                  <label className="mb-2 text-muted-foreground">
+                    Tidsmæssig Risiko
+                  </label>
+                  <SingleRiskMatrix
+                    probability={risk.timeProbability}
+                    consequence={risk.timeConsequence}
+                    onCellClick={(score) => {
+                      const {
+                        probability: timeProbability,
+                        consequence: timeConsequence,
+                      } = score;
+                      void onSubmit({
+                        timeProbability: timeProbability,
+                        timeConsequence: timeConsequence,
+                      } as UpdateRiskForm);
+                    }}
+                  />
+                </div>
+                <div className="w-1/2">
+                  <label className="mb-2 text-muted-foreground">
+                    Økonomisk Risiko
+                  </label>
+                  <SingleRiskMatrix
+                    probability={risk.economicProbability}
+                    consequence={risk.economicConsequence}
+                    onCellClick={(score) => {
+                      const {
+                        probability: economicProbability,
+                        consequence: economicConsequence,
+                      } = score;
+                      void onSubmit({
+                        economicProbability: economicProbability,
+                        economicConsequence: economicConsequence,
+                      } as UpdateRiskForm);
+                    }}
+                  />
+                </div>
+              </div>
+              <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
               <div className="flex w-full items-center gap-2">
                 <div className="flex gap-3 ">
                   <span>
-                    <span className="font-semibold">Fase:</span>
+                    <span className="text-muted-foreground">Fase:</span>
                     <span className="ml-2 font-light">
                       {risk.projectPhase?.name ?? 'Ingen fase'}
                     </span>
                   </span>
                   <span>
-                    <span className="font-semibold">Mitigrerende fase:</span>
+                    <span className="text-muted-foreground">
+                      Mitigrerende fase:
+                    </span>
                     <span className="ml-2 font-light">
                       {risk.mitigationPhase?.name ?? 'Ingen fase'}
                     </span>

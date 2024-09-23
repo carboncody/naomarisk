@@ -50,8 +50,6 @@ export async function RiskService() {
           ...data,
           customId: +highestRiskCustomId + 1,
           projectId,
-          probability: data.probability ? +data.probability : null,
-          consequence: data.consequence ? +data.consequence : null,
           projectPhaseId: data.projectPhaseId ?? null,
           mitigationPhaseId: data.mitigationPhaseId ?? null,
         },
@@ -96,8 +94,6 @@ export async function RiskService() {
       where: { id },
       data: {
         ...data,
-        probability: data.probability ? +data.probability : null,
-        consequence: data.consequence ? +data.consequence : null,
         projectPhaseId: data.projectPhaseId ?? null,
         mitigationPhaseId: data.mitigationPhaseId ?? null,
       },
