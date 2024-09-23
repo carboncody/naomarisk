@@ -13,6 +13,8 @@ export async function RiskService() {
         project: {
           include: { projectUsers: true, phases: true },
         },
+        projectPhase: true,
+        mitigationPhase: true,
         comments: {
           include: { author: true },
           orderBy: { createdAt: 'desc' },
@@ -26,6 +28,8 @@ export async function RiskService() {
       where: { projectId },
       include: {
         riskowner: true,
+        projectPhase: true,
+        mitigationPhase: true,
       },
       orderBy: {
         customId: 'asc',
