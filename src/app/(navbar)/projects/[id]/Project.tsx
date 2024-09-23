@@ -97,12 +97,18 @@ export function Project() {
               className="mb-5"
             >
               <TabsList>
-                <TabsTrigger value="risks">Risiskoregister</TabsTrigger>
-                <TabsTrigger value="overview">Oversigt</TabsTrigger>
-                <TabsTrigger value="employees">
+                <TabsTrigger className="w-56" value="risks">
+                  Risiskoregister
+                </TabsTrigger>
+                <TabsTrigger className="w-56" value="overview">
+                  Oversigt
+                </TabsTrigger>
+                <TabsTrigger className="w-56" value="employees">
                   Medarbejder tildeling
                 </TabsTrigger>
-                <TabsTrigger value="phases">Projektfase</TabsTrigger>
+                <TabsTrigger className="w-56" value="phases">
+                  Projektfase
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="overview">
                 <div className="flex w-full gap-4">
@@ -178,6 +184,7 @@ export function Project() {
                           </span>
                           <p className="w-32 text-base font-light">
                             <SingleDropdown
+                              triggerClassName="w-96"
                               options={StatusDropdownOptions}
                               buttonLabel={
                                 StatusDropdownOptions.find(

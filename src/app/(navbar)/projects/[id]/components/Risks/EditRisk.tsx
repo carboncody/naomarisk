@@ -1,5 +1,6 @@
 'use client';
 
+import { ScoreDropdown } from '@/components/ui/dropdowns/ScoreDropdown';
 import { SingleDropdown } from '@components/ui';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
@@ -126,38 +127,20 @@ export default function EditRisk({
             </div>
             <div className="flex w-full items-center justify-between gap-5">
               <div className="flex w-1/2 gap-4">
-                <div className="w-full">
+                <div className="flex w-full flex-col items-start gap-2">
                   <Label htmlFor="probability">Sansynlighed</Label>
-                  <Input
-                    className="mt-2 w-full"
-                    {...register('probability', {
-                      validate: {
-                        range: (value) =>
-                          value === null ||
-                          (value >= 0 && value <= 5) ||
-                          'Probability must be between 0 and 5',
-                      },
-                    })}
-                    id="probability"
-                    value={watch('probability') ?? ''}
-                    type="number"
+                  <ScoreDropdown
+                    label="Vælg Sansynlighed"
+                    selectedValue={watch('probability') ?? null}
+                    onSelect={(value) => setValue('probability', value)}
                   />
                 </div>
-                <div className="w-full">
+                <div className="flex w-full flex-col items-start gap-2">
                   <Label htmlFor="consequence">Konsekvens</Label>
-                  <Input
-                    className="mt-2 w-full"
-                    {...register('consequence', {
-                      validate: {
-                        range: (value) =>
-                          value === null ||
-                          (value >= 0 && value <= 5) ||
-                          'Consequence must be between 0 and 5',
-                      },
-                    })}
-                    id="consequence"
-                    value={watch('consequence') ?? ''}
-                    type="number"
+                  <ScoreDropdown
+                    label="Vælg Konsekvens"
+                    selectedValue={watch('consequence') ?? null}
+                    onSelect={(value) => setValue('consequence', value)}
                   />
                 </div>
                 <div className="flex flex-col items-start gap-2">

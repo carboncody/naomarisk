@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@components/ui/dialog';
+import { ScoreDropdown } from '@components/ui/dropdowns/ScoreDropdown';
 import { Label } from '@components/ui/label';
 import { Textarea } from '@components/ui/textarea';
 import { useEmployees } from '@lib/api/hooks';
@@ -36,8 +37,8 @@ export default function CreateRisk({
 }: CreateRiskProps) {
   const { register, handleSubmit, setValue, watch } = useForm<CreateRiskForm>({
     defaultValues: {
-      probability: 0,
-      consequence: 0,
+      probability: null,
+      consequence: null,
       status: 'OPEN',
     },
   });
@@ -118,30 +119,20 @@ export default function CreateRisk({
                 <Label className="mb-2" htmlFor="probability">
                   Sandsynlighed
                 </Label>
-                <Input
-                  {...register('probability', {
-                    validate: {
-                      range: (value) =>
-                        value === null ||
-                        (value >= 0 && value <= 5) ||
-                        'Sandsynlighed skal være mellem 1 og 5',
-                    },
-                  })}
+                <ScoreDropdown
+                  label="Vælg Sansynlighed"
+                  selectedValue={watch('probability') ?? null}
+                  onSelect={(value) => setValue('probability', value)}
                 />
               </div>
               <div>
                 <Label className="mb-2" htmlFor="consequence">
                   Konsekvens
                 </Label>
-                <Input
-                  {...register('consequence', {
-                    validate: {
-                      range: (value) =>
-                        value === null ||
-                        (value >= 0 && value <= 5) ||
-                        'Konsekvens skal være mellem 1 og 5',
-                    },
-                  })}
+                <ScoreDropdown
+                  label="Vælg Konsekvens"
+                  selectedValue={watch('consequence') ?? null}
+                  onSelect={(value) => setValue('consequence', value)}
                 />
               </div>
             </div>
