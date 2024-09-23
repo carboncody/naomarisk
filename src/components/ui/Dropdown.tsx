@@ -21,6 +21,7 @@ interface SingleDropdownProps {
   buttonLabel: ReactNode;
   setSelectedValue: (value: string | null) => void;
   customTriggerBtn?: ReactNode;
+  triggerClassName?: string;
 }
 
 export function SingleDropdown({
@@ -29,10 +30,11 @@ export function SingleDropdown({
   setSelectedValue,
   options,
   customTriggerBtn,
+  triggerClassName,
 }: SingleDropdownProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="w-full">
+      <DropdownMenuTrigger className={cn('w-full', triggerClassName)}>
         {customTriggerBtn ?? (
           <Button className="text-md w-full">
             {selectedValue

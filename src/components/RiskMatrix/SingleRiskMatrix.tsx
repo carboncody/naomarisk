@@ -4,7 +4,6 @@ import {
   HoverCardTrigger,
 } from '@components/ui/hover-card';
 import { ColorMap, RiskMap, Thresholds } from '@lib/calc/threshholds';
-import type { Risk } from '@models';
 import clsx from 'clsx';
 import { IoIosWarning } from 'react-icons/io';
 import {
@@ -13,15 +12,26 @@ import {
 } from './RiskMatrixDescription';
 
 interface SingleRiskMatrixProps {
-  risk: Risk;
+  probability: number | null;
+  consequence: number | null;
+  onCellClick?: ({
+    probability,
+    consequence,
+  }: {
+    probability: number;
+    consequence: number;
+  }) => void;
 }
 
-export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
+export function SingleRiskMatrix({
+  probability,
+  consequence,
+  onCellClick,
+}: SingleRiskMatrixProps) {
   const matrix: boolean[][] = Array.from({ length: 5 }, () =>
     Array<boolean>(5).fill(false),
   );
 
-  const { probability, consequence } = risk;
   if (probability && consequence) {
     const score = probability * consequence;
     if (RiskMap[score] && matrix[5 - probability]) {
@@ -47,16 +57,25 @@ export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
 
               return (
                 <HoverCard key={`${rowIndex}-${colIndex}`}>
-                  <HoverCardTrigger>
+                  <HoverCardTrigger
+                    onClick={() =>
+                      onCellClick?.({
+                        probability: 5 - rowIndex,
+                        consequence: colIndex + 1,
+                      })
+                    }
+                  >
                     <div
                       className={clsx(
                         '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black',
+                        onCellClick && 'cursor-pointer',
                         color === 'red' && 'text-white',
+                        !hasDot && 'opacity-70',
                       )}
                       style={{ backgroundColor: color }}
                     >
                       {hasDot && (
-                        <IoIosWarning className="h-6 w-6 animate-pulse text-black" />
+                        <IoIosWarning className="h-6 w-6 text-black" />
                       )}
                     </div>
                   </HoverCardTrigger>
