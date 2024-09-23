@@ -120,16 +120,20 @@ model ProjectUser {
 }
 
 model Risk {
-  id          String     @id @default(uuid())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  customId    Int
-  description String
-  probability Int?
-  consequence Int?
-  status      RiskStatus
-  comment     String?
-  activity    String?
+  id                  String     @id @default(uuid())
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  customId            Int
+  description         String
+  probability         Int?
+  consequence         Int?
+  timeProbability     Int?
+  timeConsequence     Int?
+  economicProbability Int?
+  economicConsequence Int?
+  status              RiskStatus
+  comment             String?
+  activity            String?
 
   riskowner       User?   @relation(fields: [riskOwnerUserId], references: [id])
   riskOwnerUserId String?
