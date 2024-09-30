@@ -57,6 +57,8 @@ export default function EditRisk({
       timeConsequence: riskElement.timeConsequence ?? null,
       economicConsequence: riskElement.economicConsequence ?? null,
       economicProbability: riskElement.economicProbability ?? null,
+      mitigationPhaseId: riskElement.mitigationPhaseId,
+      projectPhaseId: riskElement.projectPhaseId,
     },
   });
 
@@ -73,6 +75,8 @@ export default function EditRisk({
       timeProbability,
       economicConsequence,
       economicProbability,
+      mitigationPhaseId,
+      projectPhaseId,
     } = data;
 
     data.probability = probability ? +probability : null;
