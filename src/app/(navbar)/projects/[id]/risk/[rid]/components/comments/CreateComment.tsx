@@ -43,7 +43,7 @@ export function CreateComment({
   return (
     <div>
       <div className="mb-5">
-        <Textarea 
+        <Textarea
           value={content}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {

@@ -63,7 +63,7 @@ export function Comment({
       {commentBeingEditedId === comment.id ? (
         <div className="flex w-full flex-col gap-2">
           <Textarea
-            className="w-full border-0 bg-transparent outline-none focus-visible:ring-transparent p-0"
+            className="w-full border-0 bg-transparent p-0 outline-none focus-visible:ring-transparent"
             value={replacedContent}
             onChange={(e) => setReplacedContent(e.target.value)}
           />
