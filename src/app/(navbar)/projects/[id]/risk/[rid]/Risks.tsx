@@ -21,7 +21,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaComment } from 'react-icons/fa6';
-import { EditRisk } from '../../components/risks/EditRisk';
+import { EditRisk } from '../../components/Risks/EditRisk';
 import { Comments } from './components/comments';
 
 export function Risk() {

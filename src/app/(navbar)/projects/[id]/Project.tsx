@@ -12,9 +12,9 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ProjectOverview } from './components/ProjectOverview';
+import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
 import { PhaseTable } from './components/phase/PhaseTable';
-import { Risks } from './components/risks';
 
 export function Project() {
   const pathName = usePathname();

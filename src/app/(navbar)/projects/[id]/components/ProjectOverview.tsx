@@ -4,7 +4,7 @@ import type { Project, ProjectStatus } from '@models';
 import dayjs from 'dayjs';
 import { ProjectRiskMatrix } from './ProjectRiskMatrix';
 import { RiskPieChart } from './RiskPieChart';
-import { RiskChart } from './risks/RiskChart';
+import { RiskChart } from './Risks/RiskChart';
 
 interface ProjectOverviewProps {
   statusOptions: { label: string; value: ProjectStatus }[];
