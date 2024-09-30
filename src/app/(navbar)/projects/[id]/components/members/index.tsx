@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { useEmployees } from '@lib/api/hooks';
 import type { Project } from '@models';

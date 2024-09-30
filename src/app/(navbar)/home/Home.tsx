@@ -1,9 +1,8 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { Card, CardTitle } from '@components/ui/card';
 import { useCompany } from '@lib/api/hooks';
-import { useMe } from '@lib/providers/me';
 import { ProjectStatus, RiskStatus } from '@models';
 import Error from 'next/error';
 import { useMemo } from 'react';
@@ -14,7 +13,6 @@ import { ProjectBarChart } from './components/ProjectBarChart';
 import { RisksPiechart } from './components/RisksPiechart';
 
 export function Home() {
-  const me = useMe();
   const { data, isLoading, error } = useCompany();
 
   const allRisksInCompany = useMemo(() => {
@@ -32,8 +30,17 @@ export function Home() {
     );
   }
 
-  if (error ?? !data) {
-    return <Error statusCode={500} message={'Noget gik galt!'} />;
+  if (error) {
+    return (
+      <Error
+        statusCode={500}
+        title={error?.message ?? 'Noget gik galt! Prøv igen senere'}
+      />
+    );
+  }
+
+  if (!data) {
+    return <Error statusCode={404} title="Ingen firma fundet, kontakt admin" />;
   }
 
   return (

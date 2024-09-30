@@ -4,9 +4,20 @@ import dayjs from 'dayjs';
 
 const prisma = new PrismaClient();
 
-const myEmail = 'jpa@naoma.dk';
+const myEmail = process.env.SEED_EMAIL;
 
 async function main() {
+  if (!myEmail) {
+    throw new Error(
+      'SEED_EMAIL is not set. ' +
+        'Please set the SEED_EMAIL environment variable to your email address in .env',
+    );
+  }
+
+  function getRandomScore() {
+    return faker.helpers.arrayElement([1, 2, 3, 4, 5, undefined]);
+  }
+
   for (let i = 0; i < 3; i++) {
     const company = await prisma.company.create({
       data: {
@@ -18,7 +29,7 @@ async function main() {
             where: { email: myEmail },
             create: {
               email: myEmail,
-              fullName: 'Jarl Pallesen',
+              fullName: i === 0 ? 'John Doe' : faker.person.fullName(),
               role: UserRole.OWNER,
               jobDescription: faker.person.jobTitle(),
             },
@@ -103,47 +114,20 @@ async function main() {
       for (let l = 0; l < 10; l++) {
         await prisma.risk.create({
           data: {
+            projectId: project.id,
             customId: l + 1,
             description: faker.lorem.sentence(),
-            probability: faker.helpers.arrayElement([1, 2, 3, 4, 5, undefined]),
-            consequence: faker.helpers.arrayElement([1, 2, 3, 4, 5, undefined]),
             status: faker.helpers.arrayElement([
               RiskStatus.OPEN,
               RiskStatus.CLOSED,
             ]),
-            timeProbability: faker.helpers.arrayElement([
-              1,
-              2,
-              3,
-              4,
-              5,
-              undefined,
-            ]),
-            timeConsequence: faker.helpers.arrayElement([
-              1,
-              2,
-              3,
-              4,
-              5,
-              undefined,
-            ]),
-            economicProbability: faker.helpers.arrayElement([
-              1,
-              2,
-              3,
-              4,
-              5,
-              undefined,
-            ]),
-            economicConsequence: faker.helpers.arrayElement([
-              1,
-              2,
-              3,
-              4,
-              5,
-              undefined,
-            ]),
-            projectId: project.id,
+            activity: faker.lorem.sentence(),
+            probability: getRandomScore(),
+            consequence: getRandomScore(),
+            timeProbability: getRandomScore(),
+            timeConsequence: getRandomScore(),
+            economicProbability: getRandomScore(),
+            economicConsequence: getRandomScore(),
             riskOwnerUserId: faker.helpers.arrayElement(users).id,
             projectPhaseId: faker.helpers.arrayElement(phases).id,
             mitigationPhaseId:

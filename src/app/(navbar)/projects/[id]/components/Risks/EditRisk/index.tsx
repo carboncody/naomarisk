@@ -38,7 +38,7 @@ interface EditRiskProps {
   riskElement: Risk;
 }
 
-export default function EditRisk({
+export function EditRisk({
   riskElement,
   setRiskBeingEdited,
   project,
@@ -164,8 +164,8 @@ export default function EditRisk({
                   </div>
                 </div>
               </div>
-              <div className="mt-5 flex w-full items-center justify-between gap-5">
-                <div className="flex w-1/2 gap-4">
+              <div className="mt-5 flex w-full flex-col items-center justify-between gap-5">
+                <div className="flex w-full gap-4">
                   <div className="flex w-full flex-col items-start gap-2">
                     <Label htmlFor="probability">Sansynlighed</Label>
                     <ScoreDropdown
@@ -182,7 +182,9 @@ export default function EditRisk({
                       onSelect={(value) => setValue('consequence', value)}
                     />
                   </div>
-                  <div className="flex flex-col items-start gap-2">
+                </div>
+                <div className="flex w-full items-start gap-5">
+                  <div className="flex w-full flex-col items-start gap-2">
                     <span>Status</span>
                     <SingleDropdown
                       options={StatusDropdownOptions}
@@ -191,37 +193,37 @@ export default function EditRisk({
                           (option) => option.value === watch('status'),
                         )?.label ?? 'Vælg Status'
                       }
-                      selectedValue={watch('status') ?? ProjectStatus.PLANNING}
+                      selectedValue={watch('status') ?? ProjectStatus.OPEN}
                       setSelectedValue={(value) =>
                         value && setValue('status', value as RiskStatus)
                       }
                     />
                   </div>
-                </div>
-                <div className="flex w-1/2 flex-col items-start gap-2">
-                  <span>Risko Ejer</span>
-                  <SingleDropdown
-                    options={
-                      projectMembers
-                        ? projectMembers.map((employee) => ({
-                            label: employee.fullName,
-                            value: employee.id,
-                          }))
-                        : []
-                    }
-                    buttonLabel={
-                      projectMembers && watch('riskOwnerUserId')
-                        ? projectMembers.find(
-                            (employee) =>
-                              employee.id === watch('riskOwnerUserId'),
-                          )?.email ?? 'Vælg risiko ejer'
-                        : 'Vælg risiko ejer'
-                    }
-                    selectedValue={watch('riskOwnerUserId') ?? null}
-                    setSelectedValue={(value) =>
-                      setValue('riskOwnerUserId', value)
-                    }
-                  />
+                  <div className="flex w-full flex-col items-start gap-2">
+                    <span>Risko Ejer</span>
+                    <SingleDropdown
+                      options={
+                        projectMembers
+                          ? projectMembers.map((employee) => ({
+                              label: employee.fullName,
+                              value: employee.id,
+                            }))
+                          : []
+                      }
+                      buttonLabel={
+                        projectMembers && watch('riskOwnerUserId')
+                          ? projectMembers.find(
+                              (employee) =>
+                                employee.id === watch('riskOwnerUserId'),
+                            )?.email ?? 'Vælg risiko ejer'
+                          : 'Vælg risiko ejer'
+                      }
+                      selectedValue={watch('riskOwnerUserId') ?? null}
+                      setSelectedValue={(value) =>
+                        setValue('riskOwnerUserId', value)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </TabsContent>

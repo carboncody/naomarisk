@@ -28,7 +28,6 @@ enum UserStatus {
 }
 
 enum ProjectStatus {
-  PLANNING
   OPEN
   CLOSED
   ARCHIVED
@@ -88,7 +87,7 @@ model Project {
   updatedAt               DateTime      @updatedAt
   name                    String
   description             String
-  status                  ProjectStatus @default(PLANNING)
+  status                  ProjectStatus @default(OPEN)
   startDate               DateTime?
   dueDate                 DateTime?
   budget                  String?

@@ -1,7 +1,7 @@
 'use client';
 
 import UserSettings from '@app/(navbar)/account/components/UserSettings';
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { SettingsCard } from '@components/ui/SettingsCard';
 import { Button } from '@components/ui/button';
 import { useMe } from '@lib/api/hooks/users/useMe';

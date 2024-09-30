@@ -33,8 +33,7 @@ export function SingleRiskMatrix({
   );
 
   if (probability && consequence) {
-    const score = probability * consequence;
-    if (RiskMap[score] && matrix[5 - probability]) {
+    if (matrix[5 - probability]) {
       matrix[5 - probability]![consequence - 1] = true;
     }
   }
@@ -51,17 +50,22 @@ export function SingleRiskMatrix({
               {5 - rowIndex}
             </div>
             {row.map((hasDot, colIndex) => {
-              const score = (5 - rowIndex) * (colIndex + 1);
+              const currentProbability = 5 - rowIndex;
+              const currentConsequence = colIndex + 1;
+              const score = currentProbability * currentConsequence;
               const threshold = RiskMap[score];
               const color = threshold ? ColorMap[threshold] : 'green';
+              const showWarning =
+                currentProbability === probability &&
+                currentConsequence === consequence;
 
               return (
                 <HoverCard key={`${rowIndex}-${colIndex}`}>
                   <HoverCardTrigger
                     onClick={() =>
                       onCellClick?.({
-                        probability: 5 - rowIndex,
-                        consequence: colIndex + 1,
+                        probability: currentProbability,
+                        consequence: currentConsequence,
                       })
                     }
                   >
@@ -70,11 +74,11 @@ export function SingleRiskMatrix({
                         '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black',
                         onCellClick && 'cursor-pointer',
                         color === 'red' && 'text-white',
-                        !hasDot && 'opacity-70',
+                        !showWarning && 'opacity-70',
                       )}
                       style={{ backgroundColor: color }}
                     >
-                      {hasDot && (
+                      {showWarning && (
                         <IoIosWarning className="h-6 w-6 text-black" />
                       )}
                     </div>

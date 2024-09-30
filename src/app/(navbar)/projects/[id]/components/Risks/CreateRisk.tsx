@@ -29,7 +29,7 @@ interface CreateRiskProps {
   project: Project;
 }
 
-export default function CreateRisk({
+export function CreateRisk({
   isOpen,
   setIsOpen,
   refetch,

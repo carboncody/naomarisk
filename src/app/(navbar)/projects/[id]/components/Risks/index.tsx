@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
 import { useProjectRisks } from '@lib/api/hooks/risks';
@@ -9,8 +9,8 @@ import Error from 'next/error';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import CreateRisk from './CreateRisk';
-import RiskTable from './RiskTable';
+import { CreateRisk } from './CreateRisk';
+import { RiskTable } from './RiskTable';
 
 interface RisksProps {
   project: Project;
@@ -120,13 +120,11 @@ export function Risks({ project }: RisksProps) {
               </Button>
             </div>
             <TabsContent value={selectedTab}>
-              <div className="w-full overflow-y-auto rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
-                <RiskTable
-                  risks={activeTabRisks}
-                  refetch={refetch}
-                  project={project}
-                />
-              </div>
+              <RiskTable
+                risks={activeTabRisks}
+                refetch={refetch}
+                project={project}
+              />
             </TabsContent>
           </Tabs>
         </div>

@@ -2,7 +2,7 @@
 
 import EditEmployeeModal from '@app/(navbar)/employees/components/EditEmployeeModal';
 import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
