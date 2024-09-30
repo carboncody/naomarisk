@@ -100,7 +100,11 @@ export function Risk() {
                       <SheetDescription>
                         Tilføj en ny kommentar her.
                         <p className="text-Zinc-200 mt-4  text-sm ">
-                          <Comments riskId={riskId} comments={risk.comments} />
+                          <Comments
+                            riskId={riskId}
+                            comments={risk.comments}
+                            refetch={refetch}
+                          />
                         </p>
                       </SheetDescription>
                     </SheetHeader>
