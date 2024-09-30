@@ -75,8 +75,6 @@ export function EditRisk({
       timeProbability,
       economicConsequence,
       economicProbability,
-      mitigationPhaseId,
-      projectPhaseId,
     } = data;
 
     data.probability = probability ? +probability : null;

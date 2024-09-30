@@ -198,7 +198,9 @@ export function Risk() {
             <div className="w-2/3 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
               <div className="flex items-start">
                 <span className="text-muted-foreground">Aktivitet:</span>
-                <p className="ml-2">{risk.activity ?? 'Ingen aktivitet'}</p>
+                <p className="ml-2 whitespace-normal break-words">
+                  {risk.activity ?? 'Ingen aktivitet'}
+                </p>
               </div>
               <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
               <div className="flex w-full items-center justify-center gap-4">
