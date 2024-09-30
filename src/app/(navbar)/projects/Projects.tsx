@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { Tabs, TabsList, TabsTrigger } from '@components/ui/tabs';
@@ -12,13 +12,14 @@ import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { ArchiveProject } from './ArchiveProject';
+import { EditProject } from './[id]/components/EditProjectModal';
 import CreateProjectDialog from './components/CreateProjectDialog';
 import { columns } from './components/colums';
 
 export function AllProjects() {
   const [projectBeingArchived, setProjectBeingArchived] =
     useState<Project | null>(null);
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<ProjectStatus | 'ALL'>(
     ProjectStatus.OPEN,
   );
@@ -51,6 +52,10 @@ export function AllProjects() {
 
     return [];
   }, [allProjects, activeTab]);
+
+  const projectBeingEdited = useMemo(() => {
+    return allProjects?.find((project) => project.id === editingProjectId);
+  }, [allProjects, editingProjectId]);
 
   if (isFetching) {
     return (
@@ -95,9 +100,6 @@ export function AllProjects() {
           >
             <TabsList>
               <TabsTrigger value={ProjectStatus.OPEN}>Åben</TabsTrigger>
-              <TabsTrigger value={ProjectStatus.PLANNING}>
-                Planlægning
-              </TabsTrigger>
               <TabsTrigger value={ProjectStatus.CLOSED}>Lukket</TabsTrigger>
               <TabsTrigger value={'ALL'}>Alle</TabsTrigger>
               <TabsTrigger value={ProjectStatus.ARCHIVED}>
@@ -107,21 +109,21 @@ export function AllProjects() {
           </Tabs>
 
           <DataTable
-            columns={columns({ handleArchive })}
+            columns={columns({ handleArchive, setEditingProjectId })}
             data={filteredProjects}
             onRowClick={handleRowClick}
           />
         </div>
       </div>
 
-      {/* {isEditOpen && (
+      {projectBeingEdited && (
         <EditProject
-          isOpen={isEditOpen}
-          setIsOpen={setIsEditOpen}
-          project={project}
+          isOpen={!!projectBeingEdited}
+          setIsOpen={() => setEditingProjectId(null)}
+          project={projectBeingEdited}
           refetch={refetch}
         />
-      )} */}
+      )}
 
       <ArchiveProject
         isOpen={!!projectBeingArchived}

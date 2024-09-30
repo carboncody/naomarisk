@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
+import { Textarea } from '@components/ui/textarea';
 import { type UpdateProjectForm } from '@lib/api/types';
 import { type Project } from '@models';
 import axios, { AxiosError } from 'axios';
@@ -25,7 +26,7 @@ interface EditProjectProps {
   refetch: () => void;
 }
 
-export default function EditProject({
+export function EditProject({
   isOpen,
   setIsOpen,
   project,
@@ -61,17 +62,15 @@ export default function EditProject({
     }
   }
 
-  console.info(watch());
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-full">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle className="dark:text-white">Rediger Projekt</DialogTitle>
+          <DialogTitle>Rediger Projekt</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="dark:text-white">
-          <div className="flex w-full items-start gap-5 text-black dark:text-white">
-            <div>
+        <DialogDescription>
+          <div className="flex w-full items-start gap-5">
+            <div className="w-3/4">
               <Label>Projekt navn</Label>
               <Input
                 className="mt-2 w-full"
@@ -88,15 +87,8 @@ export default function EditProject({
                 value={watch('name') ?? ''}
               />
             </div>
-            <div>
-              <Label>Projekt beskrivelse</Label>
-              <Input
-                className="mt-2 w-full"
-                {...register('description')}
-                value={watch('description') ?? ''}
-              />
-            </div>
-            <div className="flex flex-col">
+
+            <div className="w-1/4">
               <Label className="mb-2">Budget [kr.]</Label>
               <Input
                 className="w-full"
@@ -105,6 +97,14 @@ export default function EditProject({
                 type="number"
               />
             </div>
+          </div>
+          <div className="mt-5">
+            <Label>Projekt beskrivelse</Label>
+            <Textarea
+              className="mt-2 w-full"
+              {...register('description')}
+              value={watch('description') ?? ''}
+            />
           </div>
           <div className="mt-5 flex gap-5">
             <div className="flex flex-col">

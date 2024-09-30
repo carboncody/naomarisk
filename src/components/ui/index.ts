@@ -1,2 +1,4 @@
 import { SingleDropdown } from './Dropdown';
-export { SingleDropdown };
+import { LoadingSpinner } from './LoadSpinner';
+
+export { LoadingSpinner, SingleDropdown };

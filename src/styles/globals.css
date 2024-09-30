@@ -23,15 +23,15 @@
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 2px;
+  width: 8px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: theme('colors.zinc.400');
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.dark ::-webkit-scrollbar-thumb {
+  background: theme('colors.zinc.600');
 }

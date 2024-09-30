@@ -17,7 +17,7 @@ export function Nav() {
   // const isAdmin = me.role === UserRole.Owner || me.role === UserRole.Manager;
 
   return (
-    <NavigationMenu className="sticky top-0 z-50 h-10 w-full bg-zinc-200 backdrop-blur-md dark:bg-zinc-900 dark:text-white md:h-16">
+    <NavigationMenu className="sticky top-0 z-50 h-12 w-full bg-zinc-200 backdrop-blur-md dark:bg-zinc-900 dark:text-white">
       <NavigationMenuList className="flex w-full items-center justify-between gap-5">
         <ThemeSwitcher />
         <NavigationMenuItem>

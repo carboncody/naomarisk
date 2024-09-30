@@ -2,7 +2,7 @@ interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export default function LoadingSpinner({}: LoadingSpinnerProps) {
+export function LoadingSpinner({}: LoadingSpinnerProps) {
   return (
     <div className="flex h-full w-full items-center justify-center">
       {/* <Spinner

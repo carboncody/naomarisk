@@ -9,7 +9,7 @@ export async function CompanyService() {
   }
 
   async function getUserCompany(userEmail: string) {
-    return db.company.findFirst({
+    return db.company.findFirstOrThrow({
       where: {
         users: {
           some: {
@@ -29,16 +29,12 @@ export async function CompanyService() {
     });
   }
 
-  async function getCompanyFromId(id: string) {
-    return db.company.findUnique({ where: { id } });
-  }
-
   async function updateCompany(
     employeeEmail: string,
     updateCompanyForm: UpdateCompanyForm,
   ) {
     const { name, cvr, email } = updateCompanyForm;
-    const user = await db.user.findUnique({
+    const user = await db.user.findUniqueOrThrow({
       where: {
         email: employeeEmail,
       },
@@ -46,7 +42,7 @@ export async function CompanyService() {
 
     return db.company.update({
       where: {
-        id: user?.companyId,
+        id: user.companyId,
       },
       data: {
         name,
@@ -59,7 +55,6 @@ export async function CompanyService() {
   return {
     getCompany,
     getUserCompany,
-    getCompanyFromId,
     updateCompany,
   };
 }

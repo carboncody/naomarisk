@@ -5,7 +5,7 @@ import { type Project, type Risk } from '@models';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { DeleteRisk } from './DeleteRisk';
-import EditRisk from './EditRisk';
+import { EditRisk } from './EditRisk';
 import { columns } from './colums';
 
 interface RiskTableProps {
@@ -14,7 +14,7 @@ interface RiskTableProps {
   project: Project;
 }
 
-export default function RiskTable({ risks, project, refetch }: RiskTableProps) {
+export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
   const router = useRouter();

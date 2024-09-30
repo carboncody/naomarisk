@@ -20,12 +20,14 @@ export default async function NavLayout({
 
   return (
     <>
-      <ThemeProvider attribute="class" enableSystem>
-        <MeProvider me={me}>
+      <MeProvider me={me}>
+        <ThemeProvider attribute="class" enableSystem>
           <Nav />
-          {children}
-        </MeProvider>
-      </ThemeProvider>
+          <div className="max-w-screen flex max-h-[calc(100vh-3rem)] flex-col overflow-y-auto">
+            <div className="p-4">{children}</div>
+          </div>
+        </ThemeProvider>
+      </MeProvider>
     </>
   );
 }

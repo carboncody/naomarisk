@@ -123,7 +123,7 @@ export const columns = ({
       );
     },
     cell: ({ row }) => (
-      <div className="truncate text-black dark:text-white">
+      <div className="truncate">
         <span>{row.original.customId}</span>
         <br />
         <span>Status: {row.original.status}</span>
@@ -145,15 +145,13 @@ export const columns = ({
       );
     },
     cell: ({ row }) => (
-      <div className="truncate text-black dark:text-white">
-        <span>
-          {row.original.riskowner ? (
-            row.original.riskowner.fullName ?? row.original.riskowner.email
-          ) : (
-            <em className="text-Zinc-400">Ingen ejer</em>
-          )}
-        </span>
-      </div>
+      <span className="line-clamp-2">
+        {row.original.riskowner ? (
+          row.original.riskowner.fullName ?? row.original.riskowner.email
+        ) : (
+          <em className="text-zinc-400">Ingen ejer</em>
+        )}
+      </span>
     ),
   },
   {
@@ -171,9 +169,7 @@ export const columns = ({
       );
     },
     cell: ({ row }) => (
-      <div className="col-span-2 flex items-center justify-between truncate text-black dark:text-white">
-        <span>{row.original.description}</span>
-      </div>
+      <span className="line-clamp-2">{row.original.description}</span>
     ),
   },
   {
@@ -216,7 +212,9 @@ export const columns = ({
         </Button>
       );
     },
-    cell: ({ row }) => row.original.activity,
+    cell: ({ row }) => (
+      <span className="line-clamp-2">{row.original.activity}</span>
+    ),
   },
   {
     id: 'actions',

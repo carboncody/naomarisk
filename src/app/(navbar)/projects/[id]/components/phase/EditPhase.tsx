@@ -79,7 +79,7 @@ export default function EditPhase({
                 />
               </div>
               <div className="w-full">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">Beskrivelse</Label>
                 <Input
                   className="mt-2 w-full"
                   {...register('description', {

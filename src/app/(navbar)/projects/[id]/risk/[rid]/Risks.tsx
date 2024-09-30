@@ -1,8 +1,7 @@
 'use client';
 
-import EditRisk from '@app/(navbar)/projects/[id]/components/Risks/EditRisk';
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import {
   Sheet,
@@ -22,6 +21,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaComment } from 'react-icons/fa6';
+import { EditRisk } from '../../components/risks/EditRisk';
 import { Comments } from './components/comments';
 
 export function Risk() {
@@ -110,19 +110,19 @@ export function Risk() {
 
               <div>
                 <span className="mt-2 text-muted-foreground">Risk ID:</span>
-                <span className="ml-1 font-light">{risk.customId}</span>
+                <span className="ml-1">{risk.customId}</span>
               </div>
 
               <div>
                 <p className="mt-2 text-muted-foreground">Beskrivelse:</p>
-                <p className="font-light">{risk.description}</p>
+                <p className="mt-2">{risk.description}</p>
               </div>
               <div className="mt-6 flex flex-col gap-2">
                 <div>
                   <span className="mt-2 text-muted-foreground">
                     Risiko Ejer:
                   </span>
-                  <span className="ml-1 font-light">
+                  <span className="ml-1">
                     {risk.riskowner?.fullName
                       ? risk.riskowner.fullName
                       : 'Ingen ejer'}
@@ -132,7 +132,7 @@ export function Risk() {
                   <span className="mt-2 text-muted-foreground">
                     Risiko Manager:
                   </span>
-                  <span className="ml-1 font-light">
+                  <span className="ml-1">
                     {risk.riskowner ? risk.riskowner.fullName : 'Ingen Manager'}
                   </span>
                 </div>
@@ -141,7 +141,8 @@ export function Risk() {
                 <p>
                   Dato for oprettelse:
                   <br />
-                  <p className="font-light">
+                  <p
+                    className=">
                     {dayjs(risk.createdAt).format('DD MMM YYYY')}
                   </p>
                 </p>
@@ -149,16 +150,17 @@ export function Risk() {
                 <p>
                   Sidst ændret:
                   <br />
-                  <p className="font-light">
+                  <p className="
+                  >
                     {dayjs(risk.updatedAt).format('DD MMM YYYY')}
                   </p>
                 </p>
               </div>
-              <div className="mt-6 flex gap-10 font-light">
+              <div className="mt-6 flex gap-10">
                 <p className="flex flex-col">
                   <p>
                     <span className="text-muted-foreground">Konsekvens:</span>
-                    <span className="ml-1 font-light">
+                    <span className="ml-1">
                       {risk.consequence ?? 'Udefineret'}
                     </span>
                   </p>
@@ -166,7 +168,7 @@ export function Risk() {
                     <span className="text-muted-foreground">
                       Sandsynlighed:
                     </span>
-                    <span className="ml-1 font-light">
+                    <span className="ml-1">
                       {risk.probability ?? 'Udefineret'}
                     </span>
                   </p>
@@ -174,7 +176,7 @@ export function Risk() {
 
                 <p>
                   <span className="text-muted-foreground">Risikoscore:</span>
-                  <span className="ml-1 font-light">{riscscore}</span>
+                  <span className="ml-1">{riscscore}</span>
                 </p>
               </div>
               <div className="mt-4 border-t border-zinc-300 pt-2 dark:border-zinc-700">
@@ -194,20 +196,34 @@ export function Risk() {
               </div>
             </div>
             <div className="w-2/3 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
-              <p className="mt-2 flex flex-wrap items-center justify-between">
-                <div className="flex items-center overflow-x-clip truncate">
-                  <span className="text-muted-foreground">Aktivitet:</span>
-                  <p className="ml-2 font-light">
-                    {risk.activity ?? 'Ingen aktivitet'}
-                  </p>
-                </div>
-              </p>
+              <div className="flex items-start">
+                <span className="text-muted-foreground">Aktivitet:</span>
+                <p className="ml-2">{risk.activity ?? 'Ingen aktivitet'}</p>
+              </div>
               <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
-              <div className="flex w-full items-center justify-center">
-                <div className="w-1/2">
+              <div className="flex w-full items-center justify-center gap-4">
+                <div className="w-full md:w-1/2">
                   <label className="mb-2 text-muted-foreground">
                     Tidsmæssig Risiko
                   </label>
+                  <div className="mt-2 flex flex-wrap gap-4">
+                    <div className="flex items-center">
+                      <label className="text-muted-foreground">
+                        Konsekvens:
+                      </label>
+                      <span className="ml-2">
+                        {risk.timeConsequence ?? 'Udefineret'}
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <label className="text-muted-foreground">
+                        Sandsynlighed:
+                      </label>
+                      <span className="ml-2">
+                        {risk.timeProbability ?? 'Udefineret'}
+                      </span>
+                    </div>
+                  </div>
                   <SingleRiskMatrix
                     probability={risk.timeProbability}
                     consequence={risk.timeConsequence}
@@ -223,10 +239,29 @@ export function Risk() {
                     }}
                   />
                 </div>
-                <div className="w-1/2">
+
+                <div className="w-full md:w-1/2">
                   <label className="mb-2 text-muted-foreground">
                     Økonomisk Risiko
                   </label>
+                  <div className="mt-2 flex flex-wrap gap-4">
+                    <div className="flex items-center">
+                      <label className="text-muted-foreground">
+                        Konsekvens:
+                      </label>
+                      <span className="ml-2">
+                        {risk.economicConsequence ?? 'Udefineret'}
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <label className="text-muted-foreground">
+                        Sandsynlighed:
+                      </label>
+                      <span className="ml-2">
+                        {risk.economicProbability ?? 'Udefineret'}
+                      </span>
+                    </div>
+                  </div>
                   <SingleRiskMatrix
                     probability={risk.economicProbability}
                     consequence={risk.economicConsequence}
@@ -248,7 +283,7 @@ export function Risk() {
                 <div className="flex gap-3 ">
                   <span>
                     <span className="text-muted-foreground">Fase:</span>
-                    <span className="ml-2 font-light">
+                    <span className="ml-2">
                       {risk.projectPhase?.name ?? 'Ingen fase'}
                     </span>
                   </span>
@@ -256,7 +291,7 @@ export function Risk() {
                     <span className="text-muted-foreground">
                       Mitigrerende fase:
                     </span>
-                    <span className="ml-2 font-light">
+                    <span className="ml-2">
                       {risk.mitigationPhase?.name ?? 'Ingen fase'}
                     </span>
                   </span>

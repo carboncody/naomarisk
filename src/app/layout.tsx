@@ -23,9 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="da" suppressHydrationWarning>
       <body suppressHydrationWarning className={`font-sans ${inter.variable}`}>
-        <main className="h-screen overflow-auto font-light dark:bg-zinc-950 dark:text-white">
+        <main className="h-screen overflow-hidden font-light dark:bg-zinc-950 dark:text-white">
           <Providers>
             <Toast />
             {children}

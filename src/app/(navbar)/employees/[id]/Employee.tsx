@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { useEmployee } from '@lib/api/hooks/users/useEmployee';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
