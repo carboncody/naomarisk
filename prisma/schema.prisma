@@ -134,17 +134,17 @@ model Risk {
   comment             String?
   activity            String?
 
-  riskowner       User?   @relation(fields: [riskOwnerUserId], references: [id])
-  riskOwnerUserId String?
-  project         Project @relation(fields: [projectId], references: [id])
-  projectId       String
-
-  comments          Comment[]
-  children          ChildRisk[]
-  mitigationPhase   Phase?      @relation("MitigationPhase", fields: [mitigationPhaseId], references: [id])
+  riskowner         User?   @relation(fields: [riskOwnerUserId], references: [id])
+  riskOwnerUserId   String?
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId         String
+  mitigationPhase   Phase?  @relation("MitigationPhase", fields: [mitigationPhaseId], references: [id])
   mitigationPhaseId String?
-  projectPhase      Phase?      @relation("ProjectPhase", fields: [projectPhaseId], references: [id])
+  projectPhase      Phase?  @relation("ProjectPhase", fields: [projectPhaseId], references: [id])
   projectPhaseId    String?
+
+  comments Comment[]
+  children ChildRisk[]
 
   @@unique([projectId, customId])
 }
@@ -175,7 +175,7 @@ model Comment {
   resolvedById String?
   resolvedBy   User?   @relation("resolver", fields: [resolvedById], references: [id])
 
-  risk   Risk   @relation(fields: [riskId], references: [id])
+  risk   Risk   @relation(fields: [riskId], references: [id], onDelete: Cascade)
   riskId String
 }
 

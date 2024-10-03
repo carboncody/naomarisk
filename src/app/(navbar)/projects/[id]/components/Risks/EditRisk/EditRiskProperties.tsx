@@ -42,7 +42,7 @@ export function EditRiskProperties({ project }: EditRiskPropertiesProps) {
           />
         </div>
       </div>
-      <h1 className="mt-8 border-spacing-5 border-b-2 border-zinc-300 text-xl font-semibold dark:border-zinc-300">
+      <h1 className="mt-8 border-spacing-5 border-b text-xl font-semibold">
         Tid
       </h1>
       <div className="mt-4 flex gap-4">
@@ -69,7 +69,7 @@ export function EditRiskProperties({ project }: EditRiskPropertiesProps) {
           </div>
         </div>
       </div>
-      <h1 className="mt-8 border-spacing-5 border-b-2 border-black text-xl font-semibold dark:border-white">
+      <h1 className="mt-8 border-spacing-5 border-b text-xl font-semibold">
         Økonomi
       </h1>
       <div className="mt-4 flex gap-4">
