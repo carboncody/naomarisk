@@ -298,15 +298,9 @@ export function Risk() {
                     buttonLabel={'Vælg fase'}
                     selectedValue={risk.projectPhaseId ?? null}
                     setSelectedValue={(value) => {
-                      if (value === risk.projectPhaseId) {
-                        void onSubmit({
-                          projectPhaseId: null,
-                        });
-                      } else {
-                        void onSubmit({
-                          projectPhaseId: value,
-                        });
-                      }
+                      void onSubmit({
+                        projectPhaseId: value,
+                      });
                     }}
                   />
                 </span>
@@ -322,15 +316,9 @@ export function Risk() {
                       buttonLabel={'Vælg fase'}
                       selectedValue={risk.mitigationPhaseId ?? null}
                       setSelectedValue={(value) => {
-                        if (value === risk.mitigationPhaseId) {
-                          void onSubmit({
-                            mitigationPhaseId: null,
-                          });
-                        } else {
-                          void onSubmit({
-                            mitigationPhaseId: value,
-                          });
-                        }
+                        void onSubmit({
+                          mitigationPhaseId: value,
+                        });
                       }}
                     />
                   </span>
