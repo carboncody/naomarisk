@@ -64,7 +64,7 @@ async function main() {
           dueDate: faker.date.future(),
           budget: faker.finance.amount(),
           companyId: company.id,
-          status: ProjectStatus.OPEN
+          status: ProjectStatus.OPEN,
         },
       });
 

@@ -291,7 +291,7 @@ export function Risk() {
                   <span>
                     <span className="text-muted-foreground">Fase:</span>
                     <span className="ml-2">
-                    <SingleDropdown
+                      <SingleDropdown
                         triggerClassName="w-72"
                         options={risk.project.phases.map((phase) => ({
                           label: phase.name,
