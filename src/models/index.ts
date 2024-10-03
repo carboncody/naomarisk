@@ -114,10 +114,10 @@ export interface Risk {
   projectId: string;
   riskOwnerUserId: string;
   user: User[];
-  mitigationPhase: Phase;
-  mitigationPhaseId: string;
-  projectPhase: Phase;
-  projectPhaseId: string;
+  mitigationPhase: Phase | null;
+  mitigationPhaseId: string | null;
+  projectPhase: Phase | null;
+  projectPhaseId: string | null;
 }
 
 export interface Comment {

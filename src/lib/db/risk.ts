@@ -98,8 +98,8 @@ export async function RiskService() {
       where: { id },
       data: {
         ...data,
-        projectPhaseId: data.projectPhaseId ?? null,
-        mitigationPhaseId: data.mitigationPhaseId ?? null,
+        projectPhaseId: data.projectPhaseId,
+        mitigationPhaseId: data.mitigationPhaseId,
       },
       include: { riskowner: true },
     });

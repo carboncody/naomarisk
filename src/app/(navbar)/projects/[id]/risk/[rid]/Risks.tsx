@@ -1,6 +1,7 @@
 'use client';
 
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
+import { SingleDropdown } from '@components/ui';
 import { LoadingSpinner } from '@components/ui/LoadSpinner';
 import { Button } from '@components/ui/button';
 import {
@@ -285,23 +286,43 @@ export function Risk() {
                 </div>
               </div>
               <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
-              <div className="flex w-full items-center gap-2">
-                <div className="flex gap-3 ">
-                  <span>
-                    <span className="text-muted-foreground">Fase:</span>
-                    <span className="ml-2">
-                      {risk.projectPhase?.name ?? 'Ingen fase'}
-                    </span>
+              <div className="flex w-full items-center justify-start gap-16">
+                <span className="ml-2 flex items-center gap-2">
+                  <p className="text-muted-foreground">Fase:</p>
+                  <SingleDropdown
+                    triggerClassName="w-72"
+                    options={risk.project.phases.map((phase) => ({
+                      label: phase.name,
+                      value: phase.id,
+                    }))}
+                    buttonLabel={'Vælg fase'}
+                    selectedValue={risk.projectPhaseId ?? null}
+                    setSelectedValue={(value) => {
+                      void onSubmit({
+                        projectPhaseId: value,
+                      });
+                    }}
+                  />
+                </span>
+                <span className="flex items-center">
+                  <p className="text-muted-foreground">Mitigrerende fase:</p>
+                  <span className="ml-2">
+                    <SingleDropdown
+                      triggerClassName="w-72"
+                      options={risk.project.phases.map((phase) => ({
+                        label: phase.name,
+                        value: phase.id,
+                      }))}
+                      buttonLabel={'Vælg fase'}
+                      selectedValue={risk.mitigationPhaseId ?? null}
+                      setSelectedValue={(value) => {
+                        void onSubmit({
+                          mitigationPhaseId: value,
+                        });
+                      }}
+                    />
                   </span>
-                  <span>
-                    <span className="text-muted-foreground">
-                      Mitigrerende fase:
-                    </span>
-                    <span className="ml-2">
-                      {risk.mitigationPhase?.name ?? 'Ingen fase'}
-                    </span>
-                  </span>
-                </div>
+                </span>
               </div>
             </div>
           </div>

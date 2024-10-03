@@ -190,8 +190,8 @@ export const columns = ({
       return (
         <PhaseProgressBar
           projectPhases={project.phases}
-          riskPhaseId={risk.projectPhaseId}
-          mitigatingPhaseId={risk.mitigationPhaseId}
+          riskPhaseId={risk.projectPhaseId!}
+          mitigatingPhaseId={risk.mitigationPhaseId!}
         />
       );
     },
