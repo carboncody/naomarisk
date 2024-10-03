@@ -6,7 +6,7 @@ import { SingleDropdown } from './Dropdown';
 export function SettingsDropdown() {
   const settingsActionDropdownOptions = [
     {
-      label: 'Bruger instillinger',
+      label: 'Indstillinger',
       href: '/account',
       value: 'settings',
     },
