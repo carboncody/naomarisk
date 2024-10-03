@@ -14,7 +14,7 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 shadow-xl dark:bg-zinc-700">
         <p className="mt-5 text-center text-4xl font-normal dark:text-white">
-          Request new password
+          Anmod om at ændre kodeord
         </p>
         <div className="px-5">
           <ForgottenPassword

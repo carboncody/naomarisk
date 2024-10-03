@@ -15,7 +15,7 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col items-center justify-center dark:bg-gradient-to-b dark:from-[#1c1c1c] dark:to-[#2a2929] dark:text-white">
       <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 shadow-xl dark:bg-zinc-700">
         <p className="mt-5 text-center text-4xl font-normal dark:text-white">
-          Create a new account
+          Opret en ny konto
         </p>
         <div className="px-5">
           <SignUp
