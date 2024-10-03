@@ -23,7 +23,7 @@ export function Nav() {
         <NavigationMenuItem>
           <Link href="/" passHref legacyBehavior>
             <NavigationMenuLink className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text text-xl font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200 md:text-2xl">
-              nRisk
+              NaomaRisk
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

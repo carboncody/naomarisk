@@ -23,9 +23,9 @@ export function ProjectEmployee({
 
   if (isFetching) {
     return (
-      <div className='flex justify-center items-center h-[80vh]'>
-      <LoadingSpinner size={50} />
-    </div>
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
+      </div>
     );
   }
 
