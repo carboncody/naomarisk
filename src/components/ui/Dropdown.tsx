@@ -22,6 +22,7 @@ interface SingleDropdownProps {
   setSelectedValue: (value: string | null) => void;
   customTriggerBtn?: ReactNode;
   triggerClassName?: string;
+  popoverClassName?: string;
 }
 
 export function SingleDropdown({
@@ -31,6 +32,7 @@ export function SingleDropdown({
   options,
   customTriggerBtn,
   triggerClassName,
+  popoverClassName,
 }: SingleDropdownProps) {
   return (
     <DropdownMenu>
@@ -46,6 +48,7 @@ export function SingleDropdown({
       <DropdownMenuContent
         onMouseDown={(e) => e.stopPropagation()}
         style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
+        className={cn(popoverClassName)}
       >
         {options.map((option) => (
           <DropdownMenuItem
