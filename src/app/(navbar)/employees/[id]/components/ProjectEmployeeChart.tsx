@@ -24,15 +24,7 @@ interface ProjectEmployeeChartProps {
   employee: User;
 }
 
-export function ProjectEmployeeChart({
-  project,
-  employee,
-}: ProjectEmployeeChartProps) {
-  // console.info(
-  //   'employee: ',
-  //   employee.projectUsers.map((p) => p.project),
-  // );
-
+export function ProjectEmployeeChart({ employee }: ProjectEmployeeChartProps) {
   const chartData = [
     { month: 'January', risk: 5 },
     { month: 'February', risk: 3 },
@@ -48,20 +40,6 @@ export function ProjectEmployeeChart({
       color: '#2563eb',
     },
   } satisfies ChartConfig;
-
-  // const CustomBarShape = (props: any) => {
-  //   return (
-  //     <Rectangle
-  //       x={x}
-  //       y={y}
-  //       width={width}
-  //       height={height}
-  //       fill={fillColor}
-  //       radius={4}
-  //       className="hover:cursor-pointer"
-  //     />
-  //   );
-  // };
 
   return (
     <Card className="flex flex-col rounded-xl border-0 bg-white shadow-none dark:bg-zinc-950">
