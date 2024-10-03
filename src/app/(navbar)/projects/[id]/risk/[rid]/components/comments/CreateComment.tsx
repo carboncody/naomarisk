@@ -9,9 +9,14 @@ import toast from 'react-hot-toast';
 interface CreateCommentProps {
   riskId: string;
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  refetch: () => void;
 }
 
-export function CreateComment({ riskId, setComments }: CreateCommentProps) {
+export function CreateComment({
+  riskId,
+  setComments,
+  refetch,
+}: CreateCommentProps) {
   const [content, setContent] = useState('');
 
   async function onSubmit(data: CreateCommentForm) {
@@ -29,6 +34,7 @@ export function CreateComment({ riskId, setComments }: CreateCommentProps) {
       toast.success('Kommentar tilføjet!');
       setComments((prevComments) => [...prevComments, comment.data.comment]);
       setContent('');
+      refetch();
     } catch (error) {
       toast.error('Error - something went wrong');
     }
@@ -46,7 +52,7 @@ export function CreateComment({ riskId, setComments }: CreateCommentProps) {
             }
           }}
           onChange={(e) => setContent(e.target.value)}
-          className="dark:bg-zinc-800 dark:text-white"
+          className="dark:bg-zinc-800 dark:text-white "
           placeholder="Skriv en kommentar..."
         />
       </div>
