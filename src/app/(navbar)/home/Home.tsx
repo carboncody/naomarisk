@@ -49,10 +49,10 @@ export function Home() {
         <span className="flex select-none gap-2 text-5xl font-medium dark:text-white">
           Velkommen til{' '}
           <p className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200">
-            nRisk
+            NaomaRisk
           </p>
         </span>
-        <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" />
+        {/* <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" /> */}
       </div>
       <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-lg dark:text-white md:mt-10">
         <PiShieldWarningBold className="inline h-6 w-6 text-amber-500" />
