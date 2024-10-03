@@ -10,7 +10,7 @@ import { BsBuildingFillGear } from 'react-icons/bs';
 import { FaCubes, FaUsers } from 'react-icons/fa';
 import { PiShieldWarningBold, PiWarningFill } from 'react-icons/pi';
 import { ProjectBarChart } from './components/ProjectBarChart';
-import { RisksPiechart } from './components/RisksPiechart';
+import { RiskScorePieChart } from './components/RisksPiechart';
 
 export function Home() {
   const { data, isLoading, error } = useCompany();
@@ -98,7 +98,7 @@ export function Home() {
 
       <div className="items-cemter grid h-[50vh] w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
         <ProjectBarChart projects={data.projects} />
-        <RisksPiechart risks={allRisksInCompany} />
+        <RiskScorePieChart risks={allRisksInCompany} />
       </div>
     </div>
   );

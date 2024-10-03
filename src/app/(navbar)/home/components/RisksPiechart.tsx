@@ -1,20 +1,9 @@
-import { type Risk } from '@models';
-import { useMemo } from 'react';
-import { FaLockOpen } from 'react-icons/fa6';
-import { IoLockClosed } from 'react-icons/io5';
-import { Cell, Pie, PieChart } from 'recharts';
-import 'src/components/ui/styles.css';
-
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from 'src/components/ui/Charts/chart';
-
-import { GrStatusInfo } from 'react-icons/gr';
+} from '@/components/ui/Charts/chart';
 import {
   Card,
   CardContent,
@@ -22,91 +11,192 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from 'src/components/ui/card';
-interface RisksPiechartProps {
-  risks: Risk[];
-}
+} from '@/components/ui/card';
+import { ColorMap, Thresholds, getThreshold } from '@lib/calc/threshholds';
+import type { Risk } from '@models';
+import { RiskStatus } from '@models';
+import { useState } from 'react';
+import { Cell, Pie, PieChart, Sector } from 'recharts';
+import { type PieSectorDataItem } from 'recharts/types/polar/Pie';
 
-export function RisksPiechart({ risks }: RisksPiechartProps) {
-  const taskCountByStatus = useMemo(() => {
-    return risks.reduce(
-      (acc, risk) => {
-        acc[risk.status] = (acc[risk.status] ?? 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-  }, [risks]);
+export const description =
+  'A larger donut chart showing risk score distribution';
 
-  type RiskStatus = 'OPEN' | 'CLOSED';
+export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const data = useMemo(() => {
-    const statusColors: Record<RiskStatus, string> = {
-      OPEN: 'hsl(var(--chart-1))',
-      CLOSED: 'hsl(var(--chart-2))',
+  const calculateRiskScores = (risks: Risk[]) => {
+    const scores = {
+      GREEN: 0,
+      YELLOW: 0,
+      RED: 0,
+      UNDEFINED: 0,
     };
-    return Object.entries(taskCountByStatus).map(([status, count]) => ({
-      value: count,
-      name: status === 'CLOSED' ? 'Lukkede risici' : 'Åbne risici',
-      fillColor:
-        statusColors[status as RiskStatus] ?? 'hsl(var(--chart-default))',
-    }));
-  }, [taskCountByStatus]);
 
-  const chartConfig = {
-    OPEN: {
-      icon: FaLockOpen,
-      label: 'Åbne risici',
-      color: 'hsl(var(--chart-1))',
+    risks.forEach((risk) => {
+      if (risk.status === RiskStatus.Open) {
+        const threshold = getThreshold(risk);
+        if (risk.probability === null || risk.consequence === null) {
+          scores.UNDEFINED++;
+        } else {
+          scores[Thresholds[threshold] as keyof typeof scores]++;
+        }
+      }
+    });
+
+    return Object.entries(scores)
+      .map(([name, value]) => ({ name, value }))
+      .filter((entry) => entry.value > 0);
+  };
+
+  const chartData = calculateRiskScores(risks);
+
+  const COLORS = {
+    GREEN: ColorMap[Thresholds.GREEN],
+    YELLOW: ColorMap[Thresholds.YELLOW],
+    RED: ColorMap[Thresholds.RED],
+    UNDEFINED: 'gray',
+  };
+
+  const labelMap = {
+    GREEN: 'Lave',
+    YELLOW: 'Medium',
+    RED: 'Kritiske',
+    UNDEFINED: 'Udefinieret',
+  };
+
+  const chartConfig: ChartConfig = {
+    value: {
+      label: 'Risks',
     },
-    CLOSED: {
-      icon: IoLockClosed,
-      label: 'Lukkede risici',
-      color: 'hsl(var(--chart-2))',
-    },
-  } satisfies ChartConfig;
+    ...chartData.reduce(
+      (acc, { name }) => ({
+        ...acc,
+        [name]: {
+          label: `${labelMap[name as keyof typeof labelMap]} risici`,
+          color: COLORS[name as keyof typeof COLORS],
+        },
+      }),
+      {},
+    ),
+  };
+
+  const onPieEnter = (_: unknown, index: number) => {
+    setActiveIndex(index);
+  };
+
+  const renderActiveShape = (props: PieSectorDataItem) => {
+    const {
+      cx,
+      cy,
+      innerRadius,
+      outerRadius,
+      startAngle,
+      endAngle,
+      fill,
+      payload,
+      percent,
+      value,
+    } = props;
+    const payloadObject = (Array.isArray(payload) ? payload[0] : payload) as {
+      name: string;
+    };
+    return (
+      <g>
+        <text
+          x={cx}
+          y={cy}
+          dy={-15}
+          textAnchor="middle"
+          fill={fill}
+          fontSize="16px"
+        >
+          {payloadObject.name}
+        </text>
+        <text
+          x={cx}
+          y={cy}
+          dy={15}
+          textAnchor="middle"
+          fill={fill}
+          fontSize="16px"
+        >
+          {`${value} (${(percent! * 100).toFixed(2)}%)`}
+        </text>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={props.outerRadius ?? 0 + 6}
+          outerRadius={props.outerRadius ?? 0 + 10}
+          fill={fill}
+        />
+      </g>
+    );
+  };
 
   return (
-    <Card className="flex flex-col border shadow-xl dark:border-transparent dark:bg-zinc-900">
+    <Card className="mx-auto flex w-full max-w-3xl flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Status over risici</CardTitle>
-        <CardDescription>Alle projekter</CardDescription>
+        <CardTitle>Åbne risici fordelt</CardTitle>
+        <CardDescription>
+          Nuværende risici status over alle projekter
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="min-h-[200px] w-full rounded-lg p-4 "
+          className="mx-auto aspect-square h-[400px]"
         >
           <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
             <Pie
+              data={chartData}
               dataKey="value"
-              data={data}
+              nameKey="name"
               cx="50%"
               cy="50%"
-              outerRadius="60%"
-              innerRadius={60}
+              innerRadius={80}
+              outerRadius={140}
               strokeWidth={5}
-              activeIndex={0}
-              // activeShape={({
-              //   outerRadius = 0,
-              //   ...props
-              // }: PieSectorDataItem) => (
-              //   <Sector {...props} outerRadius={outerRadius + 5} />
-              // )}
-              label={({ name, value }) => `${name} -> ${value}`}
+              activeIndex={activeIndex}
+              activeShape={renderActiveShape}
+              onMouseEnter={onPieEnter}
             >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fillColor} />
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[entry.name as keyof typeof COLORS]}
+                />
               ))}
             </Pie>
-            <ChartTooltip content={<ChartTooltipContent />} label={true} />
-            <ChartLegend content={<ChartLegendContent />} />
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Risici fordelt ved status <GrStatusInfo className="h-4 w-4 " />
+      <CardFooter className="mt-4 flex-col gap-2 text-sm">
+        <div className="flex flex-wrap justify-center gap-4">
+          {chartData.map(({ name, value }) => (
+            <div key={name} className="flex items-center gap-2">
+              <div
+                className="h-3 w-3 rounded-full"
+                style={{ backgroundColor: COLORS[name as keyof typeof COLORS] }}
+              />
+              <span>{`${labelMap[name as keyof typeof labelMap]} risici: ${value}`}</span>
+            </div>
+          ))}
         </div>
       </CardFooter>
     </Card>
