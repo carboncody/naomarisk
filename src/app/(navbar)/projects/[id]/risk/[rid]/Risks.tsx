@@ -2,7 +2,7 @@
 
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
 import { SingleDropdown } from '@components/ui';
-import { LoadingSpinner } from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import {
   Sheet,
@@ -40,8 +40,8 @@ export function Risk() {
 
   if (isLoading && !isRefetching) {
     return (
-      <div className="h-[80vh]">
-        <LoadingSpinner size="lg" />
+      <div className='flex justify-center items-center h-[80vh]'>
+        <LoadingSpinner size={50} />
       </div>
     );
   }
