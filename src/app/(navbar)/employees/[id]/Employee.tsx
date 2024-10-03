@@ -1,11 +1,11 @@
 'use client';
 
+import { LoadingSpinner } from '@components/ui';
 import { useEmployee } from '@lib/api/hooks/users/useEmployee';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
 import CompanySettings from './components/CompanySettings';
 import UserInfo from './components/UserInfo';
-import { LoadingSpinner } from '@components/ui';
 
 export function Employee() {
   const pathName = usePathname();
@@ -26,7 +26,7 @@ export function Employee() {
 
   if (isLoading) {
     return (
-      <div className='flex justify-center items-center h-[80vh]'>
+      <div className="flex h-[80vh] items-center justify-center">
         <LoadingSpinner size={50} />
       </div>
     );

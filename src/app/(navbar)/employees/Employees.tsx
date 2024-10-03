@@ -2,6 +2,7 @@
 
 import EditEmployeeModal from '@app/(navbar)/employees/components/EditEmployeeModal';
 import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
@@ -10,7 +11,6 @@ import Error from 'next/error';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { columns as getColumns } from './components/colums';
-import { LoadingSpinner } from '@components/ui';
 
 export function AllEmployees() {
   const router = useRouter();
@@ -31,9 +31,9 @@ export function AllEmployees() {
 
   if (isFetching && !isRefetching) {
     return (
-      <div className='flex justify-center items-center h-[80vh]'>
-      <LoadingSpinner size={50} />
-    </div>
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
+      </div>
     );
   }
 

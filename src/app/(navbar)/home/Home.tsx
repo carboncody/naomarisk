@@ -6,7 +6,6 @@ import { useCompany } from '@lib/api/hooks';
 import { ProjectStatus, RiskStatus } from '@models';
 import Error from 'next/error';
 import { useMemo } from 'react';
-import { BsBuildingFillGear } from 'react-icons/bs';
 import { FaCubes, FaUsers } from 'react-icons/fa';
 import { PiShieldWarningBold, PiWarningFill } from 'react-icons/pi';
 import { ProjectBarChart } from './components/ProjectBarChart';
@@ -24,7 +23,7 @@ export function Home() {
 
   if (isLoading) {
     return (
-      <div className='flex justify-center items-center h-[80vh]'>
+      <div className="flex h-[80vh] items-center justify-center">
         <LoadingSpinner size={50} />
       </div>
     );

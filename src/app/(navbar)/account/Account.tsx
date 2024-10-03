@@ -1,6 +1,7 @@
 'use client';
 
 import UserSettings from '@app/(navbar)/account/components/UserSettings';
+import { LoadingSpinner } from '@components/ui';
 import { SettingsCard } from '@components/ui/SettingsCard';
 import { Button } from '@components/ui/button';
 import { useMe } from '@lib/api/hooks/users/useMe';
@@ -8,14 +9,13 @@ import { UserRole } from '@models';
 import Error from 'next/error';
 import Link from 'next/link'; // Import Link from next/link
 import { CompanySettings } from './components/CompanySetttings';
-import { LoadingSpinner } from '@components/ui';
 
 export function Account() {
   const { data: me, isLoading, error, refetch } = useMe();
 
   if (isLoading) {
     return (
-      <div className='flex justify-center items-center h-[80vh]'>
+      <div className="flex h-[80vh] items-center justify-center">
         <LoadingSpinner size={50} />
       </div>
     );
