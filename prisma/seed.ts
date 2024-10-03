@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { ProjectStatus } from '@models';
 import { PrismaClient, RiskStatus, UserRole } from '@prisma/client';
 import dayjs from 'dayjs';
 
@@ -63,6 +64,7 @@ async function main() {
           dueDate: faker.date.future(),
           budget: faker.finance.amount(),
           companyId: company.id,
+          status: ProjectStatus.OPEN
         },
       });
 

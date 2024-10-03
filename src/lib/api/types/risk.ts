@@ -16,6 +16,8 @@ export type CreateRiskForm = {
 };
 
 export type UpdateRiskForm = Partial<CreateRiskForm> & {
-  probability: number | null;
-  consequence: number | null;
+  probability?: number | null;
+  consequence?: number | null;
+  projectPhaseId?: string | null;
+  mitigationPhaseId?: string | null;
 };
