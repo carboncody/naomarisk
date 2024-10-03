@@ -1,6 +1,6 @@
 'use client';
 
-import { LoadingSpinner } from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { useEmployees } from '@lib/api/hooks';
 import type { Project } from '@models';
@@ -23,9 +23,9 @@ export function ProjectEmployee({
 
   if (isFetching) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
+      <div className='flex justify-center items-center h-[80vh]'>
+      <LoadingSpinner size={50} />
+    </div>
     );
   }
 

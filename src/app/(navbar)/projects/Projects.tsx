@@ -1,6 +1,6 @@
 'use client';
 
-import { LoadingSpinner } from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { Tabs, TabsList, TabsTrigger } from '@components/ui/tabs';
@@ -59,9 +59,9 @@ export function AllProjects() {
 
   if (isFetching) {
     return (
-      <div className="flex h-[80vh] w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
+      <div className='flex justify-center items-center h-[80vh]'>
+      <LoadingSpinner size={50} />
+    </div>
     );
   }
 

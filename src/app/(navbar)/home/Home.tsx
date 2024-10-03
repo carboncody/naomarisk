@@ -1,6 +1,6 @@
 'use client';
 
-import { LoadingSpinner } from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadingSpinnerShadcn';
 import { Card, CardTitle } from '@components/ui/card';
 import { useCompany } from '@lib/api/hooks';
 import { ProjectStatus, RiskStatus } from '@models';
@@ -24,8 +24,8 @@ export function Home() {
 
   if (isLoading) {
     return (
-      <div className="h-[80vh]">
-        <LoadingSpinner size="lg" />
+      <div className='flex justify-center items-center h-[80vh]'>
+        <LoadingSpinner size={50} />
       </div>
     );
   }

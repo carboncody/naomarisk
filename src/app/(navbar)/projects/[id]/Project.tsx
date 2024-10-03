@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EditProject } from '@app/(navbar)/projects/[id]/components/EditProjectModal';
-import { LoadingSpinner } from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { useProject } from '@lib/api/hooks';
 import type { UpdateProjectForm } from '@lib/api/types';
 import { ProjectStatus } from '@models';
@@ -48,9 +48,9 @@ export function Project() {
 
   if (isLoading && !isRefetching) {
     return (
-      <div className="h-[80vh]">
-        <LoadingSpinner size="lg" />
-      </div>
+      <div className='flex justify-center items-center h-[80vh]'>
+      <LoadingSpinner size={50} />
+    </div>
     );
   }
 
