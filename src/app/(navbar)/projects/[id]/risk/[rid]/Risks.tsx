@@ -1,7 +1,11 @@
 'use client';
 
+import {
+  ConsequenceDescription,
+  ProbabilityDescription,
+} from '@components/RiskMatrix/RiskMatrixDescription';
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
-import { LoadingSpinner, SingleDropdown } from '@components/ui';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { useRisk } from '@lib/api/hooks/risks';
 import type { UpdateRiskForm } from '@lib/api/types/risk';
@@ -245,10 +249,12 @@ export function Risk() {
                 </div>
               </div>
               <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
-              <div className="flex w-full items-center justify-start gap-16">
-                <span className="ml-2 flex items-center gap-2">
-                  <p className="text-muted-foreground">Fase:</p>
-                  <SingleDropdown
+              <div className=" flex w-full items-center justify-start gap-16">
+                <div className="ml-2 flex items-center gap-2">
+                  <p className="text-muted-foreground">
+                    Fase: {risk.mitigationPhase?.name ?? 'Udefineret'}
+                  </p>
+                  {/* <SingleDropdown
                     triggerClassName="w-72"
                     options={risk.project.phases.map((phase) => ({
                       label: phase.name,
@@ -261,12 +267,14 @@ export function Risk() {
                         projectPhaseId: value,
                       });
                     }}
-                  />
-                </span>
-                <span className="flex items-center">
-                  <p className="text-muted-foreground">Mitigrerende fase:</p>
-                  <span className="ml-2">
-                    <SingleDropdown
+                  /> */}
+                </div>
+                <div className=" items-center">
+                  <p className="text-muted-foreground">
+                    Mitigrerende fase: {risk.projectPhase?.name ?? 'Udefineret'}
+                  </p>
+                  {/* <div className="ml-2"> */}
+                  {/* <SingleDropdown
                       triggerClassName="w-72"
                       options={risk.project.phases.map((phase) => ({
                         label: phase.name,
@@ -279,9 +287,41 @@ export function Risk() {
                           mitigationPhaseId: value,
                         });
                       }}
-                    />
-                  </span>
-                </span>
+                    /> */}
+                  {/* </div> */}
+                </div>
+              </div>
+              <div className="ml-10 mt-10 flex justify-start">
+                <div className="pb-5">
+                  <p className="font-semibold">Sandsynlighed:</p>
+                  <div className="mt-2">
+                    {[5, 4, 3, 2, 1].map((probability) => (
+                      <div key={probability} className="mb-1 flex">
+                        <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs  md:text-sm">
+                          {probability}
+                        </div>
+                        <div className="w-60 gap-2 text-sm">
+                          {ProbabilityDescription[probability]}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="">
+                  <p className="font-semibold">Konsekves:</p>
+                  <div className="mt-2">
+                    {[5, 4, 3, 2, 1].map((consequence) => (
+                      <div key={consequence} className="mb-1 flex">
+                        <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs md:text-sm">
+                          {consequence}
+                        </div>
+                        <div className="w-60 gap-2 text-sm">
+                          {ConsequenceDescription[consequence]}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
             <div className="w-1/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
