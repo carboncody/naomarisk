@@ -3,14 +3,6 @@
 import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
 import { LoadingSpinner, SingleDropdown } from '@components/ui';
 import { Button } from '@components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@components/ui/sheet';
 import { useRisk } from '@lib/api/hooks/risks';
 import type { UpdateRiskForm } from '@lib/api/types/risk';
 import { type Risk } from '@models';
@@ -78,7 +70,6 @@ export function Risk() {
                 >
                   Rediger Risiko
                 </Button>
-                
               </div>
 
               <div>
@@ -294,7 +285,7 @@ export function Risk() {
               </div>
             </div>
             <div className="w-1/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
-              <span className='flex gap-3 mb-2'>
+              <span className="mb-2 flex gap-3">
                 <FaComment className="h-4 w-4" />
                 Tilføj en ny kommentar her.
               </span>
