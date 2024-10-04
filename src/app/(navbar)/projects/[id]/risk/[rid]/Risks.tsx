@@ -64,7 +64,7 @@ export function Risk() {
   return (
     <>
       <div className="py-2">
-        <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-4">
+        <div className="max-w-screen-3xl mx-auto flex w-full flex-col gap-4">
           <Button className="w-20" onClick={() => window.history.back()}>
             {'<- '}Back
           </Button>
@@ -78,38 +78,7 @@ export function Risk() {
                 >
                   Rediger Risiko
                 </Button>
-                <Sheet>
-                  <Button variant="default">
-                    <SheetTrigger className="gp-2 flex">
-                      <div className="flex items-center p-2">
-                        <span>
-                          <FaComment className="mr-2 h-4 w-4" />
-                        </span>
-                        <span>Kommentér</span>
-                      </div>
-                    </SheetTrigger>
-                  </Button>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle className="flex items-center gap-3">
-                        <span>
-                          <FaComment className="h-4 w-4" />
-                        </span>
-                        <span>Kommentar</span>
-                      </SheetTitle>
-                      <SheetDescription>
-                        Tilføj en ny kommentar her.
-                        <p className="text-Zinc-200 mt-4  text-sm ">
-                          <Comments
-                            riskId={riskId}
-                            comments={risk.comments}
-                            refetch={refetch}
-                          />
-                        </p>
-                      </SheetDescription>
-                    </SheetHeader>
-                  </SheetContent>
-                </Sheet>
+                
               </div>
 
               <div>
@@ -199,7 +168,7 @@ export function Risk() {
                 </div>
               </div>
             </div>
-            <div className="w-2/3 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
+            <div className="w-2/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
               <div className="flex items-start">
                 <span className="text-muted-foreground">Aktivitet:</span>
                 <p className="ml-2 whitespace-normal break-words">
@@ -323,6 +292,19 @@ export function Risk() {
                   </span>
                 </span>
               </div>
+            </div>
+            <div className="w-1/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
+              <span className='flex gap-3 mb-2'>
+                <FaComment className="h-4 w-4" />
+                Tilføj en ny kommentar her.
+              </span>
+              <p className="text-Zinc-200 mt-4  text-sm ">
+                <Comments
+                  riskId={riskId}
+                  comments={risk.comments}
+                  refetch={refetch}
+                />
+              </p>
             </div>
           </div>
         </div>

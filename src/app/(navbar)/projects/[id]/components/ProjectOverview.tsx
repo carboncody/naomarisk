@@ -1,3 +1,7 @@
+import {
+  ConsequenceDescription,
+  ProbabilityDescription,
+} from '@components/RiskMatrix/RiskMatrixDescription';
 import { SingleDropdown } from '@components/ui';
 import { Button } from '@components/ui/button';
 import type { Project, ProjectStatus } from '@models';
@@ -112,7 +116,39 @@ export function ProjectOverview({
         </div>
 
         <div className="mt-5 flex w-full flex-col gap-4 md:flex-row">
-          <div className="flex w-full items-center justify-center rounded-xl border shadow dark:border-transparent dark:bg-zinc-900 dark:shadow-none">
+          <div className="flex w-full items-center justify-center gap-20 rounded-xl border shadow dark:border-transparent dark:bg-zinc-900 dark:shadow-none">
+            <div>
+              <div className="pb-5">
+                <p className="font-semibold">Sandsynlighed:</p>
+                <div className="mt-2">
+                  {[5, 4, 3, 2, 1].map((probability) => (
+                    <div key={probability} className="mb-1 flex">
+                      <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs  md:text-sm">
+                        {probability}
+                      </div>
+                      <div className="w-60 gap-2 text-sm">
+                        {ProbabilityDescription[probability]}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="">
+                <p className="font-semibold">Konsekves:</p>
+                <div className="mt-2">
+                  {[5, 4, 3, 2, 1].map((consequence) => (
+                    <div key={consequence} className="mb-1 flex">
+                      <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs md:text-sm">
+                        {consequence}
+                      </div>
+                      <div className="w-60 gap-2 text-sm">
+                        {ConsequenceDescription[consequence]}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
             <ProjectRiskMatrix projectId={project.id} risks={project.risks} />
           </div>
           <div className="w-full rounded-xl border shadow dark:border-transparent dark:bg-zinc-900 dark:shadow-none">

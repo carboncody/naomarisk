@@ -52,14 +52,18 @@ export function EditRisk({
     },
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
-  const StatusDropdownOptions: { label: string; value: RiskStatus }[] = [
+  const statusDropdownOptions: { label: string; value: RiskStatus }[] = [
     { label: 'Open', value: RiskStatus.Open },
     { label: 'Closed', value: RiskStatus.Closed },
   ];
 
-  async function onSubmit(data: UpdateRiskForm) {
+  async function onSubmit(data: UpdateRiskForm, e?: React.BaseSyntheticEvent) {
+    e?.preventDefault();
     const {
       probability,
       consequence,
@@ -91,6 +95,7 @@ export function EditRisk({
   }
 
   const { data: allEmployees, isError } = useEmployees();
+
   const [selectedTab, setSelectedTab] = useState<'overview' | 'properties'>(
     'overview',
   );
@@ -102,7 +107,7 @@ export function EditRisk({
     );
   }, [allEmployees, project.projectUsers]);
 
-  if (isError || !allEmployees) {
+  if (isError) {
     return <div>Something went wrong</div>;
   }
 
@@ -123,6 +128,7 @@ export function EditRisk({
                 <TabsList>
                   <TabsTrigger value="overview">Oversigt</TabsTrigger>
                   <TabsTrigger value="properties">Egenskaber</TabsTrigger>
+                  <TabsTrigger value="comments">Kommentarer</TabsTrigger>
                 </TabsList>
               </DialogTitle>
             </DialogHeader>
@@ -130,7 +136,7 @@ export function EditRisk({
               <TabsContent value="overview">
                 <EditRiskOverview
                   projectMembers={projectMembers}
-                  StatusDropdownOptions={StatusDropdownOptions}
+                  statusDropdownOptions={statusDropdownOptions}
                 />
               </TabsContent>
               <TabsContent value="properties">
@@ -144,7 +150,11 @@ export function EditRisk({
               >
                 Luk
               </Button>
-              <Button variant="default" onClick={handleSubmit(onSubmit)}>
+              <Button
+                variant="default"
+                onClick={handleSubmit(onSubmit)}
+                loading={isSubmitting}
+              >
                 Gem
               </Button>
             </DialogFooter>

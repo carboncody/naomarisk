@@ -18,8 +18,10 @@ export function CreateComment({
   refetch,
 }: CreateCommentProps) {
   const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: CreateCommentForm) {
+    setIsLoading(true);
     if (!content || content === '') {
       toast.error('Du skal skrive en kommentar');
       return;
@@ -30,12 +32,13 @@ export function CreateComment({
         status: number;
         comment: Comment;
       }>(`/api/comment/risk/${riskId}`, data);
-      console.info(comment);
       toast.success('Kommentar tilføjet!');
+      setIsLoading(false);
       setComments((prevComments) => [...prevComments, comment.data.comment]);
       setContent('');
       refetch();
     } catch (error) {
+      setIsLoading(false);
       toast.error('Error - something went wrong');
     }
   }
@@ -57,7 +60,11 @@ export function CreateComment({
         />
       </div>
 
-      <Button variant="default" onClick={() => onSubmit({ content })}>
+      <Button
+        variant="default"
+        onClick={() => onSubmit({ content })}
+        loading={isLoading}
+      >
         Kommenter
       </Button>
     </div>

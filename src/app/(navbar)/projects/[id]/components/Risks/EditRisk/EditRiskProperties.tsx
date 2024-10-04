@@ -52,6 +52,7 @@ export function EditRiskProperties({ project }: EditRiskPropertiesProps) {
           </Label>
           <div className="mt-2">
             <ScoreDropdown
+              type="probability"
               label="Vælg Sansynlighed"
               selectedValue={watch('timeProbability') ?? null}
               onSelect={(value) => setValue('timeProbability', value)}
@@ -62,7 +63,8 @@ export function EditRiskProperties({ project }: EditRiskPropertiesProps) {
           <Label htmlFor="timeConsequence">Konsekvens i forhold til tid</Label>
           <div className="mt-2">
             <ScoreDropdown
-              label="Vælg Sansynlighed"
+              type="consequence"
+              label="Vælg konskvens"
               selectedValue={watch('timeConsequence') ?? null}
               onSelect={(value) => setValue('timeConsequence', value)}
             />
@@ -77,6 +79,7 @@ export function EditRiskProperties({ project }: EditRiskPropertiesProps) {
           <Label htmlFor="economicProbability">Økonomisk Sansynlighed</Label>
           <div className="mt-2">
             <ScoreDropdown
+              type="probability"
               label="Vælg Sansynlighed"
               selectedValue={watch('economicProbability') ?? null}
               onSelect={(value) => setValue('economicProbability', value)}
@@ -87,7 +90,8 @@ export function EditRiskProperties({ project }: EditRiskPropertiesProps) {
           <Label htmlFor="economicConsequence">Økonomisk Konsekvens</Label>
           <div className="mt-2">
             <ScoreDropdown
-              label="Vælg Sansynlighed"
+              type="consequence"
+              label="Vælg konsekvens"
               selectedValue={watch('economicConsequence') ?? null}
               onSelect={(value) => setValue('economicConsequence', value)}
             />

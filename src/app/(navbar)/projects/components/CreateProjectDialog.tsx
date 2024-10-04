@@ -14,6 +14,7 @@ import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
 import { type CreateProjectForm } from '@lib/api/types';
 import axios, { AxiosError } from 'axios';
+import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -30,22 +31,34 @@ export default function CreateProjectDialog({
   setIsOpen,
   refetch,
 }: CreateProjectDialogProps) {
-  const { register, handleSubmit, setValue, watch } =
-    useForm<CreateProjectForm>({
-      defaultValues: {
-        name: '',
-        description: '',
-        startDate: new Date(),
-        dueDate: undefined,
-        projectUserIds: [myId],
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<CreateProjectForm>({
+    defaultValues: {
+      name: '',
+      description: '',
+      startDate: new Date(),
+      dueDate: undefined,
+      projectUserIds: [myId],
+    },
+  });
 
   async function onSubmit(data: CreateProjectForm) {
+    if (dayjs(data.startDate).isAfter(data.dueDate)) {
+      toast.error('Startdato kan ikke være efter slutdato');
+      return;
+    }
+
     try {
       await axios.post('/api/project', data);
       toast.success('Project created!');
       refetch();
+      reset();
       setIsOpen(false);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -117,7 +130,7 @@ export default function CreateProjectDialog({
               <Button variant="destructive" onClick={() => setIsOpen(false)}>
                 Luk
               </Button>
-              <Button variant="default" type="submit">
+              <Button variant="default" type="submit" loading={isSubmitting}>
                 Opret
               </Button>
             </DialogFooter>
