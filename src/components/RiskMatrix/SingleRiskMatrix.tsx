@@ -65,7 +65,6 @@ export function SingleRiskMatrix({
                     <div
                       className={clsx(
                         '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black',
-                        onCellClick && 'cursor-pointer',
                         color === 'red' && 'text-white',
                         !showWarning && 'opacity-70',
                       )}

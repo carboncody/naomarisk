@@ -10,12 +10,14 @@ interface CreateCommentProps {
   riskId: string;
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   refetch: () => void;
+  onCommentAdded: () => void; // New prop to notify comment addition
 }
 
 export function CreateComment({
   riskId,
   setComments,
   refetch,
+  onCommentAdded, // New prop
 }: CreateCommentProps) {
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -28,15 +30,16 @@ export function CreateComment({
     }
 
     try {
-      const comment = await axios.post<{
+      const response = await axios.post<{
         status: number;
         comment: Comment;
       }>(`/api/comment/risk/${riskId}`, data);
       toast.success('Kommentar tilføjet!');
       setIsLoading(false);
-      setComments((prevComments) => [...prevComments, comment.data.comment]);
+      setComments((prevComments) => [...prevComments, response.data.comment]);
       setContent('');
       refetch();
+      onCommentAdded(); // Call the function to notify the parent component
     } catch (error) {
       setIsLoading(false);
       toast.error('Error - something went wrong');
@@ -55,7 +58,7 @@ export function CreateComment({
             }
           }}
           onChange={(e) => setContent(e.target.value)}
-          className="dark:bg-zinc-800 dark:text-white "
+          className="dark:bg-zinc-800 dark:text-white"
           placeholder="Skriv en kommentar..."
         />
       </div>

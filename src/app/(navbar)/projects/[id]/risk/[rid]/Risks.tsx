@@ -294,6 +294,9 @@ export function Risk() {
                   riskId={riskId}
                   comments={risk.comments}
                   refetch={refetch}
+                  onCommentAdded={function (): void {
+                    console.log('onCommentAdded');
+                  }}
                 />
               </p>
             </div>

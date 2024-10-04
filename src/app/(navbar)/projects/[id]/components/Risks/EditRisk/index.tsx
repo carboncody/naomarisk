@@ -17,8 +17,9 @@ import axios from 'axios';
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { EditRiskOverview } from './EditRiskOverview'; // Import the new component
-import { EditRiskProperties } from './EditRiskProperties'; // Import the new component
+import { EditRiskComment } from './EditRiskComment';
+import { EditRiskOverview } from './EditRiskOverview';
+import { EditRiskProperties } from './EditRiskProperties';
 
 interface EditRiskProps {
   isOpen: boolean;
@@ -52,6 +53,7 @@ export function EditRisk({
     },
   });
 
+  const [commentAdded, setCommentAdded] = useState(false);
   const {
     handleSubmit,
     formState: { isSubmitting },
@@ -83,6 +85,11 @@ export function EditRisk({
     data.economicProbability = economicProbability
       ? +economicProbability
       : null;
+
+    if (!commentAdded) {
+      toast.error('Du skal tilføje en kommentar før der laves en ændring!');
+      return;
+    }
 
     try {
       await axios.patch(`/api/risk/${riskElement.id}`, data);
@@ -141,6 +148,14 @@ export function EditRisk({
               </TabsContent>
               <TabsContent value="properties">
                 <EditRiskProperties project={project} />
+              </TabsContent>
+              <TabsContent value="comments">
+                {' '}
+                <EditRiskComment
+                  riskElement={riskElement}
+                  refetch={refetch}
+                  onCommentAdded={() => setCommentAdded(true)}
+                />
               </TabsContent>
             </DialogDescription>
             <DialogFooter>

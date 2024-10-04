@@ -101,6 +101,9 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
                 riskId={selectedRisk?.id ?? ''}
                 comments={selectedRisk?.comments ?? []}
                 refetch={refetch}
+                onCommentAdded={function (): void {
+                  throw new Error('Function not implemented.');
+                }}
               />
             </SheetDescription>
           </SheetHeader>
