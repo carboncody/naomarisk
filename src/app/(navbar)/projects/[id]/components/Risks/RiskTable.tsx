@@ -16,6 +16,7 @@ import { Comments } from '../../risk/[rid]/components/comments';
 import { DeleteRisk } from './DeleteRisk';
 import { EditRisk } from './EditRisk';
 import { columns } from './colums';
+import React from 'react';
 
 interface RiskTableProps {
   refetch: () => void;

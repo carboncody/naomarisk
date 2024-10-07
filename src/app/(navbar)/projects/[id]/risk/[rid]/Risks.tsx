@@ -19,6 +19,7 @@ import toast from 'react-hot-toast';
 import { FaComment } from 'react-icons/fa6';
 import { EditRisk } from '../../components/Risks/EditRisk';
 import { Comments } from './components/comments';
+import React from 'react';
 
 export function Risk() {
   const pathName = usePathname();
@@ -109,19 +110,7 @@ export function Risk() {
                 <p>
                   Dato for oprettelse:
                   <br />
-                  <p
-                    className=">
-                    {dayjs(risk.createdAt).format('DD MMM YYYY')}
-                  </p>
-                </p>
-
-                <p>
-                  Sidst ændret:
-                  <br />
-                  <p className="
-                  >
-                    {dayjs(risk.updatedAt).format('DD MMM YYYY')}
-                  </p>
+                  <p>{dayjs(risk.updatedAt).format('DD MMM YYYY')}</p>
                 </p>
               </div>
               <div className="mt-6 flex gap-10">
@@ -163,20 +152,20 @@ export function Risk() {
                 </div>
               </div>
             </div>
-            <div className="w-2/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
+            <div className="sticky w-2/4  overflow-y-auto rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
               <div className="flex items-start">
                 <span className="text-muted-foreground">Aktivitet:</span>
-                <p className="ml-2 whitespace-normal break-words">
+                <p className="ml-2 text-primary">
                   {risk.activity ?? 'Ingen aktivitet'}
                 </p>
               </div>
               <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
               <div className="flex w-full items-center justify-center gap-4">
                 <div className="w-full md:w-1/2">
-                  <label className="mb-2 text-muted-foreground">
+                  <label className=" mb-2 flex-wrap text-muted-foreground">
                     Tidsmæssig Risiko
                   </label>
-                  <div className="mt-2 flex flex-wrap gap-4">
+                  <div className="mb-4 mt-2 flex-wrap gap-4">
                     <div className="flex items-center">
                       <label className="text-muted-foreground">
                         Konsekvens:
@@ -214,7 +203,7 @@ export function Risk() {
                   <label className="mb-2 text-muted-foreground">
                     Økonomisk Risiko
                   </label>
-                  <div className="mt-2 flex flex-wrap gap-4">
+                  <div className="mb-4 mt-2 flex-wrap gap-4">
                     <div className="flex items-center">
                       <label className="text-muted-foreground">
                         Konsekvens:
@@ -270,7 +259,7 @@ export function Risk() {
                   /> */}
                 </div>
                 <div className=" items-center">
-                  <p className="text-muted-foreground">
+                  <p className="ml-4 text-muted-foreground">
                     Mitigrerende fase: {risk.projectPhase?.name ?? 'Udefineret'}
                   </p>
                   {/* <div className="ml-2"> */}
@@ -291,11 +280,11 @@ export function Risk() {
                   {/* </div> */}
                 </div>
               </div>
-              <div className="ml-10 mt-10 flex justify-start">
+              <div className=" ml-2 mt-10 flex justify-start">
                 <div className="pb-5">
                   <p className="font-semibold">Sandsynlighed:</p>
                   <div className="mt-2">
-                    {[5, 4, 3, 2, 1].map((probability) => (
+                    {[1, 2, 3, 4, 5].map((probability) => (
                       <div key={probability} className="mb-1 flex">
                         <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs  md:text-sm">
                           {probability}
