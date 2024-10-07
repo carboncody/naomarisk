@@ -55,7 +55,7 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
     GREEN: ColorMap[Thresholds.GREEN],
     YELLOW: ColorMap[Thresholds.YELLOW],
     RED: ColorMap[Thresholds.RED],
-    UNDEFINED: 'gray',
+    UNDEFINED: '#9e9e9e',
   };
 
   const labelMap = {
@@ -96,11 +96,11 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
       fill,
       payload,
       percent,
-      value,
     } = props;
     const payloadObject = (Array.isArray(payload) ? payload[0] : payload) as {
       name: string;
     };
+    const label = labelMap[payloadObject.name as keyof typeof labelMap];
     return (
       <g>
         <text
@@ -108,20 +108,20 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
           y={cy}
           dy={-15}
           textAnchor="middle"
-          fill={fill}
+          className="fill-zinc-900 dark:fill-zinc-100"
           fontSize="16px"
         >
-          {payloadObject.name}
+          {`${label} risici`}
         </text>
         <text
           x={cx}
           y={cy}
           dy={15}
           textAnchor="middle"
-          fill={fill}
+          className="fill-zinc-900 dark:fill-zinc-100"
           fontSize="16px"
         >
-          {`${value} (${(percent! * 100).toFixed(2)}%)`}
+          {`${(percent! * 100).toFixed(2)}%`}
         </text>
         <Sector
           cx={cx}
@@ -146,7 +146,7 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
   };
 
   return (
-    <Card className="mx-auto flex w-full max-w-3xl flex-col">
+    <Card className="mx-auto flex w-full max-w-3xl flex-col shadow-xl dark:border-transparent dark:bg-zinc-900">
       <CardHeader className="items-center pb-0">
         <CardTitle>Åbne risici fordelt</CardTitle>
         <CardDescription>
