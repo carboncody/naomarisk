@@ -1,5 +1,6 @@
 'use client';
 
+import { SingleDropdown } from '@components/ui';
 import { DatePicker } from '@components/ui/DatePickerShadcn';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
@@ -14,7 +15,7 @@ import {
 import { Label } from '@components/ui/label';
 import { Textarea } from '@components/ui/textarea';
 import { type UpdateProjectForm } from '@lib/api/types';
-import { type Project } from '@models';
+import { ProjectStatus, type Project } from '@models';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -40,6 +41,7 @@ export function EditProject({
         dueDate: project.dueDate ?? undefined,
         budget: project.budget ?? '0',
         description: project.description ?? '',
+        status: project.status ?? ProjectStatus.OPEN,
       },
     });
 
@@ -61,6 +63,12 @@ export function EditProject({
       toast.error('Noget gik galt, beklager.');
     }
   }
+
+  const StatusDropdownOptions: { label: string; value: ProjectStatus }[] = [
+    { label: 'Åbent', value: ProjectStatus.OPEN },
+    { label: 'Lukket', value: ProjectStatus.CLOSED },
+    { label: 'Arkiveret', value: ProjectStatus.ARCHIVED },
+  ];
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -125,6 +133,26 @@ export function EditProject({
                   setValue('dueDate', date);
                 }}
               />
+            </div>
+            <div className="flex w-full flex-col">
+              <Label className="mb-2">Status for projektet</Label>
+              <p className="w-full text-base font-light">
+                <SingleDropdown
+                  triggerClassName="w-full"
+                  options={StatusDropdownOptions}
+                  buttonLabel={
+                    StatusDropdownOptions.find(
+                      (option) => option.value === watch('status'),
+                    )?.label ?? 'Vælg status'
+                  }
+                  selectedValue={watch('status')?.toString() ?? null}
+                  setSelectedValue={(value) => {
+                    if (value) {
+                      setValue('status', value as ProjectStatus);
+                    }
+                  }}
+                />
+              </p>
             </div>
           </div>
         </DialogDescription>

@@ -1,7 +1,7 @@
 'use client';
 
 import UserSettings from '@app/(navbar)/account/components/UserSettings';
-import { LoadingSpinner } from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { SettingsCard } from '@components/ui/SettingsCard';
 import { Button } from '@components/ui/button';
 import { useMe } from '@lib/api/hooks/users/useMe';
@@ -15,8 +15,8 @@ export function Account() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
       </div>
     );
   }

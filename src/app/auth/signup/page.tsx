@@ -13,9 +13,9 @@ export default function HomePage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center dark:bg-gradient-to-b dark:from-[#1c1c1c] dark:to-[#2a2929] dark:text-white">
-      <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 dark:bg-zinc-700">
-        <p className="mt-5 text-center text-4xl dark:text-white">
-          Create a new account
+      <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 shadow-xl dark:bg-zinc-700">
+        <p className="mt-5 text-center text-4xl font-normal dark:text-white">
+          Opret en ny konto
         </p>
         <div className="px-5">
           <SignUp
@@ -25,8 +25,8 @@ export default function HomePage() {
               variables: {
                 default: {
                   colors: {
-                    inputText: '#FFFFFF',
-                    inputLabelText: '#FFFFFF',
+                    inputText: '#000000',
+                    inputLabelText: '#000000',
                   },
                 },
               },
@@ -39,13 +39,13 @@ export default function HomePage() {
             className="block pb-2 text-blue-500"
             href="/auth/forgotpassword"
           >
-            Forgot Password?
+            Glemt adgangskode?
           </Link>
         </div>
         <div className="pt-4 text-center">
-          Already registered?{' '}
+          Allerede oprettet?{' '}
           <Link href="/auth/login" className="text-blue-500 underline">
-            Sign in
+            Log ind
           </Link>
         </div>
       </div>

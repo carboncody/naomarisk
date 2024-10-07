@@ -2,7 +2,7 @@
 
 import EditEmployeeModal from '@app/(navbar)/employees/components/EditEmployeeModal';
 import InviteEmployee from '@app/(navbar)/employees/components/InviteEmployeeModal';
-import { LoadingSpinner } from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { useEmployees } from '@lib/api/hooks';
@@ -31,8 +31,8 @@ export function AllEmployees() {
 
   if (isFetching && !isRefetching) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
       </div>
     );
   }

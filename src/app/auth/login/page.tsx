@@ -46,12 +46,11 @@ export default function SignInForm() {
   }, [supabase.auth, router]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center dark:bg-gradient-to-b dark:from-[#1c1c1c] dark:to-[#2a2929] dark:text-white">
-      <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 dark:bg-zinc-700">
-        <p className="my-5 text-center text-4xl dark:text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 shadow-xl">
+        <p className="my-5 text-center text-4xl font-normal dark:text-white">
           Velkommen til <br /> NAOMA-RISK
         </p>
-        <p className="mb-4 text-center font-medium">Sign in</p>
         <div className="px-5 py-5 dark:text-white">
           <SignIn
             supabaseClient={supabase}
@@ -60,8 +59,8 @@ export default function SignInForm() {
               variables: {
                 default: {
                   colors: {
-                    inputText: '#FFFFFF',
-                    inputLabelText: '#FFFFFF',
+                    inputText: '#000000',
+                    inputLabelText: '#000000',
                   },
                 },
               },
