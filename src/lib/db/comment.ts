@@ -41,6 +41,20 @@ export async function CommentService() {
         });
       }
 
+      void db.project.update({
+        where: { id: newComment.risk.projectId },
+        data: {
+          updatedAt: new Date(),
+        },
+      });
+
+      void db.risk.update({
+        where: { id: newComment.riskId },
+        data: {
+          updatedAt: new Date(),
+        },
+      });
+
       return newComment;
     } catch (error) {
       throw new Error();
@@ -48,12 +62,36 @@ export async function CommentService() {
   }
 
   async function updateComment(id: string, data: UpdateCommentForm) {
-    return db.comment.update({
+    const updatedComment = await db.comment.update({
       where: { id },
       data: {
         ...data,
       },
+      include: {
+        risk: {
+          include: {
+            riskowner: true,
+            project: true,
+          },
+        },
+      },
     });
+
+    void db.project.update({
+      where: { id: updatedComment.risk.projectId },
+      data: {
+        updatedAt: new Date(),
+      },
+    });
+
+    void db.risk.update({
+      where: { id: updatedComment.riskId },
+      data: {
+        updatedAt: new Date(),
+      },
+    });
+
+    return updatedComment;
   }
 
   async function deleteComment(id: string) {

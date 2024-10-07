@@ -39,7 +39,7 @@ export function SingleRiskMatrix({
   }
 
   return (
-    <div className="flex -translate-x-6 items-center text-zinc-300">
+    <div className="flex -translate-x-6 items-center dark:text-zinc-300">
       <em className="translate-x-8 rotate-[270deg] text-xs md:text-sm">
         Sandsynlighed
       </em>
@@ -61,18 +61,10 @@ export function SingleRiskMatrix({
 
               return (
                 <HoverCard key={`${rowIndex}-${colIndex}`}>
-                  <HoverCardTrigger
-                    onClick={() =>
-                      onCellClick?.({
-                        probability: currentProbability,
-                        consequence: currentConsequence,
-                      })
-                    }
-                  >
+                  <HoverCardTrigger>
                     <div
                       className={clsx(
                         '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black',
-                        onCellClick && 'cursor-pointer',
                         color === 'red' && 'text-white',
                         !showWarning && 'opacity-70',
                       )}

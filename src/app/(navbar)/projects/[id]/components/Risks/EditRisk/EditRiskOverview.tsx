@@ -11,12 +11,12 @@ import { useFormContext } from 'react-hook-form';
 
 interface EditRiskOverviewProps {
   projectMembers: User[] | undefined;
-  StatusDropdownOptions: { label: string; value: RiskStatus }[];
+  statusDropdownOptions: { label: string; value: RiskStatus }[];
 }
 
 export function EditRiskOverview({
   projectMembers,
-  StatusDropdownOptions,
+  statusDropdownOptions,
 }: EditRiskOverviewProps) {
   const { register, setValue, watch } = useFormContext<UpdateRiskForm>();
 
@@ -56,6 +56,7 @@ export function EditRiskOverview({
           <div className="flex w-full flex-col items-start gap-2">
             <Label htmlFor="probability">Sansynlighed</Label>
             <ScoreDropdown
+              type="consequence"
               label="Vælg Sansynlighed"
               selectedValue={watch('probability') ?? null}
               onSelect={(value) => setValue('probability', value)}
@@ -64,6 +65,7 @@ export function EditRiskOverview({
           <div className="flex w-full flex-col items-start gap-2">
             <Label htmlFor="consequence">Konsekvens</Label>
             <ScoreDropdown
+              type="probability"
               label="Vælg Konsekvens"
               selectedValue={watch('consequence') ?? null}
               onSelect={(value) => setValue('consequence', value)}
@@ -74,9 +76,9 @@ export function EditRiskOverview({
           <div className="flex w-full flex-col items-start gap-2">
             <span>Status</span>
             <SingleDropdown
-              options={StatusDropdownOptions}
+              options={statusDropdownOptions}
               buttonLabel={
-                StatusDropdownOptions.find(
+                statusDropdownOptions.find(
                   (option) => option.value === watch('status'),
                 )?.label ?? 'Vælg Status'
               }

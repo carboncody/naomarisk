@@ -35,7 +35,13 @@ export function CreateRisk({
   refetch,
   project,
 }: CreateRiskProps) {
-  const { register, handleSubmit, setValue, watch } = useForm<CreateRiskForm>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<CreateRiskForm>({
     defaultValues: {
       probability: null,
       consequence: null,
@@ -120,6 +126,7 @@ export function CreateRisk({
                   Sandsynlighed
                 </Label>
                 <ScoreDropdown
+                  type="probability"
                   label="Vælg Sansynlighed"
                   selectedValue={watch('probability') ?? null}
                   onSelect={(value) => setValue('probability', value)}
@@ -130,6 +137,7 @@ export function CreateRisk({
                   Konsekvens
                 </Label>
                 <ScoreDropdown
+                  type="consequence"
                   label="Vælg Konsekvens"
                   selectedValue={watch('consequence') ?? null}
                   onSelect={(value) => setValue('consequence', value)}
@@ -170,7 +178,11 @@ export function CreateRisk({
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button onClick={handleSubmit(onSubmit)} variant="default">
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            variant="default"
+            loading={isSubmitting}
+          >
             Opret
           </Button>
         </DialogFooter>

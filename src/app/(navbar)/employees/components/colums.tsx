@@ -82,7 +82,11 @@ export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
             <DropdownMenuItem onClick={() => handleEdit(employee)}>
               Rediger
             </DropdownMenuItem>

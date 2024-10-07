@@ -35,6 +35,7 @@ export function AllProjects() {
   const {
     data: allProjects,
     isFetching,
+    isRefetching,
     isError,
     error,
     refetch,
@@ -57,7 +58,7 @@ export function AllProjects() {
     return allProjects?.find((project) => project.id === editingProjectId);
   }, [allProjects, editingProjectId]);
 
-  if (isFetching) {
+  if (isFetching && !isRefetching) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
         <LoadingSpinner size={50} />
