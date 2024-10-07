@@ -25,9 +25,13 @@ import {
 import { cn } from '@lib/utils';
 import type { Project, Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
+import dayjs from 'dayjs';
+import 'dayjs/locale/da';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { PhaseProgressBar } from '../phase/PhaseProgressBar';
+
+dayjs.locale('da');
 
 function getStyleColor(risk: Risk): string | undefined {
   const riskValue =
@@ -41,12 +45,14 @@ function getStyleColor(risk: Risk): string | undefined {
 interface ColumnParams {
   handleEdit: (risk: Risk) => void;
   handleDelete: (risk: Risk) => void;
+  handleOpenSheet: (risk: Risk) => void;
   project: Project;
 }
 
 export const columns = ({
   handleEdit,
   handleDelete,
+  handleOpenSheet,
   project,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
@@ -128,6 +134,26 @@ export const columns = ({
         <br />
         <span>Status: {row.original.status}</span>
       </div>
+    ),
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Senest Opdateret
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <span className="line-clamp-2">
+        {dayjs(row.original.updatedAt).format('HH:mm DD.MMM')}
+      </span>
     ),
   },
   {
@@ -245,6 +271,9 @@ export const columns = ({
               }
             >
               Vis
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleOpenSheet(risk)}>
+              Kommentér
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleEdit(risk)}>
               Rediger

@@ -20,12 +20,14 @@ interface Props {
   riskId: string;
   comments: Comment[];
   refetch: () => void;
+  onCommentAdded: () => void;
 }
 
 export function Comments({
   riskId,
   comments: originalComments,
   refetch,
+  onCommentAdded, // New prop
 }: Props) {
   const [comments, setComments] = useState<Comment[]>(originalComments);
   const [commentBeingDeletedId, setCommentBeingDeletedId] = useState<
@@ -82,6 +84,7 @@ export function Comments({
         riskId={riskId}
         setComments={setComments}
         refetch={refetch}
+        onCommentAdded={onCommentAdded} // Pass new prop
       />
       <AlertDialog
         open={!!commentBeingDeletedId}

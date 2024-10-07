@@ -14,31 +14,54 @@ type Option = {
 };
 
 type ScoreDropdownProps = {
+  type: 'consequence' | 'probability';
   label: string;
   selectedValue: number | null;
   onSelect: (value: number | null) => void;
 };
 
-const options: Option[] = [
-  { value: null, label: 'Udefinieret' },
-  { value: 0, label: '0' },
-  { value: 1, label: '1' },
-  { value: 2, label: '2' },
-  { value: 3, label: '3' },
-  { value: 4, label: '4' },
-  { value: 5, label: '5' },
-];
-
 export function ScoreDropdown({
+  type,
   label,
   selectedValue,
   onSelect,
 }: ScoreDropdownProps) {
+  const options: Option[] = [
+    { value: null, label: 'Udefinieret' },
+    {
+      value: 1,
+      label:
+        '1 - ' + type === 'probability' ? 'Meget usandsynligt' : 'Meget lav',
+    },
+    {
+      value: 2,
+      label: '2 - ' + type === 'probability' ? 'Usandsynligt' : 'Lav',
+    },
+    {
+      value: 3,
+      label: '3 - ' + type === 'probability' ? 'Sandsynligt' : 'Moderat',
+    },
+    {
+      value: 4,
+      label:
+        '4 - ' + type === 'probability' ? 'Overvejende sandsynligt' : 'Høj',
+    },
+    {
+      value: 5,
+      label:
+        '5 - ' + type === 'probability' ? 'Meget sandsynligt' : 'Meget høj',
+    },
+  ];
+
+  const selectedLabel = options.find(
+    (option) => option.value === selectedValue,
+  );
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="w-full">
         <Button className="text-md w-full">
-          {selectedValue ? selectedValue : label}
+          {selectedLabel ? selectedLabel.label : label}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

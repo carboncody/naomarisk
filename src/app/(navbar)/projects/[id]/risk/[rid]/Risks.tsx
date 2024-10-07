@@ -1,16 +1,12 @@
 'use client';
 
-import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
-import { LoadingSpinner, SingleDropdown } from '@components/ui';
-import { Button } from '@components/ui/button';
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@components/ui/sheet';
+  ConsequenceDescription,
+  ProbabilityDescription,
+} from '@components/RiskMatrix/RiskMatrixDescription';
+import { SingleRiskMatrix } from '@components/RiskMatrix/SingleRiskMatrix';
+import { LoadingSpinner } from '@components/ui';
+import { Button } from '@components/ui/button';
 import { useRisk } from '@lib/api/hooks/risks';
 import type { UpdateRiskForm } from '@lib/api/types/risk';
 import { type Risk } from '@models';
@@ -64,7 +60,7 @@ export function Risk() {
   return (
     <>
       <div className="py-2">
-        <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-4">
+        <div className="max-w-screen-3xl mx-auto flex w-full flex-col gap-4">
           <Button className="w-20" onClick={() => window.history.back()}>
             {'<- '}Back
           </Button>
@@ -78,38 +74,6 @@ export function Risk() {
                 >
                   Rediger Risiko
                 </Button>
-                <Sheet>
-                  <Button variant="default">
-                    <SheetTrigger className="gp-2 flex">
-                      <div className="flex items-center p-2">
-                        <span>
-                          <FaComment className="mr-2 h-4 w-4" />
-                        </span>
-                        <span>Kommentér</span>
-                      </div>
-                    </SheetTrigger>
-                  </Button>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle className="flex items-center gap-3">
-                        <span>
-                          <FaComment className="h-4 w-4" />
-                        </span>
-                        <span>Kommentar</span>
-                      </SheetTitle>
-                      <SheetDescription>
-                        Tilføj en ny kommentar her.
-                        <p className="text-Zinc-200 mt-4  text-sm ">
-                          <Comments
-                            riskId={riskId}
-                            comments={risk.comments}
-                            refetch={refetch}
-                          />
-                        </p>
-                      </SheetDescription>
-                    </SheetHeader>
-                  </SheetContent>
-                </Sheet>
               </div>
 
               <div>
@@ -199,7 +163,7 @@ export function Risk() {
                 </div>
               </div>
             </div>
-            <div className="w-2/3 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
+            <div className="w-2/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
               <div className="flex items-start">
                 <span className="text-muted-foreground">Aktivitet:</span>
                 <p className="ml-2 whitespace-normal break-words">
@@ -285,10 +249,12 @@ export function Risk() {
                 </div>
               </div>
               <hr className="my-4 h-[0.5px] border-zinc-300 dark:border-zinc-700" />
-              <div className="flex w-full items-center justify-start gap-16">
-                <span className="ml-2 flex items-center gap-2">
-                  <p className="text-muted-foreground">Fase:</p>
-                  <SingleDropdown
+              <div className=" flex w-full items-center justify-start gap-16">
+                <div className="ml-2 flex items-center gap-2">
+                  <p className="text-muted-foreground">
+                    Fase: {risk.mitigationPhase?.name ?? 'Udefineret'}
+                  </p>
+                  {/* <SingleDropdown
                     triggerClassName="w-72"
                     options={risk.project.phases.map((phase) => ({
                       label: phase.name,
@@ -301,12 +267,14 @@ export function Risk() {
                         projectPhaseId: value,
                       });
                     }}
-                  />
-                </span>
-                <span className="flex items-center">
-                  <p className="text-muted-foreground">Mitigrerende fase:</p>
-                  <span className="ml-2">
-                    <SingleDropdown
+                  /> */}
+                </div>
+                <div className=" items-center">
+                  <p className="text-muted-foreground">
+                    Mitigrerende fase: {risk.projectPhase?.name ?? 'Udefineret'}
+                  </p>
+                  {/* <div className="ml-2"> */}
+                  {/* <SingleDropdown
                       triggerClassName="w-72"
                       options={risk.project.phases.map((phase) => ({
                         label: phase.name,
@@ -319,10 +287,58 @@ export function Risk() {
                           mitigationPhaseId: value,
                         });
                       }}
-                    />
-                  </span>
-                </span>
+                    /> */}
+                  {/* </div> */}
+                </div>
               </div>
+              <div className="ml-10 mt-10 flex justify-start">
+                <div className="pb-5">
+                  <p className="font-semibold">Sandsynlighed:</p>
+                  <div className="mt-2">
+                    {[5, 4, 3, 2, 1].map((probability) => (
+                      <div key={probability} className="mb-1 flex">
+                        <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs  md:text-sm">
+                          {probability}
+                        </div>
+                        <div className="w-60 gap-2 text-sm">
+                          {ProbabilityDescription[probability]}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="">
+                  <p className="font-semibold">Konsekves:</p>
+                  <div className="mt-2">
+                    {[5, 4, 3, 2, 1].map((consequence) => (
+                      <div key={consequence} className="mb-1 flex">
+                        <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs md:text-sm">
+                          {consequence}
+                        </div>
+                        <div className="w-60 gap-2 text-sm">
+                          {ConsequenceDescription[consequence]}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-1/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
+              <span className="mb-2 flex gap-3">
+                <FaComment className="h-4 w-4" />
+                Tilføj en ny kommentar her.
+              </span>
+              <p className="text-Zinc-200 mt-4  text-sm ">
+                <Comments
+                  riskId={riskId}
+                  comments={risk.comments}
+                  refetch={refetch}
+                  onCommentAdded={function (): void {
+                    console.log('onCommentAdded');
+                  }}
+                />
+              </p>
             </div>
           </div>
         </div>

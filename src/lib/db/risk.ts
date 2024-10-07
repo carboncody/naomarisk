@@ -30,9 +30,13 @@ export async function RiskService() {
         riskowner: true,
         projectPhase: true,
         mitigationPhase: true,
+        comments: {
+          include: { author: true },
+          orderBy: { createdAt: 'desc' },
+        },
       },
       orderBy: {
-        customId: 'asc',
+        updatedAt: 'desc',
       },
     });
   }

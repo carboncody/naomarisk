@@ -29,12 +29,13 @@ export function Risks({ project }: RisksProps) {
   const {
     data: allRisks,
     isFetching,
+    isRefetching,
     isError,
     error,
     refetch,
   } = useProjectRisks(project.id);
 
-  if (isFetching) {
+  if (isFetching && !isRefetching) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
         <LoadingSpinner size={50} />

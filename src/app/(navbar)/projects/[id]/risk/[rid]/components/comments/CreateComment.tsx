@@ -10,32 +10,38 @@ interface CreateCommentProps {
   riskId: string;
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   refetch: () => void;
+  onCommentAdded: () => void; // New prop to notify comment addition
 }
 
 export function CreateComment({
   riskId,
   setComments,
   refetch,
+  onCommentAdded, // New prop
 }: CreateCommentProps) {
   const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: CreateCommentForm) {
+    setIsLoading(true);
     if (!content || content === '') {
       toast.error('Du skal skrive en kommentar');
       return;
     }
 
     try {
-      const comment = await axios.post<{
+      const response = await axios.post<{
         status: number;
         comment: Comment;
       }>(`/api/comment/risk/${riskId}`, data);
-      console.info(comment);
       toast.success('Kommentar tilføjet!');
-      setComments((prevComments) => [...prevComments, comment.data.comment]);
+      setIsLoading(false);
+      setComments((prevComments) => [...prevComments, response.data.comment]);
       setContent('');
       refetch();
+      onCommentAdded(); // Call the function to notify the parent component
     } catch (error) {
+      setIsLoading(false);
       toast.error('Error - something went wrong');
     }
   }
@@ -52,12 +58,16 @@ export function CreateComment({
             }
           }}
           onChange={(e) => setContent(e.target.value)}
-          className="dark:bg-zinc-800 dark:text-white "
+          className="dark:bg-zinc-800 dark:text-white"
           placeholder="Skriv en kommentar..."
         />
       </div>
 
-      <Button variant="default" onClick={() => onSubmit({ content })}>
+      <Button
+        variant="default"
+        onClick={() => onSubmit({ content })}
+        loading={isLoading}
+      >
         Kommenter
       </Button>
     </div>

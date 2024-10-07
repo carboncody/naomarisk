@@ -17,8 +17,9 @@ import axios from 'axios';
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { EditRiskOverview } from './EditRiskOverview'; // Import the new component
-import { EditRiskProperties } from './EditRiskProperties'; // Import the new component
+import { EditRiskComment } from './EditRiskComment';
+import { EditRiskOverview } from './EditRiskOverview';
+import { EditRiskProperties } from './EditRiskProperties';
 
 interface EditRiskProps {
   isOpen: boolean;
@@ -52,14 +53,19 @@ export function EditRisk({
     },
   });
 
-  const { handleSubmit } = methods;
+  const [commentAdded, setCommentAdded] = useState(false);
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
-  const StatusDropdownOptions: { label: string; value: RiskStatus }[] = [
+  const statusDropdownOptions: { label: string; value: RiskStatus }[] = [
     { label: 'Open', value: RiskStatus.Open },
     { label: 'Closed', value: RiskStatus.Closed },
   ];
 
-  async function onSubmit(data: UpdateRiskForm) {
+  async function onSubmit(data: UpdateRiskForm, e?: React.BaseSyntheticEvent) {
+    e?.preventDefault();
     const {
       probability,
       consequence,
@@ -80,6 +86,11 @@ export function EditRisk({
       ? +economicProbability
       : null;
 
+    if (!commentAdded) {
+      toast.error('Du skal tilføje en kommentar før der laves en ændring!');
+      return;
+    }
+
     try {
       await axios.patch(`/api/risk/${riskElement.id}`, data);
       toast.success('Risk updated successfully!');
@@ -91,6 +102,7 @@ export function EditRisk({
   }
 
   const { data: allEmployees, isError } = useEmployees();
+
   const [selectedTab, setSelectedTab] = useState<'overview' | 'properties'>(
     'overview',
   );
@@ -102,7 +114,7 @@ export function EditRisk({
     );
   }, [allEmployees, project.projectUsers]);
 
-  if (isError || !allEmployees) {
+  if (isError) {
     return <div>Something went wrong</div>;
   }
 
@@ -123,6 +135,7 @@ export function EditRisk({
                 <TabsList>
                   <TabsTrigger value="overview">Oversigt</TabsTrigger>
                   <TabsTrigger value="properties">Egenskaber</TabsTrigger>
+                  <TabsTrigger value="comments">Kommentarer</TabsTrigger>
                 </TabsList>
               </DialogTitle>
             </DialogHeader>
@@ -130,11 +143,19 @@ export function EditRisk({
               <TabsContent value="overview">
                 <EditRiskOverview
                   projectMembers={projectMembers}
-                  StatusDropdownOptions={StatusDropdownOptions}
+                  statusDropdownOptions={statusDropdownOptions}
                 />
               </TabsContent>
               <TabsContent value="properties">
                 <EditRiskProperties project={project} />
+              </TabsContent>
+              <TabsContent value="comments">
+                {' '}
+                <EditRiskComment
+                  riskElement={riskElement}
+                  refetch={refetch}
+                  onCommentAdded={() => setCommentAdded(true)}
+                />
               </TabsContent>
             </DialogDescription>
             <DialogFooter>
@@ -144,7 +165,11 @@ export function EditRisk({
               >
                 Luk
               </Button>
-              <Button variant="default" onClick={handleSubmit(onSubmit)}>
+              <Button
+                variant="default"
+                onClick={handleSubmit(onSubmit)}
+                loading={isSubmitting}
+              >
                 Gem
               </Button>
             </DialogFooter>
