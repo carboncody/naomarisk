@@ -10,6 +10,8 @@ import Link from 'next/link';
 export default function HomePage() {
   const supabase = createClientComponentClient();
 
+  console.info('supabase: ', supabase);
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 shadow-xl dark:bg-zinc-700">
@@ -19,6 +21,7 @@ export default function HomePage() {
         <div className="px-5">
           <ForgottenPassword
             supabaseClient={supabase}
+            redirectTo="/auth/reset"
             appearance={{
               theme: ThemeSupa,
               variables: {
