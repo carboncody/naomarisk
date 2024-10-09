@@ -20,16 +20,9 @@ interface Props {
   riskId: string;
   comments: Comment[];
   refetch: () => void;
-  onCommentAdded: () => void;
 }
 
-export function Comments({
-  riskId,
-  comments: originalComments,
-  refetch,
-  onCommentAdded, // New prop
-}: Props) {
-  const [comments, setComments] = useState<Comment[]>(originalComments);
+export function Comments({ riskId, comments, refetch }: Props) {
   const [commentBeingDeletedId, setCommentBeingDeletedId] = useState<
     string | null
   >(null);
@@ -43,9 +36,6 @@ export function Comments({
     try {
       await axios.patch(`/api/comment/${commentId}`, { content });
       toast.success('Kommentar opdateret!');
-      setComments(
-        comments.map((c) => (c.id === commentId ? { ...c, content } : c)),
-      );
       setCommentBeingEditedId(null);
       refetch();
     } catch (error) {
@@ -59,7 +49,6 @@ export function Comments({
     try {
       await axios.delete(`/api/comment/${commentId}`);
       toast.success('Kommentar slettet!');
-      setComments(comments.filter((c) => c.id !== commentId));
       setCommentBeingDeletedId(null);
       refetch();
     } catch (error) {
@@ -70,7 +59,7 @@ export function Comments({
   return (
     <div className="flex flex-col gap-2">
       {comments.map((comment) => (
-        <DropdownAnimation isOpen={true} key={comment.id} initial>
+        <DropdownAnimation isOpen={true} key={comment.id} initial={false}>
           <CommentComponent
             comment={comment}
             commentBeingEditedId={commentBeingEditedId}
@@ -80,12 +69,7 @@ export function Comments({
           />
         </DropdownAnimation>
       ))}
-      <CreateComment
-        riskId={riskId}
-        setComments={setComments}
-        refetch={refetch}
-        onCommentAdded={onCommentAdded} // Pass new prop
-      />
+      <CreateComment riskId={riskId} refetch={refetch} />
       <AlertDialog
         open={!!commentBeingDeletedId}
         onOpenChange={(isOpen) =>

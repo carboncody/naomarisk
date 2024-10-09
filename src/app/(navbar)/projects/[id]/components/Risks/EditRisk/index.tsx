@@ -53,7 +53,6 @@ export function EditRisk({
     },
   });
 
-  const [commentAdded, setCommentAdded] = useState(false);
   const {
     handleSubmit,
     formState: { isSubmitting },
@@ -85,11 +84,6 @@ export function EditRisk({
     data.economicProbability = economicProbability
       ? +economicProbability
       : null;
-
-    if (!commentAdded) {
-      toast.error('Du skal tilføje en kommentar før der laves en ændring!');
-      return;
-    }
 
     try {
       await axios.patch(`/api/risk/${riskElement.id}`, data);
@@ -144,6 +138,8 @@ export function EditRisk({
                 <EditRiskOverview
                   projectMembers={projectMembers}
                   statusDropdownOptions={statusDropdownOptions}
+                  riskId={riskElement.id ?? ''}
+                  refetch={refetch}
                 />
               </TabsContent>
               <TabsContent value="properties">
@@ -151,11 +147,7 @@ export function EditRisk({
               </TabsContent>
               <TabsContent value="comments">
                 {' '}
-                <EditRiskComment
-                  riskElement={riskElement}
-                  refetch={refetch}
-                  onCommentAdded={() => setCommentAdded(true)}
-                />
+                <EditRiskComment riskElement={riskElement} refetch={refetch} />
               </TabsContent>
             </DialogDescription>
             <DialogFooter>

@@ -8,16 +8,12 @@ import toast from 'react-hot-toast';
 
 interface CreateCommentProps {
   riskId: string;
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   refetch: () => void;
-  onCommentAdded: () => void; // New prop to notify comment addition
 }
 
 export function CreateComment({
   riskId,
-  setComments,
   refetch,
-  onCommentAdded, // New prop
 }: CreateCommentProps) {
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,16 +26,14 @@ export function CreateComment({
     }
 
     try {
-      const response = await axios.post<{
+      await axios.post<{
         status: number;
         comment: Comment;
       }>(`/api/comment/risk/${riskId}`, data);
       toast.success('Kommentar tilføjet!');
       setIsLoading(false);
-      setComments((prevComments) => [...prevComments, response.data.comment]);
       setContent('');
       refetch();
-      onCommentAdded(); // Call the function to notify the parent component
     } catch (error) {
       setIsLoading(false);
       toast.error('Error - something went wrong');

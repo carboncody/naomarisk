@@ -31,17 +31,15 @@ export function Comment({
 
   return (
     <div className="flex w-full flex-col gap-2 rounded-lg border p-2 dark:border-zinc-700">
-      <div className="flex items-center justify-between gap-2 text-zinc-400 dark:text-zinc-400">
-        <div className="flex flex-nowrap items-center gap-2 truncate">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-nowrap items-center gap-2 truncate text-muted-foreground">
           <span>{dayjs(comment.createdAt).format('DD MMM HH:mm')}</span> -
           <span className="truncate">{comment.author.fullName}</span>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="icon" size={'icon'} className="rounded-full">
-              <span className="text-xl hover:text-zinc-600 dark:hover:text-zinc-50">
-                <SlOptions />
-              </span>
+              <SlOptions />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

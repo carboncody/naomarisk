@@ -19,7 +19,6 @@ import toast from 'react-hot-toast';
 import { FaComment } from 'react-icons/fa6';
 import { EditRisk } from '../../components/Risks/EditRisk';
 import { Comments } from './components/comments';
-import React from 'react';
 
 export function Risk() {
   const pathName = usePathname();
@@ -36,7 +35,7 @@ export function Risk() {
 
   if (isLoading && !isRefetching) {
     return (
-      <div className="flex h-[80vh] items-center justify-center">
+      <div className="flex h-full w-full flex-col items-center justify-center">
         <LoadingSpinner size={50} />
       </div>
     );
@@ -313,7 +312,7 @@ export function Risk() {
                 </div>
               </div>
             </div>
-            <div className="w-1/4 overflow-y-auto  rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
+            <div className="w-1/4 overflow-y-auto  rounded-lg border p-4 dark:border-transparent dark:bg-zinc-900">
               <span className="mb-2 flex gap-3">
                 <FaComment className="h-4 w-4" />
                 Tilføj en ny kommentar her.
@@ -323,9 +322,6 @@ export function Risk() {
                   riskId={riskId}
                   comments={risk.comments}
                   refetch={refetch}
-                  onCommentAdded={function (): void {
-                    console.log('onCommentAdded');
-                  }}
                 />
               </p>
             </div>

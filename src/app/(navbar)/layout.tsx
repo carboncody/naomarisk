@@ -24,8 +24,8 @@ export default async function NavLayout({
       <MeProvider me={me}>
         <ThemeProvider attribute="class" enableSystem>
           <Nav />
-          <div className="max-w-screen flex max-h-[calc(100vh-3rem)] flex-col overflow-y-auto">
-            <div className="p-4">{children}</div>
+          <div className="max-w-screen h-full flex max-h-[calc(100vh-3rem)] flex-col overflow-y-auto p-4">
+            {children}
           </div>
         </ThemeProvider>
       </MeProvider>
