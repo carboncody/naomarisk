@@ -11,10 +11,7 @@ interface CreateCommentProps {
   refetch: () => void;
 }
 
-export function CreateComment({
-  riskId,
-  refetch,
-}: CreateCommentProps) {
+export function CreateComment({ riskId, refetch }: CreateCommentProps) {
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

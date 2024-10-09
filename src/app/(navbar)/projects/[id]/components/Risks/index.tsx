@@ -11,7 +11,6 @@ import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { CreateRisk } from './CreateRisk';
 import { RiskTable } from './RiskTable';
-import React from 'react';
 
 interface RisksProps {
   project: Project;

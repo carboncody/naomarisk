@@ -16,7 +16,6 @@ import { Comments } from '../../risk/[rid]/components/comments';
 import { DeleteRisk } from './DeleteRisk';
 import { EditRisk } from './EditRisk';
 import { columns } from './colums';
-import React from 'react';
 
 interface RiskTableProps {
   refetch: () => void;
@@ -102,9 +101,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
                 riskId={selectedRisk?.id ?? ''}
                 comments={selectedRisk?.comments ?? []}
                 refetch={refetch}
-                onCommentAdded={function (): void {
-                  console.log('Added');
-                }}
               />
             </SheetDescription>
           </SheetHeader>

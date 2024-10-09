@@ -15,7 +15,6 @@ import { ProjectOverview } from './components/ProjectOverview';
 import { Risks } from './components/Risks';
 import { ProjectEmployee } from './components/members';
 import { PhaseTable } from './components/phase/PhaseTable';
-import React from 'react';
 
 export function Project() {
   const pathName = usePathname();

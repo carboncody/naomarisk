@@ -8,7 +8,6 @@ import CreatePhase from './CreatePhase';
 import { DeletePhase } from './DeletePhase';
 import EditPhase from './EditPhase';
 import { phaseTableColumns } from './phaseTableColumns';
-import React from 'react';
 
 interface PhaseTableProps {
   project: Project;
