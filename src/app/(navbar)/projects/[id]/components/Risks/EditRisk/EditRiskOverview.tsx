@@ -2,23 +2,83 @@
 
 import { ScoreDropdown } from '@/components/ui/dropdowns/ScoreDropdown';
 import { SingleDropdown } from '@components/ui';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@components/ui/alert-dialog';
 import { Input } from '@components/ui/Input';
 import { Label } from '@components/ui/label';
 import { Textarea } from '@components/ui/textarea';
 import { type UpdateRiskForm } from '@lib/api/types/risk';
 import { ProjectStatus, type RiskStatus, type User } from '@models';
+import axios from 'axios';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 interface EditRiskOverviewProps {
   projectMembers: User[] | undefined;
   statusDropdownOptions: { label: string; value: RiskStatus }[];
+  riskId: string;
+  refetch: () => void;
 }
 
 export function EditRiskOverview({
   projectMembers,
   statusDropdownOptions,
+  riskId,
+  refetch,
 }: EditRiskOverviewProps) {
   const { register, setValue, watch } = useFormContext<UpdateRiskForm>();
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [commentText, setCommentText] = useState('');
+  const [pendingChange, setPendingChange] = useState<{
+    field: 'probability' | 'consequence';
+    value: number | null;
+  } | null>(null);
+
+  function handleImportantChange(
+    field: 'probability' | 'consequence',
+    value: number | null,
+  ) {
+    setPendingChange({ field, value });
+    setCommentText(
+      (field === 'probability' ? 'Sandynlighed' : 'Konsekvens') +
+        ' bliver ændret til ' +
+        value +
+        '. Begrundelse - ',
+    );
+    setIsAlertOpen(true);
+  }
+
+  async function handleConfirmChange() {
+    if (pendingChange && commentText.trim()) {
+      try {
+        await axios.post(`/api/comment/risk/${riskId}`, {
+          content: commentText,
+        });
+        setValue(pendingChange.field, pendingChange.value);
+        refetch();
+        setIsAlertOpen(false);
+        setCommentText('');
+        setPendingChange(null);
+      } catch (error) {
+        toast.error('Der opstod en fejl ved tilføjelse af kommentar');
+      }
+    }
+  }
+
+  const handleCancelChange = () => {
+    setIsAlertOpen(false);
+    setCommentText('');
+    setPendingChange(null);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -56,19 +116,19 @@ export function EditRiskOverview({
           <div className="flex w-full flex-col items-start gap-2">
             <Label htmlFor="probability">Sansynlighed</Label>
             <ScoreDropdown
-              type="consequence"
+              type="probability"
               label="Vælg Sansynlighed"
               selectedValue={watch('probability') ?? null}
-              onSelect={(value) => setValue('probability', value)}
+              onSelect={(value) => handleImportantChange('probability', value)}
             />
           </div>
           <div className="flex w-full flex-col items-start gap-2">
             <Label htmlFor="consequence">Konsekvens</Label>
             <ScoreDropdown
-              type="probability"
+              type="consequence"
               label="Vælg Konsekvens"
               selectedValue={watch('consequence') ?? null}
-              onSelect={(value) => setValue('consequence', value)}
+              onSelect={(value) => handleImportantChange('consequence', value)}
             />
           </div>
         </div>
@@ -112,6 +172,34 @@ export function EditRiskOverview({
           </div>
         </div>
       </div>
+
+      <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Kommentar påkrævet</AlertDialogTitle>
+            <AlertDialogDescription>
+              Du er ved at ændre en vigtig værdi. Tilføj venligst en kommentar
+              for at forklare denne ændring.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <Textarea
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            placeholder="Skriv din kommentar her..."
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleCancelChange}>
+              Annuller
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmChange}
+              disabled={!commentText.trim()}
+            >
+              Bekræft
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

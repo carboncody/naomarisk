@@ -101,9 +101,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
                 riskId={selectedRisk?.id ?? ''}
                 comments={selectedRisk?.comments ?? []}
                 refetch={refetch}
-                onCommentAdded={function (): void {
-                  console.log('Added');
-                }}
               />
             </SheetDescription>
           </SheetHeader>

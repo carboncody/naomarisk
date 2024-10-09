@@ -6,17 +6,22 @@ import { Comments } from '../../../risk/[rid]/components/comments';
 interface EditRiskCommentProps {
   refetch: () => void;
   riskElement: Risk;
+  onCommentAdded: () => void;
 }
 
 export function EditRiskComment({
   refetch,
   riskElement,
 }: EditRiskCommentProps) {
+  console.log(riskElement);
+
   return (
-    <Comments
-      riskId={riskElement.id}
-      comments={riskElement.comments}
-      refetch={refetch}
-    />
+    <>
+      <Comments
+        riskId={riskElement.id ?? ''}
+        comments={riskElement?.comments ?? []}
+        refetch={refetch}
+      />
+    </>
   );
 }
