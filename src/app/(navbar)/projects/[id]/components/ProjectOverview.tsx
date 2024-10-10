@@ -48,12 +48,23 @@ export function ProjectOverview({
                   {project.description}
                 </p>
               </div>
+
               <div className="flex items-center justify-between border-b py-2 dark:border-zinc-700">
-                <span className="text-lg font-semibold">Projektleder</span>
-                <p className="w-4/5 text-base font-light">
-                  {project.projectUsers[0]?.user.fullName}
-                </p>
+                <span className="mr-2 text-lg font-semibold">Projektleder</span>
+                <div className="flex w-4/5 flex-col items-start justify-start">
+                  {' '}
+                  <p className="w-full text-base font-light">
+                    {project.projectUsers[0]?.user.fullName}
+                  </p>
+                  <p className="flex flex-row text-xs text-muted-foreground">
+                    { (project.projectUsers[0]?.user.contact?.phone ??
+                        'Intet telefonnummer tilgængeligt') + ' | '+ (project.projectUsers[0]?.user.email  ??
+                          'Ingen tilgængelig e-mailadresse')}
+                      
+                  </p>
+                </div>
               </div>
+
               <div className="flex items-center justify-between border-b py-2 dark:border-zinc-700">
                 <span className="text-lg font-semibold">
                   Budget for projektet
