@@ -57,10 +57,11 @@ export function ProjectOverview({
                     {project.projectUsers[0]?.user.fullName}
                   </p>
                   <p className="flex flex-row text-xs text-muted-foreground">
-                    { (project.projectUsers[0]?.user.contact?.phone ??
-                        'Intet telefonnummer tilgængeligt') + ' | '+ (project.projectUsers[0]?.user.email  ??
-                          'Ingen tilgængelig e-mailadresse')}
-                      
+                    {(project.projectUsers[0]?.user.contact?.phone ??
+                      'Intet telefonnummer tilgængeligt') +
+                      ' | ' +
+                      (project.projectUsers[0]?.user.email ??
+                        'Ingen tilgængelig e-mailadresse')}
                   </p>
                 </div>
               </div>

@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from '@components/ui/dialog';
 import { Label } from '@components/ui/label';
-import { type CreatePhaseForm } from '@lib/api/types'; // Ensure you have a type for CreatePhaseForm
+import { type CreatePhaseForm } from '@lib/api/types'; 
 import { type Project } from '@models';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -31,7 +31,13 @@ export default function CreatePhase({
   isOpen,
   project,
 }: CreatePhaseProps) {
-  const { register, handleSubmit, watch, setValue } = useForm<CreatePhaseForm>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm<CreatePhaseForm>({
     defaultValues: {
       name: '',
       startDate: undefined,
@@ -121,7 +127,11 @@ export default function CreatePhase({
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Fortryd
           </Button>
-          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="default"
+            onClick={handleSubmit(onSubmit)}
+            loading={isSubmitting}
+          >
             Opret
           </Button>
         </DialogFooter>

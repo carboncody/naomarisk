@@ -33,17 +33,22 @@ export function EditProject({
   project,
   refetch,
 }: EditProjectProps) {
-  const { register, handleSubmit, setValue, watch } =
-    useForm<UpdateProjectForm>({
-      defaultValues: {
-        name: project.name ?? '',
-        startDate: project.startDate ?? new Date(),
-        dueDate: project.dueDate ?? undefined,
-        budget: project.budget ?? '0',
-        description: project.description ?? '',
-        status: project.status ?? ProjectStatus.OPEN,
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<UpdateProjectForm>({
+    defaultValues: {
+      name: project.name ?? '',
+      startDate: project.startDate ?? new Date(),
+      dueDate: project.dueDate ?? undefined,
+      budget: project.budget ?? '0',
+      description: project.description ?? '',
+      status: project.status ?? ProjectStatus.OPEN,
+    },
+  });
 
   async function onSubmit(data: UpdateProjectForm) {
     try {
@@ -160,7 +165,11 @@ export function EditProject({
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="default"
+            onClick={handleSubmit(onSubmit)}
+            loading={isSubmitting}
+          >
             Gem
           </Button>
         </DialogFooter>
