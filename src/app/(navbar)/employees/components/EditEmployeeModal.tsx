@@ -29,7 +29,7 @@ export default function EditEmployeeModal({
   setEmployeeBeingEdited,
   employee,
 }: EditEmployeeModalProps) {
-  const { register, handleSubmit, setValue, watch } = useForm<UpdateUserForm>({
+  const { register, handleSubmit, setValue, watch, formState: { isSubmitting }} = useForm<UpdateUserForm>({
     defaultValues: {
       fullName: employee.fullName,
       jobDescription: employee.jobDescription,
@@ -134,6 +134,7 @@ export default function EditEmployeeModal({
               variant="default"
               className="bg-[#616161] text-white"
               onClick={handleSubmit(onSubmit)}
+              loading={isSubmitting}
             >
               Gem ændringer
             </Button>

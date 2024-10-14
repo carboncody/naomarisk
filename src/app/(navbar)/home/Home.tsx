@@ -96,8 +96,8 @@ export function Home() {
       </div>
 
       <div className="items-cemter grid h-[50vh] w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
-        <ProjectBarChart projects={data.projects} />
         <RiskScorePieChart risks={allRisksInCompany} />
+        <ProjectBarChart projects={data.projects} />
       </div>
     </div>
   );

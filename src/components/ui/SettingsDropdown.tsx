@@ -3,7 +3,6 @@
 import { FaGear } from 'react-icons/fa6';
 import { SingleDropdown } from './Dropdown';
 import { Button } from './button';
-
 export function SettingsDropdown() {
   const settingsActionDropdownOptions = [
     {
@@ -19,7 +18,8 @@ export function SettingsDropdown() {
   ];
 
   const triggerButton = (
-    <Button variant="icon" size="icon">
+  
+    <Button variant="ghost" size="icon">
       <FaGear className="h-5 w-5 text-muted group-hover:text-primary" />
     </Button>
   );

@@ -29,7 +29,13 @@ export default function InviteEmployee({
   setIsOpen,
   refetch,
 }: InviteEmployeeProps) {
-  const { register, handleSubmit, setValue, watch } = useForm<CreateUserForm>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<CreateUserForm>({
     defaultValues: {
       fullName: '',
       email: '',
@@ -125,7 +131,11 @@ export default function InviteEmployee({
           <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Luk
           </Button>
-          <Button variant="default" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="default"
+            onClick={handleSubmit(onSubmit)}
+            loading={isSubmitting}
+          >
             Opret
           </Button>
         </DialogFooter>
