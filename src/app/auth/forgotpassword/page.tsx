@@ -19,6 +19,7 @@ export default function HomePage() {
         <div className="px-5">
           <ForgottenPassword
             supabaseClient={supabase}
+            redirectTo="/auth/reset"
             appearance={{
               theme: ThemeSupa,
               variables: {
