@@ -152,7 +152,7 @@ export const columns = ({
     },
     cell: ({ row }) => (
       <span className="line-clamp-2">
-        {dayjs(row.original.updatedAt).format('HH:mm DD.MMM')}
+        {dayjs(row.original.updatedAt).format('DD/MM-YY')}
       </span>
     ),
   },
