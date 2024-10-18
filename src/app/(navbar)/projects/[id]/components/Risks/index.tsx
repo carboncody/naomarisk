@@ -50,9 +50,12 @@ export function Risks({ project }: RisksProps) {
   const getFilteredRisks = (): Risk[] => {
     const statusMatch = selectedTab;
     const scoreMatch = filters.score;
-
+  
     return allRisks
       ? allRisks.filter((risk) => {
+          if (selectedTab === 'all') {
+            return true; // Include all risks if 'all' tab is selected
+          }
           if (scoreMatch && risk.probability && risk.consequence) {
             return risk.probability * risk.consequence === scoreMatch;
           } else if (scoreMatch) {
@@ -62,21 +65,20 @@ export function Risks({ project }: RisksProps) {
         })
       : [];
   };
-
+  
   const filteredRisks = getFilteredRisks();
 
   const activeTabRisks =
-    selectedTab === 'all'
-      ? project.risks
-      : filteredRisks.filter((risk) => {
-          return (
-            risk.status === selectedTab ||
-            (selectedTab === RiskStatus.Open &&
-              risk.status === RiskStatus.Open) ||
-            (selectedTab === RiskStatus.Closed &&
-              risk.status === RiskStatus.Closed)
-          );
-        });
+  selectedTab === 'all'
+    ? filteredRisks // Use filteredRisks instead of project.risks
+    : filteredRisks.filter((risk) => {
+        return (
+          risk.status === selectedTab ||
+          (selectedTab === RiskStatus.Open && risk.status === RiskStatus.Open) ||
+          (selectedTab === RiskStatus.Closed && risk.status === RiskStatus.Closed)
+        );
+      });
+
 
   return (
     <>
