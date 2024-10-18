@@ -44,10 +44,10 @@ export function Account() {
         <Link href="/">
           <Button>Tilbage</Button>
         </Link>
-        <Button asChild>
+        <Button>
           <Link href="/account/update-email">Ændre email</Link>
         </Button>
-        <Button asChild>
+        <Button>
           <Link href="/account/update-password">Ændre adgangskode</Link>
         </Button>
       </div>
