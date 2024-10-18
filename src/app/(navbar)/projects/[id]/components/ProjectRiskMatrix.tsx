@@ -20,7 +20,7 @@ export function ProjectRiskMatrix({ projectId, risks }: Props) {
       <CardHeader className="items-center pb-0">
         <CardTitle>Risiko Matrix</CardTitle>
         <CardDescription className="flex items-center gap-1">
-          Risici: Sansynlighed <LiaTimesSolid /> Konsekvens{' '}
+          Risiko: Sansynlighed <LiaTimesSolid /> Konsekvens{' '}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex h-full flex-1 items-center pb-0">
