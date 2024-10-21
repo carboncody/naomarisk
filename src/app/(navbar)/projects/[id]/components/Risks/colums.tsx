@@ -57,16 +57,20 @@ export const columns = ({
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
     accessorKey: 'riskScore',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
+        <span className="px-0 hover:bg-transparent dark:hover:bg-transparent">
           Risikoscore
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        </span>
+        // <Button
+        //   variant="ghost"
+        //   className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+        //   onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        // >
+        //   Risikoscore
+        //   <ArrowUpDown className="ml-2 h-4 w-4" />
+        // </Button>
       );
     },
     cell: ({ row }) => {
@@ -116,6 +120,7 @@ export const columns = ({
 
   {
     accessorKey: 'customId',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -145,6 +150,7 @@ export const columns = ({
   },
   {
     accessorKey: 'updatedAt',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -165,6 +171,7 @@ export const columns = ({
   },
   {
     accessorKey: 'riskowner',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -186,9 +193,22 @@ export const columns = ({
         )}
       </span>
     ),
+    sortingFn: (rowA, rowB) => {
+      const nameA =
+        rowA.original.riskowner?.fullName ||
+        rowA.original.riskowner?.email ||
+        '';
+      const nameB =
+        rowB.original.riskowner?.fullName ||
+        rowB.original.riskowner?.email ||
+        '';
+
+      return nameA.localeCompare(nameB);
+    },
   },
   {
     accessorKey: 'description',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -207,6 +227,7 @@ export const columns = ({
   },
   {
     accessorKey: 'phase',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -231,6 +252,7 @@ export const columns = ({
   },
   {
     accessorKey: 'activity',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button

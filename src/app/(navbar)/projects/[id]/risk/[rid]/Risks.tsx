@@ -298,7 +298,7 @@ export function Risk() {
                 <div className="">
                   <p className="font-semibold">Konsekves:</p>
                   <div className="mt-2">
-                    {[5, 4, 3, 2, 1].map((consequence) => (
+                    {[1, 2, 3, 4, 5].map((consequence) => (
                       <div key={consequence} className="mb-1 flex">
                         <div className="mr-4 flex w-2 flex-shrink-0 select-none items-center justify-center text-xs md:text-sm">
                           {consequence}
