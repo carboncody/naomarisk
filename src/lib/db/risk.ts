@@ -35,9 +35,9 @@ export async function RiskService() {
           orderBy: { createdAt: 'desc' },
         },
       },
-      orderBy: {
-        updatedAt: 'desc',
-      },
+      // orderBy: {
+      //   updatedAt: 'desc',
+      // },
     });
   }
 

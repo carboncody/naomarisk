@@ -23,7 +23,7 @@ import {
   getThreshold,
 } from '@lib/calc/threshholds';
 import { cn } from '@lib/utils';
-import type { Project, Risk } from '@models';
+import { RiskStatus, type Project, type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import 'dayjs/locale/da';
@@ -132,7 +132,14 @@ export const columns = ({
       <div className="truncate">
         <span>{row.original.customId}</span>
         <br />
-        <span>Status: {row.original.status}</span>
+        <span>
+          Status:{' '}
+          {row.original.status === RiskStatus.Open
+            ? 'Åben'
+            : row.original.status === RiskStatus.Closed
+              ? 'Lukket'
+              : row.original.status}
+        </span>
       </div>
     ),
   },
