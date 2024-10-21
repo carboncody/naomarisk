@@ -1,9 +1,9 @@
 export const ConsequenceDescription: Record<number, string> = {
-  5: 'Katastrofal',
-  4: 'Større',
-  3: 'Moderat',
-  2: 'Mindre',
   1: 'Ubetydelig',
+  2: 'Mindre',
+  3: 'Moderat',
+  4: 'Større',
+  5: 'Katastrofal',
 };
 
 export const ProbabilityDescription: Record<number, string> = {

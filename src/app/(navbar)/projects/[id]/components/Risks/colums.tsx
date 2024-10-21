@@ -57,6 +57,7 @@ export const columns = ({
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
     accessorKey: 'riskScore',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -116,6 +117,7 @@ export const columns = ({
 
   {
     accessorKey: 'customId',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -145,6 +147,7 @@ export const columns = ({
   },
   {
     accessorKey: 'updatedAt',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -165,6 +168,7 @@ export const columns = ({
   },
   {
     accessorKey: 'riskowner',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -186,9 +190,22 @@ export const columns = ({
         )}
       </span>
     ),
+    sortingFn: (rowA, rowB) => {
+      const nameA =
+        rowA.original.riskowner?.fullName ||
+        rowA.original.riskowner?.email ||
+        '';
+      const nameB =
+        rowB.original.riskowner?.fullName ||
+        rowB.original.riskowner?.email ||
+        '';
+
+      return nameA.localeCompare(nameB);
+    },
   },
   {
     accessorKey: 'description',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -207,6 +224,7 @@ export const columns = ({
   },
   {
     accessorKey: 'phase',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -231,6 +249,7 @@ export const columns = ({
   },
   {
     accessorKey: 'activity',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button

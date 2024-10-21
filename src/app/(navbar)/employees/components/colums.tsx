@@ -35,6 +35,13 @@ export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
         <span>{row.original.fullName}</span>
       </div>
     ),
+    // Updated sorting function to sort by fullName directly
+    sortingFn: (rowA, rowB) => {
+      const nameA = rowA.original.fullName || ''; // Access fullName directly
+      const nameB = rowB.original.fullName || ''; // Access fullName directly
+
+      return nameA.localeCompare(nameB); // Compare full names
+    },
   },
   {
     accessorKey: 'email',
