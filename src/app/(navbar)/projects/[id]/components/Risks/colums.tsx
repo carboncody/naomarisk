@@ -60,17 +60,14 @@ export const columns = ({
     enableGlobalFilter: true,
     header: ({ column }) => {
       return (
-        <span className="px-0 hover:bg-transparent dark:hover:bg-transparent">
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
           Risikoscore
-        </span>
-        // <Button
-        //   variant="ghost"
-        //   className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
-        //   onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        // >
-        //   Risikoscore
-        //   <ArrowUpDown className="ml-2 h-4 w-4" />
-        // </Button>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
       );
     },
     cell: ({ row }) => {
