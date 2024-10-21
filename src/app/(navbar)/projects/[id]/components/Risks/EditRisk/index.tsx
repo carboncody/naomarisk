@@ -59,8 +59,8 @@ export function EditRisk({
   } = methods;
 
   const statusDropdownOptions: { label: string; value: RiskStatus }[] = [
-    { label: 'Open', value: RiskStatus.Open },
-    { label: 'Closed', value: RiskStatus.Closed },
+    { label: 'Åben', value: RiskStatus.Open },
+    { label: 'Lukket', value: RiskStatus.Closed },
   ];
 
   async function onSubmit(data: UpdateRiskForm, e?: React.BaseSyntheticEvent) {
