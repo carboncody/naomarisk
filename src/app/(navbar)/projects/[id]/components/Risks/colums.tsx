@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -47,6 +44,8 @@ interface ColumnParams {
   handleDelete: (risk: Risk) => void;
   handleOpenSheet: (risk: Risk) => void;
   project: Project;
+  filterByEmployee: (employeeId: string | null) => void;
+  router: ReturnType<typeof useRouter>;
 }
 
 export const columns = ({
@@ -54,6 +53,8 @@ export const columns = ({
   handleDelete,
   handleOpenSheet,
   project,
+  filterByEmployee,
+  router,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
     accessorKey: 'riskScore',
@@ -108,7 +109,7 @@ export const columns = ({
           </HoverCardTrigger>
           <HoverCardContent align="start" className="flex flex-col gap-2">
             <div>Sansynlighed: {risk.probability}</div>
-            <div>Konsense: {risk.consequence}</div>
+            <div>Konsekvens: {risk.consequence}</div>
           </HoverCardContent>
         </HoverCard>
       );
@@ -181,15 +182,30 @@ export const columns = ({
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <span className="line-clamp-2">
-        {row.original.riskowner ? (
-          row.original.riskowner.fullName ?? row.original.riskowner.email
-        ) : (
-          <em className="text-zinc-400">Ingen ejer</em>
-        )}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const riskOwner = row.original.riskowner;
+
+      const handleClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        if (riskOwner) {
+          filterByEmployee(riskOwner.id);
+          router.push(
+            `/projects/${row.original.projectId}?view=risks&employee=${riskOwner.id}`
+          );
+        } else {
+          filterByEmployee(null); 
+        }
+      };
+
+      return (
+        <span
+          className="line-clamp-2 text-blue-500 cursor-pointer hover:underline"
+          onClick={handleClick}
+        >
+          {riskOwner ? riskOwner.fullName ?? riskOwner.email : <em className="text-zinc-400">Ingen ejer</em>}
+        </span>
+      );
+    },
     sortingFn: (rowA, rowB) => {
       const nameA =
         rowA.original.riskowner?.fullName ||
@@ -203,6 +219,7 @@ export const columns = ({
       return nameA.localeCompare(nameB);
     },
   },
+  
   {
     accessorKey: 'description',
     enableGlobalFilter: true,

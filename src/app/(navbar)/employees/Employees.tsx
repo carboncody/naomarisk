@@ -58,7 +58,7 @@ export function AllEmployees() {
             <Button onClick={() => setIsNewOpen(true)}>Tilføj</Button>
           </div>
         </div>
-        <div className="w-full rounded-xl border p-4 dark:border-transparent dark:bg-zinc-900">
+        <div className="w-full rounded-xl border p-4 dark:border-transparent dark:bg-zinc-800">
           <DataTable
             data={allEmployees ?? []}
             columns={getColumns({ handleEdit })}

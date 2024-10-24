@@ -146,7 +146,7 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
   };
 
   return (
-    <Card className="mx-auto flex w-full max-w-3xl flex-col shadow-xl dark:border-transparent dark:bg-zinc-900">
+    <Card className="mx-auto flex w-full max-w-3xl flex-col shadow-xl dark:border-transparent dark:bg-zinc-800">
       <CardHeader className="items-center pb-0">
         <CardTitle>Åbne risici fordelt</CardTitle>
         <CardDescription>

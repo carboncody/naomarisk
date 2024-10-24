@@ -33,7 +33,7 @@ export function ProjectOverview({
         >
           Rediger Projekt
         </Button>
-        <div className="rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-900 dark:text-white ">
+        <div className="rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-800 dark:text-white ">
           <h2 className="mb-4 text-2xl font-bold">Projekt Information</h2>
 
           <div className="overflow-x-auto">
@@ -128,7 +128,7 @@ export function ProjectOverview({
         </div>
 
         <div className="mt-5 flex w-full flex-col gap-4 md:flex-row">
-          <div className="flex w-full items-center justify-center gap-20 rounded-xl border shadow dark:border-transparent dark:bg-zinc-900 dark:shadow-none">
+          <div className="flex w-full items-center justify-center gap-20 rounded-xl border shadow dark:border-transparent dark:bg-zinc-800 dark:shadow-none">
             <div>
               <div className="pb-5">
                 <p className="font-semibold">Sandsynlighed:</p>
@@ -163,7 +163,7 @@ export function ProjectOverview({
             </div>
             <ProjectRiskMatrix projectId={project.id} risks={project.risks} />
           </div>
-          <div className="w-full rounded-xl border shadow dark:border-transparent dark:bg-zinc-900 dark:shadow-none">
+          <div className="w-full rounded-xl border shadow dark:border-transparent dark:bg-zinc-800 dark:shadow-none">
             <RiskChart project={project} />
           </div>
         </div>

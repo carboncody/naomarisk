@@ -60,7 +60,7 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
   };
   return (
     <div className="flex items-center justify-center ">
-      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 dark:border-transparent dark:bg-zinc-900">
+      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 dark:border-transparent dark:bg-zinc-800">
         {message ? (
           <Alert
             className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}

@@ -30,28 +30,26 @@ export function ScoreDropdown({
     { value: null, label: 'Udefinieret' },
     {
       value: 1,
-      label:
-        '1 - ' + type === 'probability' ? 'Meget usandsynligt' : 'Meget lav',
+      label: '1 - ' + (type === 'probability' ? 'Meget usandsynligt' : 'Meget lav'),
     },
     {
       value: 2,
-      label: '2 - ' + type === 'probability' ? 'Usandsynligt' : 'Lav',
+      label: '2 - ' + (type === 'probability' ? 'Usandsynligt' : 'Lav'),
     },
     {
       value: 3,
-      label: '3 - ' + type === 'probability' ? 'Sandsynligt' : 'Moderat',
+      label: '3 - ' + (type === 'probability' ? 'Sandsynligt' : 'Moderat'),
     },
     {
       value: 4,
-      label:
-        '4 - ' + type === 'probability' ? 'Overvejende sandsynligt' : 'Høj',
+      label: '4 - ' + (type === 'probability' ? 'Overvejende sandsynligt' : 'Høj'),
     },
     {
       value: 5,
-      label:
-        '5 - ' + type === 'probability' ? 'Meget sandsynligt' : 'Meget høj',
+      label: '5 - ' + (type === 'probability' ? 'Meget sandsynligt' : 'Meget høj'),
     },
   ];
+  
 
   const selectedLabel = options.find(
     (option) => option.value === selectedValue,
