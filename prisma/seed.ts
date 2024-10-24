@@ -114,7 +114,7 @@ async function main() {
       });
 
       for (let l = 0; l < 10; l++) {
-        await prisma.risk.create({
+        const risk = await prisma.risk.create({
           data: {
             projectId: project.id,
             customId: l + 1,
@@ -136,6 +136,19 @@ async function main() {
               faker.helpers.arrayElement([...phases, null])?.id ?? null,
           },
         });
+
+        // Add comments to the risk
+        const numComments = faker.number.int({ min: 1, max: 5 });
+        for (let m = 0; m < numComments; m++) {
+          await prisma.comment.create({
+            data: {
+              content: faker.lorem.sentences(),
+              riskId: risk.id,
+              createdAt: faker.date.recent(),
+              authorId: faker.helpers.arrayElement(users).id,
+            },
+          });
+        }
       }
     }
   }
