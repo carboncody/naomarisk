@@ -190,19 +190,23 @@ export const columns = ({
         if (riskOwner) {
           filterByEmployee(riskOwner.id);
           router.push(
-            `/projects/${row.original.projectId}?view=risks&employee=${riskOwner.id}`
+            `/projects/${row.original.projectId}?view=risks&employee=${riskOwner.fullName}`,
           );
         } else {
-          filterByEmployee(null); 
+          filterByEmployee(null);
         }
       };
 
       return (
         <span
-          className="line-clamp-2 text-blue-500 cursor-pointer hover:underline"
+          className="line-clamp-2 cursor-pointer text-blue-500 hover:underline"
           onClick={handleClick}
         >
-          {riskOwner ? riskOwner.fullName ?? riskOwner.email : <em className="text-zinc-400">Ingen ejer</em>}
+          {riskOwner ? (
+            riskOwner.fullName ?? riskOwner.email
+          ) : (
+            <em className="text-zinc-400">Ingen ejer</em>
+          )}
         </span>
       );
     },
@@ -219,7 +223,7 @@ export const columns = ({
       return nameA.localeCompare(nameB);
     },
   },
-  
+
   {
     accessorKey: 'description',
     enableGlobalFilter: true,

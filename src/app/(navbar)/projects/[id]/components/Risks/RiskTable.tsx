@@ -9,8 +9,8 @@ import {
   SheetTitle,
 } from '@components/ui/sheet';
 import { type Project, type Risk } from '@models';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
 import { RxCross2 } from 'react-icons/rx';
 import { Comments } from '../../risk/[rid]/components/comments';
@@ -29,25 +29,26 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedRisk, setSelectedRisk] = useState<Risk | null>(null);
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(null); 
-  const [filteredData, setFilteredData] = useState<Risk[]>(risks); 
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
+    null,
+  );
+  const [filteredData, setFilteredData] = useState<Risk[]>(risks);
   const router = useRouter();
 
-  // Update filtered data when risks or selectedEmployeeId changes
-  const filterByEmployee = (employeeId: string | null) => {
-    setSelectedEmployeeId(employeeId);
-    if (employeeId) {
-      setFilteredData(risks.filter((risk) => risk.riskowner?.id === employeeId));
+  useEffect(() => {
+    if (selectedEmployeeId) {
+      setFilteredData(
+        risks.filter((risk) => risk.riskowner?.id === selectedEmployeeId),
+      );
     } else {
       setFilteredData(risks);
     }
-  };
+  }, [risks, selectedEmployeeId]);
 
   const clearEmployeeFilter = () => {
-    setSelectedEmployeeId(null);
     setFilteredData(risks);
+    setSelectedEmployeeId(null);
   };
-
   const rows = filteredData.map((risk) => ({
     ...risk,
     riskScore:
@@ -73,6 +74,10 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
     setIsSheetOpen(true);
   };
 
+  const searchParams = useSearchParams();
+  const employeeName = searchParams.get('employee');
+  console.log(selectedEmployeeId);
+
   return (
     <>
       {selectedEmployeeId && (
@@ -80,9 +85,9 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
           <div className="flex items-center">
             <div className="rounded-l-lg border border-r-0 border-zinc-400 bg-gray-200 px-2 font-light text-black dark:border-transparent dark:bg-zinc-700 dark:text-white">
               <span className="text-zinc-500 dark:text-zinc-400">
-                Filtering for employee
+                Filtering for
               </span>{' '}
-              {selectedEmployeeId}
+              {employeeName}
             </div>
             <div
               onClick={clearEmployeeFilter}
@@ -100,8 +105,8 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
           handleDelete,
           handleOpenSheet,
           project,
-          filterByEmployee, 
           router,
+          filterByEmployee: setSelectedEmployeeId,
         })}
         data={rows}
         onRowClick={handleRowClick}
