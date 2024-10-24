@@ -50,7 +50,7 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
   } satisfies ChartConfig;
 
   return (
-    <Card className="flex flex-col border shadow-xl dark:border-transparent dark:bg-zinc-900">
+    <Card className="flex flex-col border shadow-xl dark:border-transparent dark:bg-zinc-800">
       <CardHeader className="items-center pb-0">
         <CardTitle>Projekt Oversigt</CardTitle>
         <CardDescription>Alle projekter</CardDescription>

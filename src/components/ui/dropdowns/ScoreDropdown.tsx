@@ -31,25 +31,25 @@ export function ScoreDropdown({
     {
       value: 1,
       label:
-        '1 - ' + type === 'probability' ? 'Meget usandsynligt' : 'Meget lav',
+        '1 - ' + (type === 'probability' ? 'Meget usandsynligt' : 'Meget lav'),
     },
     {
       value: 2,
-      label: '2 - ' + type === 'probability' ? 'Usandsynligt' : 'Lav',
+      label: '2 - ' + (type === 'probability' ? 'Usandsynligt' : 'Lav'),
     },
     {
       value: 3,
-      label: '3 - ' + type === 'probability' ? 'Sandsynligt' : 'Moderat',
+      label: '3 - ' + (type === 'probability' ? 'Sandsynligt' : 'Moderat'),
     },
     {
       value: 4,
       label:
-        '4 - ' + type === 'probability' ? 'Overvejende sandsynligt' : 'Høj',
+        '4 - ' + (type === 'probability' ? 'Overvejende sandsynligt' : 'Høj'),
     },
     {
       value: 5,
       label:
-        '5 - ' + type === 'probability' ? 'Meget sandsynligt' : 'Meget høj',
+        '5 - ' + (type === 'probability' ? 'Meget sandsynligt' : 'Meget høj'),
     },
   ];
 

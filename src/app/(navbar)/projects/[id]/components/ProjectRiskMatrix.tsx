@@ -16,7 +16,7 @@ interface Props {
 
 export function ProjectRiskMatrix({ projectId, risks }: Props) {
   return (
-    <Card className="h-full border-0 bg-white shadow-none dark:bg-zinc-900">
+    <Card className="h-full border-0 bg-white shadow-none dark:bg-zinc-800">
       <CardHeader className="items-center pb-0">
         <CardTitle>Risiko Matrix</CardTitle>
         <CardDescription className="flex items-center gap-1">

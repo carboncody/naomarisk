@@ -65,7 +65,7 @@ export function Risk() {
             {'<- '}Back
           </Button>
           <div className="flex flex-col gap-4 md:flex-row">
-            <div className="sticky top-12 h-fit w-1/3 rounded-md border p-4 dark:border-transparent dark:bg-zinc-900 md:top-20">
+            <div className="sticky top-12 h-screen w-1/3 rounded-md border p-4 dark:border-zinc-800 dark:bg-zinc-800">
               <div className="flex justify-between gap-4">
                 <Button
                   variant="default"
@@ -151,7 +151,7 @@ export function Risk() {
                 </div>
               </div>
             </div>
-            <div className="sticky w-2/4  overflow-y-auto rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-900">
+            <div className="sticky top-12 h-screen w-2/4  overflow-y-auto rounded-lg border p-4 text-muted-foreground dark:border-transparent dark:bg-zinc-800">
               <div className="flex items-start">
                 <span className="text-muted-foreground">Aktivitet:</span>
                 <p className="ml-2 text-primary">
@@ -312,7 +312,7 @@ export function Risk() {
                 </div>
               </div>
             </div>
-            <div className="w-1/4 overflow-y-auto  rounded-lg border p-4 dark:border-transparent dark:bg-zinc-900">
+            <div className="sticky top-12 h-fit w-1/4 overflow-y-auto  rounded-lg border p-4 dark:border-transparent dark:bg-zinc-800">
               <span className="mb-2 flex gap-3">
                 <FaComment className="h-4 w-4" />
                 Tilføj en ny kommentar her.
