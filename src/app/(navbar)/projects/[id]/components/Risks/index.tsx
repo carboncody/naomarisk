@@ -86,25 +86,6 @@ export function Risks({ project }: RisksProps) {
       <div className="justify-top flex w-full flex-col items-center">
         <p className="text-xl font-semibold">Projekt: {project.name}</p>
 
-        {filters.score && (
-          <div className="my-4 flex w-full justify-end">
-            <div className="flex items-center">
-              <div className="rounded-l-lg border border-r-0 border-zinc-400 bg-gray-200 px-2 font-light text-black dark:border-transparent dark:bg-zinc-700 dark:text-white">
-                <span className="text-zinc-500 dark:text-zinc-400">
-                  Filtering for riskscore
-                </span>{' '}
-                {filters.score}
-              </div>
-              <div
-                onClick={() => setFilters({})}
-                className="border-l-dashed flex h-full items-center justify-center rounded-r-lg border border-dashed border-black bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400"
-              >
-                <RxCross2 />
-              </div>
-            </div>
-          </div>
-        )}
-
         <div className="mb-4 flex w-full items-center justify-between">
           <Tabs
             value={selectedTab}
@@ -124,6 +105,24 @@ export function Risks({ project }: RisksProps) {
               </Button>
             </div>
             <TabsContent value={selectedTab}>
+              {filters.score && (
+                <div className="my-2 flex w-full justify-end">
+                  <div className="flex items-center">
+                    <div className="rounded-l-lg border border-r-0 border-zinc-400 bg-gray-200 px-2 font-light text-black dark:border-transparent dark:bg-zinc-700 dark:text-white">
+                      <span className="text-zinc-500 dark:text-zinc-400">
+                        Filtrering for risikoscore
+                      </span>{' '}
+                      {filters.score}
+                    </div>
+                    <div
+                      onClick={() => setFilters({})}
+                      className="border-l-dashed flex h-full items-center justify-center rounded-r-lg border border-dashed border-black bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400"
+                    >
+                      <RxCross2 />
+                    </div>
+                  </div>
+                </div>
+              )}
               <RiskTable
                 risks={activeTabRisks}
                 refetch={refetch}

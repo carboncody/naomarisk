@@ -81,11 +81,11 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   return (
     <>
       {selectedEmployeeId && (
-        <div className="my-4 flex w-full justify-end">
+        <div className="my-2 flex w-full justify-end">
           <div className="flex items-center">
             <div className="rounded-l-lg border border-r-0 border-zinc-400 bg-gray-200 px-2 font-light text-black dark:border-transparent dark:bg-zinc-700 dark:text-white">
               <span className="text-zinc-500 dark:text-zinc-400">
-                Filtering for
+                Filtrering for
               </span>{' '}
               {employeeName}
             </div>
