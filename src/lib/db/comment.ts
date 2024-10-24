@@ -1,6 +1,6 @@
-import { UserRole } from '@models';
 import { env } from '@env';
 import { sendNewCommentEmail } from '@lib/services/email';
+import { UserRole } from '@models';
 import { db } from '@server/db';
 import type { CreateCommentForm, UpdateCommentForm } from '../api/types';
 
@@ -21,7 +21,7 @@ export async function CommentService() {
   async function createComment(
     riskId: string,
     authorEmail: string,
-    data: CreateCommentForm
+    data: CreateCommentForm,
   ) {
     const { userId, role } = await getUserRoleAndId(authorEmail);
 
@@ -80,7 +80,7 @@ export async function CommentService() {
   async function updateComment(
     id: string,
     editorEmail: string,
-    data: UpdateCommentForm
+    data: UpdateCommentForm,
   ) {
     const { userId, role } = await getUserRoleAndId(editorEmail);
     const existingComment = await db.comment.findUnique({ where: { id } });
