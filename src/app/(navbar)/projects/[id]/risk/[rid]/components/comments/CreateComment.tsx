@@ -19,21 +19,31 @@ export function CreateComment({ riskId, refetch }: CreateCommentProps) {
     setIsLoading(true);
     if (!content || content === '') {
       toast.error('Du skal skrive en kommentar');
+      setIsLoading(false);
       return;
     }
 
     try {
-      await axios.post<{
+      const response = await axios.post<{
         status: number;
-        comment: Comment;
+        comment?: Comment;
+        error?: string;
       }>(`/api/comment/risk/${riskId}`, data);
-      toast.success('Kommentar tilføjet!');
-      setIsLoading(false);
-      setContent('');
-      refetch();
+
+      if (response.status === 200) {
+        toast.success('Kommentar tilføjet!');
+        setContent('');
+        refetch();
+      } else {
+        toast.error(
+          response.data.error ??
+            'Du har ikke rettigheder til at tilføje en kommentar',
+        );
+        setIsLoading(false);
+      }
     } catch (error) {
+      toast.error('Du har ikke rettigheder til at tilføje en kommentar');
       setIsLoading(false);
-      toast.error('Error - something went wrong');
     }
   }
 
