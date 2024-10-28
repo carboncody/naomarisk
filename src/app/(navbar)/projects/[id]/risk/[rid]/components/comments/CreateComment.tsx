@@ -43,6 +43,7 @@ export function CreateComment({ riskId, refetch }: CreateCommentProps) {
       }
     } catch (error) {
       toast.error('Du har ikke rettigheder til at tilføje en kommentar');
+    } finally {
       setIsLoading(false);
     }
   }
