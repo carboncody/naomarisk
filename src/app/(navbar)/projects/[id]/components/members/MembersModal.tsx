@@ -11,7 +11,7 @@ import { SingleDropdown } from '@components/ui';
 import { PlusMinusButton } from '@components/ui/PlusMinusButton';
 import { Button } from '@components/ui/button';
 import type { UpdateProjectForm } from '@lib/api/types';
-import { ProjectAssignmentForm } from '@lib/api/types/project';
+import { type ProjectAssignmentForm } from '@lib/api/types/project';
 import { ProjectRole, type User } from '@models';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';

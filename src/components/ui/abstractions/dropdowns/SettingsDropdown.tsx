@@ -1,8 +1,8 @@
 'use client';
 
+import { Button } from '@components/ui/button';
 import { FaGear } from 'react-icons/fa6';
 import { SingleDropdown } from './Dropdown';
-import { Button } from './button';
 
 export function SettingsDropdown() {
   const settingsActionDropdownOptions = [

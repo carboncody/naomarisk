@@ -1,5 +1,5 @@
 import { Input } from '@components/ui/Input';
-import { ThemeSwitcher } from '@components/ui/ThemeSwitcher';
+import { ThemeSwitcher } from '@components/ui/abstractions/buttons/ThemeSwitcher';
 import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
 import { type UpdateUserForm } from '@lib/api/types';

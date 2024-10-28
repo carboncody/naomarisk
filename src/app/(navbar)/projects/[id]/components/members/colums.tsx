@@ -31,7 +31,7 @@ export const columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: 'role',
+    accessorKey: 'name',
     header: ({ column }) => {
       return (
         <Button
@@ -39,7 +39,34 @@ export const columns: ColumnDef<User>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Rolle
+          Navn
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="truncate">
+        <span>{row.original.fullName}</span>
+      </div>
+    ),
+    sortingFn: (rowA, rowB) => {
+      const nameA = rowA.original.fullName || '';
+      const nameB = rowB.original.fullName || '';
+
+      return nameA.localeCompare(nameB);
+    },
+  },
+
+  {
+    accessorKey: 'projectrole',
+    header: ({ column }) => {
+      return (
+        <Button
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Projektrolle
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
