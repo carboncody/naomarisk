@@ -4,6 +4,7 @@ import { MeProvider } from '@lib/providers/me';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import type { User } from '@models';
 import { ThemeProvider } from 'next-themes';
+import React from 'react';
 
 export default async function NavLayout({
   children,
@@ -20,12 +21,14 @@ export default async function NavLayout({
 
   return (
     <>
-      <ThemeProvider attribute="class" enableSystem>
-        <MeProvider me={me}>
+      <MeProvider me={me}>
+        <ThemeProvider attribute="class" enableSystem>
           <Nav />
-          {children}
-        </MeProvider>
-      </ThemeProvider>
+          <div className="max-w-screen flex h-full max-h-[calc(100vh-3rem)] flex-col overflow-y-auto p-4">
+            {children}
+          </div>
+        </ThemeProvider>
+      </MeProvider>
     </>
   );
 }

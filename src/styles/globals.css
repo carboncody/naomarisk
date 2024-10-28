@@ -2,16 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --text-primary: theme('colors.black');
+    --text-primary-foreground: theme('colors.zinc.800');
+    --text-muted-foreground: theme('colors.zinc.600');
+    --text-muted: theme('colors.zinc.400');
+    --text-destructive: theme('colors.red.500');
+    --border-color: theme('colors.zinc.300');
+  }
+
+  .dark {
+    --text-primary: theme('colors.white');
+    --text-primary-foreground: theme('colors.zinc.200');
+    --text-muted-foreground: theme('colors.zinc.400');
+    --text-muted: theme('colors.zinc.500');
+    --text-destructive: theme('colors.red.500');
+    --border-color: theme('colors.zinc.800');
+  }
+}
+
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 2px;
+  width: 8px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: theme('colors.zinc.400');
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.dark ::-webkit-scrollbar-thumb {
+  background: theme('colors.zinc.600');
 }

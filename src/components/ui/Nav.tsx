@@ -12,23 +12,21 @@ import { ThemeSwitcher } from './abstractions/buttons/ThemeSwitcher';
 import { SettingsDropdown } from './abstractions/dropdowns/SettingsDropdown';
 
 export function Nav() {
-  // TODO : fix this!
-  // const me = useMe();
-  // const isAdmin = me.role === UserRole.Owner || me.role === UserRole.Manager;
-
   return (
-    <NavigationMenu className="sticky top-0 z-50 h-10 w-full bg-zinc-200 backdrop-blur-md dark:bg-zinc-900 dark:text-white md:h-16">
-      <NavigationMenuList className="flex w-full items-center justify-between gap-5">
-        <ThemeSwitcher />
-        <NavigationMenuItem>
-          <Link href="/" passHref legacyBehavior>
-            <NavigationMenuLink className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text text-xl font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200 md:text-2xl">
-              nRisk
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+    <NavigationMenu className="sticky top-0 z-50 h-12 w-screen bg-zinc-200 backdrop-blur-md dark:bg-zinc-800 dark:text-white">
+      <NavigationMenuList className="flex w-screen items-center justify-between">
+        <div className="ml-3 flex items-center gap-2">
+          <ThemeSwitcher />
+          <NavigationMenuItem>
+            <Link href="/" passHref legacyBehavior>
+              <NavigationMenuLink className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text text-xl font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200 md:text-2xl">
+                NaomaRisk
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        </div>
 
-        <div className="flex justify-between">
+        <div className="flex items-center justify-center  space-x-5">
           <NavigationMenuItem>
             <Link href="/projects?status=all" passHref legacyBehavior>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -52,9 +50,11 @@ export function Nav() {
           </NavigationMenuItem>
         </div>
 
-        <NavigationMenuItem>
-          <SettingsDropdown />
-        </NavigationMenuItem>
+        <div className="flex w-[170px] items-center justify-end pr-3">
+          <NavigationMenuItem>
+            <SettingsDropdown />
+          </NavigationMenuItem>
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );

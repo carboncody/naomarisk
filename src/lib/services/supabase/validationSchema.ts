@@ -18,13 +18,13 @@ export const AuthUserWithTokenSchema = z.object({
 export const UpdatePasswordSchema = z
   .object({
     password: password(6),
-    passwordConfirm: password(6, 'Confirm Password'),
+    passwordConfirm: password(6, 'Koden'),
   })
   .superRefine(({ password, passwordConfirm }, ctx) => {
     if (password !== passwordConfirm) {
       ctx.addIssue({
         code: 'custom',
-        message: 'Password does not match',
+        message: 'Koderne er ikke ens',
         path: ['passwordConfirm'],
       });
     }
@@ -39,7 +39,7 @@ export const UpdateEmailSchema = z
     if (email !== emailConfirm) {
       ctx.addIssue({
         code: 'custom',
-        message: 'Email Address does not match',
+        message: 'Email er ikke ens',
         path: ['emailConfirm'],
       });
     }

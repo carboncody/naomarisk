@@ -8,29 +8,43 @@ import toast from 'react-hot-toast';
 
 interface CreateCommentProps {
   riskId: string;
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  refetch: () => void;
 }
 
-export function CreateComment({ riskId, setComments }: CreateCommentProps) {
+export function CreateComment({ riskId, refetch }: CreateCommentProps) {
   const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: CreateCommentForm) {
+    setIsLoading(true);
     if (!content || content === '') {
       toast.error('Du skal skrive en kommentar');
+      setIsLoading(false);
       return;
     }
 
     try {
-      const comment = await axios.post<{
+      const response = await axios.post<{
         status: number;
-        comment: Comment;
+        comment?: Comment;
+        error?: string;
       }>(`/api/comment/risk/${riskId}`, data);
-      console.info(comment);
-      toast.success('Kommentar tilføjet!');
-      setComments((prevComments) => [...prevComments, comment.data.comment]);
-      setContent('');
+
+      if (response.status === 200) {
+        toast.success('Kommentar tilføjet!');
+        setContent('');
+        refetch();
+      } else {
+        toast.error(
+          response.data.error ??
+            'Du har ikke rettigheder til at tilføje en kommentar',
+        );
+        setIsLoading(false);
+      }
     } catch (error) {
-      toast.error('Error - something went wrong');
+      toast.error('Du har ikke rettigheder til at tilføje en kommentar');
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -51,7 +65,11 @@ export function CreateComment({ riskId, setComments }: CreateCommentProps) {
         />
       </div>
 
-      <Button variant="default" onClick={() => onSubmit({ content })}>
+      <Button
+        variant="default"
+        onClick={() => onSubmit({ content })}
+        loading={isLoading}
+      >
         Kommenter
       </Button>
     </div>

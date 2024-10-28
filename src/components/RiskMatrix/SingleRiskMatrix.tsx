@@ -4,7 +4,6 @@ import {
   HoverCardTrigger,
 } from '@components/ui/hover-card';
 import { ColorMap, RiskMap, Thresholds } from '@lib/calc/threshholds';
-import type { Risk } from '@models';
 import clsx from 'clsx';
 import { IoIosWarning } from 'react-icons/io';
 import {
@@ -13,24 +12,34 @@ import {
 } from './RiskMatrixDescription';
 
 interface SingleRiskMatrixProps {
-  risk: Risk;
+  probability: number | null;
+  consequence: number | null;
+  onCellClick?: ({
+    probability,
+    consequence,
+  }: {
+    probability: number;
+    consequence: number;
+  }) => void;
 }
 
-export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
+export function SingleRiskMatrix({
+  probability,
+  consequence,
+  onCellClick,
+}: SingleRiskMatrixProps) {
   const matrix: boolean[][] = Array.from({ length: 5 }, () =>
     Array<boolean>(5).fill(false),
   );
 
-  const { probability, consequence } = risk;
   if (probability && consequence) {
-    const score = probability * consequence;
-    if (RiskMap[score] && matrix[5 - probability]) {
+    if (matrix[5 - probability]) {
       matrix[5 - probability]![consequence - 1] = true;
     }
   }
 
   return (
-    <div className="flex -translate-x-6 items-center text-zinc-300">
+    <div className="flex -translate-x-6 items-center dark:text-zinc-300">
       <em className="translate-x-8 rotate-[270deg] text-xs md:text-sm">
         Sandsynlighed
       </em>
@@ -41,9 +50,14 @@ export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
               {5 - rowIndex}
             </div>
             {row.map((hasDot, colIndex) => {
-              const score = (5 - rowIndex) * (colIndex + 1);
+              const currentProbability = 5 - rowIndex;
+              const currentConsequence = colIndex + 1;
+              const score = currentProbability * currentConsequence;
               const threshold = RiskMap[score];
               const color = threshold ? ColorMap[threshold] : 'green';
+              const showWarning =
+                currentProbability === probability &&
+                currentConsequence === consequence;
 
               return (
                 <HoverCard key={`${rowIndex}-${colIndex}`}>
@@ -52,11 +66,12 @@ export function SingleRiskMatrix({ risk }: SingleRiskMatrixProps) {
                       className={clsx(
                         '3xl:w-16 3xl:h-16 flex h-12 w-12 flex-shrink-0 select-none items-center justify-center border border-zinc-900 text-black',
                         color === 'red' && 'text-white',
+                        !showWarning && 'opacity-70',
                       )}
                       style={{ backgroundColor: color }}
                     >
-                      {hasDot && (
-                        <IoIosWarning className="h-6 w-6 animate-pulse text-black" />
+                      {showWarning && (
+                        <IoIosWarning className="h-6 w-6 text-black" />
                       )}
                     </div>
                   </HoverCardTrigger>

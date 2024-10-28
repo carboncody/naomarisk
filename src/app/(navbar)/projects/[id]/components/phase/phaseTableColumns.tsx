@@ -114,7 +114,7 @@ export const phaseTableColumns = ({
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="text-zinc-400 hover:text-black dark:text-zinc-400 dark:hover:text-white"
+              className="text-muted-foreground hover:text-primary"
             >
               <MoreHorizontal className="h-4 w-4" />
             </Button>

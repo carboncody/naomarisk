@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { useEmployee } from '@lib/api/hooks/users/useEmployee';
 import Error from 'next/error';
 import { usePathname } from 'next/navigation';
@@ -26,8 +26,8 @@ export function Employee() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
       </div>
     );
   }

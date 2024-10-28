@@ -12,6 +12,7 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
+import toast from 'react-hot-toast';
 import { ZodError, type z } from 'zod';
 
 type FormData = z.infer<typeof UpdatePasswordSchema>;
@@ -55,11 +56,11 @@ export default function PasswordForm({ user }: { user: User | undefined }) {
 
     setFormData({ password: '', passwordConfirm: '' });
     setFormSuccess(true);
-    setMessage('Din adgangskode blev opdateret.');
+    toast.success('Din adgangskode blev opdateret.');
   };
   return (
     <div className="flex items-center justify-center ">
-      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 dark:border-transparent dark:bg-zinc-900">
+      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 dark:border-transparent dark:bg-zinc-800">
         {message ? (
           <Alert
             className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}

@@ -2,11 +2,12 @@
 
 import { FaGear } from 'react-icons/fa6';
 import { SingleDropdown } from './Dropdown';
+import { Button } from './button';
 
 export function SettingsDropdown() {
   const settingsActionDropdownOptions = [
     {
-      label: 'Bruger instillinger',
+      label: 'Indstillinger',
       href: '/account',
       value: 'settings',
     },
@@ -18,9 +19,9 @@ export function SettingsDropdown() {
   ];
 
   const triggerButton = (
-    <button className="outline-none">
-      <FaGear className="h-5 w-5 text-amber-500 dark:text-amber-200" />
-    </button>
+    <Button variant="icon" size="icon">
+      <FaGear className="h-5 w-5 text-muted group-hover:text-primary" />
+    </Button>
   );
 
   return (
@@ -32,6 +33,7 @@ export function SettingsDropdown() {
         if (value === 'logout') {
         }
       }}
+      popoverClassName="min-w-[200px]"
       customTriggerBtn={triggerButton}
     />
   );

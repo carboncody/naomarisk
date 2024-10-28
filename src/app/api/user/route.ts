@@ -1,4 +1,4 @@
-import { type CreateUserForm, type UpdateUserForm } from '@lib/api/types';
+import { CreateUserForm, UpdateUserForm } from '@lib/api/types';
 import { UserService } from '@lib/db';
 import { sendInviteEmail } from '@lib/services/email';
 import { createServerClient } from '@lib/services/supabase/supabase-server';

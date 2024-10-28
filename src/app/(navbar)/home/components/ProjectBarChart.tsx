@@ -1,4 +1,4 @@
-import { type Project } from '@models';
+import { RiskStatus, type Project } from '@models';
 import { useMemo } from 'react';
 import { GrStatusInfo } from 'react-icons/gr';
 import { Bar, BarChart, XAxis } from 'recharts';
@@ -29,26 +29,28 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
   const data = useMemo(() => {
     return projects.map((project) => ({
       name: project.name,
-      Risici: project.risks.length,
-      Medarbejdere: project.projectUsers.length,
+      open: project.risks.filter((risk) => risk.status === RiskStatus.Open)
+        .length,
+      closed: project.risks.filter((risk) => risk.status === RiskStatus.Closed)
+        .length,
     }));
   }, [projects]);
 
   const chartConfig = {
-    Risici: {
+    open: {
       // icon: PiWarningFill,
-      label: 'Risici',
+      label: 'Åben risici',
       color: 'hsl(var(--chart-1))',
     },
-    Medarbejdere: {
+    closed: {
       // icon: FaUsers,
-      label: 'Medarbejdere',
+      label: 'Lukket risici',
       color: 'hsl(var(--chart-2))',
     },
   } satisfies ChartConfig;
 
   return (
-    <Card className="flex flex-col border shadow-xl dark:border-transparent dark:bg-zinc-900">
+    <Card className="flex flex-col border shadow-xl dark:border-transparent dark:bg-zinc-800">
       <CardHeader className="items-center pb-0">
         <CardTitle>Projekt Oversigt</CardTitle>
         <CardDescription>Alle projekter</CardDescription>
@@ -67,12 +69,8 @@ export function ProjectBarChart({ projects }: ProjectBarChartProps) {
             />
             <ChartLegend content={<ChartLegendContent />} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar dataKey="Risici" fill="var(--color-Risici)" radius={4} />
-            <Bar
-              dataKey="Medarbejdere"
-              fill="var(--color-Medarbejdere)"
-              radius={4}
-            />
+            <Bar dataKey="open" fill="var(--color-open)" radius={4} />
+            <Bar dataKey="closed" fill="var(--color-closed)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>

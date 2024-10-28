@@ -23,6 +23,13 @@ const config = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
+      textColor: {
+        primary: 'var(--text-primary)',
+        'primary-foreground': 'var(--text-primary-foreground)',
+        muted: 'var(--text-muted)',
+        'muted-foreground': 'var(--text-muted-foreground)',
+        destructive: 'var(--text-destructive)',
+      },
       borderWidth: {
         DEFAULT: '0.5px',
       },

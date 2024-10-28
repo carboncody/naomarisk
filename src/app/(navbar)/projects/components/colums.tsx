@@ -17,17 +17,15 @@ import { RiskStatus, type Project } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 interface ColumnParams {
   handleArchive: (project: Project) => void;
-  // handleEdit: (project: Project) => void;
+  setEditingProjectId: (id: string | null) => void;
 }
 
 export const columns = ({
   handleArchive,
-  // handleEdit,
+  setEditingProjectId,
 }: ColumnParams): ColumnDef<Project>[] => [
   {
     accessorKey: 'riskScore',
@@ -199,8 +197,6 @@ export const columns = ({
     header: '',
     cell: ({ row }) => {
       const project = row.original;
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const router = useRouter();
 
       return (
         <DropdownMenu>
@@ -219,7 +215,7 @@ export const columns = ({
           >
             <DropdownMenuItem
               className="group-hover:bg-red-500 group-hover:text-white dark:group-hover:bg-red-400"
-              onClick={() => toast.error('Not implemented yet')}
+              onClick={() => setEditingProjectId(project.id)}
             >
               Rediger Projekt
             </DropdownMenuItem>

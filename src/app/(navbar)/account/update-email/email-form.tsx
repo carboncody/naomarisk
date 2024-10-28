@@ -12,6 +12,7 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
+import toast from 'react-hot-toast';
 import { ZodError, type z } from 'zod';
 
 type FormData = z.infer<typeof UpdateEmailSchema>;
@@ -56,12 +57,12 @@ export default function EmailForm({ user }: { user: User | undefined }) {
     // reset form
     setFormData({ email: '', emailConfirm: '' });
     setFormSuccess(true);
-    setMessage('Email opdateret');
+    toast.success('Din Email blev opdateret.');
   };
 
   return (
     <div className="flex items-center justify-center ">
-      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 text-white dark:border-transparent dark:bg-zinc-900">
+      <div className="mt-10 flex w-full max-w-md flex-col rounded-lg border p-5 text-white dark:border-transparent dark:bg-zinc-800">
         {message ? (
           <Alert
             className={`${formSuccess ? 'alert-info' : 'alert-error'} mb-10`}
@@ -112,7 +113,7 @@ export default function EmailForm({ user }: { user: User | undefined }) {
           </div>
         </form>
         <div className="justify-flex mt-5 flex justify-center">
-          <Button asChild>
+          <Button>
             <Link className="block p-3" href="/account">
               Tilbage
             </Link>

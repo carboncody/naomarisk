@@ -11,21 +11,22 @@ export default function HomePage() {
   const supabase = createClientComponentClient();
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center dark:bg-gradient-to-b dark:from-[#1c1c1c] dark:to-[#2a2929] dark:text-white">
-      <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 dark:bg-[#3f3e3e]">
-        <p className="mt-5 text-center text-4xl dark:text-white">
-          Request new password
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <div className="h-[600px] w-[500px] rounded-lg border bg-zinc-200 shadow-xl dark:bg-zinc-700">
+        <p className="mt-5 text-center text-4xl font-normal dark:text-white">
+          Anmod om at ændre kodeord
         </p>
         <div className="px-5">
           <ForgottenPassword
             supabaseClient={supabase}
+            redirectTo="/auth/reset"
             appearance={{
               theme: ThemeSupa,
               variables: {
                 default: {
                   colors: {
-                    inputText: '#FFFFFF',
-                    inputLabelText: '#FFFFFF',
+                    inputText: '#000000',
+                    inputLabelText: '#000000',
                   },
                 },
               },
@@ -34,13 +35,13 @@ export default function HomePage() {
         </div>
         <div className="pt-4 text-center">
           <Link className="block pb-2 text-blue-500" href="/auth/login">
-            Sign in
+            Log ind
           </Link>
         </div>
         <div className="pt-4 text-center">
-          Not registered yet?{' '}
+          Ikke registreret endnu?{' '}
           <Link href="/auth/signup" className="text-blue-500 underline">
-            Create an account
+            Opret konto
           </Link>
         </div>
       </div>

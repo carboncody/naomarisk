@@ -5,7 +5,6 @@ export enum RiskStatus {
 }
 
 export enum ProjectStatus {
-  PLANNING = 'PLANNING',
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',
   ARCHIVED = 'ARCHIVED',
@@ -108,6 +107,10 @@ export interface Risk {
   description: string;
   probability: number | null;
   consequence: number | null;
+  timeProbability: number | null;
+  timeConsequence: number | null;
+  economicProbability: number | null;
+  economicConsequence: number | null;
   status: RiskStatus;
   comments: Comment[];
   activity?: string;
@@ -117,10 +120,10 @@ export interface Risk {
   projectId: string;
   riskOwnerUserId: string;
   user: User[];
-  mitigationPhase: Phase;
-  mitigationPhaseId: string;
-  projectPhase: Phase;
-  projectPhaseId: string;
+  mitigationPhase: Phase | null;
+  mitigationPhaseId: string | null;
+  projectPhase: Phase | null;
+  projectPhaseId: string | null;
 }
 
 export interface Comment {

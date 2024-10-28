@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -23,11 +20,15 @@ import {
   getThreshold,
 } from '@lib/calc/threshholds';
 import { cn } from '@lib/utils';
-import type { Project, Risk } from '@models';
+import { RiskStatus, type Project, type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
+import dayjs from 'dayjs';
+import 'dayjs/locale/da';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { PhaseProgressBar } from '../phase/PhaseProgressBar';
+
+dayjs.locale('da');
 
 function getStyleColor(risk: Risk): string | undefined {
   const riskValue =
@@ -41,16 +42,23 @@ function getStyleColor(risk: Risk): string | undefined {
 interface ColumnParams {
   handleEdit: (risk: Risk) => void;
   handleDelete: (risk: Risk) => void;
+  handleOpenSheet: (risk: Risk) => void;
   project: Project;
+  filterByEmployee: (employeeId: string | null) => void;
+  router: ReturnType<typeof useRouter>;
 }
 
 export const columns = ({
   handleEdit,
   handleDelete,
+  handleOpenSheet,
   project,
+  filterByEmployee,
+  router,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
     accessorKey: 'riskScore',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -101,7 +109,7 @@ export const columns = ({
           </HoverCardTrigger>
           <HoverCardContent align="start" className="flex flex-col gap-2">
             <div>Sansynlighed: {risk.probability}</div>
-            <div>Konsense: {risk.consequence}</div>
+            <div>Konsekvens: {risk.consequence}</div>
           </HoverCardContent>
         </HoverCard>
       );
@@ -110,6 +118,7 @@ export const columns = ({
 
   {
     accessorKey: 'customId',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -123,15 +132,44 @@ export const columns = ({
       );
     },
     cell: ({ row }) => (
-      <div className="truncate text-black dark:text-white">
+      <div className="truncate">
         <span>{row.original.customId}</span>
         <br />
-        <span>Status: {row.original.status}</span>
+        <span>
+          Status:{' '}
+          {row.original.status === RiskStatus.Open
+            ? 'Åben'
+            : row.original.status === RiskStatus.Closed
+              ? 'Lukket'
+              : row.original.status}
+        </span>
       </div>
     ),
   },
   {
+    accessorKey: 'updatedAt',
+    enableGlobalFilter: true,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Senest Opdateret
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <span className="line-clamp-2">
+        {dayjs(row.original.updatedAt).format('DD/MM-YY')}
+      </span>
+    ),
+  },
+  {
     accessorKey: 'riskowner',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -144,20 +182,51 @@ export const columns = ({
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="truncate text-black dark:text-white">
-        <span>
-          {row.original.riskowner ? (
-            row.original.riskowner.fullName ?? row.original.riskowner.email
+    cell: ({ row }) => {
+      const riskOwner = row.original.riskowner;
+
+      const handleClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        if (riskOwner) {
+          filterByEmployee(riskOwner.id);
+          router.push(
+            `/projects/${row.original.projectId}?view=risks&employee=${riskOwner.fullName}`,
+          );
+        } else {
+          filterByEmployee(null);
+        }
+      };
+
+      return (
+        <span
+          className="line-clamp-2 cursor-pointer text-blue-500 hover:underline"
+          onClick={handleClick}
+        >
+          {riskOwner ? (
+            riskOwner.fullName ?? riskOwner.email
           ) : (
-            <em className="text-Zinc-400">Ingen ejer</em>
+            <em className="text-zinc-400">Ingen ejer</em>
           )}
         </span>
-      </div>
-    ),
+      );
+    },
+    sortingFn: (rowA, rowB) => {
+      const nameA =
+        rowA.original.riskowner?.fullName ||
+        rowA.original.riskowner?.email ||
+        '';
+      const nameB =
+        rowB.original.riskowner?.fullName ||
+        rowB.original.riskowner?.email ||
+        '';
+
+      return nameA.localeCompare(nameB);
+    },
   },
+
   {
     accessorKey: 'description',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -171,13 +240,12 @@ export const columns = ({
       );
     },
     cell: ({ row }) => (
-      <div className="col-span-2 flex items-center justify-between truncate text-black dark:text-white">
-        <span>{row.original.description}</span>
-      </div>
+      <span className="line-clamp-2">{row.original.description}</span>
     ),
   },
   {
     accessorKey: 'phase',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -194,14 +262,15 @@ export const columns = ({
       return (
         <PhaseProgressBar
           projectPhases={project.phases}
-          riskPhaseId={risk.projectPhaseId}
-          mitigatingPhaseId={risk.mitigationPhaseId}
+          riskPhaseId={risk.projectPhaseId!}
+          mitigatingPhaseId={risk.mitigationPhaseId!}
         />
       );
     },
   },
   {
     accessorKey: 'activity',
+    enableGlobalFilter: true,
     header: ({ column }) => {
       return (
         <Button
@@ -216,7 +285,9 @@ export const columns = ({
         </Button>
       );
     },
-    cell: ({ row }) => row.original.activity,
+    cell: ({ row }) => (
+      <span className="line-clamp-2">{row.original.activity}</span>
+    ),
   },
   {
     id: 'actions',
@@ -247,6 +318,9 @@ export const columns = ({
               }
             >
               Vis
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleOpenSheet(risk)}>
+              Kommentér
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleEdit(risk)}>
               Rediger

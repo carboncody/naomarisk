@@ -1,20 +1,17 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui/LoadingSpinnerShadcn';
 import { Card, CardTitle } from '@components/ui/card';
 import { useCompany } from '@lib/api/hooks';
-import { useMe } from '@lib/providers/me';
 import { ProjectStatus, RiskStatus } from '@models';
 import Error from 'next/error';
 import { useMemo } from 'react';
-import { BsBuildingFillGear } from 'react-icons/bs';
 import { FaCubes, FaUsers } from 'react-icons/fa';
 import { PiShieldWarningBold, PiWarningFill } from 'react-icons/pi';
 import { ProjectBarChart } from './components/ProjectBarChart';
-import { RisksPiechart } from './components/RisksPiechart';
+import { RiskScorePieChart } from './components/RisksPiechart';
 
 export function Home() {
-  const me = useMe();
   const { data, isLoading, error } = useCompany();
 
   const allRisksInCompany = useMemo(() => {
@@ -26,14 +23,23 @@ export function Home() {
 
   if (isLoading) {
     return (
-      <div className="h-[80vh]">
-        <LoadingSpinner size="lg" />
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
       </div>
     );
   }
 
-  if (error ?? !data) {
-    return <Error statusCode={500} message={'Noget gik galt!'} />;
+  if (error) {
+    return (
+      <Error
+        statusCode={500}
+        title={error?.message ?? 'Noget gik galt! Prøv igen senere'}
+      />
+    );
+  }
+
+  if (!data) {
+    return <Error statusCode={404} title="Ingen firma fundet, kontakt admin" />;
   }
 
   return (
@@ -42,10 +48,10 @@ export function Home() {
         <span className="flex select-none gap-2 text-5xl font-medium dark:text-white">
           Velkommen til{' '}
           <p className="bg-gradient-to-br from-black via-amber-400 to-amber-600 bg-clip-text font-medium text-transparent dark:from-white dark:via-amber-50 dark:to-amber-200">
-            nRisk
+            NaomaRisk
           </p>
         </span>
-        <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" />
+        {/* <BsBuildingFillGear className="inline h-10 w-10 text-amber-500 dark:text-amber-200" /> */}
       </div>
       <div className="mb-4 mt-5 flex items-center gap-2 border-b border-amber-500 p-2 text-lg dark:text-white md:mt-10">
         <PiShieldWarningBold className="inline h-6 w-6 text-amber-500" />
@@ -90,8 +96,8 @@ export function Home() {
       </div>
 
       <div className="items-cemter grid h-[50vh] w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
-        <RisksPiechart risks={allRisksInCompany} />
         <ProjectBarChart projects={data.projects} />
+        <RiskScorePieChart risks={allRisksInCompany} />
       </div>
     </div>
   );

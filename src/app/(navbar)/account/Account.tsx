@@ -1,7 +1,7 @@
 'use client';
 
 import UserSettings from '@app/(navbar)/account/components/UserSettings';
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { SettingsCard } from '@components/ui/SettingsCard';
 import { Button } from '@components/ui/button';
 import { useMe } from '@lib/api/hooks/users/useMe';
@@ -15,8 +15,8 @@ export function Account() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
       </div>
     );
   }
@@ -28,7 +28,7 @@ export function Account() {
   return (
     <div>
       <div className="flex w-full">
-        <div className="dark:border-Zinc-300 ml-5 mt-[100px] flex h-[500px] w-0 rounded-2xl border dark:border-transparent dark:bg-zinc-900 md:w-1/2" />
+        <div className="dark:border-Zinc-300 ml-5 mt-[100px] flex h-[500px] w-0 rounded-2xl border dark:border-transparent dark:bg-zinc-800 md:w-1/2" />
         <div className="mt-[100px] flex w-full flex-col justify-center gap-y-5 px-4 md:w-1/2 md:px-10">
           <SettingsCard>
             <UserSettings me={me} refetchMe={refetch} />
@@ -44,10 +44,10 @@ export function Account() {
         <Link href="/">
           <Button>Tilbage</Button>
         </Link>
-        <Button asChild>
+        <Button>
           <Link href="/account/update-email">Ændre email</Link>
         </Button>
-        <Button asChild>
+        <Button>
           <Link href="/account/update-password">Ændre adgangskode</Link>
         </Button>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import { Tabs, TabsList, TabsTrigger } from '@components/ui/tabs';
@@ -12,13 +12,14 @@ import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { ArchiveProject } from './ArchiveProject';
+import { EditProject } from './[id]/components/EditProjectModal';
 import CreateProjectDialog from './components/CreateProjectDialog';
 import { columns } from './components/colums';
 
 export function AllProjects() {
   const [projectBeingArchived, setProjectBeingArchived] =
     useState<Project | null>(null);
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<ProjectStatus | 'ALL'>(
     ProjectStatus.OPEN,
   );
@@ -34,6 +35,7 @@ export function AllProjects() {
   const {
     data: allProjects,
     isFetching,
+    isRefetching,
     isError,
     error,
     refetch,
@@ -52,10 +54,14 @@ export function AllProjects() {
     return [];
   }, [allProjects, activeTab]);
 
-  if (isFetching) {
+  const projectBeingEdited = useMemo(() => {
+    return allProjects?.find((project) => project.id === editingProjectId);
+  }, [allProjects, editingProjectId]);
+
+  if (isFetching && !isRefetching) {
     return (
-      <div className="flex h-[80vh] w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
       </div>
     );
   }
@@ -87,7 +93,7 @@ export function AllProjects() {
             <Button onClick={() => setIsNewOpen(true)}>Tilføj</Button>
           )}
         </div>
-        <div className="w-full rounded-lg border border-zinc-300 p-4 dark:border-transparent dark:bg-zinc-900">
+        <div className="w-full rounded-lg border border-zinc-300 p-4 dark:border-transparent dark:bg-zinc-800">
           <Tabs
             value={activeTab}
             onValueChange={(value) => setActiveTab(value as ProjectStatus)}
@@ -95,9 +101,6 @@ export function AllProjects() {
           >
             <TabsList>
               <TabsTrigger value={ProjectStatus.OPEN}>Åben</TabsTrigger>
-              <TabsTrigger value={ProjectStatus.PLANNING}>
-                Planlægning
-              </TabsTrigger>
               <TabsTrigger value={ProjectStatus.CLOSED}>Lukket</TabsTrigger>
               <TabsTrigger value={'ALL'}>Alle</TabsTrigger>
               <TabsTrigger value={ProjectStatus.ARCHIVED}>
@@ -107,21 +110,21 @@ export function AllProjects() {
           </Tabs>
 
           <DataTable
-            columns={columns({ handleArchive })}
+            columns={columns({ handleArchive, setEditingProjectId })}
             data={filteredProjects}
             onRowClick={handleRowClick}
           />
         </div>
       </div>
 
-      {/* {isEditOpen && (
+      {projectBeingEdited && (
         <EditProject
-          isOpen={isEditOpen}
-          setIsOpen={setIsEditOpen}
-          project={project}
+          isOpen={!!projectBeingEdited}
+          setIsOpen={() => setEditingProjectId(null)}
+          project={projectBeingEdited}
           refetch={refetch}
         />
-      )} */}
+      )}
 
       <ArchiveProject
         isOpen={!!projectBeingArchived}

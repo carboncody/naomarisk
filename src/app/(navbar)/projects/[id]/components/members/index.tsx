@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@components/ui/LoadSpinner';
+import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { useEmployees } from '@lib/api/hooks';
 import type { Project } from '@models';
@@ -23,8 +23,8 @@ export function ProjectEmployee({
 
   if (isFetching) {
     return (
-      <div className="flex min-h-full w-full items-center justify-center">
-        <LoadingSpinner size="lg" />
+      <div className="flex h-[80vh] items-center justify-center">
+        <LoadingSpinner size={50} />
       </div>
     );
   }
@@ -50,7 +50,7 @@ export function ProjectEmployee({
             Tilføj / fjern medlemmer
           </Button>
         </div>
-        <div className="w-full rounded-md border p-4 dark:border-transparent dark:bg-zinc-900">
+        <div className="dark:bg-zinc-transparent w-full rounded-md border p-4 dark:border-transparent">
           <ProjectEmployeeTable
             projectMemberIds={projectMemberIds}
             employees={allEmployees ?? []}

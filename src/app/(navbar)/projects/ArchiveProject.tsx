@@ -55,8 +55,7 @@ export function ArchiveProject({
         <AlertDialogHeader>
           <AlertDialogTitle>Er du helt sikker?</AlertDialogTitle>
           <AlertDialogDescription>
-            Dette kan ikke fortrydes, projektet vil blive arkiveret og kan ikke
-            bringes tilbage.
+            Dette projektet vil blive arkiveret
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
