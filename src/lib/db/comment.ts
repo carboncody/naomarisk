@@ -2,6 +2,7 @@ import { env } from '@env';
 import { sendNewCommentEmail } from '@lib/services/email';
 import { UserRole } from '@models';
 import { db } from '@server/db';
+import toast from 'react-hot-toast';
 import type { CreateCommentForm, UpdateCommentForm } from '../api/types';
 
 export async function CommentService() {
@@ -25,8 +26,8 @@ export async function CommentService() {
   ) {
     const { userId, role } = await getUserRoleAndId(authorEmail);
 
-    // Only managers and owners can create comments
     if (role !== UserRole.Manager && role !== UserRole.Owner) {
+      toast.error('You do not have permission to create comments');
       throw new Error('You do not have permission to create comments');
     }
 
@@ -73,7 +74,11 @@ export async function CommentService() {
 
       return newComment;
     } catch (error) {
-      throw new Error('Failed to create comment');
+      throw new Error(
+        toast.error(
+          'Du har ikke rettigheder til at redigere andres kommentar',
+        ) + 'Failed to create comment',
+      );
     }
   }
 
@@ -89,13 +94,15 @@ export async function CommentService() {
       throw new Error('Comment not found');
     }
 
-    // Only managers, owners, or the original commenter can update the comment
     if (
       role !== UserRole.Manager &&
       role !== UserRole.Owner &&
       existingComment.authorId !== userId
     ) {
-      throw new Error('You do not have permission to update this comment');
+      throw new Error(
+        toast.error('You do not have permission to update this comment') +
+          'Failed to update comment',
+      );
     }
 
     const updatedComment = await db.comment.update({
@@ -131,20 +138,18 @@ export async function CommentService() {
   }
 
   async function deleteComment(id: string, deleterEmail: string) {
-    const { userId, role } = await getUserRoleAndId(deleterEmail);
+    const { userId } = await getUserRoleAndId(deleterEmail);
     const existingComment = await db.comment.findUnique({ where: { id } });
 
     if (!existingComment) {
       throw new Error('Comment not found');
     }
 
-    // Only managers, owners, or the original commenter can delete the comment
-    if (
-      role !== UserRole.Manager &&
-      role !== UserRole.Owner &&
-      existingComment.authorId !== userId
-    ) {
-      throw new Error('You do not have permission to delete this comment');
+    if (existingComment.authorId !== userId) {
+      throw new Error(
+        toast.error('You do not have permission to delete this comment') +
+          'Failed to delete comment',
+      );
     }
 
     return await db.comment.delete({ where: { id } });

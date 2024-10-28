@@ -39,7 +39,7 @@ export function Comments({ riskId, comments, refetch }: Props) {
       setCommentBeingEditedId(null);
       refetch();
     } catch (error) {
-      toast.error('Error - something went wrong');
+      toast.error('Du har ikke rettigheder til at redigere andres kommentar');
     }
   }
 
@@ -52,7 +52,7 @@ export function Comments({ riskId, comments, refetch }: Props) {
       setCommentBeingDeletedId(null);
       refetch();
     } catch (error) {
-      toast.error('Error - something went wrong');
+      toast.error('Du har ikke rettigheder til at slette andres kommentar');
     }
   }
 
