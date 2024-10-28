@@ -62,9 +62,11 @@ export function MembersModal({
   }
 
   function removeMember(id: string) {
+    const projectUserIds: string[] = getValues('projectUserIds') ?? [];
+
     setValue(
       'projectUserIds',
-      getValues('projectUserIds')?.filter((x) => x !== id),
+      projectUserIds.filter((x) => x !== id),
     );
   }
 
