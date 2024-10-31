@@ -200,29 +200,25 @@ export const columns = ({
 
       return (
         <span
-          className="line-clamp-2 flex  cursor-pointer items-center gap-2 hover:underline "
+          className="line-clamp-2 flex   items-center gap-2  "
           onClick={handleClick}
         >
-          <HoverCard>
-            <HoverCardTrigger className="flex items-center gap-2">
-              <FaInfoCircle className="h-4 w-4" />
+          {riskOwner ? (
+            <HoverCard>
+              <HoverCardTrigger className="flex cursor-pointer items-center gap-2 hover:underline">
+                <FaInfoCircle className="h-4 w-4" />
 
-              <HoverCardContent align="start" className="w-full bg-zinc-200">
-                Klik for at filtrere for{' '}
-                {riskOwner ? (
-                  riskOwner.fullName ?? riskOwner.email
-                ) : (
-                  <em className="text-zinc-400">Ingen ejer</em>
-                )}
-              </HoverCardContent>
+                <HoverCardContent align="start" className="w-full bg-zinc-200">
+                  Klik for at filtrere for{' '}
+                  {riskOwner.fullName ?? riskOwner.email}
+                </HoverCardContent>
 
-              {riskOwner ? (
-                riskOwner.fullName ?? riskOwner.email
-              ) : (
-                <em className="text-zinc-400">Ingen ejer</em>
-              )}
-            </HoverCardTrigger>
-          </HoverCard>
+                {riskOwner.fullName ?? riskOwner.email}
+              </HoverCardTrigger>
+            </HoverCard>
+          ) : (
+            <em className="text-zinc-400">Ingen ejer</em>
+          )}
         </span>
       );
     },
