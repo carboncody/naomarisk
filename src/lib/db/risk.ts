@@ -24,7 +24,7 @@ export async function RiskService() {
   }
 
   async function getProjectRisks(projectId: string) {
-    return db.risk.findMany({
+    const risks = await db.risk.findMany({
       where: { projectId },
       include: {
         riskowner: true,
@@ -35,10 +35,13 @@ export async function RiskService() {
           orderBy: { createdAt: 'desc' },
         },
       },
-      orderBy: {
-        customId: 'asc',
-      },
     });
+    risks.sort((a, b) => {
+      const aScore = (a.probability ?? 0) * (a.consequence ?? 0);
+      const bScore = (b.probability ?? 0) * (b.consequence ?? 0);
+      return bScore - aScore;
+    });
+    return risks;
   }
 
   async function createRisk(projectId: string, data: CreateRiskForm) {
