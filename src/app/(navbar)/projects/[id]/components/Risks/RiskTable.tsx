@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import {
   Sheet,
@@ -17,7 +18,6 @@ import { Comments } from '../../risk/[rid]/components/comments';
 import { DeleteRisk } from './DeleteRisk';
 import { EditRisk } from './EditRisk';
 import { columns } from './colums';
-import { Button } from '@components/ui/button';
 
 interface RiskTableProps {
   refetch: () => void;
@@ -30,9 +30,11 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedRisk, setSelectedRisk] = useState<Risk | null>(null);
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(null);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
+    null,
+  );
   const [filteredData, setFilteredData] = useState<Risk[]>(risks);
-  
+
   const [customOrder, setCustomOrder] = useState<number[]>([]);
   const [savedOrder, setSavedOrder] = useState<number[] | null>(null);
 
@@ -44,10 +46,9 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
     setCustomOrder(initialOrder);
 
     const storedOrder = localStorage.getItem('savedOrder');
-if (storedOrder) {
-  setSavedOrder(JSON.parse(storedOrder) as number[]);
-}
-
+    if (storedOrder) {
+      setSavedOrder(JSON.parse(storedOrder) as number[]);
+    }
   }, [risks]);
 
   useEffect(() => {
@@ -62,7 +63,7 @@ if (storedOrder) {
 
   const toggleCustomOrder = () => {
     if (savedOrder) {
-      setSavedOrder(null); 
+      setSavedOrder(null);
       localStorage.removeItem('savedOrder');
     } else {
       setSavedOrder([...customOrder]);
@@ -78,7 +79,10 @@ if (storedOrder) {
   const rows = filteredData
     .map((risk) => ({
       ...risk,
-      riskScore: risk.probability && risk.consequence ? risk.probability * risk.consequence : 0,
+      riskScore:
+        risk.probability && risk.consequence
+          ? risk.probability * risk.consequence
+          : 0,
     }))
     .sort((a, b) => {
       const order = savedOrder ?? customOrder;
@@ -114,7 +118,10 @@ if (storedOrder) {
         <div className="my-2 flex w-full justify-end">
           <div className="flex items-center">
             <div className="rounded-l-lg border border-r-0 border-zinc-400 bg-gray-200 px-2 font-light text-black dark:border-transparent dark:bg-zinc-700 dark:text-white">
-              <span className="text-zinc-500 dark:text-zinc-400">Filtrering for</span> {employeeName}
+              <span className="text-zinc-500 dark:text-zinc-400">
+                Filtrering for
+              </span>{' '}
+              {employeeName}
             </div>
             <div
               onClick={clearEmployeeFilter}
