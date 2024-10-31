@@ -17,6 +17,7 @@ import { Comments } from '../../risk/[rid]/components/comments';
 import { DeleteRisk } from './DeleteRisk';
 import { EditRisk } from './EditRisk';
 import { columns } from './colums';
+import { Button } from '@components/ui/button';
 
 interface RiskTableProps {
   refetch: () => void;
@@ -29,11 +30,25 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedRisk, setSelectedRisk] = useState<Risk | null>(null);
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
-    null,
-  );
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(null);
   const [filteredData, setFilteredData] = useState<Risk[]>(risks);
+  
+  const [customOrder, setCustomOrder] = useState<number[]>([]);
+  const [savedOrder, setSavedOrder] = useState<number[] | null>(null);
+
   const router = useRouter();
+
+  // Load savedOrder from localStorage on initial mount
+  useEffect(() => {
+    const initialOrder = risks.map((risk) => risk.customId);
+    setCustomOrder(initialOrder);
+
+    const storedOrder = localStorage.getItem('savedOrder');
+if (storedOrder) {
+  setSavedOrder(JSON.parse(storedOrder) as number[]);
+}
+
+  }, [risks]);
 
   useEffect(() => {
     if (selectedEmployeeId) {
@@ -45,17 +60,30 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
     }
   }, [risks, selectedEmployeeId]);
 
+  const toggleCustomOrder = () => {
+    if (savedOrder) {
+      setSavedOrder(null); 
+      localStorage.removeItem('savedOrder');
+    } else {
+      setSavedOrder([...customOrder]);
+      localStorage.setItem('savedOrder', JSON.stringify(customOrder));
+    }
+  };
+
   const clearEmployeeFilter = () => {
     setFilteredData(risks);
     setSelectedEmployeeId(null);
   };
-  const rows = filteredData.map((risk) => ({
-    ...risk,
-    riskScore:
-      risk.probability && risk.consequence
-        ? risk.probability * risk.consequence
-        : 0,
-  }));
+
+  const rows = filteredData
+    .map((risk) => ({
+      ...risk,
+      riskScore: risk.probability && risk.consequence ? risk.probability * risk.consequence : 0,
+    }))
+    .sort((a, b) => {
+      const order = savedOrder ?? customOrder;
+      return order.indexOf(a.customId) - order.indexOf(b.customId);
+    });
 
   const handleRowClick = (risk: Risk) => {
     router.push(`/projects/${project.id}/risk/${risk.id}`);
@@ -76,18 +104,17 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
 
   const searchParams = useSearchParams();
   const employeeName = searchParams.get('employee');
-  console.log(selectedEmployeeId);
 
   return (
     <>
+      <Button className="mb-3" onClick={toggleCustomOrder}>
+        {savedOrder ? 'Ryd sortering' : 'Gem sortering'}
+      </Button>
       {selectedEmployeeId && (
         <div className="my-2 flex w-full justify-end">
           <div className="flex items-center">
             <div className="rounded-l-lg border border-r-0 border-zinc-400 bg-gray-200 px-2 font-light text-black dark:border-transparent dark:bg-zinc-700 dark:text-white">
-              <span className="text-zinc-500 dark:text-zinc-400">
-                Filtrering for
-              </span>{' '}
-              {employeeName}
+              <span className="text-zinc-500 dark:text-zinc-400">Filtrering for</span> {employeeName}
             </div>
             <div
               onClick={clearEmployeeFilter}
