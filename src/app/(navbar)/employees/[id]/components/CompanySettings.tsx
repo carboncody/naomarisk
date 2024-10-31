@@ -3,20 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { Label } from '@components/ui/label';
 import { type UpdateUserForm } from '@lib/api/types';
 import { type User } from '@models';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 
 interface CompanySettingsProps {
   employee: User;
   refetch: () => void;
 }
 
-export default function CompanySettings({
-  employee,
-  refetch,
-}: CompanySettingsProps) {
-  const { register, handleSubmit } = useForm<UpdateUserForm>({
+export default function CompanySettings({ employee }: CompanySettingsProps) {
+  const {} = useForm<UpdateUserForm>({
     defaultValues: {
       fullName: employee?.fullName,
       jobDescription: employee?.jobDescription,
@@ -26,16 +21,16 @@ export default function CompanySettings({
     },
   });
 
-  async function onSubmit(data: UpdateUserForm) {
-    console.info('data: ', data);
-    try {
-      await axios.patch(`/api/user/${employee.email}`, data);
-      refetch();
-      toast.success('Brugeren er opdateret');
-    } catch (error) {
-      toast.error('Noget gik galt, beklager.');
-    }
-  }
+  // async function onSubmit(data: UpdateUserForm) {
+  //   console.info('data: ', data);
+  //   try {
+  //     await axios.patch(`/api/user/${employee.email}`, data);
+  //     refetch();
+  //     toast.success('Brugeren er opdateret');
+  //   } catch (error) {
+  //     toast.error('Noget gik galt, beklager.');
+  //   }
+  // }
 
   return (
     <>
