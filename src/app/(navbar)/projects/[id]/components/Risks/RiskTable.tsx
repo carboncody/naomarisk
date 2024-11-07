@@ -60,6 +60,7 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
 
   const toggleCustomOrder = () => {
     const currentOrder = rows.map((row) => row.customId);
+
     // if (savedOrder) {
     //   setSavedOrder(null);
     //   localStorage.removeItem('savedOrder');
