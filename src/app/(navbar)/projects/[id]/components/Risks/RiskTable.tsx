@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
 import {
   Sheet,
@@ -67,8 +66,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
     }
   }, [risks, selectedEmployeeId]);
 
-  
-
   const toggleCustomOrder = () => {
     const currentOrder = rows.map((row) => row.customId);
     // if (savedOrder) {
@@ -76,9 +73,9 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
     //   localStorage.removeItem('savedOrder');
     //   console.log('Removed saved order');
     // } else {
-      setSavedOrder([...currentOrder]);
-      localStorage.setItem('savedOrder', JSON.stringify(currentOrder));
-      console.log('Saved order:', currentOrder);
+    setSavedOrder([...currentOrder]);
+    localStorage.setItem('savedOrder', JSON.stringify(currentOrder));
+    console.log('Saved order:', currentOrder);
     // }
   };
 
