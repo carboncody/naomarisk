@@ -54,7 +54,7 @@ export function Risks({ project }: RisksProps) {
     return allRisks
       ? allRisks.filter((risk) => {
           if (selectedTab === 'all') {
-            return true; // Include all risks if 'all' tab is selected
+            return true;
           }
           if (scoreMatch && risk.probability && risk.consequence) {
             return risk.probability * risk.consequence === scoreMatch;
@@ -70,7 +70,7 @@ export function Risks({ project }: RisksProps) {
 
   const activeTabRisks =
     selectedTab === 'all'
-      ? filteredRisks // Use filteredRisks instead of project.risks
+      ? filteredRisks
       : filteredRisks.filter((risk) => {
           return (
             risk.status === selectedTab ||
@@ -83,8 +83,10 @@ export function Risks({ project }: RisksProps) {
 
   return (
     <>
-      <div className="justify-top flex w-full flex-col items-center">
-        <p className="text-xl font-semibold">Projekt: {project.name}</p>
+      <div className="justify-top mt-10 flex w-full flex-col items-center">
+        <p className="text-xl font-semibold underline">
+          Projekt: {project.name}
+        </p>
 
         <div className="mb-4 flex w-full items-center justify-between">
           <Tabs
