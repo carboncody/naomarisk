@@ -39,14 +39,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
 
   const router = useRouter();
 
-  const rows = filteredData.map((risk) => ({
-    ...risk,
-    riskScore:
-      risk.probability && risk.consequence
-        ? risk.probability * risk.consequence
-        : 0,
-  }));
-
   useEffect(() => {
     if (selectedEmployeeId) {
       setFilteredData(
@@ -104,6 +96,19 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const searchParams = useSearchParams();
   const employeeName = searchParams.get('employee');
 
+  const rows = filteredData
+    .map((risk) => ({
+      ...risk,
+      riskScore:
+        risk.probability && risk.consequence
+          ? risk.probability * risk.consequence
+          : 0,
+    }))
+    .sort((a, b) => {
+      const order = savedOrder ?? customOrder;
+      return order.indexOf(a.customId) - order.indexOf(b.customId);
+    });
+
   return (
     <>
       {/* <Button className="mb-3" onClick={toggleCustomOrder}>
@@ -127,7 +132,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
           </div>
         </div>
       )}
-
       <DataTable
         columns={columns({
           handleEdit,
