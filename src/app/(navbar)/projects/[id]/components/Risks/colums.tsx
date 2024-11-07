@@ -26,7 +26,6 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/da';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { FaInfoCircle } from 'react-icons/fa';
 import { PhaseProgressBar } from '../phase/PhaseProgressBar';
 
 dayjs.locale('da');
@@ -206,9 +205,7 @@ export const columns = ({
           {riskOwner ? (
             <HoverCard>
               <HoverCardTrigger className="flex cursor-pointer items-center gap-2 hover:underline">
-                <FaInfoCircle className="h-4 w-4" />
-
-                <HoverCardContent align="start" className="w-full bg-zinc-200">
+                <HoverCardContent align="center" className="w-full bg-zinc-200">
                   Klik for at filtrere for{' '}
                   {riskOwner.fullName ?? riskOwner.email}
                 </HoverCardContent>

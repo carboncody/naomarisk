@@ -40,7 +40,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
 
   const router = useRouter();
 
-  // Load savedOrder from localStorage on initial mount
   useEffect(() => {
     const initialOrder = risks.map((risk) => risk.customId);
     setCustomOrder(initialOrder);
