@@ -24,7 +24,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onRowClick?: (row: TData) => void;
-  onHeaderClick?: (row: TData) => void;
+  onHeaderClick?: (event: React.MouseEvent<HTMLTableCellElement>) => void; // Update to match MouseEvent
 }
 
 export function DataTable<TData, TValue>({
@@ -53,7 +53,10 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} onClick={onHeaderClick}>
+                  <TableHead
+                    key={header.id}
+                    onClick={(event) => onHeaderClick?.(event)}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(

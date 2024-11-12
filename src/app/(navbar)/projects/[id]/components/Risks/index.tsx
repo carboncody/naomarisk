@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { CreateRisk } from './CreateRisk';
+import { FilterDropdown } from './FilterDropdown';
 import { RiskTable } from './RiskTable';
 
 interface RisksProps {
@@ -18,9 +19,7 @@ interface RisksProps {
 
 export function Risks({ project }: RisksProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<RiskStatus | 'all'>(
-    RiskStatus.Open,
-  );
+  const [selectedTab, setSelectedTab] = useState<RiskStatus | 'all'>('all');
   const score = useSearchParams().get('score');
   const [filters, setFilters] = useState<{ score?: number }>({
     score: score ? Number(score) : undefined,
@@ -97,14 +96,19 @@ export function Risks({ project }: RisksProps) {
             className="w-full"
           >
             <div className="flex w-full items-center justify-between">
-              <TabsList>
-                <TabsTrigger value={'all'}> Alle </TabsTrigger>
-                <TabsTrigger value={RiskStatus.Open}>Åben</TabsTrigger>
-                <TabsTrigger value={RiskStatus.Closed}>Lukket</TabsTrigger>
-              </TabsList>
-              <Button variant="default" onClick={() => setIsNewOpen(true)}>
-                Tilføj
-              </Button>
+              <div>
+                <TabsList>
+                  <TabsTrigger value={'all'}> Alle </TabsTrigger>
+                  <TabsTrigger value={RiskStatus.Open}>Åben</TabsTrigger>
+                  <TabsTrigger value={RiskStatus.Closed}>Lukket</TabsTrigger>
+                </TabsList>
+              </div>
+              <div className="flex gap-2 text-sm">
+                <FilterDropdown riskOwnerIds={[]}></FilterDropdown>
+                <Button variant="default" onClick={() => setIsNewOpen(true)}>
+                  Tilføj
+                </Button>
+              </div>
             </div>
             <TabsContent value={selectedTab}>
               {filters.score && (

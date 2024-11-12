@@ -35,6 +35,7 @@ export async function RiskService() {
           orderBy: { createdAt: 'desc' },
         },
       },
+      orderBy: { customId: 'asc' },
     });
     risks.sort((a, b) => {
       const aScore = (a.probability ?? 0) * (a.consequence ?? 0);

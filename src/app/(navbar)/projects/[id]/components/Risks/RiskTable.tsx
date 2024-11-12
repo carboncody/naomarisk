@@ -8,7 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@components/ui/sheet';
-import { type Project, type Risk } from '@models';
+import { type Project, type Risk, type RiskStatus } from '@models';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
@@ -24,7 +24,14 @@ interface RiskTableProps {
   project: Project;
 }
 
+type RiskFilter = {
+  status: RiskStatus;
+  riskOwnerIds: string[];
+};
+
 export function RiskTable({ risks, project, refetch }: RiskTableProps) {
+  const [Filter, setFilter] = useState<string[]>([]);
+
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -33,8 +40,7 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
     null,
   );
   const [filteredData, setFilteredData] = useState<Risk[]>(risks);
-
-  const [customOrder, setCustomOrder] = useState<number[]>([]);
+  const [customOrder] = useState<number[]>([]);
   const [savedOrder, setSavedOrder] = useState<number[] | null>(null);
 
   const router = useRouter();
@@ -50,26 +56,20 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
 
     const initialOrder = risks.map((risks) => risks.customId);
     const storedOrder = localStorage.getItem('savedOrder');
-
     if (storedOrder) {
       setSavedOrder(JSON.parse(storedOrder) as number[]);
     } else {
-      setCustomOrder(initialOrder);
+      setSavedOrder([...initialOrder]);
+      localStorage.setItem('savedOrder', JSON.stringify(initialOrder));
     }
   }, [risks, selectedEmployeeId]);
 
-  const toggleCustomOrder = () => {
-    const currentOrder = rows.map((row) => row.customId);
-
-    // if (savedOrder) {
-    //   setSavedOrder(null);
-    //   localStorage.removeItem('savedOrder');
-    //   console.log('Removed saved order');
-    // } else {
+  const toggleCustomOrder = function () {
+    const currentOrder = risks.map((risk) => risk.customId);
+    console.log('Toggle custom order', currentOrder);
     setSavedOrder([...currentOrder]);
     localStorage.setItem('savedOrder', JSON.stringify(currentOrder));
-    console.log('Saved order:', currentOrder);
-    // }
+    console.log(localStorage.getItem('savedOrder'));
   };
 
   const clearEmployeeFilter = () => {
@@ -112,9 +112,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
 
   return (
     <>
-      {/* <Button className="mb-3" onClick={toggleCustomOrder}>
-        {savedOrder ? 'Ryd sortering' : 'Gem sortering'}
-      </Button> */}
       {selectedEmployeeId && (
         <div className="my-2 flex w-full justify-end">
           <div className="flex items-center">
