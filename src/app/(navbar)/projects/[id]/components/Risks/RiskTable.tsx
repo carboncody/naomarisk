@@ -9,7 +9,6 @@ import {
   SheetTitle,
 } from '@components/ui/sheet';
 import { type Project, type Risk } from '@models';
-import { SortingState } from '@tanstack/react-table';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
@@ -33,7 +32,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
     null,
   );
-  const [sorting, setSorting] = useState<SortingState>([]);
 
   const router = useRouter();
 
@@ -41,18 +39,18 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
     router.push(`/projects/${project.id}/risk/${risk.id}`);
   };
 
-  const handleEdit = (risk: Risk) => {
+  function handleEdit(risk: Risk) {
     setRiskBeingEdited(risk);
-  };
+  }
 
-  const handleDelete = (risk: Risk) => {
+  function handleDelete(risk: Risk) {
     setRiskBeingDeleted(risk);
-  };
+  }
 
-  const handleOpenSheet = (risk: Risk) => {
+  function handleOpenSheet(risk: Risk) {
     setSelectedRisk(risk);
     setIsSheetOpen(true);
-  };
+  }
 
   const searchParams = useSearchParams();
   const employeeName = searchParams.get('employee');
@@ -83,6 +81,7 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
         </div>
       )}
       <DataTable
+        tableId="risks"
         columns={columns({
           handleEdit,
           handleDelete,
