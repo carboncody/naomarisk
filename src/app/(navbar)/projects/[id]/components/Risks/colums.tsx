@@ -24,8 +24,9 @@ import { RiskStatus, type Project, type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import 'dayjs/locale/da';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { GoSortAsc, GoSortDesc } from 'react-icons/go';
 import { PhaseProgressBar } from '../phase/PhaseProgressBar';
 
 dayjs.locale('da');
@@ -37,6 +38,20 @@ function getStyleColor(risk: Risk): string | undefined {
       : 0;
   const threshold = RiskMap[riskValue];
   return threshold !== undefined ? ColorMap[threshold] : undefined;
+}
+
+type ColumnAssesorKey =
+  | 'riskScore'
+  | 'customId'
+  | 'updatedAt'
+  | 'riskowner'
+  | 'description'
+  | 'phase'
+  | 'activity';
+
+interface Sorting {
+  column: ColumnAssesorKey;
+  direction: 'asc' | 'desc';
 }
 
 interface ColumnParams {
@@ -67,7 +82,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Risikoscore
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -127,7 +148,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           RISK-ID
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -157,7 +184,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Senest Opdateret
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -178,7 +211,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Risikoejer
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}{' '}
         </Button>
       );
     },
@@ -244,7 +283,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Beskrivelse
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -263,7 +308,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Projekt Fase
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -290,7 +341,13 @@ export const columns = ({
           Aktivitet
           <br />
           <span className="text-xs">(mitigerende handling)</span>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },

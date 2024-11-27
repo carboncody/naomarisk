@@ -8,9 +8,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@components/ui/sheet';
-import { type Project, type Risk, type RiskStatus } from '@models';
+import { type Project, type Risk } from '@models';
+import { SortingState } from '@tanstack/react-table';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
 import { RxCross2 } from 'react-icons/rx';
 import { Comments } from '../../risk/[rid]/components/comments';
@@ -24,14 +25,7 @@ interface RiskTableProps {
   project: Project;
 }
 
-type RiskFilter = {
-  status: RiskStatus;
-  riskOwnerIds: string[];
-};
-
 export function RiskTable({ risks, project, refetch }: RiskTableProps) {
-  const [Filter, setFilter] = useState<string[]>([]);
-
   const [riskBeingEdited, setRiskBeingEdited] = useState<Risk | null>(null);
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -39,43 +33,9 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
     null,
   );
-  const [filteredData, setFilteredData] = useState<Risk[]>(risks);
-  const [customOrder] = useState<number[]>([]);
-  const [savedOrder, setSavedOrder] = useState<number[] | null>(null);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (selectedEmployeeId) {
-      setFilteredData(
-        risks.filter((risk) => risk.riskowner?.id === selectedEmployeeId),
-      );
-    } else {
-      setFilteredData(risks);
-    }
-
-    const initialOrder = risks.map((risks) => risks.customId);
-    const storedOrder = localStorage.getItem('savedOrder');
-    if (storedOrder) {
-      setSavedOrder(JSON.parse(storedOrder) as number[]);
-    } else {
-      setSavedOrder([...initialOrder]);
-      localStorage.setItem('savedOrder', JSON.stringify(initialOrder));
-    }
-  }, [risks, selectedEmployeeId]);
-
-  const toggleCustomOrder = function () {
-    const currentOrder = risks.map((risk) => risk.customId);
-    console.log('Toggle custom order', currentOrder);
-    setSavedOrder([...currentOrder]);
-    localStorage.setItem('savedOrder', JSON.stringify(currentOrder));
-    console.log(localStorage.getItem('savedOrder'));
-  };
-
-  const clearEmployeeFilter = () => {
-    setFilteredData(risks);
-    setSelectedEmployeeId(null);
-  };
 
   const handleRowClick = (risk: Risk) => {
     router.push(`/projects/${project.id}/risk/${risk.id}`);
@@ -97,18 +57,13 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const searchParams = useSearchParams();
   const employeeName = searchParams.get('employee');
 
-  const rows = filteredData
-    .map((risk) => ({
-      ...risk,
-      riskScore:
-        risk.probability && risk.consequence
-          ? risk.probability * risk.consequence
-          : 0,
-    }))
-    .sort((a, b) => {
-      const order = savedOrder ?? customOrder;
-      return order.indexOf(a.customId) - order.indexOf(b.customId);
-    });
+  const rows = risks.map((risk) => ({
+    ...risk,
+    riskScore:
+      risk.probability && risk.consequence
+        ? risk.probability * risk.consequence
+        : 0,
+  }));
 
   return (
     <>
@@ -121,10 +76,7 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
               </span>{' '}
               {employeeName}
             </div>
-            <div
-              onClick={clearEmployeeFilter}
-              className="border-l-dashed flex h-full items-center justify-center rounded-r-lg border border-dashed border-black bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400"
-            >
+            <div className="border-l-dashed flex h-full items-center justify-center rounded-r-lg border border-dashed border-black bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400">
               <RxCross2 />
             </div>
           </div>
@@ -141,7 +93,6 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
         })}
         data={rows}
         onRowClick={handleRowClick}
-        onHeaderClick={toggleCustomOrder}
       />
 
       {riskBeingDeleted && (

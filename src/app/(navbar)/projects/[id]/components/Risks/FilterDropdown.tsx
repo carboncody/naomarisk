@@ -1,18 +1,16 @@
 import { SingleDropdown } from '@components/ui';
 import { type RiskStatus } from '@models';
 
-enum Riskfilter {
-  Owner
-  Description
-  
-}
+// enum Riskfilter {
+//   Owner
+//   Description
 
+// }
 
 interface FilterDropdownProps {
   status?: RiskStatus;
   riskOwnerIds: string[];
 }
-
 
 export function FilterDropdown({ status, riskOwnerIds }: FilterDropdownProps) {
   const options = [
