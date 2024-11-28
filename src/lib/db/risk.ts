@@ -36,11 +36,6 @@ export async function RiskService() {
         },
       },
     });
-    risks.sort((a, b) => {
-      const aScore = (a.probability ?? 0) * (a.consequence ?? 0);
-      const bScore = (b.probability ?? 0) * (b.consequence ?? 0);
-      return bScore - aScore;
-    });
     return risks;
   }
 
