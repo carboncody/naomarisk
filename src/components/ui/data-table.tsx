@@ -41,9 +41,6 @@ export function DataTable<TData, TValue>({
   );
 
   function saveSorting(newSorting: React.SetStateAction<SortingState>) {
-    console.info('sorting: ', newSorting);
-    console.info('tableId: ', tableId);
-
     if (!tableId) {
       return;
     }
@@ -57,6 +54,7 @@ export function DataTable<TData, TValue>({
         JSON.stringify(updatedSorting),
       );
 
+      console.info('updatedSorting: ', JSON.stringify(updatedSorting));
       return updatedSorting;
     });
   }

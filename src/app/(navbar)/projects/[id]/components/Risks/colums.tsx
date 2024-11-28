@@ -40,27 +40,11 @@ function getStyleColor(risk: Risk): string | undefined {
   return threshold !== undefined ? ColorMap[threshold] : undefined;
 }
 
-// type ColumnAssesorKey =
-//   | 'riskScore'
-//   | 'customId'
-//   | 'updatedAt'
-//   | 'riskowner'
-//   | 'description'
-//   | 'phase'
-//   | 'activity';
-
-// interface Sorting {
-//   column: ColumnAssesorKey;
-//   direction: 'asc' | 'desc';
-// }
-
 interface ColumnParams {
   handleEdit: (risk: Risk) => void;
   handleDelete: (risk: Risk) => void;
   handleOpenSheet: (risk: Risk) => void;
   project: Project;
-  filterByEmployee: (employeeId: string | null) => void;
-  router: ReturnType<typeof useRouter>;
 }
 
 export const columns = ({
@@ -68,8 +52,6 @@ export const columns = ({
   handleDelete,
   handleOpenSheet,
   project,
-  filterByEmployee,
-  router,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
     accessorKey: 'riskScore',
@@ -224,34 +206,12 @@ export const columns = ({
     cell: ({ row }) => {
       const riskOwner = row.original.riskowner;
 
-      const handleClick = (event: React.MouseEvent) => {
-        event.stopPropagation();
-        if (riskOwner) {
-          filterByEmployee(riskOwner.id);
-          router.push(
-            `/projects/${row.original.projectId}?view=risks&employee=${riskOwner.fullName}`,
-          );
-        } else {
-          filterByEmployee(null);
-        }
-      };
-
       return (
-        <span
-          className="line-clamp-2 flex   items-center gap-2  "
-          onClick={handleClick}
-        >
+        <span className="line-clamp-2 flex items-center gap-2">
           {riskOwner ? (
-            <HoverCard>
-              <HoverCardTrigger className="flex cursor-pointer items-center gap-2 hover:underline">
-                <HoverCardContent align="center" className="w-full bg-zinc-200">
-                  Klik for at filtrere for{' '}
-                  {riskOwner.fullName ?? riskOwner.email}
-                </HoverCardContent>
-
-                {riskOwner.fullName ?? riskOwner.email}
-              </HoverCardTrigger>
-            </HoverCard>
+            <span className="flex cursor-pointer items-center gap-2">
+              {riskOwner.fullName ?? riskOwner.email}
+            </span>
           ) : (
             <em className="text-zinc-400">Ingen ejer</em>
           )}

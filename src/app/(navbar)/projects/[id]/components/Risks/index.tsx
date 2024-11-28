@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 'use client';
-
 import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { CreateRisk } from './CreateRisk';
+import { FilterDropdown } from './FilterDropdown';
 import { RiskTable } from './RiskTable';
 
 interface RisksProps {
@@ -20,7 +21,11 @@ export function Risks({ project }: RisksProps) {
   const [isNewOpen, setIsNewOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<RiskStatus | 'all'>('all');
   const score = useSearchParams().get('score');
-  const [filters, setFilters] = useState<{ score?: number }>({
+  const [filters, setFilters] = useState<{
+    score?: number;
+    searchTerm?: string;
+    riskowner?: string;
+  }>({
     score: score ? Number(score) : undefined,
   });
 
@@ -48,18 +53,47 @@ export function Risks({ project }: RisksProps) {
   const getFilteredRisks = (): Risk[] => {
     const statusMatch = selectedTab;
     const scoreMatch = filters.score;
+    const searchTermMatch = filters.searchTerm?.toLowerCase();
 
     return allRisks
       ? allRisks.filter((risk) => {
-          if (selectedTab === 'all') {
-            return true;
-          }
-          if (scoreMatch && risk.probability && risk.consequence) {
-            return risk.probability * risk.consequence === scoreMatch;
-          } else if (scoreMatch) {
+          if (statusMatch !== 'all' && risk.status !== statusMatch) {
             return false;
           }
-          return risk.status === statusMatch;
+
+          if (
+            scoreMatch &&
+            risk.probability &&
+            risk.consequence &&
+            risk.probability * risk.consequence !== scoreMatch
+          ) {
+            return false;
+          }
+
+          if (
+            searchTermMatch &&
+            !(
+              risk.description.toLowerCase().includes(searchTermMatch) ||
+              risk.status.toLowerCase().includes(searchTermMatch) ||
+              (risk.riskowner?.fullName?.toLowerCase() ?? '').includes(
+                searchTermMatch,
+              ) ||
+              risk.updatedAt
+                .toString()
+                .toLowerCase()
+                .includes(searchTermMatch) ||
+              (risk.probability &&
+                risk.consequence &&
+                (risk.probability * risk.consequence)
+                  .toString()
+                  .includes(searchTermMatch)) ||
+              risk.activity?.toLowerCase().includes(searchTermMatch)
+            )
+          ) {
+            return false;
+          }
+
+          return true;
         })
       : [];
   };
@@ -103,9 +137,21 @@ export function Risks({ project }: RisksProps) {
                 </TabsList>
               </div>
               <div className="flex gap-2 text-sm">
-                {/* <FilterDropdown riskowner={[]}></FilterDropdown> */}
+                <FilterDropdown
+                  risks={
+                    allRisks?.map((risk) => ({
+                      ...risk,
+                      riskownerIds: risk.riskowner ? [risk.riskowner.id] : [],
+                      searchTerm: risk.description + ' ' + risk.status,
+                    })) ?? []
+                  }
+                  onFilter={(filterTerm) => {
+                    setFilters((prev) => ({ ...prev, searchTerm: filterTerm }));
+                  }}
+                />
+
                 <Button variant="default" onClick={() => setIsNewOpen(true)}>
-                  Tilføj
+                  Tilføj Risiko
                 </Button>
               </div>
             </div>
