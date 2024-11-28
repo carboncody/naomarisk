@@ -10,7 +10,7 @@ import {
 } from '@components/ui/sheet';
 import { type Project, type Risk } from '@models';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaComment } from 'react-icons/fa6';
 import { RxCross2 } from 'react-icons/rx';
 import { Comments } from '../../risk/[rid]/components/comments';
@@ -29,11 +29,26 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const [riskBeingDeleted, setRiskBeingDeleted] = useState<Risk | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedRisk, setSelectedRisk] = useState<Risk | null>(null);
+  const [filteredData, setFilteredData] = useState<Risk[]>(risks);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
     null,
   );
-
   const router = useRouter();
+
+  useEffect(() => {
+    if (selectedEmployeeId) {
+      setFilteredData(
+        risks.filter((risk) => risk.riskowner?.id === selectedEmployeeId),
+      );
+    } else {
+      setFilteredData(risks);
+    }
+  }, [risks, selectedEmployeeId]);
+
+  const clearEmployeeFilter = () => {
+    setFilteredData(risks);
+    setSelectedEmployeeId(null);
+  };
 
   const handleRowClick = (risk: Risk) => {
     router.push(`/projects/${project.id}/risk/${risk.id}`);
@@ -55,7 +70,7 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
   const searchParams = useSearchParams();
   const employeeName = searchParams.get('employee');
 
-  const rows = risks.map((risk) => ({
+  const rows = filteredData.map((risk) => ({
     ...risk,
     riskScore:
       risk.probability && risk.consequence
@@ -74,7 +89,10 @@ export function RiskTable({ risks, project, refetch }: RiskTableProps) {
               </span>{' '}
               {employeeName}
             </div>
-            <div className="border-l-dashed flex h-full items-center justify-center rounded-r-lg border border-dashed border-black bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400">
+            <div
+              onClick={clearEmployeeFilter}
+              className="border-l-dashed flex h-full items-center justify-center rounded-r-lg border border-dashed border-black bg-gray-200 px-2 font-light text-black duration-200 hover:cursor-pointer hover:text-red-500 dark:border-zinc-500 dark:bg-zinc-700 dark:text-white dark:hover:text-red-400"
+            >
               <RxCross2 />
             </div>
           </div>

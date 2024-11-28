@@ -40,19 +40,19 @@ function getStyleColor(risk: Risk): string | undefined {
   return threshold !== undefined ? ColorMap[threshold] : undefined;
 }
 
-type ColumnAssesorKey =
-  | 'riskScore'
-  | 'customId'
-  | 'updatedAt'
-  | 'riskowner'
-  | 'description'
-  | 'phase'
-  | 'activity';
+// type ColumnAssesorKey =
+//   | 'riskScore'
+//   | 'customId'
+//   | 'updatedAt'
+//   | 'riskowner'
+//   | 'description'
+//   | 'phase'
+//   | 'activity';
 
-interface Sorting {
-  column: ColumnAssesorKey;
-  direction: 'asc' | 'desc';
-}
+// interface Sorting {
+//   column: ColumnAssesorKey;
+//   direction: 'asc' | 'desc';
+// }
 
 interface ColumnParams {
   handleEdit: (risk: Risk) => void;

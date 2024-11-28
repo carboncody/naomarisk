@@ -9,12 +9,12 @@ import { type RiskStatus } from '@models';
 
 interface FilterDropdownProps {
   status?: RiskStatus;
-  riskOwnerIds: string[];
+  riskowner: string[];
 }
 
-export function FilterDropdown({ status, riskOwnerIds }: FilterDropdownProps) {
+export function FilterDropdown({ riskowner }: FilterDropdownProps) {
   const options = [
-    ...riskOwnerIds.map((id) => ({ label: `Risk Owner ID: ${id}`, value: id })),
+    ...riskowner.map((id) => ({ label: `Risk Owner: ${id}`, value: id })),
   ];
 
   return (

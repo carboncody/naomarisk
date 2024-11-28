@@ -10,7 +10,6 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { CreateRisk } from './CreateRisk';
-import { FilterDropdown } from './FilterDropdown';
 import { RiskTable } from './RiskTable';
 
 interface RisksProps {
@@ -104,7 +103,7 @@ export function Risks({ project }: RisksProps) {
                 </TabsList>
               </div>
               <div className="flex gap-2 text-sm">
-                <FilterDropdown riskOwnerIds={[]}></FilterDropdown>
+                {/* <FilterDropdown riskowner={[]}></FilterDropdown> */}
                 <Button variant="default" onClick={() => setIsNewOpen(true)}>
                   Tilføj
                 </Button>

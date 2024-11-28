@@ -40,17 +40,25 @@ export function DataTable<TData, TValue>({
       : [],
   );
 
-  function saveSorting(sorting: React.SetStateAction<SortingState>) {
-    console.info('sorting: ', sorting);
+  function saveSorting(newSorting: React.SetStateAction<SortingState>) {
+    console.info('sorting: ', newSorting);
     console.info('tableId: ', tableId);
 
     if (!tableId) {
       return;
     }
 
-    setSorting(sorting);
-    // TODO : extract new state from state setter
-    localStorage.setItem(`${tableId}-sorting`, JSON.stringify(sorting));
+    setSorting((prev) => {
+      const updatedSorting =
+        typeof newSorting === 'function' ? newSorting(prev) : newSorting;
+
+      localStorage.setItem(
+        `${tableId}-sorting`,
+        JSON.stringify(updatedSorting),
+      );
+
+      return updatedSorting;
+    });
   }
 
   const table = useReactTable({
