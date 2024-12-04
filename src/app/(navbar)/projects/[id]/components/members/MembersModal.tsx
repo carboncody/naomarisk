@@ -35,6 +35,12 @@ export function MembersModal({
   refetchProject,
   setIsOpen,
 }: MembersModalProps) {
+  // Define the role mapping
+  const roleMapping: { [key in ProjectRole]: string } = {
+    [ProjectRole.MANAGER]: 'Projektleder',
+    [ProjectRole.MEMBER]: 'Medarbejder',
+  };
+
   const [isAdding, setIsAdding] = useState(false);
   const { handleSubmit, watch, setValue, getValues } =
     useForm<UpdateProjectForm>({
@@ -65,31 +71,33 @@ export function MembersModal({
     }
   }
 
-  function removeMember(id: string) {
+  function updateMemberRole(userId: string, role: ProjectRole) {
     setValue(
       'assignments',
-      getValues('assignments')?.filter(
-        (assignment) => assignment.userId !== id,
+      (getValues('assignments') ?? []).map((assignment) =>
+        assignment.userId === userId ? { ...assignment, role } : assignment,
       ),
     );
   }
 
-  function addMember(id: string, role: ProjectRole) {
+  function removeMember(userId: string) {
+    setValue(
+      'assignments',
+      (getValues('assignments') ?? []).filter(
+        (assignment) => assignment.userId !== userId,
+      ),
+    );
+  }
+
+  function addNewMember(userId: string) {
     setValue('assignments', [
       ...(getValues('assignments') ?? []),
-      {
-        userId: id,
-        role: role,
-      },
+      { userId, role: ProjectRole.MEMBER },
     ]);
     setIsAdding(false);
   }
 
-  const projectMembers: User[] = employees.filter((employee) => {
-    return watch('assignments')
-      ?.map((assignment) => assignment.userId)
-      ?.includes(employee.id);
-  });
+  const assignedUserIds = watch('assignments')?.map((ass) => ass.userId) ?? [];
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -104,36 +112,36 @@ export function MembersModal({
           <span className="w-full">Projekt rolle</span>
         </div>
 
-        {assignments.length > 0 ? (
-          assignments.map((member, index) => (
+        {(getValues('assignments') ?? []).length > 0 ? (
+          (getValues('assignments') ?? []).map((assignment, index) => (
             <div
               className="flex w-full items-center justify-center rounded-xl border p-1"
               key={index}
             >
               <div className="w-full">
                 <span className="truncate">
-                  {employees.find((emp) => emp.id === member.userId)
+                  {employees.find((emp) => emp.id === assignment.userId)
                     ?.fullName ?? 'Bruger'}
                 </span>
               </div>
               <div className="w-full">
-                {/* <span className="truncate">{member.role}</span> */}
                 <SingleDropdown
-                  selectedValue={member.role}
+                  selectedValue={assignment.role}
                   options={Object.values(ProjectRole).map((role) => ({
-                    label: role,
+                    label: roleMapping[role], // Use the mapping here
                     value: role,
                   }))}
-                  buttonLabel={member.role || 'Vælg rolle'}
+                  buttonLabel={roleMapping[assignment.role] || 'Vælg rolle'}
                   setSelectedValue={(role) =>
-                    role && addMember(member.userId, role as ProjectRole)
+                    role &&
+                    updateMemberRole(assignment.userId, role as ProjectRole)
                   }
                 />
               </div>
               <div className="text-center">
                 <PlusMinusButton
                   type="minus"
-                  onClick={() => removeMember(member.id)}
+                  onClick={() => removeMember(assignment.userId)}
                 />
               </div>
             </div>
@@ -149,16 +157,13 @@ export function MembersModal({
             <SingleDropdown
               selectedValue={null}
               options={employees
-                .filter(
-                  (employee) => !watch('projectUserIds')?.includes(employee.id),
-                )
-                .map((employee) => ({
-                  label: employee.email,
-                  value: employee.id,
-                  href: undefined,
+                .filter((emp) => !assignedUserIds.includes(emp.id))
+                .map((emp) => ({
+                  label: emp.fullName || emp.email,
+                  value: emp.id,
                 }))}
               buttonLabel={'Vælg medlem'}
-              setSelectedValue={(id: string | null) => id && addMember(id)}
+              setSelectedValue={(id) => id && addNewMember(id)}
             />
           </div>
         )}

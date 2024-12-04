@@ -62,7 +62,7 @@ export function Risk() {
       <div className="py-2">
         <div className="max-w-screen-3xl mx-auto flex w-full flex-col gap-4">
           <Button className="w-20" onClick={() => window.history.back()}>
-            {'<- '}Back
+            {'<- '}Tilbage
           </Button>
           <div className="flex flex-col gap-4 md:flex-row">
             <div className="sticky top-12 h-screen w-1/3 rounded-md border p-4 dark:border-zinc-800 dark:bg-zinc-800">

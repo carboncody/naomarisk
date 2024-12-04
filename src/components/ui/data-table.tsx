@@ -24,23 +24,50 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onRowClick?: (row: TData) => void;
+  tableId?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   onRowClick,
+  tableId,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const localSorting = localStorage.getItem(`${tableId}-sorting`);
+  const [sorting, setSorting] = React.useState<SortingState>(
+    localSorting !== null && localSorting !== 'undefined'
+      ? (JSON.parse(localSorting) as SortingState)
+      : [],
+  );
+
+  function saveSorting(newSorting: React.SetStateAction<SortingState>) {
+    if (!tableId) {
+      return;
+    }
+
+    setSorting((prev) => {
+      const updatedSorting =
+        typeof newSorting === 'function' ? newSorting(prev) : newSorting;
+
+      localStorage.setItem(
+        `${tableId}-sorting`,
+        JSON.stringify(updatedSorting),
+      );
+
+      console.info('updatedSorting: ', JSON.stringify(updatedSorting));
+      return updatedSorting;
+    });
+  }
+
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
     },
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: saveSorting,
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (

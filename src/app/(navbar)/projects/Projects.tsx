@@ -93,7 +93,7 @@ export function AllProjects() {
             <Button onClick={() => setIsNewOpen(true)}>Tilføj</Button>
           )}
         </div>
-        <div className="w-full rounded-lg border border-zinc-300 p-4 dark:border-transparent dark:bg-zinc-800">
+        <div className="w-full rounded-lg border border-zinc-300 p-4 dark:border-transparent dark:bg-zinc-900">
           <Tabs
             value={activeTab}
             onValueChange={(value) => setActiveTab(value as ProjectStatus)}

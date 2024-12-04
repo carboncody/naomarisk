@@ -4,7 +4,7 @@ import {
 } from '@components/RiskMatrix/RiskMatrixDescription';
 import { SingleDropdown } from '@components/ui';
 import { Button } from '@components/ui/button';
-import type { Project, ProjectStatus } from '@models';
+import { ProjectRole, type Project, type ProjectStatus } from '@models';
 import dayjs from 'dayjs';
 import { ProjectRiskMatrix } from './ProjectRiskMatrix';
 import { RiskPieChart } from './RiskPieChart';
@@ -52,16 +52,21 @@ export function ProjectOverview({
               <div className="flex items-center justify-between border-b py-2 dark:border-zinc-700">
                 <span className="mr-2 text-lg font-semibold">Projektleder</span>
                 <div className="flex w-4/5 flex-col items-start justify-start">
-                  {' '}
                   <p className="w-full text-base font-light">
-                    {project.projectUsers[0]?.user.fullName}
+                    {project.projectUsers.find(
+                      (projectUser) => projectUser.role === ProjectRole.MANAGER,
+                    )?.user.fullName ?? 'Ingen leder'}
                   </p>
                   <p className="flex flex-row text-xs text-muted-foreground">
-                    {(project.projectUsers[0]?.user.contact?.phone ??
+                    {(project.projectUsers.find(
+                      (projectUser) => projectUser.role === ProjectRole.MANAGER,
+                    )?.user.contact?.phone ??
                       'Intet telefonnummer tilgængeligt') +
                       ' | ' +
-                      (project.projectUsers[0]?.user.email ??
-                        'Ingen tilgængelig e-mailadresse')}
+                      (project.projectUsers.find(
+                        (projectUser) =>
+                          projectUser.role === ProjectRole.MANAGER,
+                      )?.user.email ?? 'Ingen tilgængelig e-mailadresse')}
                   </p>
                 </div>
               </div>

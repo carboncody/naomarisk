@@ -24,8 +24,9 @@ import { RiskStatus, type Project, type Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import 'dayjs/locale/da';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { GoSortAsc, GoSortDesc } from 'react-icons/go';
 import { PhaseProgressBar } from '../phase/PhaseProgressBar';
 
 dayjs.locale('da');
@@ -44,8 +45,6 @@ interface ColumnParams {
   handleDelete: (risk: Risk) => void;
   handleOpenSheet: (risk: Risk) => void;
   project: Project;
-  filterByEmployee: (employeeId: string | null) => void;
-  router: ReturnType<typeof useRouter>;
 }
 
 export const columns = ({
@@ -53,8 +52,6 @@ export const columns = ({
   handleDelete,
   handleOpenSheet,
   project,
-  filterByEmployee,
-  router,
 }: ColumnParams): ColumnDef<Risk>[] => [
   {
     accessorKey: 'riskScore',
@@ -67,7 +64,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Risikoscore
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -127,7 +130,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           RISK-ID
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -157,7 +166,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Senest Opdateret
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -178,32 +193,25 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Risikoejer
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}{' '}
         </Button>
       );
     },
     cell: ({ row }) => {
       const riskOwner = row.original.riskowner;
 
-      const handleClick = (event: React.MouseEvent) => {
-        event.stopPropagation();
-        if (riskOwner) {
-          filterByEmployee(riskOwner.id);
-          router.push(
-            `/projects/${row.original.projectId}?view=risks&employee=${riskOwner.fullName}`,
-          );
-        } else {
-          filterByEmployee(null);
-        }
-      };
-
       return (
-        <span
-          className="line-clamp-2 cursor-pointer text-blue-500 hover:underline"
-          onClick={handleClick}
-        >
+        <span className="line-clamp-2 flex items-center gap-2">
           {riskOwner ? (
-            riskOwner.fullName ?? riskOwner.email
+            <span className="flex cursor-pointer items-center gap-2">
+              {riskOwner.fullName ?? riskOwner.email}
+            </span>
           ) : (
             <em className="text-zinc-400">Ingen ejer</em>
           )}
@@ -235,7 +243,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Beskrivelse
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -254,7 +268,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Projekt Fase
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -281,7 +301,13 @@ export const columns = ({
           Aktivitet
           <br />
           <span className="text-xs">(mitigerende handling)</span>
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },

@@ -48,7 +48,9 @@ export async function ProjectService() {
       include: {
         risks: true,
         projectUsers: {
-          include: { user: true },
+          include: {
+            user: true,
+          },
         },
         phases: {
           include: { mitigationRisks: true, projectRisks: true },
@@ -220,7 +222,7 @@ export async function ProjectService() {
         },
       });
 
-      if (projectUserIds && projectUserIds.length > 0) {
+      if (assignments && assignments.length > 0) {
         const projectProjectEmails = prevProject.projectUsers.map(
           (projectUser) => projectUser.user.email,
         );

@@ -26,7 +26,6 @@ interface SingleRiskMatrixProps {
 export function SingleRiskMatrix({
   probability,
   consequence,
-  onCellClick,
 }: SingleRiskMatrixProps) {
   const matrix: boolean[][] = Array.from({ length: 5 }, () =>
     Array<boolean>(5).fill(false),

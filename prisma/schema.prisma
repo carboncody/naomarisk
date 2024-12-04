@@ -67,12 +67,13 @@ model Contact {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  email          String   @unique
-  fullName       String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  role           UserRole
+  id        String   @id @default(uuid())
+  email     String   @unique
+  fullName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      UserRole
+
   jobDescription String?
 
   company   Company  @relation(fields: [companyId], references: [id])

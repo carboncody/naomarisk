@@ -1,9 +1,15 @@
 'use client';
 
 import { Button } from '@components/ui/button';
-import { type User } from '@models';
+import { ProjectRole, type User } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
+
+// Define the role mapping
+const roleMapping: { [key in ProjectRole]: string } = {
+  [ProjectRole.MANAGER]: 'Projektleder',
+  [ProjectRole.MEMBER]: 'Medarbejder',
+};
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -56,7 +62,6 @@ export const columns: ColumnDef<User>[] = [
       return nameA.localeCompare(nameB);
     },
   },
-
   {
     accessorKey: 'projectrole',
     header: ({ column }) => {
@@ -73,7 +78,10 @@ export const columns: ColumnDef<User>[] = [
     },
     cell: ({ row }) => (
       <div className="truncate">
-        <span className="text-Zinc-400 break-words">{row.original.role}</span>
+        <span className="text-Zinc-400 break-words">
+          {roleMapping[row.original.role as unknown as ProjectRole] ??
+            'Ingen rolle'}
+        </span>
       </div>
     ),
   },
