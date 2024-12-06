@@ -6,6 +6,8 @@ import type { User } from '@models';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function NavLayout({
   children,
 }: {

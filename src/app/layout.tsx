@@ -3,6 +3,8 @@ import { Toast } from '@components/ui/Toast';
 import { Providers } from '@lib/providers';
 import { Inter } from 'next/font/google';
 
+export const dynamic = 'force-dynamic';
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
