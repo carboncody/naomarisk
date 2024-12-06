@@ -55,6 +55,7 @@ export function ProjectEmployee({
             projectEmployees={project.projectUsers}
             projectMemberIds={projectMemberIds}
             employees={allEmployees ?? []}
+            projectID={project.id}
           />
         </div>
       </div>

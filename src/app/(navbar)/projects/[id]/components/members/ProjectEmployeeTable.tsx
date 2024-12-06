@@ -9,35 +9,26 @@ interface ProjectEmployeeTableProps {
   projectEmployees: ProjectUser[];
   projectMemberIds: string[];
   employees: User[];
+  projectID: string;
 }
 
 export function ProjectEmployeeTable({
-  employees,
-  projectMemberIds,
   projectEmployees,
+  employees,
 }: ProjectEmployeeTableProps) {
-  const rows: User[] = employees
-    .filter((employee) => projectMemberIds.includes(employee.id))
-    .map((employee) => {
-      const projectUser = projectEmployees.find(
-        (projectEmployee) => projectEmployee.userId === employee.id,
-      );
-
-      return {
-        ...employee,
-        role: projectUser?.role,
-      };
-    });
-
   const router = useRouter();
 
-  const handleRowClick = (employee: User) => {
+  const handleRowClick = (pu: ProjectUser) => {
+    const employee = employees.find((e) => e.email === pu.user.email);
+    if (!employee) return;
     router.push(`/employees/${encodeURIComponent(employee.email)}`);
   };
 
   return (
-    <div className="w-full">
-      <DataTable columns={columns} data={rows} onRowClick={handleRowClick} />
-    </div>
+    <DataTable
+      columns={columns}
+      data={projectEmployees}
+      onRowClick={handleRowClick}
+    />
   );
 }

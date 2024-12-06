@@ -1,17 +1,11 @@
 'use client';
 
 import { Button } from '@components/ui/button';
-import { ProjectRole, type User } from '@models';
+import { type ProjectUser } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 
-// Define the role mapping
-const roleMapping: { [key in ProjectRole]: string } = {
-  [ProjectRole.MANAGER]: 'Projektleder',
-  [ProjectRole.MEMBER]: 'Medarbejder',
-};
-
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<ProjectUser>[] = [
   {
     accessorKey: 'email',
     header: ({ column }) => {
@@ -28,10 +22,10 @@ export const columns: ColumnDef<User>[] = [
     },
     cell: ({ row }) => (
       <div className="truncate">
-        <span>{row.original.email}</span>
+        <span>{row.original.user.email}</span>
         <br />
-        <span className="text-Zinc-400 break-words">
-          {row.original.jobDescription}
+        <span className="text-Zinc-400 dark:text-Zinc-800 break-words">
+          {row.original.user.jobDescription}
         </span>
       </div>
     ),
@@ -52,12 +46,12 @@ export const columns: ColumnDef<User>[] = [
     },
     cell: ({ row }) => (
       <div className="truncate">
-        <span>{row.original.fullName}</span>
+        <span>{row.original.user.fullName}</span>
       </div>
     ),
     sortingFn: (rowA, rowB) => {
-      const nameA = rowA.original.fullName || '';
-      const nameB = rowB.original.fullName || '';
+      const nameA = rowA.original.user.fullName || '';
+      const nameB = rowB.original.user.fullName || '';
 
       return nameA.localeCompare(nameB);
     },
@@ -69,7 +63,9 @@ export const columns: ColumnDef<User>[] = [
         <Button
           className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => {
+            column.toggleSorting(column.getIsSorted() === 'desc');
+          }}
         >
           Projektrolle
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -78,10 +74,7 @@ export const columns: ColumnDef<User>[] = [
     },
     cell: ({ row }) => (
       <div className="truncate">
-        <span className="text-Zinc-400 break-words">
-          {roleMapping[row.original.role as unknown as ProjectRole] ??
-            'Ingen rolle'}
-        </span>
+        <span className="text-Zinc-400 break-words">{row.original.role}</span>
       </div>
     ),
   },

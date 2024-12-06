@@ -21,11 +21,23 @@ export async function UserService() {
           users: { some: { email } },
         },
       },
+      include: {
+        projectUsers: {
+          select: { role: true, projectId: true, userId: true },
+        },
+      },
     });
   }
 
   async function getUserFromId(id: string) {
-    return db.user.findUnique({ where: { id } });
+    return db.user.findUnique({
+      where: { id },
+      include: {
+        projectUsers: {
+          select: { role: true, projectId: true, userId: true },
+        },
+      },
+    });
   }
 
   async function getUserFromEmail(
