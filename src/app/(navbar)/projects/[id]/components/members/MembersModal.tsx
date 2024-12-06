@@ -11,7 +11,8 @@ import { SingleDropdown } from '@components/ui';
 import { PlusMinusButton } from '@components/ui/PlusMinusButton';
 import { Button } from '@components/ui/button';
 import type { UpdateProjectForm } from '@lib/api/types';
-import { type User } from '@models';
+import { type ProjectAssignmentForm } from '@lib/api/types/project';
+import { ProjectRole, type User } from '@models';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,7 +21,7 @@ import toast from 'react-hot-toast';
 interface MembersModalProps {
   projectId: string;
   isOpen: boolean;
-  projectMemberIds: string[];
+  assignments: ProjectAssignmentForm[];
   employees: User[];
   refetchProject: () => void;
   setIsOpen: (isOpen: boolean) => void;
@@ -29,16 +30,25 @@ interface MembersModalProps {
 export function MembersModal({
   projectId,
   isOpen,
-  projectMemberIds,
+  assignments,
   employees,
   refetchProject,
   setIsOpen,
 }: MembersModalProps) {
+  // Define the role mapping
+  const roleMapping: { [key in ProjectRole]: string } = {
+    [ProjectRole.MANAGER]: 'Projektleder',
+    [ProjectRole.MEMBER]: 'Medarbejder',
+  };
+
   const [isAdding, setIsAdding] = useState(false);
   const { handleSubmit, watch, setValue, getValues } =
     useForm<UpdateProjectForm>({
       defaultValues: {
-        projectUserIds: projectMemberIds,
+        assignments: assignments.map((ass) => ({
+          userId: ass.userId,
+          role: ass.role,
+        })),
       },
     });
 
@@ -61,23 +71,33 @@ export function MembersModal({
     }
   }
 
-  function removeMember(id: string) {
-    const projectUserIds: string[] = getValues('projectUserIds') ?? [];
-
+  function updateMemberRole(userId: string, role: ProjectRole) {
     setValue(
-      'projectUserIds',
-      projectUserIds.filter((x) => x !== id),
+      'assignments',
+      (getValues('assignments') ?? []).map((assignment) =>
+        assignment.userId === userId ? { ...assignment, role } : assignment,
+      ),
     );
   }
 
-  function addMember(id: string) {
-    setValue('projectUserIds', [...(getValues('projectUserIds') ?? []), id]);
+  function removeMember(userId: string) {
+    setValue(
+      'assignments',
+      (getValues('assignments') ?? []).filter(
+        (assignment) => assignment.userId !== userId,
+      ),
+    );
+  }
+
+  function addNewMember(userId: string) {
+    setValue('assignments', [
+      ...(getValues('assignments') ?? []),
+      { userId, role: ProjectRole.MEMBER },
+    ]);
     setIsAdding(false);
   }
 
-  const projectMembers: User[] = employees.filter((employee) => {
-    return watch('projectUserIds')?.includes(employee.id);
-  });
+  const assignedUserIds = watch('assignments')?.map((ass) => ass.userId) ?? [];
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -89,25 +109,39 @@ export function MembersModal({
         </DialogHeader>
         <div className="text-Zinc-300 flex w-full items-center justify-center pr-6">
           <span className="w-full">Medlemmer</span>
-          <span className="w-full">Firma rolle</span>
+          <span className="w-full">Projekt rolle</span>
         </div>
 
-        {projectMembers && projectMembers.length > 0 ? (
-          projectMembers.map((member, index) => (
+        {(getValues('assignments') ?? []).length > 0 ? (
+          (getValues('assignments') ?? []).map((assignment, index) => (
             <div
               className="flex w-full items-center justify-center rounded-xl border p-1"
               key={index}
             >
               <div className="w-full">
-                <span className="truncate">{member.email}</span>
+                <span className="truncate">
+                  {employees.find((emp) => emp.id === assignment.userId)
+                    ?.fullName ?? 'Bruger'}
+                </span>
               </div>
               <div className="w-full">
-                <span className="truncate">{member.role}</span>
+                <SingleDropdown
+                  selectedValue={assignment.role}
+                  options={Object.values(ProjectRole).map((role) => ({
+                    label: roleMapping[role], // Use the mapping here
+                    value: role,
+                  }))}
+                  buttonLabel={roleMapping[assignment.role] || 'Vælg rolle'}
+                  setSelectedValue={(role) =>
+                    role &&
+                    updateMemberRole(assignment.userId, role as ProjectRole)
+                  }
+                />
               </div>
               <div className="text-center">
                 <PlusMinusButton
                   type="minus"
-                  onClick={() => removeMember(member.id)}
+                  onClick={() => removeMember(assignment.userId)}
                 />
               </div>
             </div>
@@ -123,16 +157,13 @@ export function MembersModal({
             <SingleDropdown
               selectedValue={null}
               options={employees
-                .filter(
-                  (employee) => !watch('projectUserIds')?.includes(employee.id),
-                )
-                .map((employee) => ({
-                  label: employee.email,
-                  value: employee.id,
-                  href: undefined,
+                .filter((emp) => !assignedUserIds.includes(emp.id))
+                .map((emp) => ({
+                  label: emp.fullName || emp.email,
+                  value: emp.id,
                 }))}
               buttonLabel={'Vælg medlem'}
-              setSelectedValue={(id: string | null) => id && addMember(id)}
+              setSelectedValue={(id) => id && addNewMember(id)}
             />
           </div>
         )}

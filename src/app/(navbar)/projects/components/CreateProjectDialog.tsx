@@ -13,6 +13,7 @@ import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
 import { type CreateProjectForm } from '@lib/api/types';
+import { ProjectRole } from '@models';
 import axios, { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
@@ -44,7 +45,12 @@ export default function CreateProjectDialog({
       description: '',
       startDate: new Date(),
       dueDate: undefined,
-      projectUserIds: [myId],
+      assignments: [
+        {
+          userId: myId,
+          role: ProjectRole.MEMBER,
+        },
+      ],
     },
   });
 
@@ -128,7 +134,7 @@ export default function CreateProjectDialog({
             </div>
             <DialogFooter>
               <Button variant="destructive" onClick={() => setIsOpen(false)}>
-                Luk
+                Luk!
               </Button>
               <Button variant="default" type="submit" loading={isSubmitting}>
                 Opret

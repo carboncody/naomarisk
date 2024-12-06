@@ -1,4 +1,9 @@
-import type { ProjectStatus } from '@models';
+import type { ProjectRole, ProjectStatus } from '@models';
+
+export interface ProjectAssignmentForm {
+  userId: string;
+  role: ProjectRole;
+}
 
 export type CreateProjectForm = {
   name: string;
@@ -9,7 +14,7 @@ export type CreateProjectForm = {
   status: ProjectStatus;
   riskRegisterDescription?: string;
   riskReportIntro?: string;
-  projectUserIds: string[];
+  assignments: ProjectAssignmentForm[];
 };
 
 export type UpdateProjectForm = Partial<CreateProjectForm>;

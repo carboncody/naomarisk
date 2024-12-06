@@ -52,8 +52,10 @@ export function ProjectEmployee({
         </div>
         <div className="dark:bg-zinc-transparent w-full rounded-md border p-4 dark:border-transparent">
           <ProjectEmployeeTable
+            projectEmployees={project.projectUsers}
             projectMemberIds={projectMemberIds}
             employees={allEmployees ?? []}
+            projectID={project.id}
           />
         </div>
       </div>
@@ -63,7 +65,7 @@ export function ProjectEmployee({
           projectId={project.id}
           setIsOpen={setIsNewOpen}
           refetchProject={refetchProject}
-          projectMemberIds={projectMemberIds}
+          assignments={project.projectUsers}
           employees={allEmployees ?? []}
         />
       )}

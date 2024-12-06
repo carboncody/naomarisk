@@ -43,6 +43,7 @@ export function PhaseTable({ project, refetch }: PhaseTableProps) {
       </div>
       <div className="w-full overflow-y-auto rounded-md p-4">
         <DataTable
+          tableId="phaseTable"
           columns={phaseTableColumns({
             handleEdit,
             handleDelete,

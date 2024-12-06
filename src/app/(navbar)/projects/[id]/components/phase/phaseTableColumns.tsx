@@ -11,7 +11,8 @@ import {
 import type { Phase, Risk } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
+import { GoSortAsc, GoSortDesc } from 'react-icons/go';
 
 interface ColumnParams {
   projectId: string;
@@ -35,7 +36,13 @@ export const phaseTableColumns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Fase
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -89,7 +96,13 @@ export const phaseTableColumns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Varighed
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },

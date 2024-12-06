@@ -8,8 +8,8 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import Link from 'next/link';
-import { SettingsDropdown } from './SettingsDropdown';
-import { ThemeSwitcher } from './ThemeSwitcher';
+import { ThemeSwitcher } from './abstractions/buttons/ThemeSwitcher';
+import { SettingsDropdown } from './abstractions/dropdowns/SettingsDropdown';
 
 export function Nav() {
   return (

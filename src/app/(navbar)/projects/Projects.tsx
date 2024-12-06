@@ -110,6 +110,7 @@ export function AllProjects() {
           </Tabs>
 
           <DataTable
+            tableId="projectTable"
             columns={columns({ handleArchive, setEditingProjectId })}
             data={filteredProjects}
             onRowClick={handleRowClick}
