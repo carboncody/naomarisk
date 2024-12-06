@@ -13,8 +13,6 @@ export function EditRiskComment({
   refetch,
   riskElement,
 }: EditRiskCommentProps) {
-  console.log(riskElement);
-
   return (
     <>
       <Comments

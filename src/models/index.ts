@@ -114,11 +114,13 @@ export interface Risk {
   status: RiskStatus;
   comments: Comment[];
   activity?: string;
-  riskowner: User;
+  riskOwner: User;
+  riskManager: User;
   userId: string;
   project: Project;
   projectId: string;
   riskOwnerUserId: string;
+  riskManagerUserId: string;
   user: User[];
   mitigationPhase: Phase | null;
   mitigationPhaseId: string | null;

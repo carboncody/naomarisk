@@ -24,7 +24,7 @@ export function Risks({ project }: RisksProps) {
   const [filters, setFilters] = useState<{
     score?: number;
     searchTerm?: string;
-    riskowner?: string;
+    riskOwner?: string;
   }>({
     score: score ? Number(score) : undefined,
   });
@@ -75,7 +75,9 @@ export function Risks({ project }: RisksProps) {
             !(
               risk.description.toLowerCase().includes(searchTermMatch) ||
               risk.status.toLowerCase().includes(searchTermMatch) ||
-              (risk.riskowner?.fullName?.toLowerCase() ?? '').includes(
+              (risk.riskOwner?.fullName?.toLowerCase() ?? '').includes(
+                searchTermMatch,
+              ) ||(risk.riskManager?.fullName?.toLowerCase() ?? '').includes(
                 searchTermMatch,
               ) ||
               risk.updatedAt
@@ -141,7 +143,7 @@ export function Risks({ project }: RisksProps) {
                   risks={
                     allRisks?.map((risk) => ({
                       ...risk,
-                      riskownerIds: risk.riskowner ? [risk.riskowner.id] : [],
+                      riskownerIds: risk.riskOwner ? [risk.riskOwner.id] : [],
                       searchTerm: risk.description + ' ' + risk.status,
                     })) ?? []
                   }

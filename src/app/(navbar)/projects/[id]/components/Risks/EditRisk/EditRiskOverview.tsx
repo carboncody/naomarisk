@@ -80,6 +80,10 @@ export function EditRiskOverview({
     setPendingChange(null);
   };
 
+
+  console.info('watchRiskManagerUserId: ', watch('riskManagerUserId'));
+  console.info('riskOwnerUserId: ', watch('riskOwnerUserId'));
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex w-full gap-5">
@@ -168,6 +172,28 @@ export function EditRiskOverview({
               }
               selectedValue={watch('riskOwnerUserId') ?? null}
               setSelectedValue={(value) => setValue('riskOwnerUserId', value)}
+            />
+          </div>
+          <div className="flex w-full flex-col items-start gap-2">
+            <span>Risko Manager</span>
+            <SingleDropdown
+              options={
+                projectMembers
+                  ? projectMembers.map((employee) => ({
+                      label: employee.fullName,
+                      value: employee.id,
+                    }))
+                  : []
+              }
+              buttonLabel={
+                projectMembers && watch('riskManagerUserId')
+                  ? projectMembers.find(
+                      (employee) => employee.id === watch('riskManagerUserId'),
+                    )?.email ?? 'Vælg risiko manager'
+                  : 'Vælg risiko manager'
+              }
+              selectedValue={watch('riskManagerUserId') ?? null}
+              setSelectedValue={(value) => setValue('riskManagerUserId', value)}
             />
           </div>
         </div>

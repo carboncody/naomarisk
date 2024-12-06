@@ -131,6 +131,7 @@ async function main() {
             economicProbability: getRandomScore(),
             economicConsequence: getRandomScore(),
             riskOwnerUserId: faker.helpers.arrayElement(users).id,
+            riskManagerUserId: faker.helpers.arrayElement(users).id, 
             projectPhaseId: faker.helpers.arrayElement(phases).id,
             mitigationPhaseId:
               faker.helpers.arrayElement([...phases, null])?.id ?? null,

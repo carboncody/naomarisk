@@ -183,7 +183,7 @@ export const columns = ({
     ),
   },
   {
-    accessorKey: 'riskowner',
+    accessorKey: 'riskOwner',
     enableGlobalFilter: true,
     header: ({ column }) => {
       return (
@@ -204,7 +204,7 @@ export const columns = ({
       );
     },
     cell: ({ row }) => {
-      const riskOwner = row.original.riskowner;
+      const riskOwner = row.original.riskOwner;
 
       return (
         <span className="line-clamp-2 flex items-center gap-2">
@@ -220,18 +220,65 @@ export const columns = ({
     },
     sortingFn: (rowA, rowB) => {
       const nameA =
-        rowA.original.riskowner?.fullName ||
-        rowA.original.riskowner?.email ||
+        rowA.original.riskOwner?.fullName ||
+        rowA.original.riskOwner?.email ||
         '';
       const nameB =
-        rowB.original.riskowner?.fullName ||
-        rowB.original.riskowner?.email ||
+        rowB.original.riskOwner?.fullName ||
+        rowB.original.riskOwner?.email ||
         '';
 
       return nameA.localeCompare(nameB);
     },
   },
+  {
+    accessorKey: 'riskManager',
+    enableGlobalFilter: true,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent hover:underline dark:hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Risikomanager
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}{' '}
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const riskManager = row.original.riskManager;
+      return (
+        <span className="line-clamp-2 flex items-center gap-2">
+          {riskManager ? (
+            <span className="flex cursor-pointer items-center gap-2">
+              {riskManager.fullName ?? riskManager.email}
+            </span>
+          ) : (
+            <em className="text-zinc-400">Ingen manager</em>
+          )}
+        </span>
+      );
+    },
+    sortingFn: (rowA, rowB) => {
+      const nameA =
+        rowA.original.riskManager?.fullName ||
+        rowA.original.riskManager?.email ||
+        '';
+      const nameB =
+        rowB.original.riskManager?.fullName ||
+        rowB.original.riskManager?.email ||
+        '';
 
+      return nameA.localeCompare(nameB);
+    },
+  },
   {
     accessorKey: 'description',
     enableGlobalFilter: true,

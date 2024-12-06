@@ -19,6 +19,7 @@ export async function CommentService() {
     return { userId: user.id, role: user.role };
   }
 
+
   async function createComment(
     riskId: string,
     authorEmail: string,
@@ -26,7 +27,7 @@ export async function CommentService() {
   ) {
     const { userId, role } = await getUserRoleAndId(authorEmail);
 
-    if (role !== UserRole.Manager && role !== UserRole.Owner) {
+    if (role !== UserRole.Manager && role !== UserRole.Owner ) {
       toast.error('You do not have permission to create comments');
       throw new Error('You do not have permission to create comments');
     }
@@ -41,7 +42,7 @@ export async function CommentService() {
         include: {
           risk: {
             include: {
-              riskowner: true,
+              riskOwner: true,
               project: true,
             },
           },
@@ -49,9 +50,9 @@ export async function CommentService() {
         },
       });
 
-      if (newComment.risk.riskowner) {
+      if (newComment.risk.riskOwner) {
         void sendNewCommentEmail({
-          email: newComment.risk.riskowner.email,
+          email: newComment.risk.riskOwner.email,
           comment: newComment.content,
           link: `${env.frontendUrl}/projects/${newComment.risk.projectId}/risk/${newComment.riskId}`,
           risk: newComment.risk.description,
@@ -113,7 +114,7 @@ export async function CommentService() {
       include: {
         risk: {
           include: {
-            riskowner: true,
+            riskOwner: true,
             project: true,
           },
         },
