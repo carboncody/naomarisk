@@ -60,6 +60,7 @@ export function AllEmployees() {
         </div>
         <div className="w-full rounded-xl border p-4 dark:border-transparent dark:bg-zinc-800">
           <DataTable
+            tableId="employeesTable"
             data={allEmployees ?? []}
             columns={getColumns({ handleEdit })}
             onRowClick={handleRowClick}

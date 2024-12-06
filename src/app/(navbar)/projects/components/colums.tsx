@@ -16,7 +16,8 @@ import { cn } from '@lib/utils';
 import { RiskStatus, type Project } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
+import { GoSortAsc, GoSortDesc } from 'react-icons/go';
 
 interface ColumnParams {
   handleArchive: (project: Project) => void;
@@ -29,15 +30,21 @@ export const columns = ({
 }: ColumnParams): ColumnDef<Project>[] => [
   {
     accessorKey: 'riskScore',
-    header: () => {
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           className="px-0 hover:bg-transparent dark:hover:bg-transparent"
-          // onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Åbne risici
-          {/* <ArrowUpDown className="ml-2 h-4 w-4" /> */}
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -111,6 +118,16 @@ export const columns = ({
         </HoverCard>
       );
     },
+    sortingFn: (rowA, rowB) => {
+      const openRisksA = rowA.original.risks.filter(
+        (risk) => risk.status === RiskStatus.Open,
+      );
+      const openRisksB = rowB.original.risks.filter(
+        (risk) => risk.status === RiskStatus.Open,
+      );
+
+      return openRisksA.length - openRisksB.length;
+    },
   },
 
   {
@@ -123,7 +140,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Projekt Navn
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -145,7 +168,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Oprettet
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },
@@ -165,7 +194,13 @@ export const columns = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Sidst opdateret
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === 'asc' ? (
+            <GoSortAsc className="ml-2 h-4 w-4" />
+          ) : column.getIsSorted() === 'desc' ? (
+            <GoSortDesc className="ml-2 h-4 w-4" />
+          ) : (
+            <GoSortDesc className="ml-2 h-4 w-4 opacity-0" />
+          )}
         </Button>
       );
     },

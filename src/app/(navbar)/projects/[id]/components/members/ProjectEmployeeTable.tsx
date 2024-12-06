@@ -26,6 +26,7 @@ export function ProjectEmployeeTable({
 
   return (
     <DataTable
+      tableId="projectEmployeeTable"
       columns={columns}
       data={projectEmployees}
       onRowClick={handleRowClick}
