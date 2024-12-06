@@ -77,7 +77,8 @@ export function Risks({ project }: RisksProps) {
               risk.status.toLowerCase().includes(searchTermMatch) ||
               (risk.riskOwner?.fullName?.toLowerCase() ?? '').includes(
                 searchTermMatch,
-              ) ||(risk.riskManager?.fullName?.toLowerCase() ?? '').includes(
+              ) ||
+              (risk.riskManager?.fullName?.toLowerCase() ?? '').includes(
                 searchTermMatch,
               ) ||
               risk.updatedAt

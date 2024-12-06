@@ -85,7 +85,6 @@ model User {
 
   riskowner   Risk[] @relation("RiskOwner")
   riskmanager Risk[] @relation("RiskManager")
-  
 
   authoredComments Comment[] @relation("author")
   resolvedComments Comment[] @relation("resolver")

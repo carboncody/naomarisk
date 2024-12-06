@@ -80,7 +80,6 @@ export function EditRiskOverview({
     setPendingChange(null);
   };
 
-
   console.info('watchRiskManagerUserId: ', watch('riskManagerUserId'));
   console.info('riskOwnerUserId: ', watch('riskOwnerUserId'));
 

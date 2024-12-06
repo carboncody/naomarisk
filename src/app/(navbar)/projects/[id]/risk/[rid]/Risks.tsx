@@ -101,7 +101,9 @@ export function Risk() {
                     Risiko Manager:
                   </span>
                   <span className="ml-1">
-                    {risk.riskManager ? risk.riskManager.fullName : 'Ingen Manager'}
+                    {risk.riskManager
+                      ? risk.riskManager.fullName
+                      : 'Ingen Manager'}
                   </span>
                 </div>
               </div>
