@@ -81,10 +81,13 @@ model User {
   contact   Contact? @relation(fields: [contactId], references: [id])
   contactId String?
 
-  projectUsers     ProjectUser[]
-  risks            Risk[]
-  authoredComments Comment[]     @relation("author")
-  resolvedComments Comment[]     @relation("resolver")
+  projectUsers ProjectUser[]
+
+  riskowner   Risk[] @relation("RiskOwner")
+  riskmanager Risk[] @relation("RiskManager")
+
+  authoredComments Comment[] @relation("author")
+  resolvedComments Comment[] @relation("resolver")
 }
 
 model Project {
@@ -142,8 +145,11 @@ model Risk {
   comment             String?
   activity            String?
 
-  riskowner         User?   @relation(fields: [riskOwnerUserId], references: [id])
+  riskOwner         User?   @relation("RiskOwner", fields: [riskOwnerUserId], references: [id])
   riskOwnerUserId   String?
+  riskManager       User?   @relation("RiskManager", fields: [riskManagerUserId], references: [id])
+  riskManagerUserId String?
+
   project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId         String
   mitigationPhase   Phase?  @relation("MitigationPhase", fields: [mitigationPhaseId], references: [id])

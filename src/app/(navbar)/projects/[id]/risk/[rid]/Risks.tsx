@@ -91,8 +91,8 @@ export function Risk() {
                     Risiko Ejer:
                   </span>
                   <span className="ml-1">
-                    {risk.riskowner?.fullName
-                      ? risk.riskowner.fullName
+                    {risk.riskOwner?.fullName
+                      ? risk.riskOwner.fullName
                       : 'Ingen ejer'}
                   </span>
                 </div>
@@ -101,7 +101,9 @@ export function Risk() {
                     Risiko Manager:
                   </span>
                   <span className="ml-1">
-                    {risk.riskowner ? risk.riskowner.fullName : 'Ingen Manager'}
+                    {risk.riskManager
+                      ? risk.riskManager.fullName
+                      : 'Ingen Manager'}
                   </span>
                 </div>
               </div>

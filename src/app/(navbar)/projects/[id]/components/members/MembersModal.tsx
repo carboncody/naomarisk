@@ -128,7 +128,7 @@ export function MembersModal({
                 <SingleDropdown
                   selectedValue={assignment.role}
                   options={Object.values(ProjectRole).map((role) => ({
-                    label: roleMapping[role], // Use the mapping here
+                    label: roleMapping[role],
                     value: role,
                   }))}
                   buttonLabel={roleMapping[assignment.role] || 'Vælg rolle'}

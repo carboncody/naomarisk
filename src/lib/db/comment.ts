@@ -41,7 +41,7 @@ export async function CommentService() {
         include: {
           risk: {
             include: {
-              riskowner: true,
+              riskOwner: true,
               project: true,
             },
           },
@@ -49,9 +49,9 @@ export async function CommentService() {
         },
       });
 
-      if (newComment.risk.riskowner) {
+      if (newComment.risk.riskOwner) {
         void sendNewCommentEmail({
-          email: newComment.risk.riskowner.email,
+          email: newComment.risk.riskOwner.email,
           comment: newComment.content,
           link: `${env.frontendUrl}/projects/${newComment.risk.projectId}/risk/${newComment.riskId}`,
           risk: newComment.risk.description,
@@ -113,7 +113,7 @@ export async function CommentService() {
       include: {
         risk: {
           include: {
-            riskowner: true,
+            riskOwner: true,
             project: true,
           },
         },

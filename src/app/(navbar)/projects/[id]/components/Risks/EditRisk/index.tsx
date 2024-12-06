@@ -44,6 +44,7 @@ export function EditRisk({
       status: riskElement.status,
       activity: riskElement.activity,
       riskOwnerUserId: riskElement.riskOwnerUserId,
+      riskManagerUserId: riskElement.riskManagerUserId,
       timeProbability: riskElement.timeProbability ?? null,
       timeConsequence: riskElement.timeConsequence ?? null,
       economicConsequence: riskElement.economicConsequence ?? null,

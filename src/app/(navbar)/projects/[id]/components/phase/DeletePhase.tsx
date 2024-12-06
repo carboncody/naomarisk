@@ -30,7 +30,6 @@ export function DeletePhase({
   const handleDelete = async () => {
     try {
       await axios.delete(`/api/phase/${phaseElement.id}`);
-      console.log(phaseElement.id);
       toast.success('Phase Deleted successfully!');
       refetch();
       setPhaseBeingDeleted(null);

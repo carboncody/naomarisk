@@ -9,7 +9,8 @@ export async function RiskService() {
     return db.risk.findUnique({
       where: { id },
       include: {
-        riskowner: true,
+        riskOwner: true,
+        riskManager: true,
         project: {
           include: { projectUsers: true, phases: true },
         },
@@ -27,7 +28,8 @@ export async function RiskService() {
     const risks = await db.risk.findMany({
       where: { projectId },
       include: {
-        riskowner: true,
+        riskOwner: true,
+        riskManager: true,
         projectPhase: true,
         mitigationPhase: true,
         comments: {
@@ -59,7 +61,7 @@ export async function RiskService() {
           projectPhaseId: data.projectPhaseId ?? null,
           mitigationPhaseId: data.mitigationPhaseId ?? null,
         },
-        include: { riskowner: true },
+        include: { riskOwner: true, riskManager: true },
       });
 
       void db.project.update({
@@ -69,9 +71,17 @@ export async function RiskService() {
         },
       });
 
-      if (newRisk.riskowner) {
+      if (newRisk.riskOwner) {
         void sendRiskAssignmentEmail({
-          email: newRisk.riskowner.email,
+          email: newRisk.riskOwner.email,
+          risk: newRisk.description,
+          link: `${env.frontendUrl}/projects/${projectId}/risks/${newRisk.id}`,
+        });
+      }
+
+      if (newRisk.riskManager) {
+        void sendRiskAssignmentEmail({
+          email: newRisk.riskManager.email,
           risk: newRisk.description,
           link: `${env.frontendUrl}/projects/${projectId}/risks/${newRisk.id}`,
         });
@@ -89,7 +99,7 @@ export async function RiskService() {
     if (data.riskOwnerUserId) {
       const prevRiskOwner = await db.risk.findUniqueOrThrow({
         where: { id },
-        include: { riskowner: true },
+        include: { riskOwner: true },
       });
       if (prevRiskOwner.riskOwnerUserId !== data.riskOwnerUserId) {
         newOwner = true;
@@ -103,7 +113,7 @@ export async function RiskService() {
         projectPhaseId: data.projectPhaseId,
         mitigationPhaseId: data.mitigationPhaseId,
       },
-      include: { riskowner: true },
+      include: { riskOwner: true },
     });
 
     void db.project.update({
@@ -113,9 +123,9 @@ export async function RiskService() {
       },
     });
 
-    if (newOwner && updatedRisk.riskowner) {
+    if (newOwner && updatedRisk.riskOwner) {
       void sendRiskAssignmentEmail({
-        email: updatedRisk.riskowner.email,
+        email: updatedRisk.riskOwner.email,
         risk: updatedRisk.description,
         link: `${env.frontendUrl}/projects/${updatedRisk.projectId}/risks/${updatedRisk.id}`,
       });

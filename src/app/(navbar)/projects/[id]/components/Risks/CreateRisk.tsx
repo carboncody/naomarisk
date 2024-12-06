@@ -145,7 +145,7 @@ export function CreateRisk({
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span>Risiko ejer {'->'}</span>
+              <span>Risiko ejer {':'}</span>
               <SingleDropdown
                 selectedValue={null}
                 options={
@@ -160,7 +160,7 @@ export function CreateRisk({
                   projectMembers && watch('riskOwnerUserId')
                     ? projectMembers.find(
                         (employee) => employee.id === watch('riskOwnerUserId'),
-                      )?.email
+                      )?.fullName
                     : 'Vælg medarbejder'
                 }
                 setSelectedValue={(value) => {
@@ -169,6 +169,35 @@ export function CreateRisk({
                     return;
                   }
                   setValue('riskOwnerUserId', value);
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span>Risiko Manager {':'} </span>
+              <SingleDropdown
+                selectedValue={null}
+                options={
+                  projectMembers
+                    ? projectMembers.map((employee) => ({
+                        label: employee.fullName,
+                        value: employee.id,
+                      }))
+                    : []
+                }
+                buttonLabel={
+                  projectMembers && watch('riskManagerUserId')
+                    ? projectMembers.find(
+                        (employee) =>
+                          employee.id === watch('riskManagerUserId'),
+                      )?.fullName ?? 'Vælg risiko manager'
+                    : 'Vælg risiko manager'
+                }
+                setSelectedValue={(value) => {
+                  if (value === watch('riskManagerUserId')) {
+                    setValue('riskManagerUserId', null);
+                    return;
+                  }
+                  setValue('riskManagerUserId', value);
                 }}
               />
             </div>
