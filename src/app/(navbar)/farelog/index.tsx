@@ -54,7 +54,7 @@ export function Farelog() {
             <TabsContent value="project">{AllProjects()}</TabsContent>
             <TabsContent value="log">{Csmlog()}</TabsContent>
             <TabsContent value="overview">
-              <div className="dark:bg-zinc-900 h-[300px] rounded-md w-full"></div>
+              <div className="h-[300px] w-full rounded-md dark:bg-zinc-900"></div>
             </TabsContent>
           </Tabs>
         </div>

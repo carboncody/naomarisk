@@ -2,9 +2,9 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EditProject } from '@app/(navbar)/projects/[id]/components/EditProjectModal';
+import { Risks } from '@app/(navbar)/projects/[id]/components/Risks';
 import { ProjectEmployee } from '@app/(navbar)/projects/[id]/components/members';
 import { PhaseTable } from '@app/(navbar)/projects/[id]/components/phase/PhaseTable';
-import { Risks } from '@app/(navbar)/projects/[id]/components/Risks';
 import { LoadingSpinner } from '@components/ui';
 import { useProject } from '@lib/api/hooks';
 import type { UpdateProjectForm } from '@lib/api/types';
@@ -78,7 +78,7 @@ export function CsmProject() {
 
   return (
     <>
-    <div className="flex justify-center pb-5 text-3xl font-semibold">
+      <div className="flex justify-center pb-5 text-3xl font-semibold">
         <div>
           Naoma {'  '}
           <span className="text-red-500">F</span>

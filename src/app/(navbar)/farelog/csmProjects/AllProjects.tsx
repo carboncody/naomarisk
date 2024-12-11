@@ -78,14 +78,11 @@ export function AllProjects() {
     setProjectBeingArchived(project);
   };
 
-
   return (
     <>
       <div className="justify-top flex flex-col items-center overflow-y-auto px-4">
         <div className="mb-4 mt-10 flex w-full justify-between">
-          <p className="text-3xl font-semibold">
-          CSM Projekter
-          </p>
+          <p className="text-3xl font-semibold">CSM Projekter</p>
           {isAdmin && (
             <Button onClick={() => setIsNewOpen(true)}>Tilføj</Button>
           )}

@@ -1,10 +1,4 @@
-import { ProjectRiskMatrix } from '@app/(navbar)/projects/[id]/components/ProjectRiskMatrix';
 import { RiskPieChart } from '@app/(navbar)/projects/[id]/components/RiskPieChart';
-import { RiskChart } from '@app/(navbar)/projects/[id]/components/Risks/RiskChart';
-import {
-  ConsequenceDescription,
-  ProbabilityDescription,
-} from '@components/RiskMatrix/RiskMatrixDescription';
 import { SingleDropdown } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { ProjectRole, type Project, type ProjectStatus } from '@models';
@@ -137,7 +131,7 @@ export function CsmProjectOverview({
             </div>
           </div>
         </div>
-        <div className="rounded-lg p-4 mt-4 dark:bg-zinc-800">
+        <div className="mt-4 rounded-lg p-4 dark:bg-zinc-800">
           <h2 className="mb-4 text-2xl font-bold">
             Ændringslog til fareregister:
           </h2>

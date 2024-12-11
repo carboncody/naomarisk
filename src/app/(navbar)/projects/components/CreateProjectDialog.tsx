@@ -133,8 +133,8 @@ export default function CreateProjectDialog({
                 </div>
                 <div className="items-center ">
                   <Label>CSM?</Label>
-                  <div className='pt-2'>
-                    <Checkbox className='text-xl' />
+                  <div className="pt-2">
+                    <Checkbox className="text-xl" />
                   </div>
                 </div>
               </div>

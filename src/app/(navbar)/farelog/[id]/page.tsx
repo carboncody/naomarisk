@@ -1,4 +1,4 @@
-import { CsmProject } from "./CsmProject";
+import { CsmProject } from './CsmProject';
 
 export default function Page() {
   return <CsmProject />;
