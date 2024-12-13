@@ -134,8 +134,14 @@ export function CsmProjectOverview({
         </div>
         <div className="mt-4 rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-800 dark:text-white  ">
           <h2 className="mb-4 text-2xl font-bold">
-            Ændringslog til fareregister:
+            Ændringslog til fareregister(Eksemel):
           </h2>
+          <div className="h-full w-full">
+            <iframe
+              className="h-[500px] w-full"
+              src="https://uploads.linear.app/ba36e46e-8241-4447-b145-6c2c8c5becdb/1960db00-9e39-42bf-8dd5-cd0f2cafe043/e6f1eed8-cc63-46b3-89a8-6257ebe9069f"
+            ></iframe>
+          </div>
         </div>
         {/* <div className="mt-5 flex w-full flex-col gap-4 md:flex-row">
           <div className="flex w-full items-center justify-center gap-20 rounded-xl border shadow dark:border-transparent dark:bg-zinc-800 dark:shadow-none">
