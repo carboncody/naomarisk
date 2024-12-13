@@ -55,7 +55,7 @@ export function CsmProjectOverview({
               <p className="w-3/5 text-base font-light">John Doe</p>
             </div>
           </div>
-          <div className="rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-800 dark:text-white ">
+          <div className="w-4/6 rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-800 dark:text-white ">
             <h2 className="mb-4 text-2xl font-bold">Projekt Information</h2>
 
             <div className="overflow-x-auto">
