@@ -80,7 +80,7 @@ export function CsmProject() {
     <>
       <div className="flex justify-center pb-5 text-3xl font-semibold">
         <div>
-          Naoma {'  '}
+          Naoma: {'  '}CSM /{'  '}
           <span className="text-red-500">F</span>
           areLog
         </div>
