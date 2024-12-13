@@ -2,6 +2,7 @@ import { RiskPieChart } from '@app/(navbar)/projects/[id]/components/RiskPieChar
 import { SingleDropdown } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { ProjectRole, type Project, type ProjectStatus } from '@models';
+import toast from 'react-hot-toast';
 
 interface CsmProjectOverviewProps {
   statusOptions: { label: string; value: ProjectStatus }[];
@@ -22,12 +23,12 @@ export function CsmProjectOverview({
         <Button
           variant="secondary"
           className="my-4 w-32 justify-end"
-          onClick={() => setIsEditOpen(true)}
+          onClick={() => toast.error('funktion under udvikling')}
         >
           Rediger Projekt
         </Button>
         <div className="flex gap-2">
-          <div className="w-2/6 rounded-lg p-4 dark:bg-zinc-800">
+          <div className="w-2/6 rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-800 dark:text-white ">
             <h2 className="mb-4 text-2xl font-bold">Dokument Information</h2>
             <div className="flex items-center justify-between border-b py-2 dark:border-zinc-700">
               <span className="text-lg font-semibold">Dokument nr.:</span>
@@ -131,7 +132,7 @@ export function CsmProjectOverview({
             </div>
           </div>
         </div>
-        <div className="mt-4 rounded-lg p-4 dark:bg-zinc-800">
+        <div className="mt-4 rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-zinc-800 dark:text-white  ">
           <h2 className="mb-4 text-2xl font-bold">
             Ændringslog til fareregister:
           </h2>

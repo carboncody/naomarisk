@@ -17,6 +17,9 @@ export function Csmlog() {
 
   return (
     <div className="flex h-[300px] w-full flex-col rounded-md dark:bg-zinc-900  ">
+      <div className="item-center m-5 flex justify-center text-3xl font-semibold">
+        Table der viser all logs - database drevet af AI
+      </div>
       <DataTable columns={[]} data={[]} />
     </div>
   );

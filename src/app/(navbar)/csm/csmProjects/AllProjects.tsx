@@ -71,7 +71,7 @@ export function AllProjects() {
   }
 
   const handleRowClick = (project: Project) => {
-    router.push(`/farelog/${project.id}`);
+    router.push(`/csm/${project.id}`);
   };
 
   const handleArchive = (project: Project) => {

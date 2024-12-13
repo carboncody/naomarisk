@@ -2,10 +2,9 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EditProject } from '@app/(navbar)/projects/[id]/components/EditProjectModal';
-import { Risks } from '@app/(navbar)/projects/[id]/components/Risks';
 import { ProjectEmployee } from '@app/(navbar)/projects/[id]/components/members';
-import { PhaseTable } from '@app/(navbar)/projects/[id]/components/phase/PhaseTable';
 import { LoadingSpinner } from '@components/ui';
+import { Button } from '@components/ui/button';
 import { useProject } from '@lib/api/hooks';
 import type { UpdateProjectForm } from '@lib/api/types';
 import { ProjectStatus } from '@models';
@@ -14,15 +13,16 @@ import Error from 'next/error';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { farelogTable } from '../csmOverview/farelogTable';
 import { CsmProjectOverview } from './project/CsmProjectOverview';
 
 export function CsmProject() {
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const projectId = pathName?.split('/farelog/')[1];
+  const projectId = pathName?.split('/csm/')[1];
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
-    'overview' | 'risks' | 'employees' | 'phases'
+    'overview' | 'farelog' | 'employees' | 'timeline'
   >('overview');
 
   const StatusDropdownOptions: { label: string; value: ProjectStatus }[] = [
@@ -33,7 +33,7 @@ export function CsmProject() {
 
   useEffect(() => {
     const view = searchParams.get('view');
-    if (view === 'risks') {
+    if (view === 'farelog') {
       setSelectedTab(view);
     }
   }, [searchParams]);
@@ -89,26 +89,40 @@ export function CsmProject() {
         <Tabs
           value={selectedTab}
           onValueChange={(tab) =>
-            setSelectedTab(tab as 'risks' | 'overview' | 'employees' | 'phases')
+            setSelectedTab(
+              tab as 'farelog' | 'overview' | 'employees' | 'timeline',
+            )
           }
           className="mb-5"
         >
           <TabsList>
-            <TabsTrigger className="w-56" value="risks">
-              Risiskoregister
+            <TabsTrigger className="w-56" value="farelog">
+              Farelog
             </TabsTrigger>
             <TabsTrigger className="w-56" value="overview">
               Oversigt
             </TabsTrigger>
+            <TabsTrigger className="w-56" value="timeline">
+              Tidslinje
+            </TabsTrigger>
             <TabsTrigger className="w-56" value="employees">
               Medarbejder tildeling
             </TabsTrigger>
-            <TabsTrigger className="w-56" value="phases">
-              Projektfase
-            </TabsTrigger>
           </TabsList>
-          <TabsContent value="risks">
-            <Risks project={project} />
+          <TabsContent value="farelog">
+            {/* <Risks project={project} /> */}
+            <h1 className="p-4 text-xl font-bold">
+              Eksempel på en farelog tabel
+            </h1>
+            <div className="pl-4">
+              <Button
+                variant="secondary"
+                onClick={() => toast.error('funktion under udvikling')}
+              >
+                Tilføj Log
+              </Button>
+            </div>
+            {farelogTable()}
           </TabsContent>
           <TabsContent value="employees">
             <ProjectEmployee project={project} refetch={refetch} />
@@ -121,8 +135,25 @@ export function CsmProject() {
               onSubmit={onSubmit}
             />
           </TabsContent>
-          <TabsContent value="phases">
-            <PhaseTable project={project} refetch={refetch} />
+          <TabsContent value="timeline">
+            <div className="h-full w-full p-4">
+              <span className="pb-4"> Eksemel på en tidslinje</span>
+              {/* <PhaseTable project={project} refetch={refetch} /> */}
+              <iframe
+                className="h-[500px] w-full "
+                src="https://uploads.linear.app/ba36e46e-8241-4447-b145-6c2c8c5becdb/197e4827-15e8-4a9f-ade7-ef813dec99b7/045cd60a-3331-405b-bb80-c1788615ca39"
+              ></iframe>
+              <div className="flex gap-2">
+                <iframe
+                  className="h-[500px] w-full "
+                  src="https://uploads.linear.app/ba36e46e-8241-4447-b145-6c2c8c5becdb/e26245ff-869e-4b26-8001-c7be30970f8f/1d651c54-dff5-4dff-896f-7b4666810fcc"
+                ></iframe>
+                <iframe
+                  className="h-[500px] w-full "
+                  src="https://uploads.linear.app/ba36e46e-8241-4447-b145-6c2c8c5becdb/a3b3cd5d-5ac6-48ee-997a-58aed2812f14/6c7c737e-33e1-45d4-bdd6-6eceb32060a0"
+                ></iframe>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>

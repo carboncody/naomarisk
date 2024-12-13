@@ -3,6 +3,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
 import { useState } from 'react';
 import { Csmlog } from './csmLog';
+import { description } from './csmOverview/description';
+import { farelogTable } from './csmOverview/farelogTable';
 import { AllProjects } from './csmProjects/AllProjects';
 
 export function Farelog() {
@@ -54,7 +56,16 @@ export function Farelog() {
             <TabsContent value="project">{AllProjects()}</TabsContent>
             <TabsContent value="log">{Csmlog()}</TabsContent>
             <TabsContent value="overview">
-              <div className="h-[300px] w-full rounded-md dark:bg-zinc-900"></div>
+              <div className="mb-5 w-full rounded-md bg-zinc-100 dark:bg-zinc-900">
+                <h1 className="pl-4 pt-4 text-xl font-bold">
+                  Læsevejledning til Fare Tabel
+                </h1>
+
+                {farelogTable()}
+              </div>
+              <div className="w-full rounded-md bg-zinc-100 dark:bg-zinc-900">
+                {description()}
+              </div>
             </TabsContent>
           </Tabs>
         </div>

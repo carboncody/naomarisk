@@ -49,10 +49,10 @@ export function Nav() {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href="/farelog" passHref legacyBehavior>
+            <Link href="/csm" passHref legacyBehavior>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                <span className="text-red-600">F</span>
-                arelog
+                <span className="text-red-600">C</span>
+                SM
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
