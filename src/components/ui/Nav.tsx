@@ -48,6 +48,14 @@ export function Nav() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/csm" passHref legacyBehavior>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <span className="text-red-600">C</span>
+                SM
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
         </div>
 
         <div className="flex w-[170px] items-center justify-end pr-3">
