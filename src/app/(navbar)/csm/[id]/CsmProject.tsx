@@ -111,16 +111,32 @@ export function CsmProject() {
           </TabsList>
           <TabsContent value="farelog">
             {/* <Risks project={project} /> */}
-            <h1 className="p-4 text-xl font-bold">
+            <h1 className="pb-4 pt-4 text-xl font-bold">
               Eksempel på en farelog tabel
             </h1>
-            <div className="pl-4">
-              <Button
-                variant="secondary"
-                onClick={() => toast.error('funktion under udvikling')}
-              >
-                Tilføj Log
-              </Button>
+            <div className=" flex justify-between">
+              <div>
+                <Tabs className="mb-5">
+                  <TabsList>
+                    <TabsTrigger value={ProjectStatus.OPEN}>Åben</TabsTrigger>
+                    <TabsTrigger value={ProjectStatus.CLOSED}>
+                      Lukket
+                    </TabsTrigger>
+                    <TabsTrigger value={'ALL'}>Alle</TabsTrigger>
+                    <TabsTrigger value={ProjectStatus.ARCHIVED}>
+                      Arkiveret
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
+              <div>
+                <Button
+                  variant="secondary"
+                  onClick={() => toast.error('funktion under udvikling')}
+                >
+                  Tilføj Log
+                </Button>
+              </div>
             </div>
             {farelogTable()}
           </TabsContent>
