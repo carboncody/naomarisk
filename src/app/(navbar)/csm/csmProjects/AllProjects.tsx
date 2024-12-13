@@ -15,6 +15,7 @@ import { ProjectStatus, type Project } from '@models';
 import Error from 'next/error';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export function AllProjects() {
   const [projectBeingArchived, setProjectBeingArchived] =
@@ -84,7 +85,9 @@ export function AllProjects() {
         <div className="mb-4 mt-10 flex w-full justify-between">
           <p className="text-3xl font-semibold">CSM Projekter</p>
           {isAdmin && (
-            <Button onClick={() => setIsNewOpen(true)}>Tilføj</Button>
+            <Button onClick={() => toast.error('funktion under udvikling')}>
+              Tilføj
+            </Button>
           )}
         </div>
         <div className="w-full rounded-lg border border-zinc-300 p-4 dark:border-transparent dark:bg-zinc-900">
