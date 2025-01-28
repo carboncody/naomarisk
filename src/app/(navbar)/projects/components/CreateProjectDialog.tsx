@@ -11,6 +11,7 @@ import {
 import { DatePicker } from '@components/ui/DatePickerShadcn';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
+import { Checkbox } from '@components/ui/checkbox';
 import { Label } from '@components/ui/label';
 import { type CreateProjectForm } from '@lib/api/types';
 import { ProjectRole } from '@models';
@@ -130,12 +131,12 @@ export default function CreateProjectDialog({
                     }}
                   />
                 </div>
-                {/* <div className="items-center ">
+                <div className="items-center ">
                   <Label>CSM?</Label>
                   <div className="pb-4 pt-4">
                     <Checkbox className="text-xl" />
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
             <DialogFooter>
