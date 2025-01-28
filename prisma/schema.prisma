@@ -15,6 +15,12 @@ enum RiskStatus {
   CLOSED
 }
 
+enum CSMStatus {
+  PLANNING
+  ACTIVE
+  CLOSED
+}
+
 enum UserRole {
   USER
   MANAGER
@@ -51,6 +57,8 @@ model Company {
 
   projects Project[]
   users    User[]
+
+  CSMProject CSMProject[]
 }
 
 model Contact {
@@ -64,6 +72,8 @@ model Contact {
   projectId String?
   user      User[]
   Company   Company[]
+
+  CSMProject CSMProject[]
 }
 
 model User {
@@ -88,6 +98,8 @@ model User {
 
   authoredComments Comment[] @relation("author")
   resolvedComments Comment[] @relation("resolver")
+
+  Hazard Hazard[]
 }
 
 model Project {
@@ -125,6 +137,9 @@ model ProjectUser {
   projectId String
 
   role ProjectRole @default(MEMBER)
+
+  csmProjectId String?
+  csmProject   CSMProject? @relation(fields: [csmProjectId], references: [id]) // New explicit relation
 
   @@id([userId, projectId])
 }
@@ -207,4 +222,59 @@ model Phase {
 
   projectRisks    Risk[] @relation("ProjectPhase")
   mitigationRisks Risk[] @relation("MitigationPhase")
+}
+
+model CSMProject {
+  id          String        @id @default(uuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  name        String
+  description String
+  status      ProjectStatus @default(OPEN)
+  startDate   DateTime?
+  dueDate     DateTime?
+  budget      String?
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  contacts        Contact[]
+  hazards         Hazard[]
+  csmProjectUsers ProjectUser[]
+}
+
+model Hazard {
+  id                           String    @id @default(uuid())
+  customId                     Int       @default(autoincrement())
+  status                       CSMStatus
+  identifiedDate               DateTime  @default(now())
+  version                      String
+  revisionDate                 DateTime  @updatedAt
+  responsibleUserId            String?
+  responsibleUser              User?     @relation(fields: [responsibleUserId], references: [id])
+  unwantedState                String
+  cause                        String
+  underlyingCauses             String
+  comments                     String?
+  accidentCategory             String
+  personCategory               String
+  consequence                  String
+  acceptanceCriteriaBefore     String
+  subject                      String
+  changeType                   String
+  projectActivity              String
+  activityCompletionDate       DateTime?
+  csmRaRiskAcceptancePrinciple String
+  riskAcceptanceReferences     String?
+  riskReductionMeasures        String
+  riskReductionComments        String
+  safetyRequirementDocs        String
+  measureStatus                String
+  riskLevelAfterMeasures       String
+  appendix1                    String?
+  appendix2                    String?
+  appendix3                    String?
+
+  project   CSMProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
 }
