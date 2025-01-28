@@ -125,19 +125,18 @@ model ProjectUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user      User        @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
   userId    String
-  project   Project     @relation(fields: [projectId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
   projectId String
 
-  role      ProjectRole @default(MEMBER)
+  role ProjectRole @default(MEMBER)
 
   csmProjectId String?
   csmProject   CSMProject? @relation(fields: [csmProjectId], references: [id]) // New explicit relation
 
   @@id([userId, projectId])
 }
-
 
 model Risk {
   id                  String     @id @default(uuid())
@@ -230,48 +229,46 @@ model CSMProject {
   dueDate     DateTime?
   budget      String?
 
-  company     Company       @relation(fields: [companyId], references: [id])
-  companyId   String
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
 
-  contacts    Contact[]
-  hazards     Hazard[]
-  projectUsers ProjectUser[] 
+  contacts     Contact[]
+  hazards      Hazard[]
+  projectUsers ProjectUser[]
 }
-
 
 model Hazard {
-  id                          String    @id @default(uuid())
-  customId                    Int       @default(autoincrement())
-  status                      RiskStatus
-  identifiedDate              DateTime
-  version                     String
-  revisionDate                DateTime?
-  responsibleUserId           String?
-  responsibleUser             User?     @relation(fields: [responsibleUserId], references: [id])
-  unwantedState               String
-  cause                       String
-  underlyingCauses            String
-  comments                    String?
-  accidentCategory            String
-  personCategory              String
-  consequence                 String
-  acceptanceCriteriaBefore    String
-  subject                     String
-  changeType                  String
-  projectActivity             String
-  activityCompletionDate      DateTime?
+  id                           String     @id @default(uuid())
+  customId                     Int        @default(autoincrement())
+  status                       RiskStatus
+  identifiedDate               DateTime
+  version                      String
+  revisionDate                 DateTime?
+  responsibleUserId            String?
+  responsibleUser              User?      @relation(fields: [responsibleUserId], references: [id])
+  unwantedState                String
+  cause                        String
+  underlyingCauses             String
+  comments                     String?
+  accidentCategory             String
+  personCategory               String
+  consequence                  String
+  acceptanceCriteriaBefore     String
+  subject                      String
+  changeType                   String
+  projectActivity              String
+  activityCompletionDate       DateTime?
   csmRaRiskAcceptancePrinciple String
-  riskAcceptanceReferences    String?
-  riskReductionMeasures       String
-  riskReductionComments       String
-  safetyRequirementDocs       String
-  measureStatus               String
-  riskLevelAfterMeasures      String
-  appendix1                   String?
-  appendix2                   String?
-  appendix3                   String?
+  riskAcceptanceReferences     String?
+  riskReductionMeasures        String
+  riskReductionComments        String
+  safetyRequirementDocs        String
+  measureStatus                String
+  riskLevelAfterMeasures       String
+  appendix1                    String?
+  appendix2                    String?
+  appendix3                    String?
 
-  project       CSMProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId     String
+  project   CSMProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
 }
-
