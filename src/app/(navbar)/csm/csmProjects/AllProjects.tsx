@@ -108,6 +108,7 @@ export function AllProjects() {
 
           <DataTable
             tableId="projectTable"
+            // columns={[]}
             columns={columns({ handleArchive, setEditingProjectId })}
             data={filteredProjects}
             onRowClick={handleRowClick}

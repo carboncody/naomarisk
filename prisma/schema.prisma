@@ -15,6 +15,12 @@ enum RiskStatus {
   CLOSED
 }
 
+enum CSMStatus {
+  PLANNING
+  ACTIVE
+  CLOSED
+}
+
 enum UserRole {
   USER
   MANAGER
@@ -232,20 +238,20 @@ model CSMProject {
   company   Company @relation(fields: [companyId], references: [id])
   companyId String
 
-  contacts     Contact[]
-  hazards      Hazard[]
-  projectUsers ProjectUser[]
+  contacts        Contact[]
+  hazards         Hazard[]
+  csmProjectUsers ProjectUser[]
 }
 
 model Hazard {
-  id                           String     @id @default(uuid())
-  customId                     Int        @default(autoincrement())
-  status                       RiskStatus
-  identifiedDate               DateTime
+  id                           String    @id @default(uuid())
+  customId                     Int       @default(autoincrement())
+  status                       CSMStatus
+  identifiedDate               DateTime  @default(now())
   version                      String
-  revisionDate                 DateTime?
+  revisionDate                 DateTime  @updatedAt
   responsibleUserId            String?
-  responsibleUser              User?      @relation(fields: [responsibleUserId], references: [id])
+  responsibleUser              User?     @relation(fields: [responsibleUserId], references: [id])
   unwantedState                String
   cause                        String
   underlyingCauses             String

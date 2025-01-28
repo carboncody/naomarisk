@@ -47,7 +47,7 @@ export function Farelog() {
                 Projekter
               </TabsTrigger>
               <TabsTrigger className="w-56" value="overview">
-                Oversigt
+                Læsevejledning
               </TabsTrigger>
               <TabsTrigger className="w-56" value="log">
                 Log

@@ -4,6 +4,11 @@ export enum RiskStatus {
   Closed = 'CLOSED',
 }
 
+export enum CSMStatus {
+  Open = 'OPEN',
+  Closed = 'CLOSED',
+}
+
 export enum ProjectStatus {
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',
@@ -23,6 +28,11 @@ export enum UserStatus {
 }
 
 export enum ProjectRole {
+  MEMBER = 'MEMBER',
+  MANAGER = 'MANAGER',
+}
+
+export enum CsmProjectRole {
   MEMBER = 'MEMBER',
   MANAGER = 'MANAGER',
 }
@@ -89,6 +99,22 @@ export interface Project {
   phases: Phase[];
 }
 
+export interface CsmProject {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  description: string;
+  startDate: Date;
+  status: ProjectStatus;
+  dueDate: Date;
+  budget?: string;
+  company: Company;
+  companyId: string;
+  hazards: Hazard[];
+  csmProjectUsers: ProjectUser[];
+}
+
 export interface ProjectUser {
   createdAt: Date;
   updatedAt: Date;
@@ -126,6 +152,38 @@ export interface Risk {
   mitigationPhaseId: string | null;
   projectPhase: Phase | null;
   projectPhaseId: string | null;
+}
+
+export interface Hazard {
+  id: string;
+  customId: number;
+  status: CSMStatus;
+  identifiedDate: Date;
+  version: string;
+  revisionDate: Date | null;
+  responsibleUserId: string | null;
+  unwantedState: string;
+  cause: string;
+  underlyingCauses: string;
+  comments: string | null;
+  accidentCategory: string;
+  personCategory: string;
+  consequence: string;
+  acceptanceCriteriaBefore: string;
+  subject: string;
+  changeType: string;
+  projectActivity: string;
+  activityCompletionDate: Date | null;
+  csmRaRiskAcceptancePrinciple: string;
+  riskAcceptanceReferences: string | null;
+  riskReductionMeasures: string;
+  riskReductionComments: string;
+  safetyRequirementDocs: string;
+  measureStatus: string;
+  riskLevelAfterMeasures: string;
+  appendix1: string | null;
+  appendix2: string | null;
+  appendix3: string | null;
 }
 
 export interface Comment {
