@@ -56,9 +56,15 @@ export async function PATCH(req: Request) {
   if (!user?.email) {
     return NextResponse.json({ error: 'Not logged in' });
   }
+
   const body = (await req.json()) as UpdateUserForm;
 
   const userService = await UserService();
-  const employee = await userService.updateUser(user.email, body);
+  const employee = await userService.updateUser(user.email, {
+    ...body,
+    avatarUrl: body.avatarUrl, 
+  });
+
   return NextResponse.json(employee);
 }
+

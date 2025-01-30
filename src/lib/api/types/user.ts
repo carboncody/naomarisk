@@ -7,6 +7,7 @@ export type CreateUserForm = {
   role?: UserRole;
   company?: string;
   cvr?: string;
+  avatarUrl?: string;
 };
 
 export type UpdateUserForm = Partial<CreateUserForm>;

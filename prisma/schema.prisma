@@ -75,6 +75,7 @@ model User {
   role      UserRole
 
   jobDescription String?
+  avatarUrl      String?
 
   company   Company  @relation(fields: [companyId], references: [id])
   companyId String
