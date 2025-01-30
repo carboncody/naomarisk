@@ -20,7 +20,7 @@ export function SettingsDropdown() {
 
   const triggerButton = (
     <Button variant="icon" size="icon">
-      <FaGear className="h-5 w-5 text-muted group-hover:text-primary" />
+      <FaGear className="h-5 w-5 text-muted text-zinc-700 dark:text-white" />
     </Button>
   );
 
