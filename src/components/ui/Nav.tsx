@@ -54,7 +54,7 @@ export function Nav() {
           <NavigationMenuItem>
             <NavigationMenuTrigger>Projektledelse</NavigationMenuTrigger>
             <NavigationMenuContent className="p-2">
-              Risikoværktøj:
+              <span className="pb-1 pl-3">Risikovurdering:</span>
               <ul className="grid w-[200px]">
                 <ListItem
                   href="/projects?status=all"
