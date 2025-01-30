@@ -67,6 +67,7 @@ export interface User {
   contactId: string;
   projectUsers: ProjectUser[];
   risks: Risk[];
+  avatarUrl?: string;
 }
 
 export interface Project {
