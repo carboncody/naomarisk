@@ -11,12 +11,39 @@ import { type User } from '@models';
 import { type ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import { GoSortAsc, GoSortDesc } from 'react-icons/go';
+import { RxCross1 } from 'react-icons/rx';
 
 interface ColumnParams {
   handleEdit: (employee: User) => void;
 }
 
 export const columns = ({ handleEdit }: ColumnParams): ColumnDef<User>[] => [
+  {
+    accessorKey: 'profilePicture',
+    header: 'Profilbillede',
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center justify-center">
+          {/* {profilePictureUrl ? (
+            <Image
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              src={profilePictureUrl}
+              alt={`${row.original.fullName}'s profile`}
+              width={40} // Adjust width and height as needed
+              height={40}
+              className="rounded-full object-cover"
+            />
+          ) : (
+            )} */}
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200">
+            <span className="text-2xl text-black">
+              <RxCross1 />
+            </span>
+          </div>
+        </div>
+      );
+    },
+  },
   {
     accessorKey: 'name',
     header: ({ column }) => {

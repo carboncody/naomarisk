@@ -62,9 +62,8 @@ export async function PATCH(req: Request) {
   const userService = await UserService();
   const employee = await userService.updateUser(user.email, {
     ...body,
-    avatarUrl: body.avatarUrl, 
+    avatarUrl: body.avatarUrl,
   });
 
   return NextResponse.json(employee);
 }
-
