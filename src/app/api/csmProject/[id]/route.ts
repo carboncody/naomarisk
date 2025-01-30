@@ -1,5 +1,6 @@
-import { type CreatePhaseForm, type UpdateProjectForm } from '@lib/api/types';
-import { PhaseService, ProjectService } from '@lib/db';
+import { type UpdateCsmProjectForm } from '@lib/api/types/csmProjet';
+import { ProjectService } from '@lib/db';
+import { CsmProjectService } from '@lib/db/csmProject';
 import { createServerClient } from '@lib/services/supabase/supabase-server';
 import { NextResponse } from 'next/server';
 
@@ -33,9 +34,9 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: 'Not logged in' }, { status: 401 });
   }
 
-  const body = (await req.json()) as UpdateProjectForm;
+  const body = (await req.json()) as UpdateCsmProjectForm;
 
-  const projectService = await ProjectService();
+  const projectService = await CsmProjectService();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { error } = await projectService.updateProject(
     user.email,
@@ -52,7 +53,7 @@ export async function PATCH(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const projectId = req.url.split('/project/')[1]?.split('/risk')[0];
+  const projectId = req.url.split('/csm/')[1]?.split('/risk')[0];
 
   if (!projectId) {
     return NextResponse.json({ status: 400, error: 'No project id in url' });
@@ -67,15 +68,4 @@ export async function POST(req: Request) {
   if (!user?.email) {
     return NextResponse.json({ error: 'Not logged in' }, { status: 401 });
   }
-
-  const body = (await req.json()) as CreatePhaseForm;
-
-  const phaseService = await PhaseService();
-  const { data, error } = await phaseService.createPhase(projectId, body);
-
-  if (error) {
-    return NextResponse.json({ error }, { status: error.code });
-  }
-
-  return NextResponse.json({ data, status: 201 });
 }

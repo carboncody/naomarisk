@@ -11,28 +11,27 @@ import {
 import { DatePicker } from '@components/ui/DatePickerShadcn';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/button';
-import { Checkbox } from '@components/ui/checkbox';
 import { Label } from '@components/ui/label';
-import { CreateCsmProjectForm } from '@lib/api/types/csmProjet';
+import { type CreateCsmProjectForm } from '@lib/api/types/csmProjet';
 import { CsmProjectRole } from '@models';
 import axios, { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-interface CreateHazardDialogProps {
+interface CreateCsmProjectDialogProps {
   myId: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   refetch: () => void;
 }
 
-export default function CreateHazardDialog({
+export default function CreateCsmProjectDialog({
   myId,
   isOpen,
   setIsOpen,
   refetch,
-}: CreateHazardDialogProps) {
+}: CreateCsmProjectDialogProps) {
   const {
     register,
     handleSubmit,
@@ -85,7 +84,7 @@ export default function CreateHazardDialog({
       <DialogContent className="w-full">
         <DialogHeader>
           <DialogTitle className="text-black dark:text-white">
-            Opret nyt projekt
+            Opret nyt CSM projekt
           </DialogTitle>
         </DialogHeader>
         <DialogDescription>
@@ -130,12 +129,6 @@ export default function CreateHazardDialog({
                       setValue('dueDate', date ?? null);
                     }}
                   />
-                </div>
-                <div className="items-center ">
-                  <Label>CSM?</Label>
-                  <div className="pb-4 pt-4">
-                    <Checkbox className="text-xl" />
-                  </div>
                 </div>
               </div>
             </div>

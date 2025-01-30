@@ -58,7 +58,7 @@ model Company {
   projects Project[]
   users    User[]
 
-  CSMProject CSMProject[]
+  CSMProject CsmProject[]
 }
 
 model Contact {
@@ -73,7 +73,7 @@ model Contact {
   user      User[]
   Company   Company[]
 
-  CSMProject CSMProject[]
+  CSMProject CsmProject[]
 }
 
 model User {
@@ -91,7 +91,8 @@ model User {
   contact   Contact? @relation(fields: [contactId], references: [id])
   contactId String?
 
-  projectUsers ProjectUser[]
+  projectUsers   ProjectUser[]
+  csmProjectUser CsmProjectUser[]
 
   riskowner   Risk[] @relation("RiskOwner")
   riskmanager Risk[] @relation("RiskManager")
@@ -127,6 +128,26 @@ model Project {
   phases       Phase[]
 }
 
+model CsmProject {
+  id          String        @id @default(uuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  name        String
+  description String
+  status      ProjectStatus @default(OPEN)
+  startDate   DateTime?
+  dueDate     DateTime?
+  budget      String?
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  contacts Contact[]
+  hazards  Hazard[]
+
+  CSMProjectUser CsmProjectUser[]
+}
+
 model ProjectUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -138,10 +159,21 @@ model ProjectUser {
 
   role ProjectRole @default(MEMBER)
 
-  csmProjectId String?
-  csmProject   CSMProject? @relation(fields: [csmProjectId], references: [id]) // New explicit relation
-
   @@id([userId, projectId])
+}
+
+model CsmProjectUser {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String
+  csmProject   CsmProject @relation(fields: [csmProjectId], references: [id])
+  csmProjectId String
+
+  role ProjectRole @default(MEMBER)
+
+  @@id([userId, csmProjectId])
 }
 
 model Risk {
@@ -224,25 +256,6 @@ model Phase {
   mitigationRisks Risk[] @relation("MitigationPhase")
 }
 
-model CSMProject {
-  id          String        @id @default(uuid())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  name        String
-  description String
-  status      ProjectStatus @default(OPEN)
-  startDate   DateTime?
-  dueDate     DateTime?
-  budget      String?
-
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String
-
-  contacts        Contact[]
-  hazards         Hazard[]
-  csmProjectUsers ProjectUser[]
-}
-
 model Hazard {
   id                           String    @id @default(uuid())
   customId                     Int       @default(autoincrement())
@@ -275,6 +288,6 @@ model Hazard {
   appendix2                    String?
   appendix3                    String?
 
-  project   CSMProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId String
+  csmProject   CsmProject @relation(fields: [csmProjectId], references: [id], onDelete: Cascade)
+  csmProjectId String
 }

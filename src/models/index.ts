@@ -112,9 +112,18 @@ export interface CsmProject {
   company: Company;
   companyId: string;
   hazards: Hazard[];
-  csmProjectUsers: ProjectUser[];
+  csmProjectUsers: CsmProjectUser[];
 }
 
+export interface CsmProjectUser {
+  createdAt: Date;
+  updatedAt: Date;
+  user: User;
+  userId: string;
+  csmProject: CsmProject;
+  csmProjectId: string;
+  role: CsmProjectRole;
+}
 export interface ProjectUser {
   createdAt: Date;
   updatedAt: Date;

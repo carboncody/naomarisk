@@ -5,12 +5,12 @@ import {
   type UpdateCsmProjectForm,
 } from '@lib/api/types/csmProjet';
 import { sendProjectAssignmentEmail } from '@lib/services/email';
-import { UserRole, type CSMProject } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 import { db } from '@server/db';
 
 export async function CsmProjectService() {
   async function getMyProjects(email: string) {
-    return db.cSMProject.findMany({
+    return db.csmProject.findMany({
       where: {
         csmProjectUsers: {
           some: { user: { email } },
@@ -27,7 +27,7 @@ export async function CsmProjectService() {
   }
 
   async function getProjectsInCompany(email: string) {
-    return db.cSMProject.findMany({
+    return db.csmProject.findMany({
       where: {
         company: {
           users: { some: { email } },
@@ -44,7 +44,7 @@ export async function CsmProjectService() {
   }
 
   async function getProjectFromId(id: string): Promise<CSMProject | null> {
-    return db.cSMProject.findUnique({
+    return db.csmProject.findUnique({
       where: { id },
       include: {
         hazards: true,
@@ -92,7 +92,7 @@ export async function CsmProjectService() {
         };
       }
 
-      const csmProject = await db.cSMProject.create({
+      const csmProject = await db.csmProject.create({
         data: {
           ...rest,
           company: {
@@ -168,7 +168,7 @@ export async function CsmProjectService() {
         };
       }
 
-      const prevProject = await db.cSMProject.findUnique({
+      const prevProject = await db.csmProject.findUnique({
         where: { id },
         include: {
           csmProjectUsers: {
@@ -186,7 +186,7 @@ export async function CsmProjectService() {
         };
       }
 
-      const updatedProject = await db.cSMProject.update({
+      const updatedProject = await db.csmProject.update({
         where: { id },
         data: {
           ...rest,
