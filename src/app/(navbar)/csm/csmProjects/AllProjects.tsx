@@ -2,12 +2,10 @@
 
 import { EditProject } from '@app/(navbar)/projects/[id]/components/EditProjectModal';
 import { ArchiveProject } from '@app/(navbar)/projects/ArchiveProject';
-import { columns } from '@app/(navbar)/projects/components/colums';
 import CreateProjectDialog from '@app/(navbar)/projects/components/CreateProjectDialog';
 import { LoadingSpinner } from '@components/ui';
 import { Button } from '@components/ui/button';
 import { DataTable } from '@components/ui/data-table';
-import { Tabs, TabsList, TabsTrigger } from '@components/ui/tabs';
 import { useAdmin, useMyProjects } from '@lib/api/hooks';
 import { useAllProjects } from '@lib/api/hooks/projects/useAllProjects';
 import { useMe } from '@lib/providers/me';
@@ -91,27 +89,14 @@ export function AllProjects() {
           )}
         </div>
         <div className="w-full rounded-lg border border-zinc-300 p-4 dark:border-transparent dark:bg-zinc-900">
-          <Tabs
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value as ProjectStatus)}
-            className="mb-5"
-          >
-            <TabsList>
-              <TabsTrigger value={ProjectStatus.OPEN}>Åben</TabsTrigger>
-              <TabsTrigger value={ProjectStatus.CLOSED}>Lukket</TabsTrigger>
-              <TabsTrigger value={'ALL'}>Alle</TabsTrigger>
-              <TabsTrigger value={ProjectStatus.ARCHIVED}>
-                Arkiveret
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
           <DataTable
             tableId="projectTable"
-            columns={columns({ handleArchive, setEditingProjectId })}
+            columns={[]}
+            // columns={columns({ handleArchive, setEditingProjectId })}
             data={filteredProjects}
             onRowClick={handleRowClick}
           />
+          <span className="w-full justify-center text-center">Ingen data</span>
         </div>
       </div>
 
