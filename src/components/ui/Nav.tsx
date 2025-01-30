@@ -81,6 +81,10 @@ export function Nav() {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
+            <span>|</span>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
             <AlertDialog open={open} onOpenChange={setOpen}>
               <AlertDialogTrigger asChild className="cursor-pointer">
                 <NavigationMenuLink
