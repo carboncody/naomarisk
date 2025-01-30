@@ -9,8 +9,8 @@ import { AllProjects } from './csmProjects/AllProjects';
 
 export function Farelog() {
   const [selectedTab, setSelectedTab] = useState<
-    'overview' | 'project' | 'log' | 'phases'
-  >('overview');
+    'overview' | 'project' | 'log'
+  >('project');
 
   // if (isLoading) {
   //   return (
@@ -47,7 +47,7 @@ export function Farelog() {
                 Projekter
               </TabsTrigger>
               <TabsTrigger className="w-56" value="overview">
-                Oversigt
+                Læsevejledning
               </TabsTrigger>
               <TabsTrigger className="w-56" value="log">
                 Log
