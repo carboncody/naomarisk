@@ -66,7 +66,7 @@ export function RiskPieChart({ project }: RiskPieChartProps) {
         <span className="flex gap-1">
           <p className="text-red-500 dark:text-red-400">{open} Åbne risici</p> /{' '}
           <p className="text-green-600 dark:text-green-400">
-            {closed} Lukkede af risici
+            {closed} Lukkede risici
           </p>
         </span>
       </div>

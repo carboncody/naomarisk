@@ -59,7 +59,7 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
   };
 
   const labelMap = {
-    GREEN: 'Lave',
+    GREEN: 'Lav',
     YELLOW: 'Medium',
     RED: 'Kritiske',
     UNDEFINED: 'Udefinieret',
@@ -73,7 +73,7 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
       (acc, { name }) => ({
         ...acc,
         [name]: {
-          label: `${labelMap[name as keyof typeof labelMap]} risici`,
+          label: `${labelMap[name as keyof typeof labelMap]} risiko`,
           color: COLORS[name as keyof typeof COLORS],
         },
       }),
@@ -111,7 +111,7 @@ export function RiskScorePieChart({ risks }: { risks: Risk[] }) {
           className="fill-zinc-900 dark:fill-zinc-100"
           fontSize="16px"
         >
-          {`${label} risici`}
+          {`${label} risiko`}
         </text>
         <text
           x={cx}

@@ -123,7 +123,7 @@ export function CsmProjectOverview({
               </div>
               <div className="mt-5">
                 <p className="mt-4 text-xl font-normal">
-                  Risici i projektet: {project.risks.length}
+                  Antal risici i projektet: {project.risks.length}
                 </p>
                 <div className="mt-2 flex w-full items-center gap-5">
                   <RiskPieChart project={project} />
