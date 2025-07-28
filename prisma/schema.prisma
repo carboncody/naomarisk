@@ -4,15 +4,165 @@ generator client {
 
 datasource db {
   provider     = "postgresql"
-  directUrl    = env("DIRECT_URL")
   url          = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
   relationMode = "foreignKeys"
 }
 
+model Company {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  cvr       String?   @unique
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  contactId String?
+  contact   Contact?  @relation(fields: [contactId], references: [id])
+  projects  Project[]
+  users     User[]
+}
+
+model Contact {
+  id        String    @id @default(uuid())
+  fullName  String
+  address   String?
+  phone     String?
+  website   String?
+  projectId String?
+  Company   Company[]
+  project   Project?  @relation(fields: [projectId], references: [id])
+  user      User[]
+}
+
+model User {
+  id               String        @id @default(uuid())
+  email            String        @unique
+  fullName         String
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  role             UserRole
+  jobDescription   String?
+  companyId        String
+  contactId        String?
+  avatarUrl        String?
+  authoredComments Comment[]     @relation("author")
+  resolvedComments Comment[]     @relation("resolver")
+  projectUsers     ProjectUser[]
+  riskmanager      Risk[]        @relation("RiskManager")
+  riskowner        Risk[]        @relation("RiskOwner")
+  company          Company       @relation(fields: [companyId], references: [id])
+  contact          Contact?      @relation(fields: [contactId], references: [id])
+}
+
+model Project {
+  id                      String        @id @default(uuid())
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+  name                    String
+  description             String
+  startDate               DateTime?
+  dueDate                 DateTime?
+  budget                  String?
+  riskRegisterDescription String?
+  riskReportIntro         String?
+  riskReportDocumentId    String?
+  test                    String?
+  companyId               String
+  status                  ProjectStatus @default(OPEN)
+  contacts                Contact[]
+  phases                  Phase[]
+  company                 Company       @relation(fields: [companyId], references: [id])
+  projectUsers            ProjectUser[]
+  risks                   Risk[]
+}
+
+model ProjectUser {
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  userId    String
+  projectId String
+  role      ProjectRole @default(MEMBER)
+  project   Project     @relation(fields: [projectId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
+
+  @@id([userId, projectId])
+}
+
+model Risk {
+  id                  String      @id @default(uuid())
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  customId            Int
+  description         String
+  probability         Int?
+  consequence         Int?
+  status              RiskStatus
+  comment             String?
+  activity            String?
+  riskOwnerUserId     String?
+  projectId           String
+  mitigationPhaseId   String?
+  projectPhaseId      String?
+  economicConsequence Int?
+  economicProbability Int?
+  timeConsequence     Int?
+  timeProbability     Int?
+  riskManagerUserId   String?
+  children            ChildRisk[]
+  comments            Comment[]
+  mitigationPhase     Phase?      @relation("MitigationPhase", fields: [mitigationPhaseId], references: [id])
+  project             Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectPhase        Phase?      @relation("ProjectPhase", fields: [projectPhaseId], references: [id])
+  riskManager         User?       @relation("RiskManager", fields: [riskManagerUserId], references: [id])
+  riskOwner           User?       @relation("RiskOwner", fields: [riskOwnerUserId], references: [id])
+
+  @@unique([projectId, customId])
+}
+
+model ChildRisk {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  probability Int?
+  consequence Int?
+  comment     String?
+  activity    String?
+  parentId    String
+  parent      Risk     @relation(fields: [parentId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id           String    @id @default(uuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  resolvedAt   DateTime?
+  authorId     String
+  resolvedById String?
+  riskId       String
+  content      String    @default("")
+  author       User      @relation("author", fields: [authorId], references: [id])
+  resolvedBy   User?     @relation("resolver", fields: [resolvedById], references: [id])
+  risk         Risk      @relation(fields: [riskId], references: [id], onDelete: Cascade)
+}
+
+model Phase {
+  id              String   @id @default(uuid())
+  name            String
+  startDate       DateTime
+  description     String?
+  endDate         DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id])
+  mitigationRisks Risk[]   @relation("MitigationPhase")
+  projectRisks    Risk[]   @relation("ProjectPhase")
+}
+
 enum RiskStatus {
-  PLANNING
   OPEN
   CLOSED
+  PLANNING
 }
 
 enum UserRole {
@@ -36,176 +186,4 @@ enum ProjectStatus {
 enum ProjectRole {
   MEMBER
   MANAGER
-}
-
-model Company {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  cvr       String?  @unique
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  contact   Contact? @relation(fields: [contactId], references: [id])
-  contactId String?
-
-  projects Project[]
-  users    User[]
-}
-
-model Contact {
-  id       String  @id @default(uuid())
-  fullName String
-  address  String?
-  phone    String?
-  website  String?
-
-  project   Project?  @relation(fields: [projectId], references: [id])
-  projectId String?
-  user      User[]
-  Company   Company[]
-}
-
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  fullName  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  role      UserRole
-
-  jobDescription String?
-  avatarUrl      String?
-
-  company   Company  @relation(fields: [companyId], references: [id])
-  companyId String
-  contact   Contact? @relation(fields: [contactId], references: [id])
-  contactId String?
-
-  projectUsers ProjectUser[]
-
-  riskowner   Risk[] @relation("RiskOwner")
-  riskmanager Risk[] @relation("RiskManager")
-
-  authoredComments Comment[] @relation("author")
-  resolvedComments Comment[] @relation("resolver")
-}
-
-model Project {
-  id                      String        @id @default(uuid())
-  createdAt               DateTime      @default(now())
-  updatedAt               DateTime      @updatedAt
-  name                    String
-  description             String
-  status                  ProjectStatus @default(OPEN)
-  startDate               DateTime?
-  dueDate                 DateTime?
-  budget                  String?
-  riskRegisterDescription String?
-  riskReportIntro         String?
-  riskReportDocumentId    String?
-  test                    String?
-
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String
-
-  contacts Contact[]
-  risks    Risk[]
-
-  projectUsers ProjectUser[]
-  phases       Phase[]
-}
-
-model ProjectUser {
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String
-
-  role ProjectRole @default(MEMBER)
-
-  @@id([userId, projectId])
-}
-
-model Risk {
-  id                  String     @id @default(uuid())
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @updatedAt
-  customId            Int
-  description         String
-  probability         Int?
-  consequence         Int?
-  timeProbability     Int?
-  timeConsequence     Int?
-  economicProbability Int?
-  economicConsequence Int?
-  status              RiskStatus
-  comment             String?
-  activity            String?
-
-  riskOwner         User?   @relation("RiskOwner", fields: [riskOwnerUserId], references: [id])
-  riskOwnerUserId   String?
-  riskManager       User?   @relation("RiskManager", fields: [riskManagerUserId], references: [id])
-  riskManagerUserId String?
-
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId         String
-  mitigationPhase   Phase?  @relation("MitigationPhase", fields: [mitigationPhaseId], references: [id])
-  mitigationPhaseId String?
-  projectPhase      Phase?  @relation("ProjectPhase", fields: [projectPhaseId], references: [id])
-  projectPhaseId    String?
-
-  comments Comment[]
-  children ChildRisk[]
-
-  @@unique([projectId, customId])
-}
-
-model ChildRisk {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  probability Int?
-  consequence Int?
-  comment     String?
-  activity    String?
-
-  parentId String
-  parent   Risk   @relation(fields: [parentId], references: [id], onDelete: Cascade)
-}
-
-model Comment {
-  id         String    @id @default(uuid())
-  content    String    @default("")
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  resolvedAt DateTime?
-
-  authorId String
-  author   User   @relation("author", fields: [authorId], references: [id])
-
-  resolvedById String?
-  resolvedBy   User?   @relation("resolver", fields: [resolvedById], references: [id])
-
-  risk   Risk   @relation(fields: [riskId], references: [id], onDelete: Cascade)
-  riskId String
-}
-
-model Phase {
-  id          String   @id @default(uuid())
-  name        String
-  startDate   DateTime
-  description String?
-  endDate     DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String
-
-  projectRisks    Risk[] @relation("ProjectPhase")
-  mitigationRisks Risk[] @relation("MitigationPhase")
 }
